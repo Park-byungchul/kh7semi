@@ -151,3 +151,7 @@ CREATE TABLE boardComment (
 	comment_date	date	default sysdate NOT NULL,
 	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
 );
+
+--회원 테이블 수정
+alter table client modify
+(client_type char(6) default '일반' not null check(client_type in ('일반', '관리')));

@@ -8,15 +8,13 @@ public class ClientDao {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "insert into client "
-				+ "(client_no, client_id, client_pw, "
-				+ "client_name, client_email, client_type) "
-				+ "values(client_seq.nextval, ?, ?, ?, ?, ?)";
+				+ "(client_no, client_id, client_pw, client_name, client_email) "
+				+ "values(client_seq.nextval, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, clientDto.getClientId());
 		ps.setString(2, clientDto.getClientPw());
 		ps.setString(3, clientDto.getClientName());
 		ps.setString(4, clientDto.getClientEmail());
-		ps.setString(5, clientDto.getClientType());
 		ps.execute();
 		
 		con.close();

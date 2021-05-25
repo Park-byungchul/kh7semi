@@ -3,7 +3,7 @@ package library.beans;
 import java.sql.Date;
 
 //DTO
-public class LendBook {
+public class LendBookDto {
 	private int lendBookNo;
 	private int clientNo;
 	private int getBookNo;
@@ -13,7 +13,7 @@ public class LendBook {
 	private Date lendBookLimit;
 	private Date returnBookDate;
 	
-	public LendBook() {
+	public LendBookDto() {
 		super();
 	}
 

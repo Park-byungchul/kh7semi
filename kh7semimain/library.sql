@@ -138,7 +138,7 @@ CREATE TABLE reviewComment (
 	client_no	references client(client_no) on delete set null,
 	review_no	references review(review_no) on delete cascade,
 	comment_field	varchar2(900)	NOT NULL,
-	commet_date	date	default sysdate NOT NULL,
+	comment_date	date	default sysdate NOT NULL,
 	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
 );
 

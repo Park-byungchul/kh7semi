@@ -3,53 +3,53 @@ package library.beans;
 import java.sql.Date;
 
 public class GetBookDto {
-	private int get_book_no;
-	private int book_isbn;
-	private int area_no;
-	private Date get_book_date;
-	private String get_book_status;
+	private int getBookNo;
+	private int bookIsbn;
+	private int areaNo;
+	private Date getBookDate;
+	private String getBookStatus;
 	
 	public GetBookDto() {
 		super();
 	}
 
-	public int getGet_book_no() {
-		return get_book_no;
+	public int getGetBookNo() {
+		return getBookNo;
 	}
 
-	public void setGet_book_no(int get_book_no) {
-		this.get_book_no = get_book_no;
+	public void setGetBookNo(int getBookNo) {
+		this.getBookNo = getBookNo;
 	}
 
-	public int getBook_isbn() {
-		return book_isbn;
+	public int getBookIsbn() {
+		return bookIsbn;
 	}
 
-	public void setBook_isbn(int book_isbn) {
-		this.book_isbn = book_isbn;
+	public void setBookIsbn(int bookIsbn) {
+		this.bookIsbn = bookIsbn;
 	}
 
-	public int getArea_no() {
-		return area_no;
+	public int getAreaNo() {
+		return areaNo;
 	}
 
-	public void setArea_no(int area_no) {
-		this.area_no = area_no;
+	public void setAreaNo(int areaNo) {
+		this.areaNo = areaNo;
 	}
 
-	public Date getGet_book_date() {
-		return get_book_date;
+	public Date getGetBookDate() {
+		return getBookDate;
 	}
 
-	public void setGet_book_date(Date get_book_date) {
-		this.get_book_date = get_book_date;
+	public void setGetBookDate(Date getBookDate) {
+		this.getBookDate = getBookDate;
 	}
 
-	public String getGet_book_status() {
-		return get_book_status;
+	public String getGetBookStatus() {
+		return getBookStatus;
 	}
 
-	public void setGet_book_status(String get_book_status) {
-		this.get_book_status = get_book_status;
+	public void setGetBookStatus(String getBookStatus) {
+		this.getBookStatus = getBookStatus;
 	}
 }

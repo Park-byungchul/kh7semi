@@ -3,13 +3,16 @@ package library.beans;
 import java.sql.Date;
 
 public class ReviewCommentDto {
-	int commentNo;
-	int clientNo;
-	int reviewNo;
-	String commentField;
-	Date commentDate;
-	int commentLike;
+	private int commentNo;
+	private int clientNo;
+	private int reviewNo;
+	private String commentField;
+	private Date commentDate;
+	private int commentLike;
 	
+	public ReviewCommentDto() {
+		super();
+	}
 	public int getCommentNo() {
 		return commentNo;
 	}

@@ -1,9 +1,12 @@
 package library.beans;
 
 public class BoardTypeDto {
-	int boardTypeNo;
-	String boardTypeName;
+	private int boardTypeNo;
+	private String boardTypeName;
 	
+	public BoardTypeDto() {
+		super();
+	}
 	public int getBoardTypeNo() {
 		return boardTypeNo;
 	}

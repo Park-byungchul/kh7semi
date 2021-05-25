@@ -11,6 +11,7 @@ public class ClientDto {
 	private Date clientMade;
 	private Date clientPossible;
 	private String clientType;
+	private String clientPhone;
 
 	public ClientDto() {
 		super();
@@ -78,6 +79,14 @@ public class ClientDto {
 
 	public void setClientType(String clientType) {
 		this.clientType = clientType;
+	}
+
+	public String getClientPhone() {
+		return clientPhone;
+	}
+
+	public void setClientPhone(String clientPhone) {
+		this.clientPhone = clientPhone;
 	}
 
 }

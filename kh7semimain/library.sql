@@ -159,3 +159,7 @@ alter table client modify
 --휴대폰번호 추가
 alter table client add
 (client_phone number(11) not null check(regexp_like(client_phone,'^010-\d{4}-\d{4}$')));
+
+--지점 테이블 수정(전화번호 형식 String, -포함 13자, not null은 이미 정의되어있어 정규표현식만 modify 함)
+alter table area modify
+(area_call char(13)	check(regexp_like(area_call,'^010-\d{4}-\d{4}$')));

@@ -61,10 +61,10 @@
 				<li>
 					<a href="#">열린 공간</a>
 					<ul>
-						<li><a href="#">공지사항</a></li>
-						<li><a href="#">질문 답변</a></li>
-						<li><a href="#">자유게시판</a></li>
-						<li><a href="#">도서 리뷰</a></li>
+						<li><a href="<%=root%>/board/noticeList.jsp">공지사항</a></li>
+						<li><a href="<%=root%>/board/qnaList.jsp">질문 답변</a></li>
+						<li><a href="<%=root%>/board/freeBoardList.jsp">자유게시판</a></li>
+						<li><a href="<%=root%>/board/reviewList.jsp">도서 리뷰</a></li>
 					</ul>
 				</li>
 				

@@ -30,6 +30,7 @@
 			<%} %>
 			<a href="#">사이트맵</a>
 			<a href="<%=request.getContextPath() %>/client/clientList.jsp">회원목록(관리자전용)</a>
+			<a href="<%=request.getContextPath() %>/area/areaList.jsp">지점목록(관리자전용)</a>
 		</div>
 	
 		<nav>

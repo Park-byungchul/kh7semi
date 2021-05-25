@@ -153,5 +153,9 @@ CREATE TABLE boardComment (
 );
 
 --회원 테이블 수정
+--회원속성 일반으로 기본값
 alter table client modify
 (client_type char(6) default '일반' not null check(client_type in ('일반', '관리')));
+--휴대폰번호 추가
+alter table client add
+(client_phone number(11) not null check(regexp_like(client_phone,'^010-\d{4}-\d{4}$')));

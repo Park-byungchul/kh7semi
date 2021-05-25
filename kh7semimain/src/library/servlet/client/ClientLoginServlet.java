@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import library.beans.ClientDao;
 import library.beans.ClientDto;
 
-@WebServlet(urlPatterns = "/client/insert.kh")
-public class ClientInsertServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/client/login.kh")
+public class ClientLoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
@@ -20,15 +20,18 @@ public class ClientInsertServlet extends HttpServlet {
 			ClientDto clientDto = new ClientDto();
 			clientDto.setClientId(req.getParameter("clientId"));
 			clientDto.setClientPw(req.getParameter("clientPw"));
-			clientDto.setClientName(req.getParameter("clientName"));
-			clientDto.setClientEmail(req.getParameter("clientEmail"));
-			clientDto.setClientPhone(req.getParameter("clientPhone"));
 			
 			ClientDao clientDao = new ClientDao();
-			clientDao.insert(clientDto);
+			ClientDto find = clientDao.login(clientDto);
 			
-			resp.sendRedirect("clientInsertSuccess.jsp");
-
+			if(find != null) {
+				req.getSession().setAttribute("clientNo", find.getClientNo());
+				resp.sendRedirect(req.getContextPath());
+			}
+			else {
+				resp.sendRedirect("login.jsp?error");
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);

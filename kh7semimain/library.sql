@@ -105,7 +105,7 @@ CREATE TABLE lend_book (
 	area_no	references area(area_no) on delete set null,
 	lend_book_date		date	default sysdate not NULL,
 	lend_book_limit		date	not NULL,
-	return_book_date	date	not NULL
+	return_book_date		date	default NULL
 );
 
 --일정

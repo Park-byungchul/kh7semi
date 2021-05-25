@@ -3,15 +3,18 @@ package library.beans;
 import java.sql.Date;
 
 public class ReviewDto {
-	int reviewNo;
-	int clientNo;
-	int bookIsbn;
-	String reviewSubject;
-	String reviewContent;
-	int reviewRead;
-	int reviewLike;
-	Date reviewDate;
+	private int reviewNo;
+	private int clientNo;
+	private int bookIsbn;
+	private String reviewSubject;
+	private String reviewContent;
+	private int reviewRead;
+	private int reviewLike;
+	private Date reviewDate;
 	
+	public ReviewDto() {
+		super();
+	}
 	public int getReviewNo() {
 		return reviewNo;
 	}

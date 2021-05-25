@@ -3,15 +3,19 @@ package library.beans;
 import java.sql.Date;
 
 public class BoardDto {
-	int boardNo;
-	int clientNo;
-	int boardTypeNo;
-	int areaNo;
-	String boardTitle;
-	String boardField;
-	int boardRead;
-	int boardLike;
-	Date boardDate;
+	private int boardNo;
+	private int clientNo;
+	private int boardTypeNo;
+	private int areaNo;
+	private String boardTitle;
+	private String boardField;
+	private int boardRead;
+	private int boardLike;
+	private Date boardDate;
+	
+	public BoardDto() {
+		super();
+	}
 	public int getBoardNo() {
 		return boardNo;
 	}

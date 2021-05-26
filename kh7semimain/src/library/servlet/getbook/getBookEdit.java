@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import library.beans.BookDao;
-import library.beans.BookDto;
 import library.beans.GetBookDao;
 import library.beans.GetBookDto;
 

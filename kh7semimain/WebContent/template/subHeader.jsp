@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>도서관 서비스</title>
+<title>도서관 서브</title>
 <link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
@@ -58,9 +58,9 @@
 				
 				
 				<li>
-					<a href="<%=root%>/service/serviceInfo.jsp">도서관 서비스</a>
+					<a href="#">도서관 서비스</a>
 					<ul>
-						<li><a href="<%=root%>/reservation/reservationInfo.jsp">도서 예약</a></li>
+						<li><a href="#">도서 예약</a></li>
 						<li><a href="#">희망도서</a></li>
 						<li><a href="#">행사일정</a></li>
 					</ul>
@@ -88,7 +88,7 @@
 		</nav>
 	
 		<header>
-			<h2>이용 안내</h2>
+			<h2>입력</h2>
 		</header>
 		
 		<section>
@@ -96,25 +96,3 @@
 				<aside class="multi-container">
 	
 				</aside>
-				<div class="multi-container" style="width:80%;">
-					<div>이용안내</div> 
-					<div>이용방법</div> 
-					<div>이용관련 문의</div>
-				</div>
-			</div>
-			
-				 
-				
-					
-			
-		</section>
-		
-		<footer>
-			<h5>KHAcademy 취업반 수업자료 &copy; </h5>
-			<hr>
-				세션 ID: <%=session.getId()%>
-				회원 번호 : <%=session.getAttribute("memberNo")%>
-		</footer>
-	</main>
-</body>
-</html>

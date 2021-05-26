@@ -21,6 +21,22 @@ catch (Exception e) {
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<script>
+	// 목표 : 삭제버튼을 누르면 확인창 출력 후 확인을 누르면 전송
+	$(function(){
+		$(".clientDelete").click(function(){
+			var choice = window.confirm("정말 삭제하시겠습니까?");
+			if (choice) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+	});
+</script>
+
 <div class="container-1000">
 	<div class="row text-left">
 		<h2>회원 목록</h2>
@@ -52,7 +68,7 @@ catch (Exception e) {
 					<td><%=clientDto.getClientType()%></td>
 					<td>
 					<button><a href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>">수정</a></button>
-					<button><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
+					<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
 					</td>
 				</tr>
 				<%}%>

@@ -4,7 +4,7 @@ public class AreaDto {
 	private int areaNo;
 	private String areaName;
 	private String areaLocation;
-	private int areaCall;
+	private String areaCall;
 
 	public AreaDto() {
 		super();
@@ -34,11 +34,11 @@ public class AreaDto {
 		this.areaLocation = areaLocation;
 	}
 
-	public int getAreaCall() {
+	public String getAreaCall() {
 		return areaCall;
 	}
 
-	public void setAreaCall(int areaCall) {
+	public void setAreaCall(String areaCall) {
 		this.areaCall = areaCall;
 	}
 

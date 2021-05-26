@@ -105,7 +105,7 @@ CREATE TABLE lend_book (
 	area_no	references area(area_no) on delete set null,
 	lend_book_date		date	default sysdate not NULL,
 	lend_book_limit		date	not NULL,
-	return_book_date	date	not NULL
+	return_book_date		date	default NULL
 );
 
 --일정
@@ -151,3 +151,15 @@ CREATE TABLE boardComment (
 	comment_date	date	default sysdate NOT NULL,
 	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
 );
+
+--회원 테이블 수정
+--회원속성 일반으로 기본값
+alter table client modify
+(client_type char(6) default '일반' not null check(client_type in ('일반', '관리')));
+--휴대폰번호 추가
+alter table client add
+(client_phone number(11) not null check(regexp_like(client_phone,'^010-\d{4}-\d{4}$')));
+
+--지점 테이블 수정(전화번호 형식 String, -포함 13자, not null은 이미 정의되어있어 정규표현식만 modify 함)
+alter table area modify
+(area_call char(13)	check(regexp_like(area_call,'^010-\d{4}-\d{4}$')));

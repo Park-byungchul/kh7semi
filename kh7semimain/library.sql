@@ -7,7 +7,8 @@ CREATE TABLE Client (
 	client_email	varchar2(50)	not NULL,
 	client_made	date	default sysdate  not null,
 	client_possible	date	default sysdate  not null,
-	client_type	char(6)	check(client_type in ('일반', '관리'))
+	client_type	char(6) default '일반' not null check(client_type in ('일반', '관리')),
+	client_phone char(13) not null check(regexp_like(client_phone,'^010-\d{4}-\d{4}$'))
 );
 
 --지점 테이블
@@ -15,7 +16,7 @@ CREATE TABLE area (
 	area_no	number(10)	primary key,
 	area_name	varchar2(30)	NOT NULL,
 	area_location	varchar2(300)	NOT NULL,
-	area_call	number(12)	not NULL
+	area_call	char(13)	not NULL check(regexp_like(client_phone,'^010-\d{4}-\d{4}$'))
 );
 
 --장르
@@ -151,15 +152,3 @@ CREATE TABLE boardComment (
 	comment_date	date	default sysdate NOT NULL,
 	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
 );
-
---회원 테이블 수정
---회원속성 일반으로 기본값
-alter table client modify
-(client_type char(6) default '일반' not null check(client_type in ('일반', '관리')));
---휴대폰번호 추가
-alter table client add
-(client_phone number(11) not null check(regexp_like(client_phone,'^010-\d{4}-\d{4}$')));
-
---지점 테이블 수정(전화번호 형식 String, -포함 13자, not null은 이미 정의되어있어 정규표현식만 modify 함)
-alter table area modify
-(area_call char(13)	check(regexp_like(area_call,'^010-\d{4}-\d{4}$')));

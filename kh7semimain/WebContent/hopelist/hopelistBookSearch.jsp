@@ -21,6 +21,7 @@
 function setParentText(){
     opener.document.getElementById("bookAuthor").value = document.getElementById("searched-bookAuthor").value;
     opener.document.getElementById("bookTitle").value = document.getElementById("searched-bookTitle").value;
+//     opener.document.getElementById("bookIsbn").value = document.getElementById("searched-bookIsbn").value;
     window.close();
 }
 
@@ -41,6 +42,7 @@ function setParentText(){
 <!-- 	booklist 구현 후 for Dto:list 로 불러올 예정 -->
 	<input type="text" Id="searched-bookAuthor" value="저자부분">
 	<input type="text" Id="searched-bookTitle" value="제목부분">
+	<input type="text" Id="searched-bookIsbn" value="책번호부분">
 	<button onclick="setParentText();">선택하기</button>
 	
 

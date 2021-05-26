@@ -123,11 +123,13 @@ public class ClientDao {
 			
 			clientDto.setClientNo(rs.getInt("client_no"));
 			clientDto.setClientId(rs.getString("client_id"));
+			clientDto.setClientPw(rs.getString("client_pw"));
 			clientDto.setClientName(rs.getString("client_name"));
 			clientDto.setClientEmail(rs.getString("client_email"));
 			clientDto.setClientMade(rs.getDate("client_made"));
 			clientDto.setClientPossible(rs.getDate("client_possible"));
 			clientDto.setClientType(rs.getString("client_type"));
+			clientDto.setClientPhone(rs.getString("client_phone"));
 		}
 		else {
 			clientDto = null;

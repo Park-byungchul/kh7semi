@@ -81,4 +81,16 @@ public class GenreDao {
 		
 		return genreList;
 	}
+	
+	public boolean delete(int genreNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "delete genre where genre_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, genreNo);
+		int count = ps.executeUpdate();
+		
+		con.close();
+		return count > 0;
+	}
 }

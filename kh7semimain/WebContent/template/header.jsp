@@ -1,9 +1,14 @@
+<%@page import="library.beans.AreaDto"%>
+<%@page import="java.util.List"%>
+<%@page import="library.beans.AreaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%
 	String root = request.getContextPath();
 	boolean isLogin = session.getAttribute("clientNo") != null;
+	AreaDao areaDao = new AreaDao();
+	List<AreaDto> list = areaDao.list();
 %>
  
 <!DOCTYPE html>
@@ -31,6 +36,13 @@
 			<a href="#">사이트맵</a>
 			<a href="<%=request.getContextPath() %>/client/clientList.jsp">회원목록(관리자전용)</a>
 			<a href="<%=request.getContextPath() %>/area/areaList.jsp">지점목록(관리자전용)</a>
+			<a href="<%=request.getContextPath() %>">홈으로(main)</a>
+			<select onchange="if(this.value) location.href=(this.value);">
+				<option value="">지점선택</option>
+				<%for(AreaDto areaDto : list){ %>
+				<option value="<%=request.getContextPath() %>/<%=areaDto.getAreaNo() %>"><%=areaDto.getAreaName() %></option>
+				<%} %>
+			</select>
 		</div>
 	
 		<nav>
@@ -83,6 +95,8 @@
 						<li><a href="#">관심도서</a></li>
 					</ul>
 				</li>
+				
+				
 			</ul>
 		</nav>
 	

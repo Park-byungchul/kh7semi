@@ -1,24 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
 <%
 	String root = request.getContextPath();
 %>
- 
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>도서관</title>
+<title>대출예약 안내</title>
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css">
 	<style>
-		
+		input[type="button"] {
+  			width: 300px;
+ 			height: 50px;
+		}
 	</style>
 </head>
 <body>
+	<!-- 	사이드 영역 -->
+	<aside>
+	
+	</aside>
 	<main>
 		<div>
 			<a href="#">로그인</a>
@@ -80,7 +87,32 @@
 		</nav>
 	
 		<header>
-			<h1>통합 검색 들어가는 곳</h1>
+			<h2>대출 및 예약 안내</h2>
 		</header>
 		
 		<section>
+			<div>
+				<input type="button" value="대출 및 예약 안내">
+				<input type="button" value="대출 및 예약 신청">		
+			</div>
+				<br><br>
+			
+				<div class="row">대출 안내</div> <br><br>
+				<div class="row">대출예약 안내</div> <br><br>
+				<div class="row">대출예약 신청결과 확인</div> <br><br>
+				<div class="row">대출예약 선정 제외 기준</div>
+					
+			
+		</section>
+		
+		<footer>
+			<h5>KHAcademy 취업반 수업자료 &copy; </h5>
+			<hr>
+				세션 ID: <%=session.getId()%>
+				회원 번호 : <%=session.getAttribute("memberNo")%>
+		</footer>
+	</main>
+</body>
+</html>
+</body>
+</html>

@@ -68,6 +68,7 @@ CREATE TABLE hopelist (
 	hopelist_reason	varchar2(4000)	NOT NULL,
 	hopelist_date	date	default sysdate  not null
 );
+alter table hopelist add hopelist_library varchar2(100) not null; 
 
 --리뷰 테이블
 CREATE TABLE review (

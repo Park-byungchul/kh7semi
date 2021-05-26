@@ -97,9 +97,9 @@
 	
 				</aside>
 				<div class="multi-container" style="width:80%;">
-					<div>이용안내</div> 
-					<div>이용방법</div> 
-					<div>이용관련 문의</div>
+					<div>이용안내</div> <br><br>
+					<div>이용방법</div> <br><br>
+					<div>이용관련 문의</div> <br><br>
 				</div>
 			</div>
 			

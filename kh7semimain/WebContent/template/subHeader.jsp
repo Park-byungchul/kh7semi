@@ -88,7 +88,7 @@
 		</nav>
 	
 		<header>
-			<h2>입력</h2>
+			<h2> 서브 제목 </h2>
 		</header>
 		
 		<section>

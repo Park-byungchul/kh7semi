@@ -22,7 +22,7 @@ public class BookDao {
 		
 		con.close();
 	}
-	
+
 	public boolean editBook(BookDto bookDto) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
@@ -89,4 +89,17 @@ public class BookDao {
 		
 		return bookList;
 	}
+	
+	public boolean delete(int bookIsbn) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "delete book where book_isbn = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, bookIsbn);
+		int count = ps.executeUpdate();
+		
+		con.close();
+		return count > 0;
+	}
+	
 }

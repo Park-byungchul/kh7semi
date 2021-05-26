@@ -1,10 +1,12 @@
 package library.beans;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ClientDao {
 	public void insert(ClientDto clientDto) throws Exception {
@@ -100,9 +102,39 @@ public class ClientDao {
 		}
 		else {
 			find = null;
-			}
+		}
 		con.close();
 		
 		return find;
+	}
+	
+	public ClientDto get(int clientNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from client where client_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, clientNo);
+		ResultSet rs = ps.executeQuery();
+		
+		ClientDto clientDto;
+		
+		if(rs.next()) {
+			clientDto = new ClientDto();
+			
+			clientDto.setClientNo(rs.getInt("client_no"));
+			clientDto.setClientId(rs.getString("client_id"));
+			clientDto.setClientPw(rs.getString("client_pw"));
+			clientDto.setClientName(rs.getString("client_name"));
+			clientDto.setClientEmail(rs.getString("client_email"));
+			clientDto.setClientMade(rs.getDate("client_made"));
+			clientDto.setClientPossible(rs.getDate("client_possible"));
+			clientDto.setClientType(rs.getString("client_type"));
+			clientDto.setClientPhone(rs.getString("client_phone"));
 		}
+		else {
+			clientDto = null;
+		}
+		
+		return clientDto;
+	}
 }

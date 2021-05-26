@@ -19,13 +19,16 @@
   			width: 300px;
  			height: 50px;
 		}
+		/* 사이드 영역 */
+		.multi-container {
+			float:left;
+			width:20%;
+			height:473px;
+		}
 	</style>
 </head>
 <body>
-	<!-- 	사이드 영역 -->
-	<aside>
 	
-	</aside>
 	<main>
 		<div>
 			<a href="#">로그인</a>
@@ -91,6 +94,11 @@
 		</header>
 		
 		<section>
+			<div class= "float-container">
+				<aside class="multi-container">
+				
+				</aside>
+				<div class="multi-container" style="width:80%;">
 			<div>
 				<input type="button" value="대출 및 예약 안내">
 				<input type="button" value="대출 및 예약 신청">		
@@ -101,7 +109,8 @@
 				<div class="row">대출예약 안내</div> <br><br>
 				<div class="row">대출예약 신청결과 확인</div> <br><br>
 				<div class="row">대출예약 선정 제외 기준</div>
-					
+			</div>
+		</div>		
 			
 		</section>
 		

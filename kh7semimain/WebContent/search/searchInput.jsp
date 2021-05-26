@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%
 	String root = request.getContextPath();
 %>
@@ -9,23 +8,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>도서관 서비스</title>
-<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
+<title>자료 검색</title>
+	<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css">
 	<style>
+		input[type="button"] {
+  			width: 300px;
+ 			height: 50px;
+		}
 		/* 사이드 영역 */
 		.multi-container {
 			float:left;
 			width:20%;
 			height:473px;
 		}
-		
 	</style>
 </head>
 <body>
-	
 	
 	<main>
 		<div>
@@ -88,24 +89,34 @@
 		</nav>
 	
 		<header>
-			<h2>이용 안내</h2>
+			<h2>자료 검색</h2>
 		</header>
 		
 		<section>
 			<div class= "float-container">
 				<aside class="multi-container">
-	
+				
 				</aside>
 				<div class="multi-container" style="width:80%;">
-					<div>이용안내</div> <br><br>
-					<div>이용방법</div> <br><br>
-					<div>이용관련 문의</div> <br><br>
-				</div>
+			<div>
+				<input type="button"  onclick="location.href='<%=root%>/reservation/reservationInfo.jsp'" value="대출 및 예약 안내">
+				<input type="button" value="자료 검색">		
 			</div>
+				<br><br>
 			
-				 
-				
+				<div>
+					<select>
+ 						<option>전체</option>
+ 						<option>서명</option>
+ 						<option>저자</option>
+ 					</select>
 					
+					<input type="text" size="50" height = "20">
+					<input type="submit" value="검색">
+				</div> <br><br>
+				
+			</div>
+		</div>		
 			
 		</section>
 		
@@ -116,5 +127,7 @@
 				회원 번호 : <%=session.getAttribute("memberNo")%>
 		</footer>
 	</main>
+</body>
+</html>
 </body>
 </html>

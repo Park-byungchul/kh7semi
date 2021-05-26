@@ -49,7 +49,7 @@
 				</li>
 				
 				<li>
-					<a href="#">자료 검색</a>
+					<a href="<%=root%>/search/searchInput.jsp">자료 검색</a>
 					<ul>
 						<li><a href="#">통합자료검색</a></li>
 						<li><a href="#">신착자료</a></li>
@@ -101,7 +101,7 @@
 				<div class="multi-container" style="width:80%;">
 			<div>
 				<input type="button" value="대출 및 예약 안내">
-				<input type="button" value="대출 및 예약 신청">		
+				<input type="button" onclick="location.href='<%=root%>/search/searchInput.jsp'" value="대출 및 예약 신청">		
 			</div>
 				<br><br>
 			

@@ -22,6 +22,7 @@ public class ClientInsertServlet extends HttpServlet {
 			clientDto.setClientPw(req.getParameter("clientPw"));
 			clientDto.setClientName(req.getParameter("clientName"));
 			clientDto.setClientEmail(req.getParameter("clientEmail"));
+			clientDto.setClientPhone(req.getParameter("clientPhone"));
 			
 			ClientDao clientDao = new ClientDao();
 			clientDao.insert(clientDto);

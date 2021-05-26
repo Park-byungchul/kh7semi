@@ -3,6 +3,7 @@
 
 <%
 	String root = request.getContextPath();
+	boolean isLogin = session.getAttribute("clientNo") != null;
 %>
  
 <!DOCTYPE html>
@@ -21,9 +22,15 @@
 <body>
 	<main>
 		<div>
-			<a href="#">로그인</a>
-			<a href="#">회원가입</a>
+			<%if(!isLogin){ %>
+			<a href="<%=request.getContextPath() %>/client/login.jsp">로그인</a>
+			<a href="<%=request.getContextPath() %>/client/clientInsert.jsp">회원가입</a>
+			<%}else{ %>
+			<a href="<%=request.getContextPath() %>/client/logout.kh">로그아웃</a>
+			<%} %>
 			<a href="#">사이트맵</a>
+			<a href="<%=request.getContextPath() %>/client/clientList.jsp">회원목록(관리자전용)</a>
+			<a href="<%=request.getContextPath() %>/area/areaList.jsp">지점목록(관리자전용)</a>
 		</div>
 	
 		<nav>

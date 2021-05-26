@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%
+
+    <%
 	String root = request.getContextPath();
 %>
 
@@ -9,23 +9,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>도서관 서비스</title>
-<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
+<title>자료 목록</title>
+	<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css">
 	<style>
+		
 		/* 사이드 영역 */
 		.multi-container {
 			float:left;
 			width:20%;
 			height:473px;
 		}
-		
 	</style>
 </head>
 <body>
-	
 	
 	<main>
 		<div>
@@ -88,24 +87,23 @@
 		</nav>
 	
 		<header>
-			<h2>이용 안내</h2>
+			<h2>자료 검색</h2>
 		</header>
 		
 		<section>
 			<div class= "float-container">
 				<aside class="multi-container">
-	
+				
 				</aside>
 				<div class="multi-container" style="width:80%;">
-					<div>이용안내</div> <br><br>
-					<div>이용방법</div> <br><br>
-					<div>이용관련 문의</div> <br><br>
-				</div>
-			</div>
 			
-				 
-				
-					
+			
+				<div class="row">ul, li, span으로 자료 목록 구현할 것</div> <br><br>
+				<div class="row">ul, li, span으로 자료 목록 구현할 것</div> <br><br>
+				<div class="row">ul, li, span으로 자료 목록 구현할 것</div> <br><br>
+				<div class="row">ul, li, span으로 자료 목록 구현할 것</div>
+			</div>
+		</div>		
 			
 		</section>
 		
@@ -116,5 +114,7 @@
 				회원 번호 : <%=session.getAttribute("memberNo")%>
 		</footer>
 	</main>
+</body>
+</html>
 </body>
 </html>

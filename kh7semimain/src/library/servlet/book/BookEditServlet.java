@@ -34,7 +34,7 @@ public class BookEditServlet extends HttpServlet{
 //				resp.sendRedirect("bookDetail.jsp?no="+bookDto.getBookIsbn());
 				resp.sendRedirect("clientList.jsp");
 			}
-				
+
 		}
 		catch(Exception e) {
 			e.printStackTrace();

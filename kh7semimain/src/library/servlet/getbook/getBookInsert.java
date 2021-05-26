@@ -28,7 +28,7 @@ public class getBookInsert extends HttpServlet {
 			getBookDao.insert(getBookDto);
 			
 			resp.sendRedirect("getBookInsertSuccess.jsp");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);

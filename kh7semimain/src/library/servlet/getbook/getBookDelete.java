@@ -21,7 +21,6 @@ public class getBookDelete extends HttpServlet{
 			getBookDao.delete(getBookNo);
 			
 			resp.sendRedirect("getBookList.jsp");
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);

@@ -98,7 +98,7 @@ public class GetBookDao {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, getBookNo);
 			int count = ps.executeUpdate();
-			
+	
 			con.close();
 			return count > 0;
 		}

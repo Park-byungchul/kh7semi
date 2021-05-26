@@ -22,7 +22,7 @@ public class BookDao {
 		
 		con.close();
 	}
-	
+
 	public boolean editBook(BookDto bookDto) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		

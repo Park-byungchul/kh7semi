@@ -20,7 +20,7 @@ public class BookDeleteServlet extends HttpServlet{
 			bookDao.delete(bookIsbn);
 			
 			resp.sendRedirect("bookList.jsp");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);

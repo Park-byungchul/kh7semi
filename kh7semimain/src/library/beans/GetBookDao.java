@@ -24,7 +24,7 @@ public class GetBookDao {
 		con.close();
 	}
 	
-		public boolean editStatus(GetBookDto getBookDto) throws Exception {
+		public boolean editGetBook(GetBookDto getBookDto) throws Exception {
 			Connection con = JdbcUtils.getConnection();
 			
 			String sql = "update get_book set get_book_status=? where get_book_no=?";
@@ -89,5 +89,17 @@ public class GetBookDao {
 			con.close();
 			
 			return getBookList;
+		}
+		
+		public boolean delete(int getBookNo) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "delete get_book where get_book_no = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, getBookNo);
+			int count = ps.executeUpdate();
+	
+			con.close();
+			return count > 0;
 		}
 }

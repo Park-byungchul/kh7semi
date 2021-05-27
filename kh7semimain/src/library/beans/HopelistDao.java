@@ -169,5 +169,4 @@ public class HopelistDao {
 			con.close();
 			return count > 0;
 		}
-		
 }

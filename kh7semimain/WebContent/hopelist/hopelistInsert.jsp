@@ -82,6 +82,10 @@ $(function(){
 				<label>제목</label>
 				<input type="text" Id ="bookTitle" readonly placeholder = "위의 검색버튼으로 검색 후 detail-도서신청" class="form-input form-input-underline">
 			</div>
+			<div class="row text-left">
+				<label>장르번호</label>
+				<input type="text" Id ="genreNo" readonly placeholder = "위의 검색버튼으로 검색 후 detail-도서신청" class="form-input form-input-underline">
+			</div>
 			
 			
 		<form action ="hopelistInsert.kh" method="post">

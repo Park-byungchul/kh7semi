@@ -12,6 +12,7 @@ public class BoardDto {
 	private int boardRead;
 	private int boardLike;
 	private Date boardDate;
+	private int boardSepNo;
 	
 	public BoardDto() {
 		super();
@@ -69,5 +70,11 @@ public class BoardDto {
 	}
 	public void setBoardDate(Date boardDate) {
 		this.boardDate = boardDate;
+	}
+	public int getBoardSepNo() {
+		return boardSepNo;
+	}
+	public void setBoardSepNo(int boardSepNo) {
+		this.boardSepNo = boardSepNo;
 	}
 }

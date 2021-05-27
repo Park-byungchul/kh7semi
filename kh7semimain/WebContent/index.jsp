@@ -4,19 +4,18 @@
     pageEncoding="UTF-8"%>
     
 <%
-int libraryNo;
+int areaNo;
 AreaDao areaDao = new AreaDao();
 AreaDto areaDto;
 try{
-	libraryNo = Integer.parseInt(request.getParameter("libraryNo"));
-	areaDto = areaDao.detail(libraryNo);
+	areaNo = (int)session.getAttribute("areaNo");
+	areaDto = areaDao.detail(areaNo);
 }
-catch(Exception e){
-	libraryNo = 0;
+catch (Exception e){
+	areaNo = 0;
 	areaDto = null;
 }
-boolean isChild = libraryNo != 0;	
-
+boolean isChild = areaNo != 0;	
 
 %>
 
@@ -35,7 +34,7 @@ boolean isChild = libraryNo != 0;
 			<%if(isChild){ %>
 			<h1><%=areaDto.getAreaName() %> 메인</h1>
 			<%}else{ %>
-			<h1>메인</h1>
+			<h1>통합도서관 메인</h1>
 			<%} %>
 		</section>
 

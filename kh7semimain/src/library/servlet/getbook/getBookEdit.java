@@ -1,6 +1,7 @@
 package library.servlet.getbook;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import library.beans.BookDao;
-import library.beans.BookDto;
 import library.beans.GetBookDao;
 import library.beans.GetBookDto;
 
@@ -20,10 +19,10 @@ public class getBookEdit extends HttpServlet{
 		try {
 			req.setCharacterEncoding("UTF-8");
 			GetBookDto getBookDto = new GetBookDto();
-			getBookDto.setGetBookNo(req.getParameter("getBookNo"));
-			getBookDto.setBookIsbn(req.getParameter("bookIsbn"));
-			getBookDto.setAreaNo(req.getParameter("areaNo"));
-			getBookDto.setGetBookDate(req.getParameter("getBookDate"));
+			getBookDto.setGetBookNo(Integer.parseInt(req.getParameter("getBookNo")));
+			getBookDto.setBookIsbn(Integer.parseInt(req.getParameter("bookIsbn")));
+			getBookDto.setAreaNo(Integer.parseInt(req.getParameter("areaNo")));
+			getBookDto.setGetBookDate(Date.valueOf(req.getParameter("getBookDate")));
 			getBookDto.setGetBookStatus(req.getParameter("getBookStatus"));
 			
 			GetBookDao getBookDao = new GetBookDao();

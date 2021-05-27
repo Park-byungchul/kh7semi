@@ -6,7 +6,7 @@
 <%
 	int getBookNo = Integer.parseInt(request.getParameter("getBookNo"));
 	GetBookDao getBookDao = new GetBookDao();
-	GetBookDto getBookDto = GetBookDao.get(getBookNo);
+	GetBookDto getBookDto = getBookDao.get(getBookNo);
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>

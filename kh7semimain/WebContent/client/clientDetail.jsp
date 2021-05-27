@@ -16,7 +16,7 @@
 
 	<h2>마이페이지</h2>
 	<ul>
-		<li><a href="<%=request.getContextPath() %>/client/clientDetail.jsp?clientNo=<%=clientNo%>">회원 정보</a></li>
+		<li><a href="<%=request.getContextPath() %>/client/clientDetail.jsp">회원 정보</a></li>
 		<li><a href="#">대출/예약/신청 도서 관리</a></li>
 		<li><a href="#">관심도서</a></li>
 	</ul>

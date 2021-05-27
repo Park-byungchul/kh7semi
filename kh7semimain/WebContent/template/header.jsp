@@ -13,22 +13,25 @@
 	AreaDao areaDao = new AreaDao();
 	List<AreaDto> list = areaDao.list();
 	
-	Integer areaNo = (Integer)session.getAttribute("areaNo");
+	int areaNo;
 	try{
-		areaNo = Integer.parseInt(request.getParameter("areaNo"));
+		areaNo = (int)session.getAttribute("areaNo");
 	}
 	catch (Exception e){
-		areaNo = null;
+		areaNo = 0;
 	}
 	
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto;
 	boolean isManager;
+	int clientNo;
 	try{
-		clientDto = clientDao.get((int)session.getAttribute("clientNo"));
+		clientNo = (int)session.getAttribute("clientNo");
+		clientDto = clientDao.get(clientNo);
 		isManager = clientDto.getClientType().equals("관리");
 	}
 	catch(Exception e){
+		clientNo = 0;
 		clientDto = null;
 		isManager = false;
 	}
@@ -53,11 +56,11 @@
 		var area = document.querySelector("#area");
 		area.value="<%=request.getContextPath() %>/areaSelect.kh?areaNo=<%=areaNo%>";
 	}
+	
 	function areaChange(){
-		var area = document.querySelector("#area")
+		var area = document.querySelector("#area");
 		if(area.value){
 			location.href = area.value;
-			console.log(area.value);
 		}
 	}
 </script>
@@ -73,7 +76,6 @@
 			<a href="<%=request.getContextPath() %>/client/clientDetail.jsp" class="right">회원 정보</a>
 			<a href="<%=request.getContextPath() %>/client/logout.kh" class="right">로그아웃</a>
 			<%} %>
-<!-- 		if(this.value) location.href=(this.value) -->
 			<select id="area" onchange="areaChange();" class="left">
 				<option value="">도서관 바로가기</option>
 				<option value="<%=request.getContextPath() %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
@@ -86,7 +88,7 @@
 		<div class="float-container">
 			<div class="left">
 				<a href="<%=request.getContextPath() %>">
-				<%if(areaNo != null){ %>
+				<%if(areaNo > 0){ %>
 					<%=areaDao.detail(areaNo).getAreaName() %>
 				<%} else { %>
 					메인 도서관
@@ -150,9 +152,9 @@
 				</li>
 				
 				<li>
-					<a href="#">마이페이지</a>
+					<a href="<%=request.getContextPath() %>/client/clientDetail.jsp">마이페이지</a>
 					<ul>
-						<li><a href="#">회원 정보</a></li>
+						<li><a href="<%=request.getContextPath() %>/client/clientDetail.jsp">회원 정보</a></li>
 						<li><a href="#">대출/예약/신청도서 관리</a></li>
 						<li><a href="#">관심도서</a></li>
 					</ul>

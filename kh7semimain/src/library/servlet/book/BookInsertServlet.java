@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,9 +18,9 @@ public class BookInsertServlet extends HttpServlet {
 		try {
 			req.setCharacterEncoding("UTF-8");
 			BookDto bookDto = new BookDto();
-			bookDto.setBookIsbn(req.getParameter("bookIsbn"));
-			bookDto.setGenreNo(req.getParameter("GenreNo"));
-			bookDto.setBookName(req.getParameter("bookName"));
+			bookDto.setBookIsbn(Integer.parseInt(req.getParameter("bookIsbn")));
+			bookDto.setGenreNo(Integer.parseInt(req.getParameter("GenreNo")));
+			bookDto.setBookTitle(req.getParameter("bookName"));
 			bookDto.setBookAuthor(req.getParameter("bookAuthor"));
 			
 			BookDao bookDao = new BookDao();

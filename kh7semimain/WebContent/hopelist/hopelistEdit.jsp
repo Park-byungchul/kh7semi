@@ -1,22 +1,22 @@
-
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
+<%@page import="library.beans.BookDto"%>
+<%@page import="library.beans.BookDao"%>
+<%@page import="library.beans.HopelistDto"%>
+<%@page import="library.beans.HopelistDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/template/header.jsp"></jsp:include>
 <%
-	request.setCharacterEncoding("UTF-8");
-	Integer clientNo = (Integer)session.getAttribute("clientNo");
+	int hopelistNo = Integer.parseInt(request.getParameter("hopelistNo"));
+	HopelistDao hopelistDao = new HopelistDao();
+	HopelistDto hopelistDto = hopelistDao.get(hopelistNo);	
+	
+	BookDao bookDao = new BookDao();
+	BookDto bookDto = bookDao.get(hopelistDto.getBookIsbn());
 	
 	ClientDao clientDao = new ClientDao();
-	ClientDto clientDto;
-	if(clientNo == null) {
-		clientDto = null;
-	}
-	else {
-		clientDto = clientDao.get(clientNo);
-	}
-
+	ClientDto clientDto = clientDao.get(hopelistDto.getClientNo());
 %>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
@@ -33,25 +33,11 @@ $(function(){
 });
 	
 </script>
-<style>
-	.choice-library{
-		margin-left:20px;
-		margin-right:20px;
-		width:150px;
-	}
-	.search-book{
-		border:1px solid white;
-		border-radius:20%;
-		text-decoration:none;
-		padding:0.5rem;
-		background-color: green;
-		color:white;
-	}
-</style>
-<div class = "container-600">
-	<h2>희망도서 신청 페이지</h2>
-	
+<div class="container-600">
 	<div class="row">
+		<h2>희망도서 신청 수정</h2>
+	</div>
+		<div class="row">
 				<div class="row text-left">
 					<label>신청자</label>
 					<input type="text"  readonly id="clientName" value="<%=clientDto.getClientName()%>" placeholder = "session으로 clientNo가져와서 처리" class="form-input form-input-underline">
@@ -76,19 +62,16 @@ $(function(){
 			
 			<div class="row text-left">
 				<label>저자</label>
-				<input type="text"  Id="bookAuthor"readonly placeholder = "도서detail-희망도서신청으로 들어오거나" class="form-input form-input-underline">
+				<input type="text"  Id="bookAuthor"readonly value = "<%=bookDto.getBookAuthor()%>"class="form-input form-input-underline">
 			</div>
 			<div class="row text-left">
 				<label>제목</label>
-				<input type="text" Id ="bookTitle" readonly placeholder = "위의 검색버튼으로 검색 후 detail-도서신청" class="form-input form-input-underline">
-			</div>
-			<div class="row text-left">
-				<label>장르번호</label>
-				<input type="text" Id ="genreNo" readonly placeholder = "위의 검색버튼으로 검색 후 detail-도서신청" class="form-input form-input-underline">
+				<input type="text" Id ="bookTitle" readonly value = "<%=bookDto.getBookTitle()%>" class="form-input form-input-underline">
 			</div>
 			
 			
-		<form action ="hopelistInsert.kh" method="post">
+		<form action ="hopelistEdit.kh" method="post">
+			<input type="hidden" name="hopelistNo" value="<%=hopelistDto.getHopelistNo()%>">
 			<input type="hidden" id="bookIsbn" name="bookIsbn" value="1">
 			<div class="row text-left">
 				<label>비치희망 도서관</label>
@@ -100,15 +83,14 @@ $(function(){
 			</div>
 			<div class="row text-left">
 				<label>신청사유</label>
-				<textarea name="hopelistReason" rows="10" class="form-input"></textarea> 
+				<textarea name="hopelistReason" rows="10" class="form-input"><%=hopelistDto.getHopelistReason()%></textarea> 
 			</div>
-			<input type="submit" value="신청" class="form-btn form-btn-positive"> 
+			<input type="submit" value="수정" class="form-btn form-btn-positive"> 
 		</form>
 				<hr>
 				<input type="button" value="목록" class="form-btn form-btn-normal">
 			
 	</div>
-	
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

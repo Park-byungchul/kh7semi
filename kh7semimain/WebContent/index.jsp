@@ -22,10 +22,21 @@ boolean isChild = libraryNo != 0;
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
-<%if(isChild){ %>
-<h1><%=areaDto.getAreaName() %> 메인</h1>
-<%}else{ %>
-<h1>메인</h1>
-<%} %>
+<div>
+	<article>
+		<header>
+			<form action="#" method="post">
+				<input type="text" placeholder="통합 검색">
+				<input type="submit" value="검색">
+			</form>
+		</header>
+	
+		<section>
+			<%if(isChild){ %>
+			<h1><%=areaDto.getAreaName() %> 메인</h1>
+			<%}else{ %>
+			<h1>메인</h1>
+			<%} %>
+		</section>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

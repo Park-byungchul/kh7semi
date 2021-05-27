@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.BookDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -24,15 +25,11 @@
 					<label>장르 번호 : </label><input type="text" name="genreNo">
 				</div>
 				<div class="row">
-					<label>제목 : </label><input type="text" name="bookName">
+					<label>제목 : </label><input type="text" name="bookTitle">
 				</div>
 				<div class="row">
-					<label>저자 : </label><input type="text" name="bookIsbn">
+					<label>저자 : </label><input type="text" name="bookAuthor">
 				</div>
-				<div class="row">
-					<input type="submit" value="등록">
-				</div>
-			</form>
 		</div>
 	</div>
 

@@ -27,11 +27,12 @@ public class BookDao {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "update book set book_title=? , book_author = ? "
-				+ "where book_isbn=?";
+				+ ", genre_no = ? where book_isbn=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, bookDto.getBookTitle());
 		ps.setString(2, bookDto.getBookAuthor());
-		ps.setInt(3, bookDto.getBookIsbn());
+		ps.setInt(3, bookDto.getGenreNo());
+		ps.setInt(4, bookDto.getBookIsbn());
 		int count = ps.executeUpdate();
 		
 		con.close();
@@ -72,6 +73,59 @@ public class BookDao {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		
+		List<BookDto> bookList = new ArrayList<>();
+		
+		while(rs.next()) {
+			BookDto bookDto = new BookDto();
+			
+			bookDto.setBookIsbn(rs.getInt("book_isbn"));
+			bookDto.setGenreNo(rs.getInt("genre_no"));
+			bookDto.setBookTitle(rs.getString("book_title"));
+			bookDto.setBookAuthor(rs.getString("book_author"));
+			
+			bookList.add(bookDto);
+		}
+		
+		con.close();
+		
+		return bookList;
+	}
+	
+	public List<BookDto> search(String keyword) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from book where (book_Title || book_author) like ? order by #1 asc";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+
+		List<BookDto> bookList = new ArrayList<>();
+		
+		while(rs.next()) {
+			BookDto bookDto = new BookDto();
+			
+			bookDto.setBookIsbn(rs.getInt("book_isbn"));
+			bookDto.setGenreNo(rs.getInt("genre_no"));
+			bookDto.setBookTitle(rs.getString("book_title"));
+			bookDto.setBookAuthor(rs.getString("book_author"));
+			
+			bookList.add(bookDto);
+		}
+		
+		con.close();
+		
+		return bookList;
+	}
+	
+	public List<BookDto> search(String type, String keyword) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from book where instr(#1, ?) > 0 order by #1 asc";
+		sql = sql.replace("#1", type);
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+
 		List<BookDto> bookList = new ArrayList<>();
 		
 		while(rs.next()) {

@@ -32,7 +32,7 @@ public class BookDao {
 		ps.setString(1, bookDto.getBookTitle());
 		ps.setString(2, bookDto.getBookAuthor());
 		ps.setInt(3, bookDto.getGenreNo());
-		ps.setInt(3, bookDto.getBookIsbn());
+		ps.setInt(4, bookDto.getBookIsbn());
 		int count = ps.executeUpdate();
 		
 		con.close();

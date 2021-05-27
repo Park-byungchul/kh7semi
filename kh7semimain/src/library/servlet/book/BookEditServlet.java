@@ -22,7 +22,7 @@ public class BookEditServlet extends HttpServlet{
 			BookDto bookDto = new BookDto();
 			bookDto.setBookIsbn(Integer.parseInt(req.getParameter("bookIsbn")));
 			bookDto.setGenreNo(Integer.parseInt(req.getParameter("GenreNo")));
-			bookDto.setBookTitle(req.getParameter("bookName"));
+			bookDto.setBookTitle(req.getParameter("bookTitle"));
 			bookDto.setBookAuthor(req.getParameter("bookAuthor"));
 			
 			BookDao bookDao = new BookDao();

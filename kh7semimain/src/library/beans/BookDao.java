@@ -27,11 +27,12 @@ public class BookDao {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "update book set book_title=? , book_author = ? "
-				+ "where book_isbn=?";
+				+ ", genre_no = ? where book_isbn=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, bookDto.getBookTitle());
 		ps.setString(2, bookDto.getBookAuthor());
-		ps.setInt(3, bookDto.getBookIsbn());
+		ps.setInt(3, bookDto.getGenreNo());
+		ps.setInt(4, bookDto.getBookIsbn());
 		int count = ps.executeUpdate();
 		
 		con.close();

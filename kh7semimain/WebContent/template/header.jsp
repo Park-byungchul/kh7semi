@@ -11,16 +11,15 @@
 	AreaDao areaDao = new AreaDao();
 	List<AreaDto> list = areaDao.list();
 	
-	int libraryNo;
-	String libraryName;
-	try{
-		libraryNo = Integer.parseInt(request.getParameter("libraryNo"));
-		libraryName = areaDao.detail(libraryNo).getAreaName();
-	}
-	catch (Exception e){
-		libraryNo = 0;
-		libraryName = "메인 도서관";
-	}
+	int areaNo = (int)session.getAttribute("areaNo");
+// 	try{
+// 		areaNo = Integer.parseInt(request.getParameter("areaNo"));
+// 		areaName = areaDao.detail(areaNo).getAreaName();
+// 	}
+// 	catch (Exception e){
+// 		areaNo = 0;
+// 		areaName = "메인 도서관";
+// 	}
 %>
  
 <!DOCTYPE html>
@@ -35,30 +34,51 @@
 	<style>
 		
 	</style>
+	
+	<script>
+	window.onload = function(){
+		var area = document.querySelector("#area");
+		area.value="<%=request.getContextPath() %>/areaSelect.kh?areaNo=<%=areaNo%>";
+	}
+	function areaChange(){
+		var area = document.querySelector("#area")
+		if(area.value){
+			location.href = area.value;
+			console.log(area.value);
+		}
+	}
+</script>
 </head>
 <body>
 	<main>
 		<div class="float-container">
-			<%if(!isLogin){ %>
 			<a href="#" class="right">사이트맵</a>
+			<%if(!isLogin){ %>
 			<a href="<%=request.getContextPath() %>/client/clientInsert.jsp" class="right">회원가입</a>
 			<a href="<%=request.getContextPath() %>/client/login.jsp" class="right">로그인</a>
 			<%}else{ %>
-			<a href="<%=request.getContextPath() %>/client/logout.kh">로그아웃</a>
+			<a href="#" class="right">내 정보 보기</a>
+			<a href="<%=request.getContextPath() %>/client/logout.kh" class="right">로그아웃</a>
 			<%} %>
-			
-			<select onchange="if(this.value) location.href=(this.value)" class="left">
+<!-- 		if(this.value) location.href=(this.value) -->
+			<select id="area" onchange="areaChange();" class="left">
 				<option value="">도서관 바로가기</option>
-				<option value="<%=request.getContextPath() %>">도서관 홈으로</option>
+				<option value="<%=request.getContextPath() %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
 				<%for (AreaDto areaDto : list){ %>
-				<option value="<%=request.getContextPath() %>?libraryNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+				<option value="<%=request.getContextPath() %>/areaSelect.kh?areaNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
 				<%} %>
 			</select>
 		</div>
 		
 		<div class="float-container">
 			<div class="left">
-				<a href="#"><%=libraryName %></a>
+				<a href="<%=request.getContextPath() %>">
+				<%if((int)session.getAttribute("areaNo") > 0){ %>
+					<%=areaDao.detail(areaNo).getAreaName() %>
+				<%}else{ %>
+					메인 도서관
+				<%} %>
+				</a>
 			</div>
 			<div class="left">
 				<form action="#" method="post">

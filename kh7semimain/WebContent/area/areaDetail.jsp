@@ -11,7 +11,16 @@
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
-	<div class="container-800">
+<jsp:include page="/template/sidebar1.jsp"></jsp:include>
+
+	<h2>관리자 메뉴</h2>
+	<ul>
+		<li><a href="<%=request.getContextPath() %>/client/clientList.jsp">회원목록</a></li>
+		<li><a href="<%=request.getContextPath() %>/area/areaList.jsp">지점목록</a></li>
+	</ul>
+
+<jsp:include page="/template/sidebar2.jsp"></jsp:include>
+
 		<div class="row text-left">
 			<h2>지점 정보</h2>
 		</div>

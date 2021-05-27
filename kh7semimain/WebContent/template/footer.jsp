@@ -8,6 +8,8 @@
 			<hr>
 				세션 ID: <%=session.getId()%>
 				회원 번호 : <%=session.getAttribute("clientNo")%>
+				<br>
+				지점 번호 : <%=session.getAttribute("areaNo")%>
 		</footer>
 	</main>
 </body>

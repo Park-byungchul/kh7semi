@@ -91,6 +91,59 @@ public class BookDao {
 		return bookList;
 	}
 	
+	public List<BookDto> search(String keyword) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from book where (book_Title || book_author) like ? order by #1 asc";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+
+		List<BookDto> bookList = new ArrayList<>();
+		
+		while(rs.next()) {
+			BookDto bookDto = new BookDto();
+			
+			bookDto.setBookIsbn(rs.getInt("book_isbn"));
+			bookDto.setGenreNo(rs.getInt("genre_no"));
+			bookDto.setBookTitle(rs.getString("book_title"));
+			bookDto.setBookAuthor(rs.getString("book_author"));
+			
+			bookList.add(bookDto);
+		}
+		
+		con.close();
+		
+		return bookList;
+	}
+	
+	public List<BookDto> search(String type, String keyword) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from book where instr(#1, ?) > 0 order by #1 asc";
+		sql = sql.replace("#1", type);
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+
+		List<BookDto> bookList = new ArrayList<>();
+		
+		while(rs.next()) {
+			BookDto bookDto = new BookDto();
+			
+			bookDto.setBookIsbn(rs.getInt("book_isbn"));
+			bookDto.setGenreNo(rs.getInt("genre_no"));
+			bookDto.setBookTitle(rs.getString("book_title"));
+			bookDto.setBookAuthor(rs.getString("book_author"));
+			
+			bookList.add(bookDto);
+		}
+		
+		con.close();
+		
+		return bookList;
+	}
+	
 	public boolean delete(int bookIsbn) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		

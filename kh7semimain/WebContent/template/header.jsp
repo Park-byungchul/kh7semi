@@ -13,7 +13,13 @@
 	AreaDao areaDao = new AreaDao();
 	List<AreaDto> list = areaDao.list();
 	
-	int areaNo = (int)session.getAttribute("areaNo");
+	Integer areaNo = (Integer)session.getAttribute("areaNo");
+	try{
+		areaNo = Integer.parseInt(request.getParameter("areaNo"));
+	}
+	catch (Exception e){
+		areaNo = null;
+	}
 	
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto;
@@ -80,9 +86,9 @@
 		<div class="float-container">
 			<div class="left">
 				<a href="<%=request.getContextPath() %>">
-				<%if((int)session.getAttribute("areaNo") > 0){ %>
+				<%if(areaNo != null){ %>
 					<%=areaDao.detail(areaNo).getAreaName() %>
-				<%}else{ %>
+				<%} else { %>
 					메인 도서관
 				<%} %>
 				</a>

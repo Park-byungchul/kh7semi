@@ -11,7 +11,7 @@ header, section, footer {
 	padding:25px;
 }
 section {
-	min-height: 500px;
+	min-height: 300px;
 }
 .sidebar {
 	width:20%;

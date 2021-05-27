@@ -1,8 +1,15 @@
+<%@page import="library.beans.GetBookDto"%>
+<%@page import="java.util.List"%>
+<%@page import="library.beans.GetBookDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-    <%
+<%
 	String root = request.getContextPath();
+
+	//목록을 구하는 서버단 코드(Java)
+	GetBookDao getBookDao =  new GetBookDao();
+	List<GetBookDto> getBookList = getBookDao.list();
 %>
 
 <!DOCTYPE html>
@@ -96,12 +103,35 @@
 				
 				</aside>
 				<div class="multi-container" style="width:80%;">
+			<table border = "1" width="800">
+				<thead>
+					<tr>
+						<th width="10%">책번호</th>
+						<th width="10%">지점번호</th>
+						<th width="50%">책제목</th>
+						<th width="20%">저자</th>						
+						<th>상태</th>
+					</tr>
+				</thead>
+				<tbody>
+<!-- 					검색메소드가 실행되면 list가 펼쳐지게 코드 구현해야함 -->
+					<%for(GetBookDto getBookDto : getBookList) {%>
+					<tr>
+						<td><%=getBookDto.getBookIsbn() %></td>
+						<td><%=getBookDto.getAreaNo() %></td>					
+						<td>
+							<a href="#"> <!-- 상세페이지 만들고 연결할 것 -->
+								<%=getBookDto.getGetBookTitle()%>
+							</a>
+						</td>
+						<td><%=getBookDto.getGetBookAuthor() %></td>
+						<td><%=getBookDto.getGetBookStatus() %></td>
+					</tr>
+					<%} %>
+				</tbody>
+			</table>
 			
-			
-				<div class="row">ul, li, span으로 자료 목록 구현할 것</div> <br><br>
-				<div class="row">ul, li, span으로 자료 목록 구현할 것</div> <br><br>
-				<div class="row">ul, li, span으로 자료 목록 구현할 것</div> <br><br>
-				<div class="row">ul, li, span으로 자료 목록 구현할 것</div>
+				
 			</div>
 		</div>		
 			

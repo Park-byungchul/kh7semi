@@ -19,7 +19,16 @@ try {
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
-<div class="container-1000">
+<jsp:include page="/template/sidebar1.jsp"></jsp:include>
+
+	<h2>관리자 메뉴</h2>
+	<ul>
+		<li><a href="<%=request.getContextPath() %>/client/clientList.jsp">회원목록</a></li>
+		<li><a href="<%=request.getContextPath() %>/area/areaList.jsp">지점목록</a></li>
+	</ul>
+
+<jsp:include page="/template/sidebar2.jsp"></jsp:include>
+
 	<div class="row text-left">
 		<h2>지점 목록</h2>
 	</div>
@@ -55,7 +64,7 @@ try {
 		</table>
 	</div>
 	
-	<div class="row">
+	<div class="row text-center">
 		<ol class="pagination-list">
 		<li><a href="#">&lt;이전</a></li>
 		

@@ -5,7 +5,6 @@
 
 <%
 	int bookIsbn = Integer.parseInt(request.getParameter("bookIsbn"));
-	AreaDao areaDao = new AreaDao();
 	BookDao bookDao = new BookDao();
 	BookDto bookDto = bookDao.get(bookIsbn);
 %>

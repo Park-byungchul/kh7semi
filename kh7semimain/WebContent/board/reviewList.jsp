@@ -5,8 +5,13 @@
     pageEncoding="UTF-8"%>
 
 <%
+	// Review 테이블로 갈아엎어야 함 ㅠㅠ
+	
 	BoardDao boardDao = new BoardDao();
 	List<BoardDto> boardList = boardDao.list();
+	
+	Integer clientNo = (Integer)session.getAttribute("clientNo");
+	boolean isLogin = (clientNo != null);
 	
 	int p;
 
@@ -57,6 +62,12 @@
 			</tbody>
 		</table>
 	</div>
+	
+	<%if(isLogin) { %>
+		<div class="row text-right">
+			<a href="boardWrite.jsp?boardTypeNo=4" class="link-btn">글쓰기</a>
+		</div>
+	<%} %>
 	
 	<div class="row">
 		<ol class="pagination-list">

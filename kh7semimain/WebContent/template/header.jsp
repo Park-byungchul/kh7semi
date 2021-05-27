@@ -40,7 +40,10 @@
 			<select onchange="if(this.value) location.href=(this.value)">
 				<option value="">도서관선택</option>
 				<%for (AreaDto areaDto : list){ %>
-				<option value="<%=request.getContextPath() %>?libraryNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+					<%if(areaDto.getAreaName().equals("전체")) { %>
+					<%} else { %>
+						<option value="<%=request.getContextPath() %>?libraryNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+					<%} %>
 				<%} %>
 			</select>
 			<a href="<%=request.getContextPath() %>">홈으로</a>

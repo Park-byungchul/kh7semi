@@ -57,7 +57,8 @@ CREATE TABLE board (
 	board_field	varchar2(4000)	NOT NULL,
 	board_read	number(19)	default 0 NOT NULL check(board_read >= 0),
 	board_like	number(19)	default 0 NOT NULL check(board_like >= 0),
-	board_date	date	default sysdate not null
+	board_date	date	default sysdate not null,
+    board_sep_no number(19) not null
 );
 
 --희망도서 신청 테이블

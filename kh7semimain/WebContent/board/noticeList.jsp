@@ -1,14 +1,29 @@
-<%@page import="library.beans.BoardDto"%>
+<%@page import="library.beans.BoardListDto"%>
+<%@page import="library.beans.BoardListDao"%>
+<%@page import="library.beans.AreaDto"%>
+<%@page import="library.beans.AreaDao"%>
+<%@page import="library.beans.ClientDto"%>
+<%@page import="library.beans.ClientDao"%>
 <%@page import="java.util.List"%>
-<%@page import="library.beans.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%
-	BoardDao boardDao = new BoardDao();
-	List<BoardDto> boardList = boardDao.list();
+	BoardListDao boardListDao = new BoardListDao();
+	List<BoardListDto> boardList = boardListDao.list(1);
+	
+	Integer clientNo = (Integer)session.getAttribute("clientNo");
+	boolean isLogin = (clientNo != null);
 	
 	int p;
+	
+	ClientDao clientDao = new ClientDao();
+	ClientDto clientDto;
+	
+	if(clientNo == null)
+		clientDto = null;
+	else
+		clientDto = clientDao.get(clientNo);
 
 	try {
 		p = Integer.parseInt(request.getParameter("p"));
@@ -39,24 +54,34 @@
 			</thead>
 			
 			<tbody>
-				<%for(BoardDto boardDto : boardList) { %>
+				<%for(BoardListDto boardListDto : boardList) { %>
 				<tr>
-					<td><%=boardDto.getBoardNo() %></td>
-					<td><%=boardDto.getAreaNo() %></td>
+					<td><%=boardListDto.getBoardSepNo() %></td>
 					<td align=left>
-						<a href="boardDetail.jsp?boardNo=<%=boardDto.getBoardNo()%>">
-						<%=boardDto.getBoardTitle() %>
+						<%if(boardListDto.getAreaNo() != 0){ %>
+							[<%=boardListDto.getAreaName() %>]
+						<%} else { %>
+							[전체]
+						<%} %>
+						<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
+							<%=boardListDto.getBoardTitle() %>
 						</a>
 					</td>
-					<td><%=boardDto.getClientNo() %></td>
-					<td><%=boardDto.getBoardDate() %></td>
-					<td><%=boardDto.getBoardRead() %></td>
-					<td><%=boardDto.getBoardLike() %></td>
+					<td><%=boardListDto.getClientName() %></td>
+					<td><%=boardListDto.getBoardDate() %></td>
+					<td><%=boardListDto.getBoardRead() %></td>
+					<td><%=boardListDto.getBoardLike() %></td>
 				</tr>
 				<%} %>
 			</tbody>
 		</table>
 	</div>
+
+	<%if(isLogin && clientDto.getClientType().equals("관리")) { %>
+		<div class="row text-right">
+			<a href="boardWrite.jsp?boardTypeNo=1" class="link-btn">글쓰기</a>
+		</div>
+	<%} %>
 	
 	<div class="row">
 		<ol class="pagination-list">

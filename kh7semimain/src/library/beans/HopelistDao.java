@@ -11,6 +11,7 @@ import java.util.List;
 
 
 
+
 public class HopelistDao {
 
 	public static final String USERNAME = "kh7semi2";
@@ -151,4 +152,22 @@ public class HopelistDao {
 			
 			return count;
 		}
+		//수정기능
+		public boolean edit(HopelistDto hopelistDto) throws Exception {
+			Connection con = JdbcUtils.getConnection();;
+			
+			String sql = "update hopelist "
+									+ "set book_isbn=?,hopelist_reason=?,hopelist_library=?,hopelist_date=sysdate "
+									+ "where hopelist_no=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, hopelistDto.getBookIsbn());
+			ps.setString(2, hopelistDto.getHopelistReason());
+			ps.setString(3, hopelistDto.getHopelistLibrary());
+			ps.setInt(4, hopelistDto.getHopelistNo());
+			int count = ps.executeUpdate();
+			
+			con.close();
+			return count > 0;
+		}
+		
 }

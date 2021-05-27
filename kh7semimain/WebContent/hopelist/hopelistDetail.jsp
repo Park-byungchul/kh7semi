@@ -40,7 +40,7 @@
 		</div>
 		
 		<div class="row text-right">
-			<a href="boardWrite.jsp" class="link-btn">신청하러가기</a>
+			<a href="hopelistInsert.jsp" class="link-btn">신청하러가기</a>
 		
 			<!-- 본인 및 관리자에게만 표시되도록 하는 것이 좋다 -->
 			<a href="hopelistEdit.jsp?hopelistNo=<%=hopelistNo%>" class="link-btn">수정</a>

@@ -102,4 +102,33 @@ public class GetBookDao {
 			con.close();
 			return count > 0;
 		}
+		
+		//입고된 책 검색 기능
+		public List<GetBookDto> searchList(String keyword) throws Exception{
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select * from get_book "
+					+ "where (get_book_title || get_book_author) like '%'||?||'%'";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, keyword);
+			ResultSet rs = ps.executeQuery();
+			
+			List<GetBookDto> getBookList = new ArrayList<>();
+			
+			while(rs.next()) {
+				GetBookDto getBookDto = new GetBookDto();
+				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
+				getBookDto.setBookIsbn(rs.getInt("book_isbn"));
+				getBookDto.setAreaNo(rs.getInt("area_no"));
+				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
+				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
+				
+				getBookList.add(getBookDto);
+			}
+			
+			con.close();
+			
+			return getBookList;
+					
+		}
 }

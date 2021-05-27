@@ -13,3 +13,10 @@ header, section, footer {
 section {
 	min-height: 500px;
 }
+.sidebar {
+	width:20%;
+	min-height:500px;
+}
+.mainSection{
+	width:80%;
+}

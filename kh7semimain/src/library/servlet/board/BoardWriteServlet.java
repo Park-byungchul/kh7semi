@@ -38,17 +38,18 @@ public class BoardWriteServlet extends HttpServlet {
 			int boardNo = boardDao.getSequence();
 			boardDto.setBoardNo(boardNo);
 			
+			int boardTypeNo = Integer.parseInt(req.getParameter("boardTypeNo"));
 			int boardSepNo = 0;
-			if(Integer.parseInt(req.getParameter("boardTypeNo")) == 1) {
+			if(boardTypeNo == 1) {
 				boardSepNo = boardDao.getNoticeSequence();
 			}
-			else if(Integer.parseInt(req.getParameter("boardTypeNo")) == 2) {
+			else if(boardTypeNo == 2) {
 				boardSepNo = boardDao.getQnaSequence();
 			}
-			else if(Integer.parseInt(req.getParameter("boardTypeNo")) == 3) {
+			else if(boardTypeNo == 3) {
 				boardSepNo = boardDao.getFreeBoardSequence();
 			}
-			else if(Integer.parseInt(req.getParameter("boardTypeNo")) == 4) {
+			else if(boardTypeNo == 4) {
 				boardSepNo = boardDao.getReviewSequence();
 			}
 			boardDto.setBoardSepNo(boardSepNo);

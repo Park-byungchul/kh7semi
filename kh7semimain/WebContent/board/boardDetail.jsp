@@ -98,9 +98,11 @@
 	<div class="row text-right">
 		<!-- 본인 및 관리자에게만 표시되도록 하는 것이 좋다 -->
 		<%if(clientNo != null) {%>
-			<%if(isAdmin || (boardDto.getBoardTypeNo() != 1 && boardDto.getClientNo() == clientNo)) {%>
+			<%if(boardDto.getClientNo() == clientNo) { %>
 				<a href="boardEdit.jsp?boardNo=<%=boardNo%>" class="link-btn">수정</a>
-				<a href="boardDelete.kh?boardNo=<%=boardNo%>" class="link-btn">삭제</a>
+			<%} %>
+			<%if(isAdmin || boardDto.getClientNo() == clientNo) {%>
+				<a href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn">삭제</a>
 			<%} %>
 		<%} %>
 		<a href="#" onclick="chooseList()" class="link-btn">목록</a>

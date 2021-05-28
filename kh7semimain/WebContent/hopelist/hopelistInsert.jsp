@@ -64,8 +64,9 @@ $(function(){
 		<div class="row">
 			<form class="bookSearchForm" name="bookSearchForm" action="hopelistBookSearch.jsp" method="post" target="target">
 				<select name="type" >
-					<option value="bookTitle">제목</option>
-					<option value="bookAuthor">저자</option>
+					<option value="all" selected>전체</option>
+					<option value="book_title">제목</option>
+					<option value="book_author">저자</option>
 				</select>
 				<input type="text" name="keyword" placeholder="검색어" class="hopelist-bookSearch">
 			</form>

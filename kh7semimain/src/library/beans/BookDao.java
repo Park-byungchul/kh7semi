@@ -94,7 +94,8 @@ public class BookDao {
 	public List<BookDto> search(String keyword) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "select * from book where (book_Title || book_author) like ? order by #1 asc";
+		String sql = "select * from book "
+	               + "where (book_title || book_author) like '%'||?||'%'";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
 		ResultSet rs = ps.executeQuery();

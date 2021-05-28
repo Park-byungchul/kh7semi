@@ -42,7 +42,7 @@ public class RecommendDao {
 		
 		String sql = "select * from ("
 							+ "select rownum rn, TMP.* from ("
-								+ "select * from recommendCount order by recommendcount asc"
+								+ "select * from recommendCount order by recommendcount desc"
 							+ ") TMP"
 						+ ") where rn between ? and ?";
 		PreparedStatement ps = con.prepareStatement(sql);
@@ -54,8 +54,7 @@ public class RecommendDao {
 		List<RecommendDto> recommendRankList = new ArrayList<>();
 		while(rs.next()) {
 			RecommendDto recommendDto = new RecommendDto();
-			recommendDto.setRecommendNo(rs.getInt("recommend_no"));
-			recommendDto.setClientNo(rs.getInt("client_no"));
+
 			recommendDto.setBookIsbn(rs.getInt("book_isbn"));
 			
 			

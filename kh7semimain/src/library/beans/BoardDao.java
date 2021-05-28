@@ -247,4 +247,21 @@ public class BoardDao {
 				
 		return boardDto;
 	}
+	
+	// 조회수 증가 기능
+	public boolean read(int boardNo, int clientNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+			
+		String sql = "update board set "
+				+ "board_read = board_read + 1 "
+				+ "where board_no = ? and client_no != ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, boardNo);
+		ps.setInt(2, clientNo);
+		int count = ps.executeUpdate();
+			
+		con.close();
+			
+		return count > 0;
+	}
 }

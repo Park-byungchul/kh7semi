@@ -1,3 +1,5 @@
+<%@page import="library.beans.ClientDto"%>
+<%@page import="library.beans.ClientDao"%>
 <%@page import="library.beans.AreaDto"%>
 <%@page import="java.util.List"%>
 <%@page import="library.beans.AreaDao"%>
@@ -11,15 +13,29 @@
 	AreaDao areaDao = new AreaDao();
 	List<AreaDto> list = areaDao.list();
 	
-	int areaNo = (int)session.getAttribute("areaNo");
-// 	try{
-// 		areaNo = Integer.parseInt(request.getParameter("areaNo"));
-// 		areaName = areaDao.detail(areaNo).getAreaName();
-// 	}
-// 	catch (Exception e){
-// 		areaNo = 0;
-// 		areaName = "메인 도서관";
-// 	}
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
+	
+	ClientDao clientDao = new ClientDao();
+	ClientDto clientDto;
+	boolean isManager;
+	int clientNo;
+	try{
+		clientNo = (int)session.getAttribute("clientNo");
+		clientDto = clientDao.get(clientNo);
+		isManager = clientDto.getClientType().equals("관리");
+	}
+	catch(Exception e){
+		clientNo = 0;
+		clientDto = null;
+		isManager = false;
+	}
+	
 %>
  
 <!DOCTYPE html>
@@ -40,11 +56,11 @@
 		var area = document.querySelector("#area");
 		area.value="<%=request.getContextPath() %>/areaSelect.kh?areaNo=<%=areaNo%>";
 	}
+	
 	function areaChange(){
-		var area = document.querySelector("#area")
+		var area = document.querySelector("#area");
 		if(area.value){
 			location.href = area.value;
-			console.log(area.value);
 		}
 	}
 </script>
@@ -57,10 +73,9 @@
 			<a href="<%=request.getContextPath() %>/client/clientInsert.jsp" class="right">회원가입</a>
 			<a href="<%=request.getContextPath() %>/client/login.jsp" class="right">로그인</a>
 			<%}else{ %>
-			<a href="#" class="right">내 정보 보기</a>
+			<a href="<%=request.getContextPath() %>/client/clientDetail.jsp" class="right">회원 정보</a>
 			<a href="<%=request.getContextPath() %>/client/logout.kh" class="right">로그아웃</a>
 			<%} %>
-<!-- 		if(this.value) location.href=(this.value) -->
 			<select id="area" onchange="areaChange();" class="left">
 				<option value="">도서관 바로가기</option>
 				<option value="<%=request.getContextPath() %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
@@ -73,9 +88,9 @@
 		<div class="float-container">
 			<div class="left">
 				<a href="<%=request.getContextPath() %>">
-				<%if((int)session.getAttribute("areaNo") > 0){ %>
+				<%if(areaNo > 0){ %>
 					<%=areaDao.detail(areaNo).getAreaName() %>
-				<%}else{ %>
+				<%} else { %>
 					메인 도서관
 				<%} %>
 				</a>
@@ -86,9 +101,12 @@
 					<input type="submit" value="검색">
 				</form>
 			</div>
-			<div class="right">
-				<a href="<%=request.getContextPath() %>/client/clientList.jsp">관리자메뉴</a>
-			</div>
+			<%if(isManager){ %>
+				<div class="right">
+					<a href="<%=request.getContextPath() %>/client/clientList.jsp">관리자메뉴</a>
+				</div>
+			<%} %>
+			
 		</div>
 	
 		<nav>
@@ -134,9 +152,9 @@
 				</li>
 				
 				<li>
-					<a href="#">마이페이지</a>
+					<a href="<%=request.getContextPath() %>/client/clientDetail.jsp">마이페이지</a>
 					<ul>
-						<li><a href="#">회원 정보</a></li>
+						<li><a href="<%=request.getContextPath() %>/client/clientDetail.jsp">회원 정보</a></li>
 						<li><a href="#">대출/예약/신청도서 관리</a></li>
 						<li><a href="#">관심도서</a></li>
 					</ul>

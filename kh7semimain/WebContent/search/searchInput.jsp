@@ -1,7 +1,26 @@
+<%@page import="library.beans.GetBookDto"%>
+<%@page import="java.util.List"%>
+<%@page import="library.beans.GetBookDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	String root = request.getContextPath();
+//목록을 구하는 서버단 코드(Java)
+	request.setCharacterEncoding("UTF-8");
+	String type = request.getParameter("type");
+	String keyword = request.getParameter("keyword");
+		
+	
+	GetBookDao getBookDao = new GetBookDao();
+		List<GetBookDto> getBookList;
+		//select값이 기본 -> '전체' 값을 null로 주고 keyword만 전송
+		if(type == null){
+			getBookList = getBookDao.searchList(keyword);
+		}
+		else{ //select가 '전체'가 아니면 type과 keyword 같이 전송
+			getBookList = getBookDao.searchList(type, keyword);
+		}
+		
 %>
 
 <!DOCTYPE html>
@@ -105,13 +124,13 @@
 				<br><br>
 			
 				<div>
-					<select>
- 						<option>전체</option>
- 						<option>서명</option>
- 						<option>저자</option>
+					<select name="type">
+ 						<option value="null">전체</option>
+ 						<option value="get_book_title">서명</option>
+ 						<option value= "get_book_author">저자</option>
  					</select>
 					
-					<input type="text" size="50" height = "20">
+					<input type="text" name="keyword" size="50" height = "20">
 					<input type="submit" value="검색">
 				</div> <br><br>
 				

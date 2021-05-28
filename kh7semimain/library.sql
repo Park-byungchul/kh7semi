@@ -156,3 +156,7 @@ CREATE TABLE boardComment (
 	comment_date	date	default sysdate NOT NULL,
 	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
 );
+
+----view 생성권한, 추천도서 count
+grant create view to kh7semi2;
+create or replace view recommendCount as select book_isbn, count(recommend_no) as recommendCount from recommend group by book_isbn; 

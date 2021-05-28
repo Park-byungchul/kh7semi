@@ -8,6 +8,8 @@ public class GetBookDto {
 	private int areaNo;
 	private Date getBookDate;
 	private String getBookStatus;
+	private String getBookTitle;
+	private String getBookAuthor;
 	
 	public GetBookDto() {
 		super();
@@ -52,4 +54,21 @@ public class GetBookDto {
 	public void setGetBookStatus(String getBookStatus) {
 		this.getBookStatus = getBookStatus;
 	}
+
+	public String getGetBookTitle() {
+		return getBookTitle;
+	}
+
+	public void setGetBookTitle(String getBookTitle) {
+		this.getBookTitle = getBookTitle;
+	}
+
+	public String getGetBookAuthor() {
+		return getBookAuthor;
+	}
+
+	public void setGetBookAuthor(String getBookAuthor) {
+		this.getBookAuthor = getBookAuthor;
+	}
+		
 }

@@ -98,6 +98,8 @@ CREATE TABLE get_book (
 	get_book_date	date	default sysdate not null,
 	get_book_status	varchar2(12)	default '대여가능' not null check (get_book_status in ('대여가능', '예약중', '대출중', '파손'))
 );
+alter table get_book add get_book_title varchar2(300) not null;
+alter table get_book add get_book_author varchar2(300) not null;
 
 -- 대출 테이블
 CREATE TABLE lend_book (

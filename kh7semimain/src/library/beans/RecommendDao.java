@@ -14,22 +14,25 @@ public class RecommendDao {
 	public static final String PASSWORD = "kh7semi2";
 	
 	//추천하기
-	public void insert(RecommendDto recomendDto) throws Exception {
+	public void insert(RecommendDto recommendDto) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "insert into recommend values(recommend_seq.nextval)";
+		String sql = "insert into recommend values(recommend_seq.nextval,?,?)";
 		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, recommendDto.getClientNo());
+		ps.setInt(2, recommendDto.getBookIsbn());
 		ps.execute();
 		
 		con.close();
 	}
 	//추천삭제(추천하기 한번 더 클릭)
-	public boolean delete(int recommendNo) throws Exception {
+	public boolean delete(RecommendDto recommendDto) throws Exception {
 		Connection con = JdbcUtils.getConnection();;
 		
-		String sql = "delete recommend where recommend_no = ?";
+		String sql = "delete recommend where client_no = ? and book_isbn = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, recommendNo);
+		ps.setInt(1, recommendDto.getClientNo());
+		ps.setInt(2, recommendDto.getBookIsbn());
 		int count = ps.executeUpdate();
 		
 		con.close();
@@ -65,5 +68,16 @@ public class RecommendDao {
 		
 		return recommendRankList;
 	}
-	
+	//추천확인 기능
+		public boolean check(RecommendDto recommendDto) throws Exception {
+			Connection con = JdbcUtils.getConnection();;
+			String sql = "select * from recommend where book_isbn=? and client_no=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, recommendDto.getBookIsbn());
+			ps.setInt(2, recommendDto.getClientNo());
+			ResultSet rs = ps.executeQuery();
+			boolean result = rs.next();
+			con.close();
+			return result;
+		}
 }

@@ -7,19 +7,9 @@
 <%
 ClientDao clientDao = new ClientDao();
 List<ClientDto> list = clientDao.list();
-
-int p;
-
-try {
-	p = Integer.parseInt(request.getParameter("p"));
-}
-catch (Exception e) {
-	p = 1;
-}
-
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -36,16 +26,6 @@ catch (Exception e) {
 		});
 	});
 </script>
-
-<jsp:include page="/template/sidebar1.jsp"></jsp:include>
-
-	<h2>관리자 메뉴</h2>
-	<ul>
-		<li><a href="<%=request.getContextPath() %>/client/clientList.jsp">회원목록</a></li>
-		<li><a href="<%=request.getContextPath() %>/area/areaList.jsp">지점목록</a></li>
-	</ul>
-
-<jsp:include page="/template/sidebar2.jsp"></jsp:include>
 
 	<div class="row text-left">
 		<h2>회원 목록</h2>
@@ -84,22 +64,4 @@ catch (Exception e) {
 			</tbody>
 		</table>
 	</div>
-
-	<div class="row text-center">
-		<ol class="pagination-list">
-		<li><a href="#">&lt;이전</a></li>
-		
-		<%for(int i = 1; i <= 10; i++) { %>
-			<%if(p == i) { %>
-				<li class="on"><a href="#"><%=i%></a></li>
-			<%} else {%>
-				<li><a href="#"><%=i%></a></li>
-			<%} %>
-		<%} %>
-
-		<li><a href="#">다음&gt;</a></li>
-		</ol>
-	</div>
-
-
 <jsp:include page="/template/footer.jsp"></jsp:include>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import library.beans.ClientDao;
 import library.beans.ClientDto;
+import library.beans.RoleDao;
 
 @WebServlet(urlPatterns = "/client/clientEdit.kh")
 public class ClientEditServlet extends HttpServlet {
@@ -30,6 +31,11 @@ public class ClientEditServlet extends HttpServlet {
 			
 			ClientDao clientDao = new ClientDao();
 			boolean result = clientDao.edit(clientDto);
+			
+			if(clientDto.getClientType().equals("일반관리자") || clientDto.getClientType().equals("일반사용자")) {
+				RoleDao roleDao = new RoleDao();
+				roleDao.delete(ClientNo);
+			}
 			
 			if(result) {
 				resp.sendRedirect("clientList.jsp");

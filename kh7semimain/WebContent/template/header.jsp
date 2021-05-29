@@ -21,21 +21,16 @@
 		areaNo = 0;
 	}
 	
-	ClientDao clientDao = new ClientDao();
-	ClientDto clientDto;
-	boolean isManager;
 	int clientNo;
 	try{
 		clientNo = (int)session.getAttribute("clientNo");
-		clientDto = clientDao.get(clientNo);
-		isManager = clientDto.getClientType().equals("관리");
 	}
 	catch(Exception e){
 		clientNo = 0;
-		clientDto = null;
-		isManager = false;
 	}
 	
+	ClientDao clientDao = new ClientDao();
+	ClientDto clientDto = clientDao.get(clientNo);
 %>
  
 <!DOCTYPE html>
@@ -101,10 +96,13 @@
 					<input type="submit" value="검색">
 				</form>
 			</div>
-			<%if(isManager){ %>
-				<div class="right">
-					<a href="<%=request.getContextPath() %>/client/clientList.jsp">관리자메뉴</a>
-				</div>
+			<%if(clientDto != null){ %>
+				<%if(clientDto.getClientType().equals("전체관리자") || clientDto.getClientType().equals("권한관리자")){ %>
+					<div class="right">
+						<span><%=clientDto.getClientType() %></span>
+						<a href="<%=request.getContextPath() %>/admin/adminMenu.jsp">관리자메뉴</a>
+					</div>
+				<%} %>
 			<%} %>
 			
 		</div>

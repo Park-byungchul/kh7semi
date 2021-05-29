@@ -136,7 +136,7 @@
 					<a href="<%=root%>/service/serviceInfo.jsp">도서관 서비스</a>
 					<ul>
 						<li><a href="<%=root%>/reservation/reservationInfo.jsp">도서 예약</a></li>
-						<li><a href="#">희망도서</a></li>
+						<li><a href="<%=root%>/hopelist/hopelist.jsp">희망도서</a></li>
 						<li><a href="#">행사일정</a></li>
 					</ul>
 				</li>

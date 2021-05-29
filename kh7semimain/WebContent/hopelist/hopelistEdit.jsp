@@ -29,7 +29,9 @@ $(function(){
 		$(".bookSearchForm").submit();
 	});
 	
-	
+	$(".choice-library").val("<%=hopelistDto.getHopelistLibrary()%>").attr("selected", "selected");
+
+
 });
 	
 </script>
@@ -50,8 +52,9 @@ $(function(){
 		<div class="row">
 			<form class="bookSearchForm" name="bookSearchForm" action="hopelistBookSearch.jsp" method="post" target="target">
 				<select name="type" >
-					<option value="bookTitle">제목</option>
-					<option value="bookAuthor">저자</option>
+					<option value="all" selected>전체</option>
+					<option value="book_title">제목</option>
+					<option value="book_author">저자</option>
 				</select>
 				<input type="text" name="keyword" placeholder="검색어" class="hopelist-bookSearch">
 			</form>
@@ -67,6 +70,10 @@ $(function(){
 			<div class="row text-left">
 				<label>제목</label>
 				<input type="text" Id ="bookTitle" readonly value = "<%=bookDto.getBookTitle()%>" class="form-input form-input-underline">
+			</div>
+			<div class="row text-left">
+				<label>장르번호</label>
+				<input type="text" Id ="genreNo" readonly value = "<%=bookDto.getGenreNo()%>" class="form-input form-input-underline">
 			</div>
 			
 			
@@ -88,8 +95,9 @@ $(function(){
 			<input type="submit" value="수정" class="form-btn form-btn-positive"> 
 		</form>
 				<hr>
+				<a href="hopelist.jsp">
 				<input type="button" value="목록" class="form-btn form-btn-normal">
-			
+				</a>
 	</div>
 </div>
 

@@ -5,6 +5,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
+	
 <%
 	request.setCharacterEncoding("UTF-8");
  	String keyword = request.getParameter("keyword");
@@ -13,7 +14,19 @@
 	String root = request.getContextPath();
 	
 	BookDao bookDao = new BookDao();
-	List<BookDto> list = bookDao.list();
+
+	boolean isSearch = type != null && keyword != null && !keyword.trim().equals("");
+	
+	List<BookDto> bookList;
+	if(!isSearch){
+		bookList = bookDao.list();
+	}
+	else if(type.equals("all")){
+		bookList = bookDao.search(keyword);
+	}
+	else {
+		bookList = bookDao.search(type, keyword);
+	}
  %>
  
 <html>
@@ -44,26 +57,9 @@ $(function(){
 	    opener.document.getElementById("genreNo").value = genre;
 	    window.close();
 	});
+	
+	$(".choice-type").val("<%=type%>").attr("selected", "selected");
 });
-
-// function setParentText(obj){
-	
-// 	var choiceBtn = $(obj);
-// 	var tr = choiceBtn.parent().parent();
-// 	var td = tr.children();
-	
-	
-// 	var isbn = td.eq(0).text();
-// 	var genre = td.eq(1).text();
-// 	var title = td.eq(2).text();
-// 	var author = td.eq(3).text();
-		
-//     opener.document.getElementById("bookAuthor").value = author;
-//     opener.document.getElementById("bookTitle").value = title;
-//     opener.document.getElementById("bookIsbn").value = isbn;
-//     opener.document.getElementById("genreNo").value = genre;
-//     window.close();
-// }
 
 
 
@@ -75,10 +71,20 @@ $(function(){
 </style>
 <body>
 	<div class="container-600">
-	<input type="text" value=<%=keyword %>>
-	<input type="text" value=<%=type%>>
-	<hr>
+	
 	</div>
+	<div class="row">
+			<form class="bookSearchForm" name="bookSearchForm" action="hopelistBookSearch.jsp" method="post" target="target">
+				<select name="type" class="choice-type">
+					<option value="all" selected>전체</option>
+					<option value="book_title">제목</option>
+					<option value="book_author">저자</option>
+				</select>
+				<input type="text" name="keyword" value=<%=keyword %>>
+				<input type="submit" value="검색" class="bookSearch-btn">
+			</form>
+	</div>
+	<hr>	
 	
 	<div class="row text-left">
 		<h2>책 목록</h2>
@@ -95,7 +101,7 @@ $(function(){
 				</tr>
 			</thead>
 			<tbody>
-				<%for (BookDto bookDto : list) { %>
+				<%for (BookDto bookDto : bookList) { %>
 				<tr>
 					<td Id="searched-bookIsbn"><%=bookDto.getBookIsbn()%></td>
 					<td Id="searched-genreNo"><%=bookDto.getGenreNo()%></td>

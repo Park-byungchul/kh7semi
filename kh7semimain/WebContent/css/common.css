@@ -357,3 +357,9 @@ word-break:break-all;
 	text-overflow:ellipsis;
 */
 }
+
+
+/*bookSearchForm inline설정 */
+.bookSearchForm {
+	display:inline;
+}

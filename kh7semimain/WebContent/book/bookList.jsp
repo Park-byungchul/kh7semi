@@ -1,3 +1,5 @@
+<%@page import="library.beans.RecommendDto"%>
+<%@page import="library.beans.RecommendDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="java.util.List"%>
 <%@page import="library.beans.BookDao"%>
@@ -7,6 +9,21 @@
 <%
 BookDao bookDao = new BookDao();
 List<BookDto> list = bookDao.list();
+int clientNo;
+try {
+	clientNo = (int)session.getAttribute("clientNo");
+	
+}
+catch (Exception e){
+	clientNo = 0;
+}
+
+
+RecommendDao recommendDao = new RecommendDao();
+RecommendDto recommendDto = new RecommendDto();
+
+boolean isLogin = session.getAttribute("clientNo") != null;
+
 
 int p;
 
@@ -31,9 +48,17 @@ catch (Exception e) {
 				return false;
 			}
 		});
+		
+		$(".bookRecommend").click(function(){
+			
+		});
 	});
 </script>
-
+<style>
+.bookList>button>a{
+	text-decoration: none;
+}
+</style>
 <div class="container-1000">
 	<div class="row text-left">
 		<h2>책 목록</h2>
@@ -56,9 +81,20 @@ catch (Exception e) {
 					<td><%=bookDto.getGenreNo()%></td>
 					<td><%=bookDto.getBookTitle()%></td>
 					<td><%=bookDto.getBookAuthor()%></td>
-					<td>
+					<td class="bookList">
 					<button><a href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
 					<button class="bookDelete"><a href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>">삭제</a></button>
+					<%
+						recommendDto.setClientNo(clientNo);
+						recommendDto.setBookIsbn(bookDto.getBookIsbn());
+						boolean isRecommend = recommendDao.check(recommendDto);
+						
+						if(isLogin && isRecommend) {
+					%>
+					<button class="bookRecommend"><a href="bookRecommendDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천취소</a></button>
+					<%} else if(isLogin && !isRecommend){%>
+					<button class="bookRecommend"><a href="bookRecommendInsert.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천하기</a></button>
+					<%}%>
 					</td>
 				</tr>
 				<%}%>

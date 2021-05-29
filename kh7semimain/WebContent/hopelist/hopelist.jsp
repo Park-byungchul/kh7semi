@@ -9,7 +9,9 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	HopelistDao hopelistDao = new HopelistDao();
-	List<HopelistDto> hopelist = hopelistDao.list();
+	List<HopelistDto> hopelist;
+	int clientNo = (int)session.getAttribute("clientNo");
+	hopelist = hopelistDao.myhopeList(clientNo);
 	
 	
 	int pageNo;//현재 페이지 번호

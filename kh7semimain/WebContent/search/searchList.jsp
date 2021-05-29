@@ -8,8 +8,23 @@
 	String root = request.getContextPath();
 
 	//목록을 구하는 서버단 코드(Java)
-	GetBookDao getBookDao =  new GetBookDao();
-	List<GetBookDto> getBookList = getBookDao.list();
+	request.setCharacterEncoding("UTF-8");
+	String type = request.getParameter("type");
+	String keyword = request.getParameter("keyword");
+		
+	
+ 	GetBookDao getBookDao = new GetBookDao();
+ 		List<GetBookDto> getBookList;
+ 		//select값이 기본 -> '전체' 값을 null로 주고 keyword만 전송
+ 		if(type == null && keyword == null) {
+ 			getBookList = getBookDao.list();
+ 		}
+ 		else if(type.equals("all")){
+ 			getBookList = getBookDao.searchList(keyword);
+ 		}
+ 		else{ //select가 '전체'가 아니면 type과 keyword 같이 전송
+ 			getBookList = getBookDao.searchList(type, keyword);
+ 		}
 %>
 
 <!DOCTYPE html>
@@ -119,11 +134,7 @@
 					<tr>
 						<td><%=getBookDto.getBookIsbn() %></td>
 						<td><%=getBookDto.getAreaNo() %></td>					
-						<td>
-							<a href="#"> <!-- 상세페이지 만들고 연결할 것 -->
-								<%=getBookDto.getGetBookTitle()%>
-							</a>
-						</td>
+						<td><%=getBookDto.getGetBookTitle()%></td>
 						<td><%=getBookDto.getGetBookAuthor() %></td>
 						<td><%=getBookDto.getGetBookStatus() %></td>
 					</tr>

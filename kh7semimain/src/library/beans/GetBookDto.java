@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class GetBookDto {
 	private int getBookNo;
-	private int bookIsbn;
+	private long bookIsbn;
 	private int areaNo;
 	private Date getBookDate;
 	private String getBookStatus;
@@ -23,11 +23,11 @@ public class GetBookDto {
 		this.getBookNo = getBookNo;
 	}
 
-	public int getBookIsbn() {
+	public long getBookIsbn() {
 		return bookIsbn;
 	}
 
-	public void setBookIsbn(int bookIsbn) {
+	public void setBookIsbn(long bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 

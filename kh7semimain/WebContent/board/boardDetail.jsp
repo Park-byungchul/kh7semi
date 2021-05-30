@@ -1,3 +1,5 @@
+<%@page import="library.beans.BoardLikeDto"%>
+<%@page import="library.beans.BoardLikeDao"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.Set"%>
 <%@page import="library.beans.BoardListDto"%>
@@ -68,9 +70,26 @@
 	else {
 		areaDto = null;
 	}
+	
+	// 좋아요 체크
+	boolean isLike = false;
+	if(clientNo != 0) {
+		BoardLikeDao boardLikeDao = new BoardLikeDao();
+		BoardLikeDto boardLikeDto = new BoardLikeDto();
+		boardLikeDto.setBoardNo(boardNo);
+		boardLikeDto.setClientNo(clientNo);
+		isLike = boardLikeDao.check(boardLikeDto);
+	}
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
+
+<style>
+	.heart > a {
+		color:red;
+		text-decoration:none;
+	}
+</style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
@@ -134,6 +153,15 @@
 			<%} %>
 			<%if(isAdmin || boardDto.getClientNo() == clientNo) {%>
 				<a href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn">삭제</a>
+			<%} %>
+			<%if(isLike) { %>
+				<span class="heart">
+				<a href="boardLikeDelete.kh?boardNo=<%=boardNo%>&clientNo=<%=clientNo%>" class="link-btn">♥</a>
+				</span>
+			<%} else { %>
+				<span class="heart">
+				<a href="boardLikeInsert.kh?boardNo=<%=boardNo%>&clientNo=<%=clientNo%>" class="link-btn">♡</a>
+				</span>
 			<%} %>
 		<%} %>
 		<a href="#" onclick="chooseList()" class="link-btn">목록</a>

@@ -1,3 +1,6 @@
+<%@page import="library.beans.BoardCommentDto"%>
+<%@page import="java.util.List"%>
+<%@page import="library.beans.BoardCommentDao"%>
 <%@page import="library.beans.BoardLikeDto"%>
 <%@page import="library.beans.BoardLikeDao"%>
 <%@page import="java.util.HashSet"%>
@@ -14,6 +17,7 @@
     pageEncoding="UTF-8"%>
     
 <%
+	// 테스트
 	// 세션 번호
 	int clientNo;
 	try {
@@ -56,7 +60,7 @@
 	boolean isAdmin = false;
 	if(clientNo != 0) {
 		ClientDto tmp = clientDao.get(clientNo);
-		if(tmp.getClientType().equals("관리")) {
+		if(!tmp.getClientType().equals("일반사용자")) {
 			isAdmin = true;
 		}
 	}
@@ -86,6 +90,10 @@
 	
 	//다음글 정보 불러오기
 	BoardDto nextBoardDto = boardDao.getNext(boardListDto.getBoardTypeNo(), boardListDto.getBoardSepNo());
+
+	// 댓글 목록 출력
+	BoardCommentDao commentDao = new BoardCommentDao();
+	List<BoardCommentDto> commentList = commentDao.list(boardNo);
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -101,7 +109,7 @@
 <script>
 	// 목록 눌렀을 때 돌아가는 함수
 	function chooseList() {
-		var boardTypeNo = <%=boardListDto.getBoardTypeNo()%>
+		var boardTypeNo = <%=boardListDto.getBoardTypeNo()%>;
 		
 		if(boardTypeNo === 1) {
 			location.href = "noticeList.jsp";
@@ -116,6 +124,47 @@
 			location.href = "reviewList.jsp";
 		}
 	}
+	
+	// 댓글창 로그인 상태가 아니면 막아놓음
+	$(function() {
+		var clientNo = <%=session.getAttribute("clientNo")%>;
+		if(clientNo == null) {
+			clientNo = 0;
+		}
+
+		if(clientNo === 0) {
+			$("#commentContent").attr("readonly", true);
+			$("#commentContent").val("로그인 후 이용하세요");
+		}
+		else {
+			$("#commentContent").removeAttr("readonly");
+			$("#commentContent").val("");
+		}
+	});
+	
+	// 댓글 삭제
+	$(function(){
+		$(".comment-delete-btn").click(function(e) {
+			var choice = window.confirm("정말 삭제하시겠습니까?");
+			if(!choice){
+				e.preventDefault();
+			}
+		});
+	});
+	
+	// 댓글 수정
+	$(function() {
+		$(".comment-edit-area").hide();
+		
+		$(".comment-edit-btn").click(function() {
+			$(this).parent().parent().next().hide();
+			$(this).parent().parent().next().next().show();
+		});
+		$(".comment-edit-cancel-btn").click(function() {
+			$(this).parent().parent().hide();
+			$(this).parent().parent().prwv.show();
+		});
+	});
 </script>
 
 <div class="container-800">
@@ -150,6 +199,52 @@
 	<div class="row text-left" style="min-height:300px;">
 		<pre><%=boardDto.getBoardField()%></pre>
 	</div>
+	
+	<form action="commentInsert.kh" method="post">
+		<input type="hidden" name="boardNo" value="<%=boardNo%>">
+		<input type="hidden" name="boardTypeNo" value="<%=boardListDto.getBoardTypeNo()%>">
+		<div class="row">
+			<textarea id="commentContent" name="commentContent" required></textarea>
+		</div>
+		<div class="row">
+			<input type="submit" value="댓글 작성">
+		</div>
+	</form>
+	
+	<div class="row text-left">
+		<h4>댓글 목록</h4>
+	</div>
+	<%for(BoardCommentDto commentDto : commentList) { %>
+		<div class="row text-left" style="border:1px solid gray;">
+			<div class="float-container">
+				<div class="left"><%=commentDao.getClientName(commentDto.getClientNo()) %></div>
+				
+				 <%if(commentDto.getClientNo() == clientNo) { %>
+					<div class="right">
+						<a class="comment-edit-btn">수정</a>
+						| 
+						<a class="comment-delete-btn" href="commentDelete.kh?commentNo=<%=commentDto.getCommentNo()%>&boardNo=<%=boardNo%>">삭제</a>
+					</div>
+				<%} %>
+			</div>
+			<!-- 화면 표시 댓글 -->
+			<div class="comment-display-area">
+				<pre><%=commentDto.getCommentContent() %></pre>
+			</div>
+			<%if(commentDto.getClientNo() == clientNo) { %>
+				<div class="comment-edit-area">
+					<form action="commentEdit.kh" method="post">
+						<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
+						<input type="hidden" name="boardNo" value="<%=boardNo%>">
+						<textarea name="commentContent" required><%=commentDto.getCommentContent()%></textarea>
+						<input type="submit" value="댓글 수정">
+						<input type="button" value="작성 취소" class="comment-edit-cancel-btn">
+					</form>
+				</div>
+			<%} %>
+			<div><%=commentDto.getCommentDate().toLocaleString() %></div>
+		</div>
+	<%} %>
 	
 	<div class="row text-right">
 		<!-- 본인 및 관리자에게만 표시되도록 하는 것이 좋다 -->

@@ -16,7 +16,7 @@ public class BookRecommendDeleteServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			//준비 : memberNo, boardNo
+			//준비 : clientNo, bookIsbn
 			req.setCharacterEncoding("UTF-8");
 			RecommendDto recommendDto = new RecommendDto();
 			recommendDto.setClientNo(Integer.parseInt(req.getParameter("clientNo"))); 

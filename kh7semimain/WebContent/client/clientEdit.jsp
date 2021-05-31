@@ -5,6 +5,7 @@
 	pageEncoding="UTF-8"%>
 
 <%
+String root = request.getContextPath();
 ClientDao clientDao = new ClientDao();
 List<ClientDto> list = clientDao.list();
 int clientNo = Integer.parseInt(request.getParameter("clientNo"));
@@ -52,14 +53,12 @@ String currentType = clientDao.get(clientNo).getClientType();
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>회원번호</th>
-					<th>아이디</th>
-					<th>이름</th>
-					<th>이메일</th>
-					<th>생성일</th>
-					<th>대출가능일</th>
-					<th>등급</th>
-					<th>관리</th>
+					<th width="15%">아이디</th>
+					<th width="20%">이름</th>
+					<th width="20%">이메일</th>
+					<th width="20%">대출가능일</th>
+					<th width="12%">등급</th>
+					<th width="13%">관리</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -70,8 +69,7 @@ String currentType = clientDao.get(clientNo).getClientType();
 				boolean isEdit = clientNo == clientDto.getClientNo();
 				%>
 				<tr>
-					<td><%=clientDto.getClientNo()%></td>
-					<td><%=clientDto.getClientId()%></td>
+					<td><a href=<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>><%=clientDto.getClientId()%></a></td>
 					<%
 					if (isEdit) {
 					%>
@@ -82,18 +80,6 @@ String currentType = clientDao.get(clientNo).getClientType();
 							value="<%=clientDto.getClientName()%>"></td>
 						<td><input type="text" name="clientEmail" required
 							value="<%=clientDto.getClientEmail()%>"></td>
-						<%
-						} else {
-						%>
-						<td><%=clientDto.getClientName()%></td>
-						<td><%=clientDto.getClientEmail()%></td>
-						<%
-						}
-						%>
-						<td><%=clientDto.getClientMade()%></td>
-						<%
-						if (isEdit) {
-						%>
 						<td><input type="date" name="clientPossible" required
 							value="<%=clientDto.getClientPossible()%>"></td>
 						<td><select id="clientType" name="clientType">
@@ -109,10 +95,12 @@ String currentType = clientDao.get(clientNo).getClientType();
 					<%
 					} else {
 					%>
-					<td><%=clientDto.getClientPossible()%></td>
-					<td><%=clientDto.getClientType()%></td>
-					<td><button><a href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>">수정</a></button>
-					<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
+						<td><%=clientDto.getClientName()%></td>
+						<td><%=clientDto.getClientEmail()%></td>
+						<td><%=clientDto.getClientPossible()%></td>
+						<td><%=clientDto.getClientType()%></td>
+						<td><button><a href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>">수정</a></button>
+						<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
 					<%
 					}
 					%>

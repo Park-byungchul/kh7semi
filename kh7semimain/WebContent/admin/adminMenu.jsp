@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.RoleAreaDto"%>
 <%@page import="library.beans.RoleAreaDao"%>
 <%@page import="library.beans.ClientDto"%>
@@ -7,13 +8,30 @@
 	pageEncoding="UTF-8"%>
 
 <%
+request.setCharacterEncoding("UTF-8");
 int clientNo = (int)session.getAttribute("clientNo");
 ClientDao clientDao = new ClientDao();
 ClientDto clientDto = clientDao.get(clientNo);
 RoleAreaDao roleAreaDao = new RoleAreaDao();
+
+AreaDao areaDao = new AreaDao();
+int areaNo;
+try{
+	areaNo = (int)session.getAttribute("areaNo");
+}
+catch (Exception e){
+	areaNo = 0;
+}
+
+String title = "관리자 메뉴";
+if(areaNo > 0){
+	title += " : " + areaDao.detail(areaNo).getAreaName();
+}
 %>
 
-<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 	<div class="row text-center">
 		<h1><%=clientDto.getClientType() %>입니다.</h1>

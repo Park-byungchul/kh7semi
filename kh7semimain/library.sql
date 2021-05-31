@@ -137,26 +137,6 @@ CREATE TABLE Reservation (
 	Reservation_date  date		default sysdate NOT NULL
 );
 
--- 책리뷰 댓글
-CREATE TABLE reviewComment (
-	comment_no	number(19)	primary key,
-	client_no	references client(client_no) on delete set null,
-	review_no	references review(review_no) on delete cascade,
-	comment_field	varchar2(900)	NOT NULL,
-	comment_date	date	default sysdate NOT NULL,
-	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
-);
-
---게시판 댓글
-CREATE TABLE boardComment (
-	comment_no	number(19)	primary key,
-	client_no	references client(client_no)  on delete set null,
-	board_no	references board(board_no) on delete cascade,
-	comment_content	varchar2(900)	NOT NULL,
-	comment_date	date	default sysdate NOT NULL,
-	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
-);
-
 ----view 생성권한, 추천도서 count
 grant create view to kh7semi2;
 create or replace view recommendCount as select book_isbn, count(recommend_no) as recommendCount from recommend group by book_isbn; 
@@ -171,6 +151,31 @@ create or replace view roleArea as
 select C.client_no, C.client_name, A.area_no, A.area_name, R.role_date
 from role R, client C, area A
 where R.area_no = A.area_no and R.client_no = C.client_no;
+
+-------- 여기서부터 다 drop and create 해주세요 -------- 
+
+drop table reviewComment;
+drop table boardComment;
+
+-- 책리뷰 댓글
+CREATE TABLE review_comment (
+	comment_no	number(19)	primary key,
+	client_no	references client(client_no) on delete set null,
+	review_no	references review(review_no) on delete cascade,
+	comment_field	varchar2(900)	NOT NULL,
+	comment_date	date	default sysdate NOT NULL,
+	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
+);
+
+--게시판 댓글
+CREATE TABLE board_comment (
+	comment_no	number(19)	primary key,
+	client_no	references client(client_no)  on delete set null,
+	board_no	references board(board_no) on delete cascade,
+	comment_content	varchar2(900)	NOT NULL,
+	comment_date	date	default sysdate NOT NULL,
+	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
+);
 
 -- 게시판은 고정이므로 developer에서 insert
 insert into board_type values(1, '공지사항');

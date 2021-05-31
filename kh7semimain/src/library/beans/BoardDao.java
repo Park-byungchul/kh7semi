@@ -112,7 +112,7 @@ public class BoardDao {
 		con.close();
 	}
 	
-	// 목록 조회 (일단 단순하게 구현)
+	// 목록 조회
 	public List<BoardDto> list() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
@@ -135,6 +135,40 @@ public class BoardDao {
 			boardDto.setBoardLike(rs.getInt("board_like"));
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			
+			boardList.add(boardDto);
+		}
+		
+		con.close();
+		
+		return boardList;
+	}
+	
+	// 검색
+	public List<BoardDto> search(String type, String keyword) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from board where instr(#1, ?) > 0";
+		sql = sql.replace("#1", type);
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+		
+		List<BoardDto> boardList = new ArrayList<>();
+		
+		while(rs.next()) {
+			BoardDto boardDto = new BoardDto();
+			
+			boardDto.setBoardNo(rs.getInt("boardNo"));
+			boardDto.setBoardNo(rs.getInt("clientNo"));
+			boardDto.setBoardNo(rs.getInt("boardTypeNo"));
+			boardDto.setBoardNo(rs.getInt("areaNo"));
+			boardDto.setBoardTitle(rs.getString("boardTitle"));
+			boardDto.setBoardTitle(rs.getString("boardContent"));
+			boardDto.setBoardNo(rs.getInt("boardRead"));
+			boardDto.setBoardNo(rs.getInt("boardLike"));
+			boardDto.setBoardDate(rs.getDate("boardDate"));
+			boardDto.setBoardNo(rs.getInt("boardSepNo"));
 			
 			boardList.add(boardDto);
 		}

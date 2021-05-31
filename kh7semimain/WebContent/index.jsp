@@ -25,11 +25,19 @@ boolean isChild = areaNo != 0;
 RecommendDao recommendDao = new RecommendDao();
 List<RecommendDto> recommendRank = recommendDao.rank(1, 3);
 
+request.setCharacterEncoding("UTF-8");
 
-
+String title;
+if(areaNo > 0){
+	title =areaDao.detail(areaNo).getAreaName();
+} else {
+ title = "메인 도서관";
+}
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/template/header.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 <div>
 	<article>

@@ -31,7 +31,7 @@
 		<table class="table table-border">
 			<tr>
 				<th>
-					<label>성명</label>
+					<label>이름</label>
 				</th>
 				<td>
 				<span><%=clientDto.getClientName()%></span>

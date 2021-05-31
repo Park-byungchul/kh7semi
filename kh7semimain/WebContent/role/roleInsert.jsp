@@ -12,7 +12,7 @@
 request.setCharacterEncoding("UTF-8");
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 ClientDao clientDao = new ClientDao();
-List<ClientDto> adminList = clientDao.adminList();
+List<ClientDto> adminList = clientDao.adminPermmisionList();
 AreaDao areaDao = new AreaDao();
 List<AreaDto> areaList = areaDao.list();
 
@@ -24,7 +24,7 @@ catch (Exception e){
 	areaNo = 0;
 }
 
-String title = "권한등록";
+String title = "권한 등록";
 if(areaNo > 0){
 	title += " : " + areaDao.detail(areaNo).getAreaName();
 }

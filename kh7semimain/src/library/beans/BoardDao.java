@@ -264,4 +264,21 @@ public class BoardDao {
 			
 		return count > 0;
 	}
+	
+	// 좋아요 갱신 기능
+	public boolean refreshBoardLike(int boardNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "update board "
+				+ "set board_like = (select count(*) from board_like where board_no = ?) "
+				+ "where board_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, boardNo);
+		ps.setInt(2, boardNo);
+		int count = ps.executeUpdate();
+		
+		con.close();
+		
+		return count > 0;
+	}
 }

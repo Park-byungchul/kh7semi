@@ -135,6 +135,7 @@ public class ClientDao {
 			clientDto = null;
 		}
 		
+		con.close();
 		return clientDto;
 	}
 	

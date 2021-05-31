@@ -155,6 +155,8 @@
 */
 .table {
 	width:100%;
+	table-layout: fixed;
+	word-break: break-all;
 }
 .table > thead > tr > th, 
 .table > thead > tr > td,
@@ -356,4 +358,10 @@ word-break:break-all;
 	white-space:nowrap;
 	text-overflow:ellipsis;
 */
+}
+
+
+/*bookSearchForm inline설정 */
+.bookSearchForm {
+	display:inline;
 }

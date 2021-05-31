@@ -5,26 +5,23 @@
 	pageEncoding="UTF-8"%>
 
 <%
+String root = request.getContextPath();
 ClientDao clientDao = new ClientDao();
 List<ClientDto> list = clientDao.list();
 int clientNo = Integer.parseInt(request.getParameter("clientNo"));
-
-int p;
-
-try {
-	p = Integer.parseInt(request.getParameter("p"));
-} catch (Exception e) {
-	p = 1;
-}
+String currentType = clientDao.get(clientNo).getClientType();
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <script>
 	// 목표 : 삭제버튼을 누르면 확인창 출력 후 확인을 누르면 전송
 	$(function(){
+		$("#clientType").val("<%=currentType%>");
+		var currentType = $("#clientType").val();
+		
 		$(".clientDelete").click(function(){
 			var choice = window.confirm("정말 삭제하시겠습니까?");
 			if (choice) {
@@ -33,10 +30,21 @@ try {
 				return false;
 			}
 		});
+
+		$("#clientType").change(function(){
+			if(currentType == "전체관리자" || currentType == "권한관리자"){
+				var change = window.confirm("등급 변경으로 권한이 삭제될 수 있습니다. 계속 진행하시겠습니까?");
+				if(!change){
+					$("#clientType").val("<%=currentType%>");
+				}
+				else{
+					currentType = "";
+				}
+			}
+		});
 	});
 </script>
 
-<div class="container-1000">
 	<div class="row text-left">
 		<h2>회원 목록</h2>
 	</div>
@@ -45,14 +53,12 @@ try {
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>회원번호</th>
-					<th>아이디</th>
-					<th>이름</th>
-					<th>이메일</th>
-					<th>생성일</th>
-					<th>대출가능일</th>
-					<th>등급</th>
-					<th>관리</th>
+					<th width="15%">아이디</th>
+					<th width="20%">이름</th>
+					<th width="20%">이메일</th>
+					<th width="20%">대출가능일</th>
+					<th width="12%">등급</th>
+					<th width="13%">관리</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -63,8 +69,7 @@ try {
 				boolean isEdit = clientNo == clientDto.getClientNo();
 				%>
 				<tr>
-					<td><%=clientDto.getClientNo()%></td>
-					<td><%=clientDto.getClientId()%></td>
+					<td><a href=<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>><%=clientDto.getClientId()%></a></td>
 					<%
 					if (isEdit) {
 					%>
@@ -75,23 +80,13 @@ try {
 							value="<%=clientDto.getClientName()%>"></td>
 						<td><input type="text" name="clientEmail" required
 							value="<%=clientDto.getClientEmail()%>"></td>
-						<%
-						} else {
-						%>
-						<td><%=clientDto.getClientName()%></td>
-						<td><%=clientDto.getClientEmail()%></td>
-						<%
-						}
-						%>
-						<td><%=clientDto.getClientMade()%></td>
-						<%
-						if (isEdit) {
-						%>
 						<td><input type="date" name="clientPossible" required
 							value="<%=clientDto.getClientPossible()%>"></td>
-						<td><select name="clientType">
-								<option>일반</option>
-								<option>관리</option>
+						<td><select id="clientType" name="clientType">
+								<option>일반사용자</option>
+								<option>일반관리자</option>
+								<option>권한관리자</option>
+								<option>전체관리자</option>
 						</select></td>
 						<td><input type="submit" value="완료">
 						<button><a
@@ -100,10 +95,12 @@ try {
 					<%
 					} else {
 					%>
-					<td><%=clientDto.getClientPossible()%></td>
-					<td><%=clientDto.getClientType()%></td>
-					<td><button><a href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>">수정</a></button>
-					<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
+						<td><%=clientDto.getClientName()%></td>
+						<td><%=clientDto.getClientEmail()%></td>
+						<td><%=clientDto.getClientPossible()%></td>
+						<td><%=clientDto.getClientType()%></td>
+						<td><button><a href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>">수정</a></button>
+						<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
 					<%
 					}
 					%>
@@ -113,32 +110,6 @@ try {
 				%>
 			</tbody>
 		</table>
-	</div>
-
-	<div class="row">
-		<ol class="pagination-list">
-			<li><a href="#">&lt;이전</a></li>
-
-			<%
-			for (int i = 1; i <= 10; i++) {
-			%>
-			<%
-			if (p == i) {
-			%>
-			<li class="on"><a href="#"><%=i%></a></li>
-			<%
-			} else {
-			%>
-			<li><a href="#"><%=i%></a></li>
-			<%
-			}
-			%>
-			<%
-			}
-			%>
-
-			<li><a href="#">다음&gt;</a></li>
-		</ol>
 	</div>
 
 </div>

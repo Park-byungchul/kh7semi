@@ -82,3 +82,30 @@ increment by 1
 nocycle
 nocache;
 
+create sequence notice_seq
+minvalue 1
+start with 1
+increment by 1
+nocycle
+nocache;
+
+create sequence qna_seq
+minvalue 1
+start with 1
+increment by 1
+nocycle
+nocache;
+
+create sequence freeboard_seq
+minvalue 1
+start with 1
+increment by 1
+nocycle
+nocache;
+
+create sequence review_seq
+minvalue 1
+start with 1
+increment by 1
+nocycle
+nocache;

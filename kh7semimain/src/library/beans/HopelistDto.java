@@ -3,11 +3,20 @@ package library.beans;
 import java.sql.Date;
 
 public class HopelistDto {
+	//희망도서 관련 정보
 	private int hopelistNo;
 	private int clientNo;
 	private int bookIsbn;
 	private String hopelistReason;
 	private Date hopelistDate;
+	private String hopelistLibrary;
+	
+	public String getHopelistLibrary() {
+		return hopelistLibrary;
+	}
+	public void setHopelistLibrary(String hopelistLibrary) {
+		this.hopelistLibrary = hopelistLibrary;
+	}
 	public HopelistDto() {
 		super();
 	}

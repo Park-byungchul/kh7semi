@@ -18,15 +18,15 @@ public class BookInsertServlet extends HttpServlet {
 		try {
 			req.setCharacterEncoding("UTF-8");
 			BookDto bookDto = new BookDto();
-			bookDto.setBookIsbn(Integer.parseInt(req.getParameter("bookIsbn")));
-			bookDto.setGenreNo(Integer.parseInt(req.getParameter("GenreNo")));
+			bookDto.setBookIsbn(Long.parseLong(req.getParameter("bookIsbn")));
+			bookDto.setGenreNo(Integer.parseInt(req.getParameter("genreNo")));
 			bookDto.setBookTitle(req.getParameter("bookName"));
 			bookDto.setBookAuthor(req.getParameter("bookAuthor"));
 			
 			BookDao bookDao = new BookDao();
 			bookDao.insert(bookDto);
 			
-			resp.sendRedirect("bookInsertSuccess.jsp");
+			resp.sendRedirect("bookList.jsp");
 
 		} catch (Exception e) {
 			e.printStackTrace();

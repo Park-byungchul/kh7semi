@@ -11,10 +11,10 @@ public class BookDao {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "insert into book "
-				+ "(book_isbn, genre_no, book_title, book_,author) "
+				+ "(book_isbn, genre_no, book_title, book_author) "
 				+ "values(?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, bookDto.getBookIsbn());
+		ps.setLong(1, bookDto.getBookIsbn());
 		ps.setInt(2, bookDto.getGenreNo());
 		ps.setString(3, bookDto.getBookTitle());
 		ps.setString(4, bookDto.getBookAuthor());
@@ -32,7 +32,7 @@ public class BookDao {
 		ps.setString(1, bookDto.getBookTitle());
 		ps.setString(2, bookDto.getBookAuthor());
 		ps.setInt(3, bookDto.getGenreNo());
-		ps.setInt(4, bookDto.getBookIsbn());
+		ps.setLong(4, bookDto.getBookIsbn());
 		int count = ps.executeUpdate();
 		
 		con.close();
@@ -40,19 +40,19 @@ public class BookDao {
 		return count > 0;
 	}
 	
-	public BookDto get(int bookIsbn) throws Exception {
+	public BookDto get(long bookIsbn) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "select * from book where book_isbn = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, bookIsbn);
+		ps.setLong(1, bookIsbn);
 		ResultSet rs = ps.executeQuery();
 		
 		BookDto bookDto;
 		if(rs.next()) {
 			bookDto = new BookDto();
 			
-			bookDto.setBookIsbn(rs.getInt("book_isbn"));
+			bookDto.setBookIsbn(rs.getLong("book_isbn"));
 			bookDto.setGenreNo(rs.getInt("genre_no"));
 			bookDto.setBookTitle(rs.getString("book_title"));
 			bookDto.setBookAuthor(rs.getString("book_author"));
@@ -78,7 +78,7 @@ public class BookDao {
 		while(rs.next()) {
 			BookDto bookDto = new BookDto();
 			
-			bookDto.setBookIsbn(rs.getInt("book_isbn"));
+			bookDto.setBookIsbn(rs.getLong("book_isbn"));
 			bookDto.setGenreNo(rs.getInt("genre_no"));
 			bookDto.setBookTitle(rs.getString("book_title"));
 			bookDto.setBookAuthor(rs.getString("book_author"));
@@ -94,7 +94,8 @@ public class BookDao {
 	public List<BookDto> search(String keyword) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "select * from book where (book_Title || book_author) like ? order by #1 asc";
+		String sql = "select * from book "
+	               + "where (book_title || book_author) like '%'||?||'%'";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
 		ResultSet rs = ps.executeQuery();
@@ -104,7 +105,7 @@ public class BookDao {
 		while(rs.next()) {
 			BookDto bookDto = new BookDto();
 			
-			bookDto.setBookIsbn(rs.getInt("book_isbn"));
+			bookDto.setBookIsbn(rs.getLong("book_isbn"));
 			bookDto.setGenreNo(rs.getInt("genre_no"));
 			bookDto.setBookTitle(rs.getString("book_title"));
 			bookDto.setBookAuthor(rs.getString("book_author"));
@@ -119,19 +120,20 @@ public class BookDao {
 	
 	public List<BookDto> search(String type, String keyword) throws Exception {
 		Connection con = JdbcUtils.getConnection();
-		
-		String sql = "select * from book where instr(#1, ?) > 0 order by #1 asc";
+
+		String sql = "select * from book "
+				+ "where #1 like '%'||?||'%' order by #1 asc";
 		sql = sql.replace("#1", type);
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
 		ResultSet rs = ps.executeQuery();
-
+		
 		List<BookDto> bookList = new ArrayList<>();
 		
 		while(rs.next()) {
 			BookDto bookDto = new BookDto();
 			
-			bookDto.setBookIsbn(rs.getInt("book_isbn"));
+			bookDto.setBookIsbn(rs.getLong("book_isbn"));
 			bookDto.setGenreNo(rs.getInt("genre_no"));
 			bookDto.setBookTitle(rs.getString("book_title"));
 			bookDto.setBookAuthor(rs.getString("book_author"));
@@ -144,12 +146,12 @@ public class BookDao {
 		return bookList;
 	}
 	
-	public boolean delete(int bookIsbn) throws Exception {
+	public boolean delete(long bookIsbn) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "delete book where book_isbn = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, bookIsbn);
+		ps.setLong(1, bookIsbn);
 		int count = ps.executeUpdate();
 		
 		con.close();

@@ -1,3 +1,5 @@
+<%@page import="library.beans.WishlistDto"%>
+<%@page import="library.beans.WishlistDao"%>
 <%@page import="library.beans.RecommendDto"%>
 <%@page import="library.beans.RecommendDao"%>
 <%@page import="library.beans.BookDto"%>
@@ -21,6 +23,9 @@ catch (Exception e){
 
 RecommendDao recommendDao = new RecommendDao();
 RecommendDto recommendDto = new RecommendDto();
+
+WishlistDao wishlistDao = new WishlistDao();
+WishlistDto wishlistDto = new WishlistDto();
 
 boolean isLogin = session.getAttribute("clientNo") != null;
 
@@ -49,8 +54,11 @@ catch (Exception e) {
 			}
 		});
 		
-		$(".bookRecommend").click(function(){
-			
+		$(".booklist-wishlistBtn-neg").click(function(){
+			window.alert("관심도서가 해제되었습니다.")
+		});
+		$(".booklist-wishlistBtn-pos").click(function(){
+			window.alert("관심도서 목록에 추가되었습니다.")
 		});
 	});
 </script>
@@ -87,14 +95,25 @@ catch (Exception e) {
 					<%
 						recommendDto.setClientNo(clientNo);
 						recommendDto.setBookIsbn(bookDto.getBookIsbn());
+						
+						wishlistDto.setClientNo(clientNo);
+						wishlistDto.setBookIsbn(bookDto.getBookIsbn());
+						
 						boolean isRecommend = recommendDao.check(recommendDto);
+						boolean isWishlist = wishlistDao.check(wishlistDto);
 						
 						if(isLogin && isRecommend) {
 					%>
-					<button class="bookRecommend"><a href="bookRecommendDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천취소</a></button>
+					<button class="booklist-btn"><a href="bookRecommendDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천취소</a></button>
 					<%} else if(isLogin && !isRecommend){%>
-					<button class="bookRecommend"><a href="bookRecommendInsert.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천하기</a></button>
+					<button class="booklist-btn"><a href="bookRecommendInsert.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천하기</a></button>
 					<%}%>
+					
+					<%if(isLogin && isWishlist) { %>
+					<button class="booklist-wishlistBtn-neg"><a href="bookWishlistDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">관심도서 해제</a></button>
+					<%} else if(isLogin && !isWishlist) { %>
+					<button class="booklist-wishlistBtn-pos"><a href="bookWishlistInsert.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">관심도서 담기</a></button>
+					<%} %>	
 					</td>
 				</tr>
 				<%}%>

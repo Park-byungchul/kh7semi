@@ -1,3 +1,5 @@
+<%@page import="library.beans.RoleDao"%>
+<%@page import="library.beans.AreaDto"%>
 <%@page import="library.beans.RoleAreaDto"%>
 <%@page import="library.beans.RoleAreaDao"%>
 <%@page import="java.util.List"%>
@@ -18,7 +20,7 @@ catch (Exception e){
 	areaNo = 0;
 }
 
-String title = "지점권한 관리";
+String title = "일반관리자 목록";
 if(areaNo > 0){
 	title += " : " + areaDao.detail(areaNo).getAreaName();
 }
@@ -28,7 +30,18 @@ ClientDao clientDao = new ClientDao();
 ClientDto clientDto = clientDao.get(clientNo);
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 
-List<RoleAreaDto> roleList = roleAreaDao.areaListByClient(clientDto.getClientNo());
+List<AreaDto> areaList;
+if(clientDto.getClientType().equals("전체관리자")){
+	areaList = areaDao.list();
+}
+else{
+	areaList = areaDao.list(clientNo);
+}
+
+RoleDao roleDao = new RoleDao();
+boolean isAdmin = roleDao.isAdmin(clientNo, areaNo);
+
+List<ClientDto> adminNormalList = clientDao.adminNormalList();
 %>
 
 <jsp:include page="/admin/adminMenuSidebar.jsp">
@@ -36,29 +49,64 @@ List<RoleAreaDto> roleList = roleAreaDao.areaListByClient(clientDto.getClientNo(
 </jsp:include>
 
 	<div class="row">
-		<h1>지점 권한 관리</h1>
+		<h1>일반관리자 목록 
+		<%if(areaNo > 0){ %>
+		(<%=areaDao.detail(areaNo).getAreaName() %>)
+		<%} %>
+		</h1>
+	</div>
+	
+	<div class="row text-right">
+		<button><a href="rolePartialInsert.jsp">관리자 추가</a></button>
 	</div>
 	
 	<div class="row text-center"">
-		<table class="table table-border">
-			<tr>
-				<th width="20%">
-					<span>지점</span>
-				</th>
-				<th>
-					<span>관리자</span>
-				</th>
-			</tr>
-			<%for (RoleAreaDto roleAreaDto : roleList){ %>
-				<tr>	
-					<td>
-					<%=roleAreaDto.getAreaName() %>
-					</td>
-					<td>
-						ddddddd
-					</td>
+		<table class="table table-border table-hover">
+			<thead>
+				<tr>
+					<th width="20%">
+						<span>지점</span>
+					</th>
+					<th>
+						<span>관리자</span>
+					</th>
 				</tr>
-			<%} %>
+			</thead>
+			</tbody>
+				<%if(areaNo == 0){ %>
+				<%for (AreaDto areaDto : areaList){ %>
+					<tr>	
+						<td>
+							<%=areaDto.getAreaName() %>
+						</td>
+						<td>
+						<%for(ClientDto adminNormalDto : adminNormalList){ %>
+							<%if(roleDao.isAdmin(adminNormalDto.getClientNo(), areaDto.getAreaNo())){ %>
+								<a href="rolePartialDetail.jsp?rolePartialClientNo=<%=adminNormalDto.getClientNo()%>&rolePartialAreaNo=<%=areaDto.getAreaNo()%>"><%=adminNormalDto.getClientName() %></a>
+							<%} %>
+						<%} %>
+						</td>
+					</tr>
+				<%} %>
+				<%} else if(isAdmin || clientDto.getClientType().equals("전체관리자")){%>
+					<tr>	
+						<td>
+							<%=areaDao.detail(areaNo).getAreaName() %>
+						</td>
+						<td>
+							<%for(ClientDto adminNormalDto : adminNormalList){ %>
+							<%if(roleDao.isAdmin(adminNormalDto.getClientNo(), areaNo)){ %>
+								<a href="rolePartialDetail.jsp"><%=adminNormalDto.getClientName() %></a>
+							<%} %>
+						<%} %>
+						</td>
+					</tr>
+				<%}else{ %>
+					<tr>
+						<td colspan="2"><span>해당 지점에 대한 관리자 권한이 없습니다</span></td>
+					</tr>
+				<%} %>
+			</tbody>
 		</table>
 	</div>
 

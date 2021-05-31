@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import library.beans.BoardDao;
 import library.beans.BoardLikeDao;
 import library.beans.BoardLikeDto;
 
@@ -24,6 +25,9 @@ public class BoardLikeDeleteServlet extends HttpServlet{
 			
 			BoardLikeDao boardLikeDao = new BoardLikeDao();
 			boardLikeDao.delete(boardLikeDto);
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.refreshBoardLike(boardLikeDto.getBoardNo());
 			
 			resp.sendRedirect("boardDetail.jsp?boardNo="+boardLikeDto.getBoardNo());
 		}

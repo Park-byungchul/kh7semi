@@ -18,15 +18,16 @@
 <%if(clientDto.getClientType().equals("전체관리자")){ %>
 <h3>전체관리자</h3>
 <ul>
-	<li><a href="<%=root %>/client/clientList.jsp">회원관리</a></li>
-	<li><a href="<%=root %>/area/areaList.jsp">지점관리</a></li>
-	<li><a href="<%=root %>/role/roleList.jsp">권한관리</a></li>
-</ul>
-<%} else{ %>
-<h3>권한관리자</h3>
-<ul>
-	<li><a href="<%=root %>/role/rolePartialList.jsp">내 지점 권한 관리</a></li>
+	<li><a href="<%=root %>/client/clientList.jsp">회원 목록</a></li>
+	<li><a href="<%=root %>/area/areaList.jsp">지점 목록</a></li>
+	<li><a href="<%=root %>/role/roleList.jsp">권한관리자 목록</a></li>
 </ul>
 <%} %>
+<h3>권한관리자</h3>
+<ul>
+	<li><a href="<%=root %>/client/clientPartialList.jsp">회원 목록</a></li>
+	<li><a href="<%=root %>/role/rolePartialList.jsp">일반관리자 목록</a></li>
+</ul>
+
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>

@@ -48,10 +48,11 @@
 				</div>
 				<div class="row">
 					<input type="submit" value="수정">
+				</form>
 					<button><a href="areaList.jsp">취소</a></button>
 					<button id="areaDeleteBtn"><a href="areaDelete.kh?areaNo=<%=areaDto.getAreaNo() %>">삭제</a></button>
 				</div>
-			</form>
+			
 		</div>
 	</div>
 

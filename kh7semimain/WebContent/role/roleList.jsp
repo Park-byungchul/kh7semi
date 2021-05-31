@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
 <%@page import="library.beans.RoleAreaDto"%>
@@ -7,12 +8,30 @@
 	pageEncoding="UTF-8"%>
 
 <%
+String root = request.getContextPath();
+request.setCharacterEncoding("UTF-8");
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 ClientDao clientDao = new ClientDao();
 List<ClientDto> adminList = clientDao.adminList();
+
+AreaDao areaDao = new AreaDao();
+int areaNo;
+try{
+	areaNo = (int)session.getAttribute("areaNo");
+}
+catch (Exception e){
+	areaNo = 0;
+}
+
+String title = "권한관리";
+if(areaNo > 0){
+	title += " : " + areaDao.detail(areaNo).getAreaName();
+}
 %>
 
-<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 	<div class="row text-left">
 		<h2>관리자 권한 목록</h2>
@@ -34,13 +53,13 @@ List<ClientDto> adminList = clientDao.adminList();
 				<%for(ClientDto clientDto : adminList){ %>
 					<tr>
 						<td>
-							<%=clientDto.getClientName() %>(<%=clientDto.getClientNo() %>)
+							<a href="<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>"><%=clientDto.getClientName() %></a>
 						</td>
 						<td>
 							<%List<RoleAreaDto> roleList = roleAreaDao.areaListByClient(clientDto.getClientNo()); %>
 							
 							<%for (RoleAreaDto roleAreaDto : roleList){ %>
-								<%=roleAreaDto.getAreaName() %>
+								<a href="roleDetail.jsp?roleClientNo=<%=roleAreaDto.getClientNo()%>&roleAreaNo=<%=roleAreaDto.getAreaNo()%>"><%=roleAreaDto.getAreaName() %></a>
 							<%} %>
 						</td>
 					</tr>

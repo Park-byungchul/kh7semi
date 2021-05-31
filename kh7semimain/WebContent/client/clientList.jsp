@@ -5,6 +5,7 @@
 	pageEncoding="UTF-8"%>
 
 <%
+String root = request.getContextPath();
 ClientDao clientDao = new ClientDao();
 List<ClientDto> list = clientDao.list();
 %>
@@ -35,24 +36,20 @@ List<ClientDto> list = clientDao.list();
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>회원번호</th>
-					<th>아이디</th>
-					<th>이름</th>
-					<th>이메일</th>
-					<th>생성일</th>
-					<th>대출가능일</th>
-					<th>등급</th>
-					<th>관리</th>
+					<th width="15%">아이디</th>
+					<th width="20%">이름</th>
+					<th width="20%">이메일</th>
+					<th width="20%">대출가능일</th>
+					<th width="12%">등급</th>
+					<th width="13%">관리</th>
 				</tr>
 			</thead>
 			<tbody>
 				<%for (ClientDto clientDto : list) { %>
 				<tr>
-					<td><%=clientDto.getClientNo()%></td>
-					<td><%=clientDto.getClientId()%></td>
+					<td><a href=<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>><%=clientDto.getClientId()%></a></td>
 					<td><%=clientDto.getClientName()%></td>
 					<td><%=clientDto.getClientEmail()%></td>
-					<td><%=clientDto.getClientMade()%></td>
 					<td><%=clientDto.getClientPossible()%></td>
 					<td><%=clientDto.getClientType()%></td>
 					<td>

@@ -6,7 +6,6 @@
 <%@page import="library.beans.HopelistDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/template/header.jsp"></jsp:include>
 <%
 	int hopelistNo = Integer.parseInt(request.getParameter("hopelistNo"));
 	HopelistDao hopelistDao = new HopelistDao();
@@ -18,6 +17,9 @@
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto = clientDao.get(hopelistDto.getClientNo());
 %>
+
+<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 $(function(){	
@@ -35,8 +37,8 @@ $(function(){
 });
 	
 </script>
-<div class="container-600">
-	<div class="row">
+
+	<div class="row text-center">
 		<h2>희망도서 신청 수정</h2>
 	</div>
 		<div class="row">
@@ -99,6 +101,5 @@ $(function(){
 				<input type="button" value="목록" class="form-btn form-btn-normal">
 				</a>
 	</div>
-</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

@@ -165,7 +165,7 @@
 					<ul>
 						<li><a href="<%=request.getContextPath() %>/client/clientDetail.jsp">회원 정보</a></li>
 						<li><a href="#">대출/예약/신청도서 관리</a></li>
-						<li><a href="#">관심도서</a></li>
+						<li><a href="<%=root%>/wishlist/wishlist.jsp">관심도서</a></li>
 					</ul>
 				</li>
 				

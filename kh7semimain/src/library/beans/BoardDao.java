@@ -112,7 +112,7 @@ public class BoardDao {
 		con.close();
 	}
 	
-	// 목록 조회 (일단 단순하게 구현)
+	// 목록 조회
 	public List<BoardDto> list() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
@@ -135,6 +135,40 @@ public class BoardDao {
 			boardDto.setBoardLike(rs.getInt("board_like"));
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			
+			boardList.add(boardDto);
+		}
+		
+		con.close();
+		
+		return boardList;
+	}
+	
+	// 검색
+	public List<BoardDto> search(String type, String keyword) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from board where instr(#1, ?) > 0";
+		sql = sql.replace("#1", type);
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+		
+		List<BoardDto> boardList = new ArrayList<>();
+		
+		while(rs.next()) {
+			BoardDto boardDto = new BoardDto();
+			
+			boardDto.setBoardNo(rs.getInt("boardNo"));
+			boardDto.setBoardNo(rs.getInt("clientNo"));
+			boardDto.setBoardNo(rs.getInt("boardTypeNo"));
+			boardDto.setBoardNo(rs.getInt("areaNo"));
+			boardDto.setBoardTitle(rs.getString("boardTitle"));
+			boardDto.setBoardTitle(rs.getString("boardContent"));
+			boardDto.setBoardNo(rs.getInt("boardRead"));
+			boardDto.setBoardNo(rs.getInt("boardLike"));
+			boardDto.setBoardDate(rs.getDate("boardDate"));
+			boardDto.setBoardNo(rs.getInt("boardSepNo"));
 			
 			boardList.add(boardDto);
 		}
@@ -263,5 +297,96 @@ public class BoardDao {
 		con.close();
 			
 		return count > 0;
+	}
+	
+	// 좋아요 갱신 기능
+	public boolean refreshBoardLike(int boardNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "update board "
+				+ "set board_like = (select count(*) from board_like where board_no = ?) "
+				+ "where board_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, boardNo);
+		ps.setInt(2, boardNo);
+		int count = ps.executeUpdate();
+		
+		con.close();
+		
+		return count > 0;
+	}
+	
+	//이전글 조회 기능
+	public BoardDto getPrevious(int boardTypeNo, int boardSepNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+			
+		String sql = "select * from board "
+				+ "where board_no = "
+				+ "(select max(board_no) from board where board_type_no = ? and board_sep_no < ?)";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, boardTypeNo);
+		ps.setInt(2, boardSepNo);
+		ResultSet rs = ps.executeQuery();
+			
+		BoardDto boardDto;
+			
+		if(rs.next()) {
+			boardDto = new BoardDto();
+				
+			boardDto.setBoardNo(rs.getInt("board_no"));
+			boardDto.setClientNo(rs.getInt("client_no"));
+			boardDto.setBoardTypeNo(rs.getInt("board_type_no"));
+			boardDto.setAreaNo(rs.getInt("area_no"));
+			boardDto.setBoardTitle(rs.getString("board_title"));
+			boardDto.setBoardField(rs.getString("board_field"));
+			boardDto.setBoardRead(rs.getInt("board_read"));
+			boardDto.setBoardLike(rs.getInt("board_like"));
+			boardDto.setBoardDate(rs.getDate("board_date"));
+			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
+		}
+		else {
+			boardDto = null;
+		}
+			
+		con.close();
+			
+		return boardDto;
+	}
+		
+	//다음글 조회 기능
+	public BoardDto getNext(int boardTypeNo, int boardSepNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+			
+		String sql = "select * from board "
+				+ "where board_no = "
+				+ "(select min(board_no) from board where board_type_no = ? and board_sep_no > ?)";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, boardTypeNo);
+		ps.setInt(2, boardSepNo);
+		ResultSet rs = ps.executeQuery();
+			
+		BoardDto boardDto;
+			
+		if(rs.next()) {
+			boardDto = new BoardDto();
+				
+			boardDto.setBoardNo(rs.getInt("board_no"));
+			boardDto.setClientNo(rs.getInt("client_no"));
+			boardDto.setBoardTypeNo(rs.getInt("board_type_no"));
+			boardDto.setAreaNo(rs.getInt("area_no"));
+			boardDto.setBoardTitle(rs.getString("board_title"));
+			boardDto.setBoardField(rs.getString("board_field"));
+			boardDto.setBoardRead(rs.getInt("board_read"));
+			boardDto.setBoardLike(rs.getInt("board_like"));
+			boardDto.setBoardDate(rs.getDate("board_date"));
+			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
+		}
+		else {
+			boardDto = null;
+		}
+		
+		con.close();
+		
+		return boardDto;
 	}
 }

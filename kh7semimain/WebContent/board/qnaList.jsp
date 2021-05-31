@@ -9,13 +9,68 @@
     pageEncoding="UTF-8"%>
 
 <%
-	BoardListDao boardListDao = new BoardListDao();
-	List<BoardListDto> boardList = boardListDao.list(2);
+	request.setCharacterEncoding("UTF-8");
+
+	// 검색 변수
+	String type = request.getParameter("type");
+	String keyword = request.getParameter("keyword");
 	
+	boolean isSearch = type != null && keyword != null && !keyword.trim().equals("");
+	
+	// 페이지 번호
+	int pageNo;
+	
+	try {
+		pageNo = Integer.parseInt(request.getParameter("pageNo"));
+		if(pageNo < 1) throw new Exception();
+	}
+	catch (Exception e) {
+		pageNo = 1;
+	}
+	
+	// 한 페이지 글 개수
+	int pageSize;
+	try {
+		pageSize = Integer.parseInt(request.getParameter("pageSize"));
+		if(pageSize < 10) throw new Exception();
+	}
+	catch (Exception e) {
+		pageSize = 10;
+	}
+	
+	BoardListDao boardListDao = new BoardListDao();
+	List<BoardListDto> boardList;
+	
+	// 시작과 끝번호
+	int startRow = pageNo * pageSize - (pageSize - 1);
+	int endRow = pageNo * pageSize;
+	
+	// 페이지 네비게이션 영역 계산
+	int count;
+	
+	if(isSearch) count = boardListDao.getCount(type, keyword, 2);
+	else count = boardListDao.getCount(2);
+	
+	int blockSize = 10;
+	
+	int lastBlock = (count + pageSize - 1) / pageSize;	
+	// int lastBlock = (count - 1) / pageSize + 1;
+	
+	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+	int endBlock = startBlock + blockSize - 1;
+	
+	if(endBlock > lastBlock) // 범위를 벗어나면
+		endBlock = lastBlock;
+
+	// 목록 출력 (일반 목록 / 검색)
+	if(!isSearch)
+		boardList = boardListDao.list(2, startRow, endRow);
+	else
+		boardList = boardListDao.search(2, type, keyword, startRow, endRow);
+	
+	// 회원 정보
 	Integer clientNo = (Integer)session.getAttribute("clientNo");
 	boolean isLogin = (clientNo != null);
-	
-	int p;
 	
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto;
@@ -24,16 +79,42 @@
 		clientDto = null;
 	else
 		clientDto = clientDao.get(clientNo);
-
-	try {
-		p = Integer.parseInt(request.getParameter("p"));
-	}
-	catch (Exception e) {
-		p = 1;
-	}
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<%if(isSearch) { %>
+	<script>
+		$(function() {
+			$("select[name=type]").val("<%=type%>");
+			$("input[name=keyword]").val("<%=keyword%>");
+		});
+	</script>
+<%} %>
+
+<script>
+	$(function() {
+		$(".pagination > a").click(function() {
+			var pageNo = $(this).text();
+			
+			if(pageNo == "이전") {
+				pageNo = parseInt($(".pagination > a :not(.move-link)").first().text()) - 1;
+				$("input[name=pageNo]".val(pageNo));
+				$(".serach-form").submit();
+			}
+			else if(pageNo == "다음") {
+				pageNo = parseInt($(".pagination > a:not(.move-link)").last().text()) + 1;
+				$("input[name=pageNo]".val(pageNo));
+				$(".serach-form").submit();
+			}
+			else {
+				$("input[name=pageNo]".val(pageNo));
+				$(".serach-form").submit();
+			}
+		});
+	});
+</script>
 
 <div class="container-1000">
 	<div class="row text-left">
@@ -77,27 +158,41 @@
 		</table>
 	</div>
 
-	<%if(isLogin) { %>
+	<%if(isLogin && clientDto.getClientType().equals("관리")) { %>
 		<div class="row text-right">
 			<a href="boardWrite.jsp?boardTypeNo=2" class="link-btn">글쓰기</a>
 		</div>
 	<%} %>
 	
 	<div class="row">
-		<ol class="pagination-list">
-		<li><a href="#">&lt;이전</a></li>
-		
-		<%for(int i = 1; i <= 10; i++) { %>
-			<%if(p == i) { %>
-				<li class="on"><a href="#"><%=i%></a></li>
-			<%} else {%>
-				<li><a href="#"><%=i%></a></li>
+		<div class="pagination">
+			<%if(startBlock > 1) { %>
+				<a class="move-link">이전</a>
 			<%} %>
-		<%} %>
-
-		<li><a href="#">다음&gt;</a></li>
-		</ol>
+			<%for(int i = startBlock; i <= endBlock; i++) {%>
+				<%if(i == pageNo) {%>
+					<a class="on"><%=i %></a>
+				<%} else { %>
+					<a><%=i %></a>
+				<%} %>
+			<%} %>
+	 		<%if(endBlock < lastBlock) { %>
+				<a class="move-link">다음</a>
+			<%} %>
+		</div>
 	</div>
+	
+	<form class="search-form" action="qnaList.jsp" method="get">
+		<input type="hidden" name="pageNo">
+	
+		<select name="type">
+			<option value="board_title">제목</option>
+			<option value="client_name">작성자</option>
+		</select>
+		
+		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
+		<input type="submit" value="검색" class="btn-style">
+	</form>
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

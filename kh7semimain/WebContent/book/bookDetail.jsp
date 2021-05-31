@@ -22,13 +22,13 @@
 					<label>ISBN : </label><span><%=bookDto.getBookIsbn() %></span>
 				</div>
 				<div class="row">
-					<label>장르 번호 : </label><input type="text" name="genreNo">
+					<label>장르 번호 : </label><input type="text" name="genreNo" value="<%=bookDto.getGenreNo()%>">
 				</div>
 				<div class="row">
-					<label>제목 : </label><input type="text" name="bookTitle">
+					<label>제목 : </label><input type="text" name="bookTitle" value="<%=bookDto.getBookTitle()%>">
 				</div>
 				<div class="row">
-					<label>저자 : </label><input type="text" name="bookAuthor">
+					<label>저자 : </label><input type="text" name="bookAuthor" value="<%=bookDto.getBookAuthor()%>">		
 				</div>
 		</div>
 	</div>

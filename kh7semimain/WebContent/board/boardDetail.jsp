@@ -80,6 +80,12 @@
 		boardLikeDto.setClientNo(clientNo);
 		isLike = boardLikeDao.check(boardLikeDto);
 	}
+	
+	//이전글 정보 불러오기
+	BoardDto prevBoardDto = boardDao.getPrevious(boardListDto.getBoardTypeNo(), boardListDto.getBoardSepNo());
+	
+	//다음글 정보 불러오기
+	BoardDto nextBoardDto = boardDao.getNext(boardListDto.getBoardTypeNo(), boardListDto.getBoardSepNo());
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -165,6 +171,27 @@
 			<%} %>
 		<%} %>
 		<a href="#" onclick="chooseList()" class="link-btn">목록</a>
+	</div>
+	
+	<div class="row text-left">
+		다음글 : 
+		<%if(nextBoardDto == null){%>
+		다음글이 없습니다.
+		<%}else{ %>
+		<a href="boardDetail.jsp?boardNo=<%=nextBoardDto.getBoardNo()%>">
+			<%=nextBoardDto.getBoardTitle()%>
+		</a>
+		<%} %>
+	</div>
+	<div class="row text-left">
+		이전글 : 
+		<%if(prevBoardDto == null){%>
+		이전글이 없습니다.
+		<%}else{ %>
+		<a href="boardDetail.jsp?boardNo=<%=prevBoardDto.getBoardNo()%>">
+			<%=prevBoardDto.getBoardTitle()%>
+		</a>
+		<%} %>
 	</div>
 </div>
 

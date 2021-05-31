@@ -23,7 +23,7 @@ public class RoleDeleteServlet extends HttpServlet {
 			RoleDao roleDao = new RoleDao();
 			
 			roleDao.delete(roleClientNo, roleAreaNo);
-			
+
 			String type = req.getParameter("type");
 			if (type == null) {
 				resp.sendRedirect("roleList.jsp");

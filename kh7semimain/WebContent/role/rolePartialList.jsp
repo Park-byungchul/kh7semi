@@ -1,3 +1,4 @@
+
 <%@page import="library.beans.RoleDao"%>
 <%@page import="library.beans.AreaDto"%>
 <%@page import="library.beans.RoleAreaDto"%>
@@ -20,6 +21,7 @@ catch (Exception e){
 	areaNo = 0;
 }
 
+
 String title = "일반관리자 목록";
 if(areaNo > 0){
 	title += " : " + areaDao.detail(areaNo).getAreaName();
@@ -29,6 +31,7 @@ int clientNo = (int)session.getAttribute("clientNo");
 ClientDao clientDao = new ClientDao();
 ClientDto clientDto = clientDao.get(clientNo);
 RoleAreaDao roleAreaDao = new RoleAreaDao();
+
 
 List<AreaDto> areaList;
 if(clientDto.getClientType().equals("전체관리자")){

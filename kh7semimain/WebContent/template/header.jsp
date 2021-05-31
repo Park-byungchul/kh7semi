@@ -9,7 +9,6 @@
 
 <%
 	String pageNow = request.getRequestURI();
-
 	String title = request.getParameter("title");
 
 	String root = request.getContextPath();

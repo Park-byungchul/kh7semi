@@ -24,6 +24,7 @@ catch (Exception e){
 	areaNo = 0;
 }
 
+
 String title = "권한 등록";
 if(areaNo > 0){
 	title += " : " + areaDao.detail(areaNo).getAreaName();

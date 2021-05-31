@@ -31,13 +31,20 @@
 	
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto = clientDao.get(clientNo);
+	
+	String title;
+	if(areaNo > 0){
+		title = areaDao.detail(areaNo).getAreaName();
+	} else {
+	 title = "메인 도서관";
+	 }
 %>
  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>도서관</title>
+	<title><%=title %></title>
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">

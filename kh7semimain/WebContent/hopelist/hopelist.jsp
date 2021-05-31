@@ -5,7 +5,7 @@
 <%@page import="library.beans.HopelistDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/template/header.jsp"></jsp:include>
+    
 <%
 	request.setCharacterEncoding("UTF-8");
 	HopelistDao hopelistDao = new HopelistDao();
@@ -52,7 +52,9 @@
 	}
 
 %>
-<div class="container-600">
+
+<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
+
 	<div class="row">
 		<h2>희망도서 신청 목록페이지</h2>
 	</div>
@@ -122,6 +124,5 @@
 			
 		</div>	
 	</div>
-</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

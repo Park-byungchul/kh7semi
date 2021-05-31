@@ -4,7 +4,6 @@
 <%@page import="library.beans.HopelistDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/template/header.jsp"></jsp:include>
 <%
 	int hopelistNo = Integer.parseInt(request.getParameter("hopelistNo"));
 	HopelistDao hopelistDao = new HopelistDao();
@@ -14,8 +13,12 @@
 	BookDto bookDto = bookDao.get(hopelistDto.getBookIsbn());
 
 %>
-<div class="container-600">
-	<h2>내 희망도서 신청 <%=hopelistNo%>번 페이지</h2>
+
+<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
+
+	<div class="row text-center">
+		<h2>내 희망도서 신청 <%=hopelistNo%>번 페이지</h2>
+	</div>
 	
 		<div class="row">
 			도서명 : 
@@ -49,6 +52,5 @@
 			
 			<a href="hopelist.jsp" class="link-btn">목록</a>
 		</div>
-</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

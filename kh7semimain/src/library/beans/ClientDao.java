@@ -135,6 +135,30 @@ public class ClientDao {
 			clientDto = null;
 		}
 		
+		con.close();
 		return clientDto;
+	}
+	
+	public List<ClientDto> adminList() throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from client where client_type = '권한관리자'";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		List<ClientDto> list = new ArrayList<>();
+		while(rs.next()) {
+			ClientDto clientDto = new ClientDto();
+			clientDto.setClientNo(rs.getInt("client_no"));
+			clientDto.setClientId(rs.getString("client_id"));
+			clientDto.setClientName(rs.getString("client_name"));
+			clientDto.setClientEmail(rs.getString("client_email"));
+			clientDto.setClientMade(rs.getDate("client_made"));
+			clientDto.setClientPossible(rs.getDate("client_possible"));
+			clientDto.setClientType(rs.getString("client_type"));
+			list.add(clientDto);
+		}
+		
+		con.close();
+		return list;
 	}
 }

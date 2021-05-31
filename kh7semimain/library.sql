@@ -7,7 +7,7 @@ CREATE TABLE Client (
 	client_email	varchar2(50)	not NULL,
 	client_made	date	default sysdate  not null,
 	client_possible	date	default sysdate  not null,
-	client_type	char(6) default '일반' not null check(client_type in ('일반', '관리')),
+	client_type	char(15) default '일반사용자' not null check(client_type in ('일반사용자', '일반관리자', '권한관리자', '전체관리자')),
 	client_phone char(13) not null check(regexp_like(client_phone,'^010-\d{4}-\d{4}$'))
 );
 
@@ -35,10 +35,10 @@ CREATE TABLE Book (
 
 --관리자 권한 테이블
 CREATE TABLE role (
-	role_no	number(10)	primary key,
 	client_no	references client(client_no) on delete cascade,
 	area_no	references area(area_no) on delete cascade,
-	role_date	date	default sysdate  not null
+	role_date	date	default sysdate  not null,
+	primary key(client_no, area_no)
 );
 
 -- 게시판 종류 테이블
@@ -160,3 +160,14 @@ CREATE TABLE boardComment (
 ----view 생성권한, 추천도서 count
 grant create view to kh7semi2;
 create or replace view recommendCount as select book_isbn, count(recommend_no) as recommendCount from recommend group by book_isbn; 
+
+-- 관리자 권한
+create or replace view roleArea as
+select R.role_no, C.client_name, A.area_name, R.role_date
+from role R, client C, area A
+where R.area_no = A.area_no and R.client_no = C.client_no;
+
+create or replace view roleArea as
+select C.client_no, C.client_name, A.area_no, A.area_name, R.role_date
+from role R, client C, area A
+where R.area_no = A.area_no and R.client_no = C.client_no;

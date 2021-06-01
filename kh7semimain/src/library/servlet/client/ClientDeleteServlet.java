@@ -21,8 +21,11 @@ public class ClientDeleteServlet extends HttpServlet {
 			ClientDao clientDao = new ClientDao();
 			clientDao.delete(clientNo);
 			
-			resp.sendRedirect("clientList.jsp");
-			
+			if(req.getParameter("type") == null) {
+				resp.sendRedirect("clientList.jsp");
+			} else {
+				resp.sendRedirect("clientPartialList.jsp");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);

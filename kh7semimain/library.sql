@@ -15,7 +15,7 @@ CREATE TABLE Client (
 CREATE TABLE area (
 	area_no	number(10)	primary key,
 	area_name	varchar2(30)	NOT NULL,
-	area_location	varchar2(300)	NOT NULL,
+	area_location	varchar2(300)	NOT NULL,ecl
 	area_call	char(13)	not NULL check(regexp_like(area_call,'^010-\d{4}-\d{4}$'))
 );
 

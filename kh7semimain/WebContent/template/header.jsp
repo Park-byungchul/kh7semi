@@ -1,3 +1,4 @@
+<%@page import="library.beans.RoleDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
 <%@page import="library.beans.AreaDto"%>
@@ -7,6 +8,9 @@
     pageEncoding="UTF-8"%>
 
 <%
+	String pageNow = request.getRequestURI();
+	String title = request.getParameter("title");
+
 	String root = request.getContextPath();
 	boolean isLogin = session.getAttribute("clientNo") != null;
 	
@@ -32,19 +36,20 @@
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto = clientDao.get(clientNo);
 	
-	String title;
-	if(areaNo > 0){
-		title = areaDao.detail(areaNo).getAreaName();
-	} else {
-	 title = "메인 도서관";
-	 }
+	boolean adminAll = false;
+	boolean adminPart = false;
+	
+	if(clientDto != null){
+		adminAll = clientDto.getClientType().equals("전체관리자");
+		adminPart = clientDto.getClientType().equals("권한관리자");
+	}
 %>
  
 <!DOCTYPE html>
 <html>
 <head>
+<title><%=title %></title>
 <meta charset="UTF-8">
-	<title><%=title %></title>
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
@@ -62,7 +67,7 @@
 	function areaChange(){
 		var area = document.querySelector("#area");
 		if(area.value){
-			location.href = area.value;
+			location.href = area.value + "&back=<%=pageNow%>";
 		}
 	}
 </script>
@@ -75,7 +80,7 @@
 			<a href="<%=root %>/client/clientInsert.jsp" class="right">회원가입</a>
 			<a href="<%=root %>/client/login.jsp" class="right">로그인</a>
 			<%}else{ %>
-			<a href="<%=root %>/client/clientDetail.jsp" class="right">회원 정보</a>
+			<a href="<%=root %>/client/clientDetail.jsp" class="right">마이페이지</a>
 			<a href="<%=root %>/client/logout.kh" class="right">로그아웃</a>
 			<%} %>
 			<select id="area" onchange="areaChange();" class="left">
@@ -103,14 +108,12 @@
 					<input type="submit" value="검색">
 				</form>
 			</div>
-			<%if(clientDto != null){ %>
-				<%if(clientDto.getClientType().equals("전체관리자") || clientDto.getClientType().equals("권한관리자")){ %>
+				<%if(adminAll || adminPart){ %>
 					<div class="right">
 						<span><%=clientDto.getClientType() %></span>
 						<a href="<%=root %>/admin/adminMenu.jsp">관리자메뉴</a>
 					</div>
 				<%} %>
-			<%} %>
 			
 		</div>
 	

@@ -8,25 +8,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import library.beans.RoleAreaDao;
 import library.beans.RoleDao;
-import library.beans.RoleDto;
 
-@WebServlet(urlPatterns = "/role/roleInsert.kh")
-public class RoleInsertServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/role/roleDelete.kh")
+public class RoleDeleteServlet extends HttpServlet {
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try {
-			req.setCharacterEncoding("UTF-8");
-
-			int clientNo = Integer.parseInt(req.getParameter("clientNo"));
-			int areaNo = Integer.parseInt(req.getParameter("areaNo"));
-			RoleDto roleDto = new RoleDto();
-			roleDto.setClientNo(clientNo);
-			roleDto.setAreaNo(areaNo);
-
+			int roleClientNo = Integer.parseInt(req.getParameter("roleClientNo"));
+			int roleAreaNo = Integer.parseInt(req.getParameter("roleAreaNo"));
+			
 			RoleDao roleDao = new RoleDao();
-			roleDao.insert(roleDto);
+			
+			roleDao.delete(roleClientNo, roleAreaNo);
 
 			String type = req.getParameter("type");
 			if (type == null) {

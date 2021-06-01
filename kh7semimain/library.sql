@@ -58,7 +58,8 @@ CREATE TABLE board (
 	board_read	number(19)	default 0 NOT NULL check(board_read >= 0),
 	board_like	number(19)	default 0 NOT NULL check(board_like >= 0),
 	board_date	date	default sysdate not null,
-    board_sep_no number(19) not null
+    board_sep_no number(19) not null,
+    board_reply number(19) default 0 not null check(board_reply >= 0)
 );
 
 --희망도서 신청 테이블
@@ -172,6 +173,7 @@ CREATE TABLE board_comment (
 	comment_no	number(19)	primary key,
 	client_no	references client(client_no)  on delete set null,
 	board_no	references board(board_no) on delete cascade,
+    board_type_no   references board_type(board_type_no) on delete cascade,
 	comment_content	varchar2(900)	NOT NULL,
 	comment_date	date	default sysdate NOT NULL,
 	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
@@ -207,3 +209,8 @@ board_no references board(board_no) on delete cascade,
 like_time date default sysdate not null,
 primary key(client_no, board_no)
 );
+
+-- comment에 게시판 번호 추가
+alter table board_comment add board_type_no references board_type(board_type_no) on delete cascade;
+
+alter table board add board_reply number(19) default 0 not null check(board_reply >= 0);

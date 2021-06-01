@@ -37,8 +37,11 @@ public class ClientEditServlet extends HttpServlet {
 				roleDao.delete(ClientNo);
 			}
 			
-			if(result) {
+			if(req.getParameter("type") == null) {
 				resp.sendRedirect("clientList.jsp");
+			}
+			else {
+				resp.sendRedirect("clientPartialList.jsp");
 			}
 			
 		} catch (Exception e) {

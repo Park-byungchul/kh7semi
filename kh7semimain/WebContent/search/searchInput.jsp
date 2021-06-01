@@ -23,7 +23,7 @@
 		
 %>
 
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
+<jsp:include page="/search/searchSidebar.jsp"></jsp:include>
 
 <style>
 	input[type="button"] {

@@ -59,7 +59,8 @@ CREATE TABLE board (
 	board_like	number(19)	default 0 NOT NULL check(board_like >= 0),
 	board_date	date	default sysdate not null,
     board_sep_no number(19) not null,
-    board_reply number(19) default 0 not null check(board_reply >= 0)
+    board_reply number(19) default 0 not null check(board_reply >= 0),
+    board_open varchar(9) default '공개' not null check(board_open in ('공개', '비공개'))
 );
 
 --희망도서 신청 테이블
@@ -206,7 +207,7 @@ drop view board_list;
 create view board_list as
 select B.board_no, B.area_no as board_area, B.board_type_no, B.board_title, 
         B.board_date, B.board_read, B.board_like, B.client_no as board_writer,
-        B.board_sep_no, B.board_reply,
+        B.board_sep_no, B.board_reply, B.board_open,
         C.client_no, C.client_name, 
         A.area_no, A.area_name,
         BT.board_type_no as type_no, BT.board_type_name
@@ -214,3 +215,30 @@ from board B
 left outer join client C on B.client_no = C.client_no
 left outer join area A on B.area_no = A.area_no
 left outer join board_type BT on B.board_type_no = bt.board_type_no;
+
+-- 질문 답변 게시판 상태를 위한 테이블
+drop table board_answer;
+
+create table board_answer (
+board_no references board(board_no) on delete cascade,
+board_status varchar2(12) default '접수중' not null check (board_status in ('접수중', '답변완료')),
+answer_content varchar2(4000) default '아직 답변이 등록되지 않았습니다.' not null,
+answer_date Date default sysdate not null,
+primary key(board_no)
+);
+
+drop view board_qna;
+
+create view board_qna as
+select B.board_no, B.client_no, B.area_no as board_area_no,
+        B.board_title, B.board_field, B.board_read, B.board_date, B.board_open,
+        BA.board_no as answer_no, BA.board_status, BA.answer_content,
+        A.area_no, A.area_name
+from board B
+left outer join board_answer BA on B.board_no = BA.board_no
+left outer join area A on A.area_no = B.area_no
+where B.board_type_no = 2;
+
+select * from board_list;
+
+alter table board add board_open varchar(9) default '공개' not null check(board_open in ('공개', '비공개'));

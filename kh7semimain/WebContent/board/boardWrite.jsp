@@ -81,6 +81,23 @@
 						<textarea name="boardField" rows="15" class="text-right form-input"></textarea>
 					</td>
 				</tr>
+				
+				<%if(boardTypeNo == 2) { %>
+					<tr>
+						<th class="text-left" style="background-color:lightgray;">공개 여부</th>
+						<td>
+							<div>
+							    <input type="radio" name="boardOpen" value="공개">
+							    <label for="공개">공개</label>
+							    
+							    <input type="radio" name="boardOpen" value="비공개" checked>
+							    <label for="비공개">비공개</label>
+						  	</div>
+						</td>
+					</tr>
+				<%} else { %>
+					<input type="hidden" name="boardOpen" value="공개">
+				<%} %>
 			</tbody>
 		</table>
 

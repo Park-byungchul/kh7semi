@@ -70,7 +70,7 @@ RoleAreaDto roleAreaDto = roleAreaDao.get(roleClientNo, roleAreaNo);
 					<select name="clientNo" required id="roleClient">
 						<option value="">관리자를 선택하세요</option>
 						<%for(ClientDto clientDto : adminList){ %>
-							<option value="<%=clientDto.getClientNo() %>"><%=clientDto.getClientName() %></option>
+							<option value="<%=clientDto.getClientNo() %>">[<%=clientDto.getClientNo() %>]<%=clientDto.getClientName() %>[<%=clientDto.getClientId() %>]</option>
 						<%} %>
 					</select>
 				</div>
@@ -79,7 +79,7 @@ RoleAreaDto roleAreaDto = roleAreaDao.get(roleClientNo, roleAreaNo);
 					<select name="areaNo" required id="roleArea">
 						<option value="">지점을 선택하세요</option>
 						<%for(AreaDto areaDto : areaList){ %>
-							<option value="<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+							<option value="<%=areaDto.getAreaNo()%>">[<%=areaDto.getAreaNo() %>]<%=areaDto.getAreaName() %></option>
 						<%} %>
 					</select>
 				</div>

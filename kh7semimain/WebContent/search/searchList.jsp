@@ -1,6 +1,6 @@
-<%@page import="library.beans.GetBookDto"%>
+<%@page import="library.beans.GetBookSearchDto"%>
 <%@page import="java.util.List"%>
-<%@page import="library.beans.GetBookDao"%>
+<%@page import="library.beans.GetBookSearchDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -13,32 +13,44 @@
 	String keyword = request.getParameter("keyword");
 		
 	
- 	GetBookDao getBookDao = new GetBookDao();
- 		List<GetBookDto> getBookList;
+ 	GetBookSearchDao getBookSearchDao = new GetBookSearchDao();
+ 		List<GetBookSearchDto> getBookList;
  		//select값이 기본 -> '전체' 값을 null로 주고 keyword만 전송
  		if(type == null && keyword == null) {
- 			getBookList = getBookDao.list();
+ 			getBookList = getBookSearchDao.list();
  		}
  		else if(type.equals("all") || type.equals(null)){
- 			getBookList = getBookDao.searchList(keyword);
+ 			getBookList = getBookSearchDao.searchList(keyword);
  		}
  		else{ //select가 '전체'가 아니면 type과 keyword 같이 전송
- 			getBookList = getBookDao.searchList(type, keyword);
+ 			getBookList = getBookSearchDao.searchList(type, keyword);
  		}
 %>
 
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
-	
+<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>	
 		<div class="row text-center">
 			<h2>자료 검색</h2>
 		</div>
+		
+		<div class="row text-center">
+				<form action = "searchList.jsp" method="get">
+					<select name="type">
+						<option value="all">전체</option>
+						<option value="book_title">서명</option>
+						<option value= "book_author">저자</option>
+					</select>
+				
+				<input type="text" name="keyword" size="50" height = "20" required>
+				<input type="submit" value="검색">
+				</form>					
+			</div> <br><br>
 		
 		<div class="row text-center">
 			<table border = "1" width="800" class="row text-center">
 				<thead>
 					<tr>
 						<th width="10%">책번호</th>
-						<th width="10%">지점번호</th>
+						<th width="10%">지점명</th>
 						<th width="50%">책제목</th>
 						<th width="20%">저자</th>						
 						<th>상태</th>
@@ -46,13 +58,13 @@
 				</thead>
 				<tbody>
 <!-- 					검색메소드가 실행되면 list가 펼쳐지게 코드 구현해야함 -->
-					<%for(GetBookDto getBookDto : getBookList) {%>
+					<%for(GetBookSearchDto getBookSearchDto : getBookList) {%>
 					<tr>
-						<td><%=getBookDto.getBookIsbn() %></td>
-						<td><%=getBookDto.getAreaNo() %></td>					
-						<td><%=getBookDto.getGetBookTitle()%></td>
-						<td><%=getBookDto.getGetBookAuthor() %></td>
-						<td><%=getBookDto.getGetBookStatus() %></td>
+						<td><%=getBookSearchDto.getBookIsbn() %></td>
+						<td><%=getBookSearchDto.getAreaName() %></td>					
+						<td><%=getBookSearchDto.getBookTitle()%></td>
+						<td><%=getBookSearchDto.getBookAuthor() %></td>
+						<td><%=getBookSearchDto.getGetBookStatus() %></td>
 					</tr>
 					<%} %>
 				</tbody>

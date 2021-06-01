@@ -169,5 +169,4 @@ public class GetBookDao {
 			return getBookList;
 
 		}
-		
 }

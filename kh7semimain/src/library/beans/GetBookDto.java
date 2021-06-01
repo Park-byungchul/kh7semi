@@ -70,5 +70,6 @@ public class GetBookDto {
 	public void setGetBookAuthor(String getBookAuthor) {
 		this.getBookAuthor = getBookAuthor;
 	}
-		
+	
+	
 }

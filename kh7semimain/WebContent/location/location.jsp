@@ -33,6 +33,7 @@ List<AreaDto> areaList = areaDao.list();
 			var name = $("#areaName").children("option:selected").text();
 			$(".library-areaName").text(name);
 			this.form.submit();
+			//test
 		});
 			
 

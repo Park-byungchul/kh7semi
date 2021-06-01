@@ -6,10 +6,10 @@
 <%
 	String root = request.getContextPath();
 	int clientNo;
-	try{
+	try {
 		clientNo = (int)session.getAttribute("clientNo");
 	}
-	catch (Exception e){
+	catch (Exception e) {
 		clientNo = 0;
 	}
 	ClientDao clientDao = new ClientDao();

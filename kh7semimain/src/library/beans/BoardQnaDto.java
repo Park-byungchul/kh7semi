@@ -2,23 +2,23 @@ package library.beans;
 
 import java.sql.Date;
 
-public class BoardDto {
+public class BoardQnaDto {
 	private int boardNo;
 	private int clientNo;
-	private int boardTypeNo;
-	private int areaNo;
+	private int boardAreaNo;
 	private String boardTitle;
 	private String boardField;
 	private int boardRead;
-	private int boardLike;
 	private Date boardDate;
-	private int boardSepNo;
-	private int boardReply;
 	private String boardOpen;
 	
-	public BoardDto() {
-		super();
-	}
+	private int answerNo;
+	private String boardStatus;
+	private String answerContent;
+	
+	private int areaNo;
+	private String areaName;
+	
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -31,17 +31,11 @@ public class BoardDto {
 	public void setClientNo(int clientNo) {
 		this.clientNo = clientNo;
 	}
-	public int getBoardTypeNo() {
-		return boardTypeNo;
+	public int getBoardAreaNo() {
+		return boardAreaNo;
 	}
-	public void setBoardTypeNo(int boardTypeNo) {
-		this.boardTypeNo = boardTypeNo;
-	}
-	public int getAreaNo() {
-		return areaNo;
-	}
-	public void setAreaNo(int areaNo) {
-		this.areaNo = areaNo;
+	public void setBoardAreaNo(int boardAreaNo) {
+		this.boardAreaNo = boardAreaNo;
 	}
 	public String getBoardTitle() {
 		return boardTitle;
@@ -55,17 +49,41 @@ public class BoardDto {
 	public void setBoardField(String boardField) {
 		this.boardField = boardField;
 	}
+	public int getAnswerNo() {
+		return answerNo;
+	}
+	public void setAnswerNo(int answerNo) {
+		this.answerNo = answerNo;
+	}
+	public String getBoardStatus() {
+		return boardStatus;
+	}
+	public void setBoardStatus(String boardStatus) {
+		this.boardStatus = boardStatus;
+	}
+	public String getAnswerContent() {
+		return answerContent;
+	}
+	public void setAnswerContent(String answerContent) {
+		this.answerContent = answerContent;
+	}
+	public int getAreaNo() {
+		return areaNo;
+	}
+	public void setAreaNo(int areaNo) {
+		this.areaNo = areaNo;
+	}
+	public String getAreaName() {
+		return areaName;
+	}
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
 	public int getBoardRead() {
 		return boardRead;
 	}
 	public void setBoardRead(int boardRead) {
 		this.boardRead = boardRead;
-	}
-	public int getBoardLike() {
-		return boardLike;
-	}
-	public void setBoardLike(int boardLike) {
-		this.boardLike = boardLike;
 	}
 	public Date getBoardDate() {
 		return boardDate;
@@ -78,17 +96,5 @@ public class BoardDto {
 	}
 	public void setBoardOpen(String boardOpen) {
 		this.boardOpen = boardOpen;
-	}
-	public int getBoardSepNo() {
-		return boardSepNo;
-	}
-	public void setBoardSepNo(int boardSepNo) {
-		this.boardSepNo = boardSepNo;
-	}
-	public int getBoardReply() {
-		return boardReply;
-	}
-	public void setBoardReply(int boardReply) {
-		this.boardReply = boardReply;
 	}
 }

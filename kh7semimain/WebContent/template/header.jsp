@@ -125,20 +125,20 @@
 	
 		<nav>
 			<!-- 메뉴 -->
-			<ul class="menu">
+			<ul class="menu" style="z-index:1">
 				<li>
-					<a href="#">도서관 소개</a>
+					<a href="<%=root%>/location/location.jsp">도서관 소개</a>
 					<ul>
-						<li><a href="#">찾아오는길</a></li>
+						<li><a href="<%=root%>/location/location.jsp">찾아오는길</a></li>
 						<li><a href="#">자료 현황</a></li>
 						<li><a href="#">이용 안내</a></li>
 					</ul>
 				</li>
 				
 				<li>
-					<a href="#">자료 검색</a>
+					<a href="<%=root%>/search/searchInput.jsp">자료 검색</a>
 					<ul>
-						<li><a href="#">통합자료검색</a></li>
+						<li><a href="<%=root%>/search/searchInput.jsp">통합자료검색</a></li>
 						<li><a href="#">신착자료</a></li>
 						<li><a href="#">추천도서</a></li>
 						<li><a href="#">대출베스트</a></li>

@@ -88,7 +88,7 @@ public class BoardDao {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "insert into board "
-				+ "values(?, ?, ?, ?, ?, ?, 0, 0, sysdate, ?, 0)";
+				+ "values(?, ?, ?, ?, ?, ?, 0, 0, sysdate, ?, 0, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, boardDto.getBoardNo());
 		ps.setInt(2, boardDto.getClientNo());
@@ -105,6 +105,7 @@ public class BoardDao {
 		ps.setString(5, boardDto.getBoardTitle());
 		ps.setString(6, boardDto.getBoardField());
 		ps.setInt(7, boardDto.getBoardSepNo());
+		ps.setString(8, boardDto.getBoardOpen());
 		
 		// 새글/답글일 경우 추가해야 함 (superNo, groupNo, Depth)
 		
@@ -136,6 +137,7 @@ public class BoardDao {
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
 			boardDto.setBoardReply(rs.getInt("board_reply"));
+			boardDto.setBoardOpen(rs.getString("board_open"));
 			
 			boardList.add(boardDto);
 		}
@@ -171,6 +173,7 @@ public class BoardDao {
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardNo(rs.getInt("board_sep_no"));
 			boardDto.setBoardReply(rs.getInt("board_reply"));
+			boardDto.setBoardOpen(rs.getString("board_open"));
 			
 			boardList.add(boardDto);
 		}
@@ -205,6 +208,7 @@ public class BoardDao {
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
 			boardDto.setBoardReply(rs.getInt("board_reply"));
+			boardDto.setBoardOpen(rs.getString("board_open"));
 		}
 		else
 			boardDto = null;
@@ -277,6 +281,7 @@ public class BoardDao {
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
 			boardDto.setBoardReply(rs.getInt("board_reply"));
+			boardDto.setBoardOpen(rs.getString("board_open"));
 		}
 		else
 			boardDto = null;
@@ -348,6 +353,7 @@ public class BoardDao {
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
 			boardDto.setBoardReply(rs.getInt("board_reply"));
+			boardDto.setBoardOpen(rs.getString("board_open"));
 		}
 		else {
 			boardDto = null;
@@ -386,6 +392,7 @@ public class BoardDao {
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
 			boardDto.setBoardReply(rs.getInt("board_reply"));
+			boardDto.setBoardOpen(rs.getString("board_open"));
 		}
 		else {
 			boardDto = null;

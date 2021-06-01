@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import library.beans.BoardAnswerDao;
 import library.beans.BoardDao;
 import library.beans.BoardDto;
 
@@ -56,6 +57,11 @@ public class BoardWriteServlet extends HttpServlet {
 			boardDto.setBoardSepNo(boardSepNo);
 
 			boardDao.write(boardDto);
+			
+			if (boardTypeNo == 2) {
+				BoardAnswerDao answerDao = new BoardAnswerDao();
+				answerDao.receipt(boardNo);
+			}
 			
 			resp.sendRedirect("boardDetail.jsp?boardNo="+boardNo);
 		}

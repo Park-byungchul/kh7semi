@@ -28,7 +28,7 @@ public class AnswerInsertServlet extends HttpServlet {
 			answerDto.setClientNo(clientNo);
 
 			BoardAnswerDao answerDao = new BoardAnswerDao();
-			answerDao.write(answerDto);
+			answerDao.answer(answerDto);
 			
 			resp.sendRedirect("boardDetail.jsp?boardNo="+answerDto.getBoardNo());
 		}

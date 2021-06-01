@@ -42,7 +42,14 @@ List<AreaDto> areaList = areaDao.list();
 	
 </script>
 
-
+<style>
+.left {
+z-index: 1;
+}
+.menu {
+z-index: 2;
+}
+</style>
 <jsp:include page="/template/header.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
@@ -57,10 +64,10 @@ List<AreaDto> areaList = areaDao.list();
 </ul>
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>
-
+<div class = "row">
+	<h2>header</h2>
+</div>
 <div class="float-container">
-	<div class="left" id="map1" style="width:400px;height:400px;margin:20px 20px;display:inline-block;">
-	</div>	
 	<div class="left">
 		<div class="row">
 			<h2 class="library-areaName" style="display:inline-block;"><%=areaList.get(2).getAreaName()%></h2>
@@ -74,8 +81,10 @@ List<AreaDto> areaList = areaDao.list();
 			<h3>- 전화번호</h3>
 			<span><%=areaList.get(2).getAreaCall()%></span>
 		</div>
-		
 	</div>
+	
+	<div class="left" id="map1" style="width:400px;height:400px;margin:20px 20px;display:inline-block;">
+	</div>	
 </div>
 
 <div class="float-container">
@@ -157,7 +166,7 @@ List<AreaDto> areaList = areaDao.list();
 	        infowindow.open(map1, marker1);
 
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords1);
+	        map1.setCenter(coords1);
 	    } 
 }); 	    
 	
@@ -175,7 +184,7 @@ List<AreaDto> areaList = areaDao.list();
 	        });
 	        infowindow.open(map2, marker2);
 
-	        map.setCenter(coords2);
+	        map2.setCenter(coords2);
 	    } 
 });
 	
@@ -196,7 +205,7 @@ List<AreaDto> areaList = areaDao.list();
 	        });
 	        infowindow.open(map3, marker3);
 
-	        map.setCenter(coords3);
+	        map3.setCenter(coords3);
 	    } 
 });
 </script>

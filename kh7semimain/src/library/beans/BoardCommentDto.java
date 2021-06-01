@@ -9,6 +9,7 @@ public class BoardCommentDto {
 	private String commentContent;
 	private Date commentDate;
 	private int commentLike;
+	private int boardTypeNo;
 	
 	public BoardCommentDto() {
 		super();
@@ -48,5 +49,11 @@ public class BoardCommentDto {
 	}
 	public void setCommentLike(int commentLike) {
 		this.commentLike = commentLike;
+	}
+	public int getBoardTypeNo() {
+		return boardTypeNo;
+	}
+	public void setBoardTypeNo(int boardTypeNo) {
+		this.boardTypeNo = boardTypeNo;
 	}
 }

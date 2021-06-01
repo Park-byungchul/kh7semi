@@ -3,7 +3,6 @@
 <%@page import="library.beans.ClientDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/template/header.jsp"></jsp:include>
 <%
 	request.setCharacterEncoding("UTF-8");
 	Integer clientNo = (Integer)session.getAttribute("clientNo");
@@ -18,6 +17,9 @@
 	}
 
 %>
+
+<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 $(function(){	
@@ -48,8 +50,10 @@ $(function(){
 		color:white;
 	}
 </style>
-<div class = "container-600">
-	<h2>희망도서 신청 페이지</h2>
+
+	<div class="row text-center">
+		<h2>희망도서 신청 페이지</h2>
+	</div>
 	
 	<div class="row">
 				<div class="row text-left">
@@ -64,8 +68,9 @@ $(function(){
 		<div class="row">
 			<form class="bookSearchForm" name="bookSearchForm" action="hopelistBookSearch.jsp" method="post" target="target">
 				<select name="type" >
-					<option value="bookTitle">제목</option>
-					<option value="bookAuthor">저자</option>
+					<option value="all" selected>전체</option>
+					<option value="book_title">제목</option>
+					<option value="book_author">저자</option>
 				</select>
 				<input type="text" name="keyword" placeholder="검색어" class="hopelist-bookSearch">
 			</form>
@@ -81,6 +86,10 @@ $(function(){
 			<div class="row text-left">
 				<label>제목</label>
 				<input type="text" Id ="bookTitle" readonly placeholder = "위의 검색버튼으로 검색 후 detail-도서신청" class="form-input form-input-underline">
+			</div>
+			<div class="row text-left">
+				<label>장르번호</label>
+				<input type="text" Id ="genreNo" readonly placeholder = "위의 검색버튼으로 검색 후 detail-도서신청" class="form-input form-input-underline">
 			</div>
 			
 			
@@ -104,7 +113,5 @@ $(function(){
 				<input type="button" value="목록" class="form-btn form-btn-normal">
 			
 	</div>
-	
-</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

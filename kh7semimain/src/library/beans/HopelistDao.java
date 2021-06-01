@@ -11,6 +11,7 @@ import java.util.List;
 
 
 
+
 public class HopelistDao {
 
 	public static final String USERNAME = "kh7semi2";
@@ -109,6 +110,30 @@ public class HopelistDao {
 			con.close();
 			return list;
 		}
+		
+		public List<HopelistDto> myhopeList(int clientNo) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select * from hopelist where client_no = ? order by hopelist_no desc";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, clientNo);
+			ResultSet rs = ps.executeQuery();
+			List<HopelistDto> list = new ArrayList<>();
+			while(rs.next()) {
+				HopelistDto hopelistDto = new HopelistDto();
+				hopelistDto.setHopelistNo(rs.getInt("hopelist_no"));
+				hopelistDto.setClientNo(rs.getInt("client_no"));
+				hopelistDto.setBookIsbn(rs.getInt("book_isbn"));
+				hopelistDto.setHopelistReason(rs.getString("hopelist_reason"));
+				hopelistDto.setHopelistDate(rs.getDate("hopelist_date"));
+				hopelistDto.setHopelistLibrary(rs.getString("hopelist_library"));
+				
+				list.add(hopelistDto);
+			}
+			
+			con.close();
+			return list;
+		}
 		//hopelistNo로 Dto 정보 가져오기
 		public HopelistDto get(int hopelistNo) throws Exception {
 			Connection con = JdbcUtils.getConnection();;
@@ -150,5 +175,22 @@ public class HopelistDao {
 			con.close();
 			
 			return count;
+		}
+		//수정기능
+		public boolean edit(HopelistDto hopelistDto) throws Exception {
+			Connection con = JdbcUtils.getConnection();;
+			
+			String sql = "update hopelist "
+									+ "set book_isbn=?,hopelist_reason=?,hopelist_library=?,hopelist_date=sysdate "
+									+ "where hopelist_no=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, hopelistDto.getBookIsbn());
+			ps.setString(2, hopelistDto.getHopelistReason());
+			ps.setString(3, hopelistDto.getHopelistLibrary());
+			ps.setInt(4, hopelistDto.getHopelistNo());
+			int count = ps.executeUpdate();
+			
+			con.close();
+			return count > 0;
 		}
 }

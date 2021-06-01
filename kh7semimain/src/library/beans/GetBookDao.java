@@ -52,7 +52,7 @@ public class GetBookDao {
 				
 				
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getInt("book_isbn"));
+				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
@@ -78,10 +78,12 @@ public class GetBookDao {
 			while(rs.next()) {
 				GetBookDto getBookDto = new GetBookDto();
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getInt("book_isbn"));
+				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
+				getBookDto.setGetBookTitle(rs.getString("get_book_title"));
+				getBookDto.setGetBookAuthor(rs.getString("get_book_author"));
 				
 				getBookList.add(getBookDto);
 			}

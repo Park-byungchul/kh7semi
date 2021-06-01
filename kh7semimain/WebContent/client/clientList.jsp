@@ -5,21 +5,12 @@
 	pageEncoding="UTF-8"%>
 
 <%
+String root = request.getContextPath();
 ClientDao clientDao = new ClientDao();
 List<ClientDto> list = clientDao.list();
-
-int p;
-
-try {
-	p = Integer.parseInt(request.getParameter("p"));
-}
-catch (Exception e) {
-	p = 1;
-}
-
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -37,7 +28,6 @@ catch (Exception e) {
 	});
 </script>
 
-<div class="container-1000">
 	<div class="row text-left">
 		<h2>회원 목록</h2>
 	</div>
@@ -46,24 +36,20 @@ catch (Exception e) {
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>회원번호</th>
-					<th>아이디</th>
-					<th>이름</th>
-					<th>이메일</th>
-					<th>생성일</th>
-					<th>대출가능일</th>
-					<th>등급</th>
-					<th>관리</th>
+					<th width="15%">아이디</th>
+					<th width="20%">이름</th>
+					<th width="20%">이메일</th>
+					<th width="20%">대출가능일</th>
+					<th width="12%">등급</th>
+					<th width="13%">관리</th>
 				</tr>
 			</thead>
 			<tbody>
 				<%for (ClientDto clientDto : list) { %>
 				<tr>
-					<td><%=clientDto.getClientNo()%></td>
-					<td><%=clientDto.getClientId()%></td>
+					<td><a href=<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>><%=clientDto.getClientId()%></a></td>
 					<td><%=clientDto.getClientName()%></td>
 					<td><%=clientDto.getClientEmail()%></td>
-					<td><%=clientDto.getClientMade()%></td>
 					<td><%=clientDto.getClientPossible()%></td>
 					<td><%=clientDto.getClientType()%></td>
 					<td>
@@ -75,23 +61,4 @@ catch (Exception e) {
 			</tbody>
 		</table>
 	</div>
-
-	<div class="row">
-		<ol class="pagination-list">
-		<li><a href="#">&lt;이전</a></li>
-		
-		<%for(int i = 1; i <= 10; i++) { %>
-			<%if(p == i) { %>
-				<li class="on"><a href="#"><%=i%></a></li>
-			<%} else {%>
-				<li><a href="#"><%=i%></a></li>
-			<%} %>
-		<%} %>
-
-		<li><a href="#">다음&gt;</a></li>
-		</ol>
-	</div>
-
-</div>
-
 <jsp:include page="/template/footer.jsp"></jsp:include>

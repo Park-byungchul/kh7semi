@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
 
-	<div class="container-800">
 		<div class="row text-left">
 			<h2>지점 등록</h2>
 		</div>
@@ -24,6 +23,5 @@
 				</div>
 			</form>
 		</div>
-	</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

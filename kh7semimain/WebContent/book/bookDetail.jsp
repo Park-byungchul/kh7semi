@@ -6,7 +6,6 @@
 
 <%
 	int bookIsbn = Integer.parseInt(request.getParameter("bookIsbn"));
-	AreaDao areaDao = new AreaDao();
 	BookDao bookDao = new BookDao();
 	BookDto bookDto = bookDao.get(bookIsbn);
 %>
@@ -23,18 +22,14 @@
 					<label>ISBN : </label><span><%=bookDto.getBookIsbn() %></span>
 				</div>
 				<div class="row">
-					<label>장르 번호 : </label><input type="text" name="genreNo">
+					<label>장르 번호 : </label><input type="text" name="genreNo" value="<%=bookDto.getGenreNo()%>">
 				</div>
 				<div class="row">
-					<label>제목 : </label><input type="text" name="bookName">
+					<label>제목 : </label><input type="text" name="bookTitle" value="<%=bookDto.getBookTitle()%>">
 				</div>
 				<div class="row">
-					<label>저자 : </label><input type="text" name="bookIsbn">
+					<label>저자 : </label><input type="text" name="bookAuthor" value="<%=bookDto.getBookAuthor()%>">		
 				</div>
-				<div class="row">
-					<input type="submit" value="등록">
-				</div>
-			</form>
 		</div>
 	</div>
 

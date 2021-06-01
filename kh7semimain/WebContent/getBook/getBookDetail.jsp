@@ -32,10 +32,6 @@
 				<div class="row">
 					<label>상태 : </label><input type="text" name="getBookStatus">
 				</div>
-				<div class="row">
-					<input type="submit" value="등록">
-				</div>
-			</form>
 		</div>
 	</div>
 

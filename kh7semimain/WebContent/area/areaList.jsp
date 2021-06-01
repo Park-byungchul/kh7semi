@@ -1,3 +1,5 @@
+<%@page import="library.beans.RoleAreaDto"%>
+<%@page import="library.beans.RoleAreaDao"%>
 <%@page import="library.beans.AreaDto"%>
 <%@page import="java.util.List"%>
 <%@page import="library.beans.AreaDao"%>
@@ -7,19 +9,10 @@
 <%
 AreaDao areaDao = new AreaDao();
 List<AreaDto> list = areaDao.list();
-
-int p;
-
-try {
-	p = Integer.parseInt(request.getParameter("p"));
-} catch (Exception e) {
-	p = 1;
-}
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
 
-<div class="container-1000">
 	<div class="row text-left">
 		<h2>지점 목록</h2>
 	</div>
@@ -32,10 +25,8 @@ try {
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>지점번호</th>
 					<th>지점명</th>
-					<th>지점위치</th>
-					<th>전화번호</th>
+					<th>지점 전화번호</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -43,32 +34,14 @@ try {
 				for (AreaDto areaDto : list) {
 				%>
 				<tr>
-					<td><%=areaDto.getAreaNo()%></td>
-					<td><a href="areaDetail.jsp?areaNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName()%></a></td>
-					<td><%=areaDto.getAreaLocation()%></td>
-					<td><%=areaDto.getAreaCall()%></td>
+					<td>[<%=areaDto.getAreaNo()%>]<a href="areaDetail.jsp?areaNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName()%></a></td>
+					<td><%=areaDto.getAreaCall() %></td>
 				</tr>
 				<%
 				}
 				%>
 			</tbody>
 		</table>
-	</div>
-	
-	<div class="row">
-		<ol class="pagination-list">
-		<li><a href="#">&lt;이전</a></li>
-		
-		<%for(int i = 1; i <= 10; i++) { %>
-			<%if(p == i) { %>
-				<li class="on"><a href="#"><%=i%></a></li>
-			<%} else {%>
-				<li><a href="#"><%=i%></a></li>
-			<%} %>
-		<%} %>
-
-		<li><a href="#">다음&gt;</a></li>
-		</ol>
 	</div>
 	
 </div>

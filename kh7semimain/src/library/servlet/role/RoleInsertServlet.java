@@ -18,17 +18,22 @@ public class RoleInsertServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			req.setCharacterEncoding("UTF-8");
-			
+
 			int clientNo = Integer.parseInt(req.getParameter("clientNo"));
 			int areaNo = Integer.parseInt(req.getParameter("areaNo"));
 			RoleDto roleDto = new RoleDto();
 			roleDto.setClientNo(clientNo);
 			roleDto.setAreaNo(areaNo);
-			
+
 			RoleDao roleDao = new RoleDao();
 			roleDao.insert(roleDto);
-			
-			resp.sendRedirect("roleList.jsp");
+
+			String type = req.getParameter("type");
+			if (type == null) {
+				resp.sendRedirect("roleList.jsp");
+			} else {
+				resp.sendRedirect("rolePartialList.jsp");
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -26,6 +26,27 @@ public class AreaDao {
 		con.close();
 		return list;
 	}
+	
+	public List<AreaDto> list(int clientNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+
+		String sql = "select A.* from area A inner join role R on A.area_no = R.area_no where client_no = ? order by A.area_no desc";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, clientNo);
+		ResultSet rs = ps.executeQuery();
+		List<AreaDto> list = new ArrayList<>();
+		while (rs.next()) {
+			AreaDto areaDto = new AreaDto();
+			areaDto.setAreaNo(rs.getInt("area_no"));
+			areaDto.setAreaName(rs.getString("area_name"));
+			areaDto.setAreaLocation(rs.getString("area_location"));
+			areaDto.setAreaCall(rs.getString("area_call"));
+			list.add(areaDto);
+		}
+
+		con.close();
+		return list;
+	}
 
 	public void insert(AreaDto areaDto) throws Exception {
 		Connection con = JdbcUtils.getConnection();

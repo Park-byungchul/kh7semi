@@ -158,7 +158,7 @@
 		</table>
 	</div>
 
-	<%if(isLogin && clientDto.getClientType().equals("관리")) { %>
+	<%if(isLogin && !clientDto.getClientType().equals("일반사용자")) { %>
 		<div class="row text-right">
 			<a href="boardWrite.jsp?boardTypeNo=2" class="link-btn">글쓰기</a>
 		</div>

@@ -8,6 +8,7 @@
     pageEncoding="UTF-8"%>
 
 <%
+	String pageNow = request.getRequestURI();
 	String title = request.getParameter("title");
 
 	String root = request.getContextPath();
@@ -37,12 +38,10 @@
 	
 	boolean adminAll = false;
 	boolean adminPart = false;
-
-	RoleDao roleDao = new RoleDao();
 	
 	if(clientDto != null){
 		adminAll = clientDto.getClientType().equals("전체관리자");
-		adminPart = clientDto.getClientType().equals("권한관리자") && roleDao.isAdmin(clientNo, areaNo);
+		adminPart = clientDto.getClientType().equals("권한관리자");
 	}
 %>
  
@@ -68,7 +67,7 @@
 	function areaChange(){
 		var area = document.querySelector("#area");
 		if(area.value){
-			location.href = area.value;
+			location.href = area.value + "&back=<%=pageNow%>";
 		}
 	}
 </script>

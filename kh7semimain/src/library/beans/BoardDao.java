@@ -88,7 +88,7 @@ public class BoardDao {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "insert into board "
-				+ "values(?, ?, ?, ?, ?, ?, 0, 0, sysdate, ?)";
+				+ "values(?, ?, ?, ?, ?, ?, 0, 0, sysdate, ?, 0)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, boardDto.getBoardNo());
 		ps.setInt(2, boardDto.getClientNo());
@@ -135,6 +135,7 @@ public class BoardDao {
 			boardDto.setBoardLike(rs.getInt("board_like"));
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			boardDto.setBoardReply(rs.getInt("board_reply"));
 			
 			boardList.add(boardDto);
 		}
@@ -159,16 +160,17 @@ public class BoardDao {
 		while(rs.next()) {
 			BoardDto boardDto = new BoardDto();
 			
-			boardDto.setBoardNo(rs.getInt("boardNo"));
-			boardDto.setBoardNo(rs.getInt("clientNo"));
-			boardDto.setBoardNo(rs.getInt("boardTypeNo"));
-			boardDto.setBoardNo(rs.getInt("areaNo"));
-			boardDto.setBoardTitle(rs.getString("boardTitle"));
-			boardDto.setBoardTitle(rs.getString("boardContent"));
-			boardDto.setBoardNo(rs.getInt("boardRead"));
-			boardDto.setBoardNo(rs.getInt("boardLike"));
-			boardDto.setBoardDate(rs.getDate("boardDate"));
-			boardDto.setBoardNo(rs.getInt("boardSepNo"));
+			boardDto.setBoardNo(rs.getInt("board_no"));
+			boardDto.setBoardNo(rs.getInt("client_no"));
+			boardDto.setBoardNo(rs.getInt("board_type_no"));
+			boardDto.setBoardNo(rs.getInt("area_no"));
+			boardDto.setBoardTitle(rs.getString("board_title"));
+			boardDto.setBoardTitle(rs.getString("board_content"));
+			boardDto.setBoardNo(rs.getInt("board_read"));
+			boardDto.setBoardNo(rs.getInt("board_like"));
+			boardDto.setBoardDate(rs.getDate("board_date"));
+			boardDto.setBoardNo(rs.getInt("board_sep_no"));
+			boardDto.setBoardReply(rs.getInt("board_reply"));
 			
 			boardList.add(boardDto);
 		}
@@ -202,6 +204,7 @@ public class BoardDao {
 			boardDto.setBoardLike(rs.getInt("board_like"));
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			boardDto.setBoardReply(rs.getInt("board_reply"));
 		}
 		else
 			boardDto = null;
@@ -273,6 +276,7 @@ public class BoardDao {
 			boardDto.setBoardLike(rs.getInt("board_like"));
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			boardDto.setBoardReply(rs.getInt("board_reply"));
 		}
 		else
 			boardDto = null;
@@ -343,6 +347,7 @@ public class BoardDao {
 			boardDto.setBoardLike(rs.getInt("board_like"));
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			boardDto.setBoardReply(rs.getInt("board_reply"));
 		}
 		else {
 			boardDto = null;
@@ -380,6 +385,7 @@ public class BoardDao {
 			boardDto.setBoardLike(rs.getInt("board_like"));
 			boardDto.setBoardDate(rs.getDate("board_date"));
 			boardDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			boardDto.setBoardReply(rs.getInt("board_reply"));
 		}
 		else {
 			boardDto = null;
@@ -388,5 +394,23 @@ public class BoardDao {
 		con.close();
 		
 		return boardDto;
+	}
+	
+	
+	// 댓글 수 갱신 기능
+	public boolean refreshComment(int boardNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+			
+		String sql = "update board "
+				+ "set board_reply = (select count(*) from board_comment where board_no = ?) "
+				+ "where board_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, boardNo);
+		ps.setInt(2, boardNo);
+		int count = ps.executeUpdate();
+
+		con.close();
+			
+		return count > 0;
 	}
 }

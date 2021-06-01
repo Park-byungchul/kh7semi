@@ -6,7 +6,7 @@ public class HopelistDto {
 	//희망도서 관련 정보
 	private int hopelistNo;
 	private int clientNo;
-	private int bookIsbn;
+	private long bookIsbn;
 	private String hopelistReason;
 	private Date hopelistDate;
 	private String hopelistLibrary;
@@ -32,10 +32,10 @@ public class HopelistDto {
 	public void setClientNo(int clientNo) {
 		this.clientNo = clientNo;
 	}
-	public int getBookIsbn() {
+	public long getBookIsbn() {
 		return bookIsbn;
 	}
-	public void setBookIsbn(int bookIsbn) {
+	public void setBookIsbn(long bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 	public String getHopelistReason() {

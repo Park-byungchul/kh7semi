@@ -30,6 +30,7 @@ public class BoardWriteServlet extends HttpServlet {
 			boardDto.setBoardTypeNo(Integer.parseInt(req.getParameter("boardTypeNo")));
 			boardDto.setBoardTitle(req.getParameter("boardTitle"));
 			boardDto.setBoardField(req.getParameter("boardField"));
+			boardDto.setBoardOpen(req.getParameter("boardOpen"));
 
 			int clientNo = (int)req.getSession().getAttribute("clientNo");
 			boardDto.setClientNo(clientNo);
@@ -53,9 +54,7 @@ public class BoardWriteServlet extends HttpServlet {
 				boardSepNo = boardDao.getReviewSequence();
 			}
 			boardDto.setBoardSepNo(boardSepNo);
-			
-			// 답글인지 새글인지 처리하는 코드 추가해야 함
-			
+
 			boardDao.write(boardDto);
 			
 			resp.sendRedirect("boardDetail.jsp?boardNo="+boardNo);

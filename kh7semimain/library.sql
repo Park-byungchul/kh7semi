@@ -144,11 +144,6 @@ create or replace view recommendCount as select book_isbn, count(recommend_no) a
 
 -- 관리자 권한
 create or replace view roleArea as
-select R.role_no, C.client_name, A.area_name, R.role_date
-from role R, client C, area A
-where R.area_no = A.area_no and R.client_no = C.client_no;
-
-create or replace view roleArea as
 select C.client_no, C.client_name, A.area_no, A.area_name, R.role_date
 from role R, client C, area A
 where R.area_no = A.area_no and R.client_no = C.client_no;

@@ -16,7 +16,8 @@ ClientDao clientDao = new ClientDao();
 List<ClientDto> adminNormalList = clientDao.adminNormalList();
 AreaDao areaDao = new AreaDao();
 List<AreaDto> areaList = areaDao.list();
-
+int clientNo = (int)session.getAttribute("clientNo");
+List<RoleAreaDto> roleAreaList = roleAreaDao.areaListByClient(clientNo);
 int areaNo;
 try{
 	areaNo = (int)session.getAttribute("areaNo");
@@ -46,27 +47,31 @@ if(areaNo > 0){
 					<select name="clientNo" required>
 						<option value="">관리자를 선택하세요</option>
 						<%for(ClientDto clientDto : adminNormalList){ %>
-							<option value="<%=clientDto.getClientNo() %>"><%=clientDto.getClientName() %></option>
+							<option value="<%=clientDto.getClientNo() %>">[<%=clientDto.getClientNo() %>]<%=clientDto.getClientName() %>[<%=clientDto.getClientId() %>]</option>
 						<%} %>
 					</select>
 				</div>
 				<div class="row">
 					<label>지점 이름 : </label>
 					<select name="areaNo" required>
-						<%if(areaNo == 0){ %>
+						<%if(areaNo == 0 && clientDao.get(clientNo).getClientType().equals("권한관리자")){ %>
+							<option value="">지점을 선택하세요</option>
+							<%for(RoleAreaDto roleAreaDto : roleAreaList){ %>
+								<option value="<%=roleAreaDto.getAreaNo()%>">[<%=roleAreaDto.getAreaNo() %>]<%=roleAreaDto.getAreaName() %></option>
+							<%} %>
+						<%}else if(areaNo == 0 && clientDao.get(clientNo).getClientType().equals("전체관리자")){ %>
 							<option value="">지점을 선택하세요</option>
 							<%for(AreaDto areaDto : areaList){ %>
-								<option value="<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+								<option value="<%=areaDto.getAreaNo()%>">[<%=areaDto.getAreaNo() %>]<%=areaDto.getAreaName() %></option>
 							<%} %>
 						<%}else{ %>
-							<option value="<%=areaNo%>"><%=areaDao.detail(areaNo).getAreaName() %></option>
+							<option value="<%=areaNo%>">[<%=areaDao.detail(areaNo).getAreaNo() %>]<%=areaDao.detail(areaNo).getAreaName() %></option>
 						<%} %>
 					</select>
 				</div>
 				<div class="row">
 					<input type="submit" value="등록">
 					</form>
-					<button></button>
 				</div>
 			
 		</div>

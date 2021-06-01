@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="java.util.List"%>
 <%@page import="library.beans.ClientDao"%>
@@ -5,14 +6,67 @@
 	pageEncoding="UTF-8"%>
 
 <%
+request.setCharacterEncoding("UTF-8");
 String root = request.getContextPath();
 ClientDao clientDao = new ClientDao();
-List<ClientDto> list = clientDao.list();
 int clientNo = Integer.parseInt(request.getParameter("clientNo"));
 String currentType = clientDao.get(clientNo).getClientType();
+
+String search = request.getParameter("search");
+boolean isSearch = search != null;
+
+//////////페이지네이션
+int pageNo;
+try{
+pageNo = Integer.parseInt(request.getParameter("pageNo"));
+}
+catch (Exception e){
+pageNo = 1;
+}
+
+int pageSize = 10; // 1페이지에 보여줄 개수
+
+//rownum의 시작번호(startRow)와 종료번호(endRow)를 계산
+int strNum = pageSize * pageNo - (pageSize-1);
+int endNum = pageSize * pageNo;
+
+List<ClientDto> list;
+int count = clientDao.getCount();
+if(!isSearch){
+	list = clientDao.list(strNum, endNum);
+	count = clientDao.getCount();
+} else{
+	list = clientDao.search(search, strNum, endNum);
+	count = clientDao.getCount(search);
+}
+
+int blockSize = 10;
+int lastBlock = (count + pageSize - 1) / pageSize;
+int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+int endBlock = startBlock + blockSize - 1;
+
+if(endBlock > lastBlock){ // 범위를 벗어나면
+endBlock = lastBlock; // 범위를 수정
+}
+
+AreaDao areaDao = new AreaDao();
+int areaNo;
+try{
+	areaNo = (int)session.getAttribute("areaNo");
+}
+catch (Exception e){
+	areaNo = 0;
+}
+
+String title = "회원 목록";
+if(areaNo > 0){
+	title += " : " + areaDao.detail(areaNo).getAreaName();
+}
 %>
 
-<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -32,6 +86,16 @@ String currentType = clientDao.get(clientNo).getClientType();
 		});
 	});
 </script>
+
+<%if(isSearch){ %>
+
+<script>
+	$(function(){
+		$("#search").val("<%=search %>");
+	});
+</script>
+
+<%} %>
 
 	<div class="row text-left">
 		<h2>회원 목록</h2>
@@ -65,6 +129,7 @@ String currentType = clientDao.get(clientNo).getClientType();
 					if (isEdit) {
 					%>
 					<form action="clientEdit.kh?type=partial" method="post">
+						<input type="hidden" name="pageNo" value="<%=pageNo %>">
 						<input type="hidden" name="clientNo"
 							value="<%=clientDto.getClientNo()%>">
 						<input type="hidden" name="clientName" 
@@ -79,7 +144,11 @@ String currentType = clientDao.get(clientNo).getClientType();
 						</select></td>
 						<td><input type="submit" value="완료">
 						<button><a
-							href="clientPartialList.jsp">취소</a></button></td>
+							href="clientPartialList.jsp?pageNo=<%=pageNo %>
+								<%if(isSearch){ %>
+									&search=<%=search %>
+								<%}%>
+							">취소</a></button></td>
 					</form>
 					<%
 					} else {
@@ -87,7 +156,11 @@ String currentType = clientDao.get(clientNo).getClientType();
 						<td><%=clientDto.getClientType()%></td>
 						<td>
 						<%if(clientDto.getClientType().equals("일반관리자") || clientDto.getClientType().equals("일반사용자")){ %>
-						<button><a href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>">수정</a></button>
+						<button><a href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
+							<%if(isSearch){ %>
+								&search=<%=search %>
+							<%} %>
+						">수정</a></button>
 						<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
 						<%} %>
 						</td>
@@ -102,6 +175,28 @@ String currentType = clientDao.get(clientNo).getClientType();
 		</table>
 	</div>
 
-</div>
+	<div class="text-center pagination">
+	<%if(startBlock > 1){ %>
+		<a class="move-link">이전</a>
+		<%} %>
+		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
+			<%if(i == pageNo){ %>
+				<a href="clientPartialList.jsp?pageNo=<%=i %>" class="on"><%=i %></a>
+			<%}else{ %>
+				<a href="clientPartialList.jsp?pageNo=<%=i %>"><%=i %></a>
+			<%} %>
+		<%} %>
+		<%if(endBlock < lastBlock){ %>
+		<a class="move-link">다음</a>
+		<%} %>
+	</div>
+	
+	<div class="row text-center">
+		<form action="clientPartialList.jsp" method="post">
+			<input type="hidden" value="1" name="pageNo">
+			<input type="text" name="search" id="search">
+			<input type="submit" value="검색">
+		</form>
+	</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

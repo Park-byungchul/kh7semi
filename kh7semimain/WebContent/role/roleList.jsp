@@ -45,7 +45,7 @@ if(areaNo > 0){
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th width="15%">관리자 이름</th>
+					<th width="20%">관리자</th>
 					<th>지점</th>
 				</tr>
 			</thead>
@@ -53,13 +53,13 @@ if(areaNo > 0){
 				<%for(ClientDto clientDto : adminList){ %>
 					<tr>
 						<td>
-							<a href="<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>"><%=clientDto.getClientName() %></a>
+							<a href="<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>">[<%=clientDto.getClientNo() %>]<%=clientDto.getClientName() %>[<%=clientDto.getClientId() %>]</a>
 						</td>
 						<td>
 							<%List<RoleAreaDto> roleList = roleAreaDao.areaListByClient(clientDto.getClientNo()); %>
 							
 							<%for (RoleAreaDto roleAreaDto : roleList){ %>
-								<a href="roleDetail.jsp?roleClientNo=<%=roleAreaDto.getClientNo()%>&roleAreaNo=<%=roleAreaDto.getAreaNo()%>"><%=roleAreaDto.getAreaName() %></a>
+								<a href="roleDetail.jsp?roleClientNo=<%=roleAreaDto.getClientNo()%>&roleAreaNo=<%=roleAreaDto.getAreaNo()%>">[<%=roleAreaDto.getAreaNo() %>]<%=roleAreaDto.getAreaName() %></a>
 							<%} %>
 						</td>
 					</tr>

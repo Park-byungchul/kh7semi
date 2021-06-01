@@ -20,6 +20,7 @@ public class ClientEditServlet extends HttpServlet {
 		try {
 			req.setCharacterEncoding("UTF-8");
 			
+			int pageNo = Integer.parseInt(req.getParameter("pageNo"));
 			int ClientNo = Integer.parseInt(req.getParameter("clientNo"));
 			
 			ClientDto clientDto = new ClientDto();
@@ -38,10 +39,10 @@ public class ClientEditServlet extends HttpServlet {
 			}
 			
 			if(req.getParameter("type") == null) {
-				resp.sendRedirect("clientList.jsp");
+				resp.sendRedirect("clientList.jsp?pageNo="+pageNo);
 			}
 			else {
-				resp.sendRedirect("clientPartialList.jsp");
+				resp.sendRedirect("clientPartialList.jsp?pageNo="+pageNo);
 			}
 			
 		} catch (Exception e) {

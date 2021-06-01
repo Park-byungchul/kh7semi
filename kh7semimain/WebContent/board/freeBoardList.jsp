@@ -142,6 +142,9 @@
 						<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
 							<%=boardListDto.getBoardTitle() %>
 						</a>
+						<%if(boardListDto.getBoardReply() > 0){ %>
+							[<%=boardListDto.getBoardReply()%>]
+						<%} %>
 					</td>
 					<td><%=boardListDto.getClientName() %></td>
 					<td><%=boardListDto.getBoardDate() %></td>

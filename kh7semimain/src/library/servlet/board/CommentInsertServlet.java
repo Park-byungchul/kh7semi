@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import library.beans.BoardCommentDao;
 import library.beans.BoardCommentDto;
+import library.beans.BoardDao;
 
 @WebServlet (urlPatterns = "/board/commentInsert.kh")
 public class CommentInsertServlet extends HttpServlet{
@@ -28,6 +29,9 @@ public class CommentInsertServlet extends HttpServlet{
 			
 			BoardCommentDao commentDao = new BoardCommentDao();
 			commentDao.insert(commentDto);
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.refreshComment(commentDto.getBoardNo());
 			
 			resp.sendRedirect("boardDetail.jsp?boardNo="+commentDto.getBoardNo());
 		}

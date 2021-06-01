@@ -1,7 +1,7 @@
 package library.beans;
 
 public class BookDto {
-	private int bookIsbn;
+	private long bookIsbn;
 	private int genreNo;
 	private String bookTitle;
 	private String bookAuthor;
@@ -10,11 +10,11 @@ public class BookDto {
 		super();
 	}
 
-	public int getBookIsbn() {
+	public long getBookIsbn() {
 		return bookIsbn;
 	}
 
-	public void setBookIsbn(int bookIsbn) {
+	public void setBookIsbn(long bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 

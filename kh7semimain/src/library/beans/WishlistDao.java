@@ -18,7 +18,7 @@ public class WishlistDao {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, wishlistDto.getWishlistNo());
 		ps.setInt(2, wishlistDto.getClientNo());
-		ps.setInt(3, wishlistDto.getBookIsbn());
+		ps.setLong(3, wishlistDto.getBookIsbn());
 		ps.execute();
 		
 		con.close();
@@ -37,13 +37,13 @@ public class WishlistDao {
 		return no;
 	}
 	//관심목록 삭제
-	public boolean delete(int clientNo ,int bookIsbn) throws Exception {
+	public boolean delete(int clientNo ,long bookIsbn) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "delete wishlist where client_no = ? and book_isbn = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, clientNo);
-		ps.setInt(2, bookIsbn);
+		ps.setLong(2, bookIsbn);
 		int count = ps.executeUpdate();
 		
 		con.close();
@@ -63,7 +63,7 @@ public class WishlistDao {
 			WishlistDto wishlistDto = new WishlistDto();
 			wishlistDto.setWishlistNo(rs.getInt("wishlist_no"));
 			wishlistDto.setClientNo(rs.getInt("client_no"));
-			wishlistDto.setBookIsbn(rs.getInt("book_isbn"));
+			wishlistDto.setBookIsbn(rs.getLong("book_isbn"));
 		
 			
 			list.add(wishlistDto);
@@ -85,7 +85,7 @@ public class WishlistDao {
 			WishlistDto wishlistDto = new WishlistDto();
 			wishlistDto.setWishlistNo(rs.getInt("wishlist_no"));
 			wishlistDto.setClientNo(rs.getInt("client_no"));
-			wishlistDto.setBookIsbn(rs.getInt("book_isbn"));
+			wishlistDto.setBookIsbn(rs.getLong("book_isbn"));
 		
 			
 			list.add(wishlistDto);
@@ -107,7 +107,7 @@ public class WishlistDao {
 		if(rs.next()) {
 			wishlistDto = new WishlistDto();
 			
-			wishlistDto.setBookIsbn(rs.getInt("book_isbn"));
+			wishlistDto.setBookIsbn(rs.getLong("book_isbn"));
 			wishlistDto.setClientNo(rs.getInt("genre_no"));
 			
 		}
@@ -124,7 +124,7 @@ public class WishlistDao {
 		Connection con = JdbcUtils.getConnection();;
 		String sql = "select * from wishlist where book_isbn=? and client_no=?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, wishlistDto.getBookIsbn());
+		ps.setLong(1, wishlistDto.getBookIsbn());
 		ps.setInt(2, wishlistDto.getClientNo());
 		ResultSet rs = ps.executeQuery();
 		boolean result = rs.next();

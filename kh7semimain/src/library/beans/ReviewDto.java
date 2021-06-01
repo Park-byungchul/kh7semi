@@ -5,7 +5,7 @@ import java.sql.Date;
 public class ReviewDto {
 	private int reviewNo;
 	private int clientNo;
-	private int bookIsbn;
+	private Long bookIsbn;
 	private String reviewSubject;
 	private String reviewContent;
 	private int reviewRead;
@@ -27,10 +27,10 @@ public class ReviewDto {
 	public void setClientNo(int clientNo) {
 		this.clientNo = clientNo;
 	}
-	public int getBookIsbn() {
+	public long getBookIsbn() {
 		return bookIsbn;
 	}
-	public void setBookIsbn(int bookIsbn) {
+	public void setBookIsbn(long bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 	public String getReviewSubject() {

@@ -5,7 +5,7 @@
     pageEncoding="UTF-8"%>
 
 <%
-	int bookIsbn = Integer.parseInt(request.getParameter("bookIsbn"));
+	long bookIsbn = Long.parseLong(request.getParameter("bookIsbn"));
 	BookDao bookDao = new BookDao();
 	BookDto bookDto = bookDao.get(bookIsbn);
 %>

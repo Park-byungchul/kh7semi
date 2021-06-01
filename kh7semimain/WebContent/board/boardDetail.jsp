@@ -257,13 +257,13 @@
 		<div class="row float-container">
 			<div class="left">
 				작성자 | 
-				<%if(answerDto != null) {%>
-					<%=answerDto.getClientNo() %>
+				<%if(answerDto.getClientNo() != 0) {%>
+					<%=answerDao.getClientName(answerDto.getClientNo()) %>
 				<%} %>
 			</div>
 			<div class="right">
 				답변일 | 
-				<%if(answerDto != null) {%>
+				<%if(answerDto.getAnswerDate() != null) {%>
 					<%=answerDto.getAnswerDate().toLocaleString() %>
 				<%} %>
 			</div>		
@@ -271,11 +271,7 @@
 		
 		<div class="row text-left" style="min-height:300px;">
 			<pre>
-				<%if(answerDto == null) {%>
-					아직 답변이 등록되지 않았습니다.
-				<%} else { %>
-					<%=answerDto.getAnswerContent() %>
-				<%} %>
+				<%=answerDto.getAnswerContent() %>
 			</pre>
 		</div>
 	</div>

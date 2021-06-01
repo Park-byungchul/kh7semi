@@ -43,6 +43,8 @@
 		adminAll = clientDto.getClientType().equals("전체관리자");
 		adminPart = clientDto.getClientType().equals("권한관리자");
 	}
+	
+	boolean isAdminCurrentArea = clientDao.isAdminCurrentArea(clientNo, areaNo);
 %>
  
 <!DOCTYPE html>
@@ -114,7 +116,11 @@
 						<a href="<%=root %>/admin/adminMenu.jsp">관리자메뉴</a>
 					</div>
 				<%} %>
-			
+				<%if(isAdminCurrentArea){ %>
+					<div class="right">
+						<span>해당 지점의 관리자입니다</span>
+					</div>
+				<%} %>
 		</div>
 	
 		<nav>

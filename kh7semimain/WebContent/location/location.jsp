@@ -50,12 +50,7 @@ List<AreaDto> areaList = areaDao.list();
 </script>
 
 <style>
-.left {
-z-index: 1;
-}
-.menu {
-z-index: 2;
-}
+
 </style>
 <jsp:include page="/template/header.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
@@ -71,10 +66,9 @@ z-index: 2;
 </ul>
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>
-<div class = "row">
-	<h2>header</h2>
-</div>
 <div class="float-container">
+	<div class="left" id="map1" style="width:400px;height:400px;margin:20px 20px;display:inline-block;">
+	</div>	
 	<div class="left">
 		<div class="row">
 			<h2 class="library-areaName" style="display:inline-block;"><%=areaList.get(2).getAreaName()%></h2>
@@ -90,8 +84,6 @@ z-index: 2;
 		</div>
 	</div>
 	
-	<div class="left" id="map1" style="width:400px;height:400px;margin:20px 20px;display:inline-block;">
-	</div>	
 </div>
 
 <div class="float-container">

@@ -9,7 +9,9 @@
 request.setCharacterEncoding("UTF-8");
 String root = request.getContextPath();
 ClientDao clientDao = new ClientDao();
-List<ClientDto> list = clientDao.list();
+
+String search = request.getParameter("search");
+boolean isSearch = search != null;
 
 AreaDao areaDao = new AreaDao();
 int areaNo;
@@ -23,6 +25,40 @@ catch (Exception e){
 String title = "회원관리";
 if(areaNo > 0){
 	title += " : " + areaDao.detail(areaNo).getAreaName();
+}
+
+//////////페이지네이션
+int pageNo;
+try{
+pageNo = Integer.parseInt(request.getParameter("pageNo"));
+}
+catch (Exception e){
+pageNo = 1;
+}
+
+int pageSize = 10; // 1페이지에 보여줄 개수
+
+// rownum의 시작번호(startRow)와 종료번호(endRow)를 계산
+int strNum = pageSize * pageNo - (pageSize-1);
+int endNum = pageSize * pageNo;
+
+List<ClientDto> list;
+int count;
+if(!isSearch){
+list = clientDao.list(strNum, endNum);
+count = clientDao.getCount();
+} else{
+list = clientDao.search(search, strNum, endNum);
+count = clientDao.getCount(search);
+}
+
+int blockSize = 10;
+int lastBlock = (count + pageSize - 1) / pageSize;
+int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+int endBlock = startBlock + blockSize - 1;
+
+if(endBlock > lastBlock){ // 범위를 벗어나면
+endBlock = lastBlock; // 범위를 수정
 }
 %>
 
@@ -45,6 +81,16 @@ if(areaNo > 0){
 		});
 	});
 </script>
+
+<%if(isSearch){ %>
+
+<script>
+	$(function(){
+		$("#search").val("<%=search %>");
+	});
+</script>
+
+<%} %>
 
 	<div class="row text-left">
 		<h2>회원 목록</h2>
@@ -72,8 +118,12 @@ if(areaNo > 0){
 					<td><%=clientDto.getClientType()%></td>
 					<td>
 					<%if(clientDto.getClientType().equals("일반관리자") || clientDto.getClientType().equals("일반사용자")){ %>
-						<button><a href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>">수정</a></button>
-						<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
+						<button><a href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
+							<%if(isSearch){ %>
+								&search=<%=search %>
+							<%} %>
+						">수정</a></button>
+						<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>&type=partial">삭제</a></button>
 					<%} %>
 					</td>
 				</tr>
@@ -81,4 +131,38 @@ if(areaNo > 0){
 			</tbody>
 		</table>
 	</div>
+	
+	<div class="text-center pagination">
+	<%if(startBlock > 1){ %>
+		<a class="move-link">이전</a>
+		<%} %>
+		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
+			<%if(i == pageNo){ %>
+				<a href="clientPartialList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%} %>
+				" class="on"><%=i %></a>
+			<%}else{ %>
+				<a href="clientPartialList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%} %>
+				"><%=i %></a>
+			<%} %>
+		<%} %>
+		<%if(endBlock < lastBlock){ %>
+		<a class="move-link">다음</a>
+		<%} %>
+	</div>
+	
+		
+	<div class="row text-center">
+		<form action="clientPartialList.jsp" method="post">
+			<input type="hidden" value="<%=pageNo %>" name="pageNo">
+			<input type="text" name="search" id="search">
+			<input type="submit" value="검색">
+		</form>
+	</div>
+	
 <jsp:include page="/template/footer.jsp"></jsp:include>

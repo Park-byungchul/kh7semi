@@ -19,7 +19,7 @@
  		if(type == null && keyword == null) {
  			getBookList = getBookDao.list();
  		}
- 		else if(type.equals("all")){
+ 		else if(type.equals("all") || type.equals(null)){
  			getBookList = getBookDao.searchList(keyword);
  		}
  		else{ //select가 '전체'가 아니면 type과 keyword 같이 전송

@@ -52,12 +52,13 @@
 <meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
+	<link rel="stylesheet" type="text/css" href="<%=root%>/css/scrolledMenu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css">
 	<style>
-		
-	</style>
 	
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 	window.onload = function(){
 		var area = document.querySelector("#area");
@@ -70,6 +71,20 @@
 			location.href = area.value + "&back=<%=pageNow%>";
 		}
 	}
+	
+	$(function(){
+		$(window).scroll(function(){
+			var menu = $(".menu");
+			var top = $("html").scrollTop() || $("body").scrollTop();
+			if(top >= 140){
+				menu.addClass("fixed");
+			}else {
+				menu.removeClass("fixed");
+			}
+		});
+	});
+	
+	
 </script>
 </head>
 <body>

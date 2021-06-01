@@ -32,19 +32,44 @@ ClientDao clientDao = new ClientDao();
 ClientDto clientDto = clientDao.get(clientNo);
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 
-
-List<AreaDto> areaList;
-if(clientDto.getClientType().equals("전체관리자")){
-	areaList = areaDao.list();
-}
-else{
-	areaList = areaDao.list(clientNo);
-}
-
 RoleDao roleDao = new RoleDao();
 boolean isAdmin = roleDao.isAdmin(clientNo, areaNo);
 
 List<ClientDto> adminNormalList = clientDao.adminNormalList();
+
+//////////페이지네이션
+int pageNo;
+try{
+pageNo = Integer.parseInt(request.getParameter("pageNo"));
+}
+catch (Exception e){
+pageNo = 1;
+}
+
+int pageSize = 10; // 1페이지에 보여줄 개수
+
+//rownum의 시작번호(startRow)와 종료번호(endRow)를 계산
+int strNum = pageSize * pageNo - (pageSize-1);
+int endNum = pageSize * pageNo;
+
+
+List<AreaDto> areaList;
+if(clientDto.getClientType().equals("전체관리자")){
+	areaList = areaDao.list(strNum, endNum);
+} else{
+	areaList = areaDao.list(clientNo, strNum, endNum);
+}
+
+int count = areaDao.getCount();
+
+int blockSize = 10;
+int lastBlock = (count + pageSize - 1) / pageSize;
+int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+int endBlock = startBlock + blockSize - 1;
+
+if(endBlock > lastBlock){ // 범위를 벗어나면
+endBlock = lastBlock; // 범위를 수정
+}
 %>
 
 <jsp:include page="/admin/adminMenuSidebar.jsp">
@@ -80,12 +105,12 @@ List<ClientDto> adminNormalList = clientDao.adminNormalList();
 				<%for (AreaDto areaDto : areaList){ %>
 					<tr>	
 						<td>
-							<%=areaDto.getAreaName() %>
+							[<%=areaDto.getAreaNo() %>]<%=areaDto.getAreaName() %>
 						</td>
 						<td>
 						<%for(ClientDto adminNormalDto : adminNormalList){ %>
 							<%if(roleDao.isAdmin(adminNormalDto.getClientNo(), areaDto.getAreaNo())){ %>
-								<a href="rolePartialDetail.jsp?rolePartialClientNo=<%=adminNormalDto.getClientNo()%>&rolePartialAreaNo=<%=areaDto.getAreaNo()%>"><%=adminNormalDto.getClientName() %></a>
+								<a href="rolePartialDetail.jsp?rolePartialClientNo=<%=adminNormalDto.getClientNo()%>&rolePartialAreaNo=<%=areaDto.getAreaNo()%>">[<%=adminNormalDto.getClientNo() %>]<%=adminNormalDto.getClientName() %>[<%=adminNormalDto.getClientId() %>]</a>
 							<%} %>
 						<%} %>
 						</td>
@@ -94,14 +119,14 @@ List<ClientDto> adminNormalList = clientDao.adminNormalList();
 				<%} else if(isAdmin || clientDto.getClientType().equals("전체관리자")){%>
 					<tr>	
 						<td>
-							<%=areaDao.detail(areaNo).getAreaName() %>
+							[<%=areaDao.detail(areaNo).getAreaNo() %>]<%=areaDao.detail(areaNo).getAreaName() %>
 						</td>
 						<td>
 							<%for(ClientDto adminNormalDto : adminNormalList){ %>
-							<%if(roleDao.isAdmin(adminNormalDto.getClientNo(), areaNo)){ %>
-								<a href="rolePartialDetail.jsp"><%=adminNormalDto.getClientName() %></a>
+								<%if(roleDao.isAdmin(adminNormalDto.getClientNo(), areaNo)){ %>
+									<a href="rolePartialDetail.jsp?rolePartialClientNo=<%=adminNormalDto.getClientNo()%>&rolePartialAreaNo=<%=areaNo%>">[<%=adminNormalDto.getClientNo() %>]<%=adminNormalDto.getClientName() %>[<%=adminNormalDto.getClientId() %>]</a>
+								<%} %>
 							<%} %>
-						<%} %>
 						</td>
 					</tr>
 				<%}else{ %>
@@ -111,6 +136,22 @@ List<ClientDto> adminNormalList = clientDao.adminNormalList();
 				<%} %>
 			</tbody>
 		</table>
+	</div>
+
+	<div class="text-center pagination">
+	<%if(startBlock > 1){ %>
+		<a class="move-link">이전</a>
+		<%} %>
+		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
+			<%if(i == pageNo){ %>
+				<a href="rolePartialList.jsp?pageNo=<%=i %>" class="on"><%=i %></a>
+			<%}else{ %>
+				<a href="rolePartialList.jsp?pageNo=<%=i %>"><%=i %></a>
+			<%} %>
+		<%} %>
+		<%if(endBlock < lastBlock){ %>
+		<a class="move-link">다음</a>
+		<%} %>
 	</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

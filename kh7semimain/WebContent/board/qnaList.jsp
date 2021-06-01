@@ -142,7 +142,6 @@
 					<th>도서관</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th>조회수</th>
 				</tr>
 			</thead>
 			
@@ -154,7 +153,7 @@
 						<%if(boardListDto.getBoardOpen().equals("비공개") && !isAdmin && boardListDto.getClientNo() != clientNo) {%>
 							<%=boardListDto.getBoardTitle() %>
 						<%} else { %>
-							<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
+							<a href="qnaDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
 								<%=boardListDto.getBoardTitle() %>
 							</a>
 						<%} %>
@@ -173,7 +172,6 @@
 					</td>
 					<td><%=boardListDto.getClientName() %></td>
 					<td><%=boardListDto.getBoardDate() %></td>
-					<td><%=boardListDto.getBoardRead() %></td>
 				</tr>
 				<%} %>
 			</tbody>

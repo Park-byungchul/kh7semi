@@ -20,8 +20,21 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
-	$(function(){
+	$(function() {
 		$("select[name=areaNo]").val("<%=boardDto.getAreaNo()%>");
+	});
+	
+	$(function() {
+		$("#delete").click(function() {
+			var choice = window.confirm("정말 삭제하시겠습니까?");
+			
+			if (choice) {
+				return true;
+			} 
+			else {
+				return false;
+			}
+		});
 	});
 </script>
 
@@ -32,6 +45,7 @@
 
 	<form action="boardEdit.kh" method="post">
 		<input type="hidden" name="boardNo" value="<%=boardDto.getBoardNo()%>">
+		<input type="hidden" name="boardTypeNo" value="<%=boardDto.getBoardTypeNo()%>">
 	
 		<%if(boardDto.getBoardTypeNo() == 1 || boardDto.getBoardTypeNo() == 2) { %>
 			<div class="row text-left">
@@ -58,7 +72,13 @@
 		</div>
 	
 		<div class="row">
-			<input type="submit" value="수정" class="form-btn">
+			<input type="submit" value="수정" class="link-btn">
+			<a id="delete" href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn">삭제</a>
+			<%if(boardDto.getBoardTypeNo() == 2) { %>
+				<a href="qnaDetail.jsp?boardNo=<%=boardNo%>" class="link-btn">취소</a>
+			<%} else { %>
+				<a href="boardDetail.jsp?boardNo=<%=boardNo%>" class="link-btn">취소</a>
+			<%} %>
 		</div>
 	
 	</form>

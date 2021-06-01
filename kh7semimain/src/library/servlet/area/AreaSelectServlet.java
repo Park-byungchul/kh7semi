@@ -18,8 +18,9 @@ public class AreaSelectServlet extends HttpServlet {
 			
 			req.getSession().removeAttribute("areaNo");
 			req.getSession().setAttribute("areaNo", areaNo);
+			String back = req.getParameter("back");
 			
-			resp.sendRedirect(req.getContextPath());
+			resp.sendRedirect(back);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

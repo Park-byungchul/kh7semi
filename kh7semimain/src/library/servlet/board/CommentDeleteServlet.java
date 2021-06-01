@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import library.beans.BoardCommentDao;
 import library.beans.BoardCommentDto;
+import library.beans.BoardDao;
 
 @WebServlet (urlPatterns = "/board/commentDelete.kh")
 public class CommentDeleteServlet extends HttpServlet {
@@ -25,6 +26,9 @@ public class CommentDeleteServlet extends HttpServlet {
 			
 			BoardCommentDao commentDao = new BoardCommentDao();
 			commentDao.delete(commentDto);
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.refreshComment(commentDto.getBoardNo());
 			
 			resp.sendRedirect("boardDetail.jsp?boardNo="+commentDto.getBoardNo());
 		}

@@ -24,6 +24,13 @@ if(areaNo > 0){
 List<AreaDto> areaList = areaDao.list();
 // areaDao.list() 불러올때 sql문이 area_no desc로 되어있음을 유의
 %>
+
+<style>
+	#map1, #map2, #map3 {
+		z-index: -1;
+	}
+</style>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 

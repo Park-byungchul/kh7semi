@@ -22,12 +22,6 @@ public class BoardEditServlet extends HttpServlet {
 			boardDto.setBoardNo(Integer.parseInt(req.getParameter("boardNo")));
 			boardDto.setAreaNo(Integer.parseInt(req.getParameter("areaNo")));
 			boardDto.setBoardTitle(req.getParameter("boardTitle"));
-			boardDto.setBoardField(req.getParameter("boardField"));
-			
-			System.out.println(req.getParameter("boardNo"));
-			System.out.println(req.getParameter("areaNo"));
-			System.out.println(req.getParameter("boardTitle"));
-			System.out.println(req.getParameter("boardField"));
 			
 			BoardDao boardDao = new BoardDao();
 			boardDao.edit(boardDto);

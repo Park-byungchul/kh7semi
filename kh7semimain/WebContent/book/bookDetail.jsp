@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.BookDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

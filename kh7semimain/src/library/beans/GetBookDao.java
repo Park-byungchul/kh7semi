@@ -15,7 +15,7 @@ public class GetBookDao {
 				+ "get_book_date, get_book_status) "
 				+ "values(get_book_seq.next(), ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, getBookDto.getBookIsbn());
+		ps.setLong(1, getBookDto.getBookIsbn());
 		ps.setInt(2, getBookDto.getAreaNo());
 		ps.setDate(3, getBookDto.getGetBookDate());
 		ps.setString(4, getBookDto.getGetBookStatus());
@@ -102,4 +102,70 @@ public class GetBookDao {
 			con.close();
 			return count > 0;
 		}
+		
+		//입고된 책 검색 기능
+		public List<GetBookDto> searchList(String keyword) throws Exception{
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select * from get_book "
+					+ "where (get_book_title || get_book_author) like '%'||?||'%'";
+//			+ "where instr(get_book_title || get_book_author, ?) > 0 order by get_book_title asc";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, keyword);
+			ResultSet rs = ps.executeQuery();
+			
+			List<GetBookDto> getBookList = new ArrayList<>();
+			
+			while(rs.next()) {
+				GetBookDto getBookDto = new GetBookDto();
+				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
+				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setAreaNo(rs.getInt("area_no"));
+				getBookDto.setGetBookDate(rs.getDate("get_book_date"));
+				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
+				getBookDto.setGetBookTitle(rs.getString("get_book_title"));
+				getBookDto.setGetBookAuthor(rs.getString("get_book_author"));
+				
+				getBookList.add(getBookDto);
+			}
+			
+			con.close();
+			
+			return getBookList;
+					
+		}
+		
+		public List<GetBookDto> searchList(String type, String keyword) throws Exception{
+			Connection con = JdbcUtils.getConnection();
+			
+//			String sql = "select * from get_book where instr(#1, ?) > 0 order by #1 asc";
+			String sql = "select * from get_book "
+					+ "where #1 like '%'||?||'%' order by #1 asc";
+			sql = sql.replace("#1", type);
+			System.out.println(sql);
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, keyword);
+			ResultSet rs = ps.executeQuery();
+			
+			List<GetBookDto> getBookList = new ArrayList<>();
+			
+			while(rs.next()) {
+				GetBookDto getBookDto = new GetBookDto();
+				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
+				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setAreaNo(rs.getInt("area_no"));
+				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
+				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
+				getBookDto.setGetBookTitle(rs.getString("get_book_title"));
+				getBookDto.setGetBookAuthor(rs.getString("get_book_author"));
+				
+				getBookList.add(getBookDto);
+			}
+			
+			con.close();
+			
+			return getBookList;
+
+		}
+		
 }

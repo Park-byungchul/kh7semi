@@ -1,11 +1,17 @@
-<%@page import="library.beans.GetBookDto"%>
 <%@page import="java.util.List"%>
+<%@page import="library.beans.GetBookDto"%>
 <%@page import="library.beans.GetBookDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	String root = request.getContextPath();
-//목록을 구하는 서버단 코드(Java)
+
+	//목록을 구하는 서버단 코드(Java)
+	//= pageNo : 현재 화면의 페이지 번호
+	//= type : 검색 수행시의 분류
+	//= keyword : 검색 수행시의 검색어
+	
+	//목록을 구하는 서버단 코드(Java)
 	/* request.setCharacterEncoding("UTF-8");
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
@@ -20,7 +26,10 @@
  		else{ //select가 '전체'가 아니면 type과 keyword 같이 전송
  			getBookList = getBookDao.searchList(type, keyword);
  		} */
-		
+	request.setCharacterEncoding("UTF-8");
+	String type = request.getParameter("type"); //검색 정보
+	String keyword = request.getParameter("keyword"); //검색 정보
+
 %>
 
 <jsp:include page="/search/searchSidebar.jsp"></jsp:include>
@@ -42,13 +51,12 @@
 		</div>
 			<br><br>
 			
-		<!-- 	검색창 구현 -->
 			<div class="row text-center">
 				<form action = "searchList.jsp" method="get">
 					<select name="type">
 						<option value="all">전체</option>
-						<option value="get_book_title">서명</option>
-						<option value= "get_book_author">저자</option>
+						<option value="book_title">서명</option>
+						<option value= "book_author">저자</option>
 					</select>
 				
 				<input type="text" name="keyword" size="50" height = "20" required>

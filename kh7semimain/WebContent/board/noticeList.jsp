@@ -147,6 +147,9 @@
 						<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
 							<%=boardListDto.getBoardTitle() %>
 						</a>
+						<%if(boardListDto.getBoardReply() > 0){ %>
+							[<%=boardListDto.getBoardReply()%>]
+						<%} %>
 					</td>
 					<td><%=boardListDto.getClientName() %></td>
 					<td><%=boardListDto.getBoardDate() %></td>
@@ -158,7 +161,7 @@
 		</table>
 	</div>
 
-	<%if(isLogin && clientDto.getClientType().equals("관리")) { %>
+	<%if(isLogin && !clientDto.getClientType().equals("일반사용자")) { %>
 		<div class="row text-right">
 			<a href="boardWrite.jsp?boardTypeNo=1" class="link-btn">글쓰기</a>
 		</div>

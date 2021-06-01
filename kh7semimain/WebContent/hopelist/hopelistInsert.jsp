@@ -110,7 +110,9 @@ $(function(){
 			<input type="submit" value="신청" class="form-btn form-btn-positive"> 
 		</form>
 				<hr>
+				<a href="hopelist.jsp">
 				<input type="button" value="목록" class="form-btn form-btn-normal">
+				</a>
 			
 	</div>
 

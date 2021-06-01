@@ -20,7 +20,7 @@ public class RecommendDao {
 		String sql = "insert into recommend values(recommend_seq.nextval,?,?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, recommendDto.getClientNo());
-		ps.setInt(2, recommendDto.getBookIsbn());
+		ps.setLong(2, recommendDto.getBookIsbn());
 		ps.execute();
 		
 		con.close();
@@ -32,7 +32,7 @@ public class RecommendDao {
 		String sql = "delete recommend where client_no = ? and book_isbn = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, recommendDto.getClientNo());
-		ps.setInt(2, recommendDto.getBookIsbn());
+		ps.setLong(2, recommendDto.getBookIsbn());
 		int count = ps.executeUpdate();
 		
 		con.close();
@@ -58,7 +58,7 @@ public class RecommendDao {
 		while(rs.next()) {
 			RecommendDto recommendDto = new RecommendDto();
 
-			recommendDto.setBookIsbn(rs.getInt("book_isbn"));
+			recommendDto.setBookIsbn(rs.getLong("book_isbn"));
 			
 			
 			recommendRankList.add(recommendDto);
@@ -73,7 +73,7 @@ public class RecommendDao {
 			Connection con = JdbcUtils.getConnection();;
 			String sql = "select * from recommend where book_isbn=? and client_no=?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, recommendDto.getBookIsbn());
+			ps.setLong(1, recommendDto.getBookIsbn());
 			ps.setInt(2, recommendDto.getClientNo());
 			ResultSet rs = ps.executeQuery();
 			boolean result = rs.next();

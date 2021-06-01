@@ -35,6 +35,8 @@ public class BoardListDao {
 			boardListDto.setBoardLike(rs.getInt("board_like"));
 			boardListDto.setBoardDate(rs.getDate("board_date"));
 			boardListDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			boardListDto.setBoardReply(rs.getInt("board_reply"));
+			boardListDto.setBoardOpen(rs.getString("board_open"));
 			
 			boardListDto.setClientNo(rs.getInt("client_no"));
 			boardListDto.setClientName(rs.getString("client_name"));
@@ -84,6 +86,8 @@ public class BoardListDao {
 			boardListDto.setBoardLike(rs.getInt("board_like"));
 			boardListDto.setBoardDate(rs.getDate("board_date"));
 			boardListDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			boardListDto.setBoardReply(rs.getInt("board_reply"));
+			boardListDto.setBoardOpen(rs.getString("board_open"));
 			
 			boardListDto.setClientNo(rs.getInt("client_no"));
 			boardListDto.setClientName(rs.getString("client_name"));
@@ -125,6 +129,8 @@ public class BoardListDao {
 			boardListDto.setBoardLike(rs.getInt("board_like"));
 			boardListDto.setBoardDate(rs.getDate("board_date"));
 			boardListDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			boardListDto.setBoardReply(rs.getInt("board_reply"));
+			boardListDto.setBoardOpen(rs.getString("board_open"));
 				
 			boardListDto.setClientNo(rs.getInt("client_no"));
 			boardListDto.setClientName(rs.getString("client_name"));

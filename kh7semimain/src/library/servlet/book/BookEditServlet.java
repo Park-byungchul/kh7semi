@@ -20,7 +20,7 @@ public class BookEditServlet extends HttpServlet{
 			req.setCharacterEncoding("UTF-8");
 			
 			BookDto bookDto = new BookDto();
-			bookDto.setBookIsbn(Integer.parseInt(req.getParameter("bookIsbn")));
+			bookDto.setBookIsbn(Long.parseLong(req.getParameter("bookIsbn")));
 			bookDto.setGenreNo(Integer.parseInt(req.getParameter("GenreNo")));
 			bookDto.setBookTitle(req.getParameter("bookTitle"));
 			bookDto.setBookAuthor(req.getParameter("bookAuthor"));

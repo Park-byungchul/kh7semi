@@ -12,6 +12,8 @@ public class BoardListDto {
 	private int boardLike;
 	private Date boardDate;
 	private int boardSepNo;
+	private int boardReply;
+	private String boardOpen;
 	
 	private int clientNo;
 	private String clientName;
@@ -111,5 +113,17 @@ public class BoardListDto {
 	}
 	public void setBoardTypeName(String boardTypeName) {
 		this.boardTypeName = boardTypeName;
+	}
+	public int getBoardReply() {
+		return boardReply;
+	}
+	public void setBoardReply(int boardReply) {
+		this.boardReply = boardReply;
+	}
+	public String getBoardOpen() {
+		return boardOpen;
+	}
+	public void setBoardOpen(String boardOpen) {
+		this.boardOpen = boardOpen;
 	}
 }

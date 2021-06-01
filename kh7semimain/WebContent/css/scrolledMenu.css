@@ -18,46 +18,46 @@
 	8. 글자 또는 메뉴 hover 설정 등을 구현
 	9. 서서브 메뉴부터는 우측에 나오도록 구현
 */
-.menu {
-	border-bottom: 1px solid black;
-}
-.menu, .menu ul {
+.menu.fixed, .menu.fixed ul {
+	width:100%;
 	margin:0;
 	padding:0;
 	list-style: none;
-	background-color:white;
+	background-color:#4B97FF;
+	position : fixed;
+	top:0;
+	left:0;
 }
-.menu > li {
+.menu.fixed > li {
 	display: inline-block;
 	position: relative;
-	left:250px;
+	left:600;
 }
-.menu ul {
+.menu.fixed ul {
 	display:none; 
 	position:absolute;
 	left:0;
 	top:53px; 
+	border-radius: 0 0 5% 5%;
 }
-.menu li:hover > ul {
+.menu.fixed li:hover > ul {
 	display:block;
 }
-.menu li {
+.menu.fixed li {
 	padding:1rem;
 	width:150px;
 }
-.menu li:hover {
-	background-color:#f5f5f5;
-	text-decoration: underline;
+.menu.fixed li:hover {
+	background-color:#1359B5;
 }
-.menu li > a {
-	color:black;
+.menu.fixed li > a {
+	color:white;
 	text-decoration: none;
 	display: block;
 	width:100%;
 }
-.menu > li > ul > li ul{
+.menu.fixed > li > ul > li ul{
 	top:0;
 	left:0;
 	margin-left:150px;
-	background-color:#f5f5f5;
 }

@@ -12,7 +12,7 @@ String root = request.getContextPath();
 request.setCharacterEncoding("UTF-8");
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 ClientDao clientDao = new ClientDao();
-List<ClientDto> adminList = clientDao.adminList();
+List<ClientDto> adminList = clientDao.adminPermmisionList();
 
 AreaDao areaDao = new AreaDao();
 int areaNo;
@@ -34,7 +34,7 @@ if(areaNo > 0){
 </jsp:include>
 
 	<div class="row text-left">
-		<h2>관리자 권한 목록</h2>
+		<h2>권한관리자 목록</h2>
 	</div>
 	
 	<div class="row text-right">

@@ -145,6 +145,11 @@ create or replace view recommendCount as select book_isbn, count(recommend_no) a
 
 -- 관리자 권한
 create or replace view roleArea as
+select R.role_no, C.client_name, A.area_name, R.role_date
+from role R, client C, area A
+where R.area_no = A.area_no and R.client_no = C.client_no;
+
+create or replace view roleArea as
 select C.client_no, C.client_name, A.area_no, A.area_name, R.role_date
 from role R, client C, area A
 where R.area_no = A.area_no and R.client_no = C.client_no;
@@ -217,17 +222,14 @@ left outer join area A on B.area_no = A.area_no
 left outer join board_type BT on B.board_type_no = bt.board_type_no;
 
 -- 질문 답변 게시판 상태를 위한 테이블
-drop table board_answer;
-
 create table board_answer (
 board_no references board(board_no) on delete cascade,
 board_status varchar2(12) default '접수중' not null check (board_status in ('접수중', '답변완료')),
+client_no references client(client_no) on delete set null,
 answer_content varchar2(4000) default '아직 답변이 등록되지 않았습니다.' not null,
 answer_date Date default sysdate not null,
 primary key(board_no)
 );
-
-drop view board_qna;
 
 create view board_qna as
 select B.board_no, B.client_no, B.area_no as board_area_no,
@@ -238,7 +240,5 @@ from board B
 left outer join board_answer BA on B.board_no = BA.board_no
 left outer join area A on A.area_no = B.area_no
 where B.board_type_no = 2;
-
-select * from board_list;
 
 alter table board add board_open varchar(9) default '공개' not null check(board_open in ('공개', '비공개'));

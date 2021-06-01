@@ -59,7 +59,7 @@ if(areaNo > 0){
 			<p>추천도서-추천수순위 프로토타입</p>
 			<%for(RecommendDto recommendDto : recommendRank) { %>
 				<%
-				int bookIsbn = recommendDto.getBookIsbn();
+				long bookIsbn = recommendDto.getBookIsbn();
 				BookDao bookDao = new BookDao();
 				BookDto bookDto = bookDao.get(bookIsbn);
 				%>

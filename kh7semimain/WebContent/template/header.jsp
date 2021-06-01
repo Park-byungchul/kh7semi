@@ -119,7 +119,7 @@
 	
 		<nav>
 			<!-- 메뉴 -->
-			<ul class="menu">
+			<ul class="menu" style="z-index:1">
 				<li>
 					<a href="<%=root%>/location/location.jsp">도서관 소개</a>
 					<ul>

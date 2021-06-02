@@ -59,9 +59,6 @@ catch (Exception e){
 }
 
 String title = "회원 목록";
-if(areaNo > 0){
-	title += " : " + areaDao.detail(areaNo).getAreaName();
-}
 %>
 
 <jsp:include page="/admin/adminMenuSidebar.jsp">
@@ -121,14 +118,15 @@ if(areaNo > 0){
 				boolean isEdit = clientNo == clientDto.getClientNo();
 				%>
 				<tr>
-					<td><span><%=clientDto.getClientId()%></span></td>
-					<td><span><%=clientDto.getClientName()%></span></td>
-					<td><span><%=clientDto.getClientEmail() %></span></td>
-					<td><span><%=clientDto.getClientPossible() %></span></td>
+					<td><%=clientDto.getClientId()%></td>
+					<td><%=clientDto.getClientName()%></td>
+					<td><%=clientDto.getClientEmail() %></td>
+					<td><%=clientDto.getClientPossible() %></td>
 					<%
 					if (isEdit) {
 					%>
 					<form action="clientEdit.kh?type=partial" method="post">
+						<input type="hidden" name="search" value="<%=search %>">
 						<input type="hidden" name="pageNo" value="<%=pageNo %>">
 						<input type="hidden" name="clientNo"
 							value="<%=clientDto.getClientNo()%>">

@@ -108,7 +108,7 @@ endBlock = lastBlock; // 범위를 수정
 			<tbody>
 				<%for (ClientDto clientDto : list) { %>
 				<tr>
-					<td><a href=<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>><%=clientDto.getClientId()%></a></td>
+					<td><%=clientDto.getClientId()%></a></td>
 					<td><%=clientDto.getClientName()%></td>
 					<td><%=clientDto.getClientEmail()%></td>
 					<td><%=clientDto.getClientPossible()%></td>
@@ -152,7 +152,6 @@ endBlock = lastBlock; // 범위를 수정
 		<a class="move-link">다음</a>
 		<%} %>
 	</div>
-	
 		
 	<div class="row text-center">
 		<form action="clientPartialList.jsp" method="post">

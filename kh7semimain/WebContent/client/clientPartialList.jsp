@@ -42,11 +42,11 @@ int endNum = pageSize * pageNo;
 List<ClientDto> list;
 int count;
 if(!isSearch){
-list = clientDao.list(strNum, endNum);
-count = clientDao.getCount();
+list = clientDao.partialList(strNum, endNum);
+count = clientDao.getPartialCount();
 } else{
-list = clientDao.search(search, strNum, endNum);
-count = clientDao.getCount(search);
+list = clientDao.partialSearch(search, strNum, endNum);
+count = clientDao.getPartialCount(search);
 }
 
 int blockSize = 10;
@@ -155,8 +155,8 @@ endBlock = lastBlock; // 범위를 수정
 		
 	<div class="row text-center">
 		<form action="clientPartialList.jsp" method="post">
-			<input type="hidden" value="<%=pageNo %>" name="pageNo">
-			<input type="text" name="search" id="search">
+			<input type="hidden" value="1" name="pageNo">
+			<input type="text" name="search" id="search" required>
 			<input type="submit" value="검색">
 		</form>
 	</div>

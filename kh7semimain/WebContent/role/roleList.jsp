@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDto"%>
 <%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
@@ -12,7 +13,6 @@ String root = request.getContextPath();
 request.setCharacterEncoding("UTF-8");
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 ClientDao clientDao = new ClientDao();
-List<ClientDto> adminList = clientDao.adminPermmisionList();
 
 AreaDao areaDao = new AreaDao();
 int areaNo;
@@ -23,9 +23,35 @@ catch (Exception e){
 	areaNo = 0;
 }
 
-String title = "권한관리";
-if(areaNo > 0){
-	title += " : " + areaDao.detail(areaNo).getAreaName();
+String title = "권한관리자 목록";
+
+//////////페이지네이션
+int pageNo;
+try{
+pageNo = Integer.parseInt(request.getParameter("pageNo"));
+}
+catch (Exception e){
+pageNo = 1;
+}
+
+int pageSize = 10; // 1페이지에 보여줄 개수
+
+//rownum의 시작번호(startRow)와 종료번호(endRow)를 계산
+int strNum = pageSize * pageNo - (pageSize-1);
+int endNum = pageSize * pageNo;
+
+
+List<ClientDto> adminPermissionList;
+adminPermissionList = clientDao.adminPermissionList(strNum, endNum);
+int count = clientDao.getAdminPermissionCount();
+
+int blockSize = 10;
+int lastBlock = (count + pageSize - 1) / pageSize;
+int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+int endBlock = startBlock + blockSize - 1;
+
+if(endBlock > lastBlock){ // 범위를 벗어나면
+endBlock = lastBlock; // 범위를 수정
 }
 %>
 
@@ -50,7 +76,7 @@ if(areaNo > 0){
 				</tr>
 			</thead>
 			<tbody>
-				<%for(ClientDto clientDto : adminList){ %>
+				<%for(ClientDto clientDto : adminPermissionList){ %>
 					<tr>
 						<td>
 							<a href="<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>">[<%=clientDto.getClientNo() %>]<%=clientDto.getClientName() %>[<%=clientDto.getClientId() %>]</a>
@@ -67,6 +93,21 @@ if(areaNo > 0){
 			</tbody>
 		</table>
 	</div>
-
+	
+	<div class="text-center pagination">
+	<%if(startBlock > 1){ %>
+		<a class="move-link">이전</a>
+		<%} %>
+		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
+			<%if(i == pageNo){ %>
+				<a href="roleList.jsp?pageNo=<%=i %>" class="on"><%=i %></a>
+			<%}else{ %>
+				<a href="roleList.jsp?pageNo=<%=i %>"><%=i %></a>
+			<%} %>
+		<%} %>
+		<%if(endBlock < lastBlock){ %>
+		<a class="move-link">다음</a>
+		<%} %>
+	</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

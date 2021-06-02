@@ -22,10 +22,7 @@ catch (Exception e){
 	areaNo = 0;
 }
 
-String title = "회원관리";
-if(areaNo > 0){
-	title += " : " + areaDao.detail(areaNo).getAreaName();
-}
+String title = "회원 목록";
 
 //////////페이지네이션
 int pageNo;

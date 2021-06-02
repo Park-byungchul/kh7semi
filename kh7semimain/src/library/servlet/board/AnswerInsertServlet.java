@@ -30,7 +30,7 @@ public class AnswerInsertServlet extends HttpServlet {
 			BoardAnswerDao answerDao = new BoardAnswerDao();
 			answerDao.answer(answerDto);
 			
-			resp.sendRedirect("boardDetail.jsp?boardNo="+answerDto.getBoardNo());
+			resp.sendRedirect("qnaDetail.jsp?boardNo="+answerDto.getBoardNo());
 		}
 		catch (Exception e) {
 			e.printStackTrace();

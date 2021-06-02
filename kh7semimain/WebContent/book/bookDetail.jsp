@@ -1,13 +1,15 @@
 <%@page import="library.beans.AreaDao"%>
-<%@page import="library.beans.BookDto"%>
-<%@page import="library.beans.BookDao"%>
+<%@page import="library.beans.BookDetailDto"%>
+<%@page import="library.beans.BookDetailDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%
+
 	String bookIsbn = request.getParameter("bookIsbn");
-	BookDao bookDao = new BookDao();
-	BookDto bookDto = bookDao.get(bookIsbn);
+	BookDetailDao bookDetailDao = new BookDetailDao();
+	BookDetailDto bookDetailDto = bookDetailDao.get(bookIsbn);
+
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -19,16 +21,19 @@
 		
 		<div class="row">
 				<div class="row">
-					<label>ISBN : </label><span><%=bookDto.getBookIsbn() %></span>
+					<label>ISBN : <%=bookDetailDto.getBookIsbn() %></label>
 				</div>
 				<div class="row">
-					<label>장르 번호 : </label><input type="text" name="genreNo" value="<%=bookDto.getGenreNo()%>">
+					<label>장르 번호 : <%=bookDetailDto.getGenreNo()%></label>
 				</div>
 				<div class="row">
-					<label>제목 : </label><input type="text" name="bookTitle" value="<%=bookDto.getBookTitle()%>">
+					<label>장르 : <%=bookDetailDto.getGenreName()%></label>
 				</div>
 				<div class="row">
-					<label>저자 : </label><input type="text" name="bookAuthor" value="<%=bookDto.getBookAuthor()%>">		
+					<label>제목 : <%=bookDetailDto.getBookTitle()%></label>
+				</div>
+				<div class="row">
+					<label>저자 : <%=bookDetailDto.getBookAuthor()%></label>		
 				</div>
 		</div>
 	</div>

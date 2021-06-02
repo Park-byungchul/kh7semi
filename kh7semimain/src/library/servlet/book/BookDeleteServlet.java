@@ -16,7 +16,7 @@ public class BookDeleteServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 
-			long bookIsbn = Long.parseLong(req.getParameter("bookIsbn"));
+			String bookIsbn = req.getParameter("bookIsbn");
 			
 			BookDao bookDao = new BookDao();
 			bookDao.delete(bookIsbn);

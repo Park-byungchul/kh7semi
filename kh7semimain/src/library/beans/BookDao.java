@@ -10,14 +10,16 @@ public class BookDao {
 	public void insert(BookDto bookDto) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "insert into book "
-				+ "(book_isbn, genre_no, book_title, book_author) "
-				+ "values(?, ?, ?, ?)";
+		String sql = "insert into book values(?,?,?,?,?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setLong(1, bookDto.getBookIsbn());
+		ps.setString(1, bookDto.getBookIsbn());
 		ps.setInt(2, bookDto.getGenreNo());
 		ps.setString(3, bookDto.getBookTitle());
 		ps.setString(4, bookDto.getBookAuthor());
+		ps.setString(5, bookDto.getBookPublisher());
+		ps.setDate(6, bookDto.getBookDate());
+		ps.setString(7, bookDto.getBookContent());
+		ps.setString(8, bookDto.getBookImg());
 		ps.execute();
 		
 		con.close();
@@ -26,13 +28,18 @@ public class BookDao {
 	public boolean editBook(BookDto bookDto) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "update book set book_title=? , book_author = ? "
-				+ ", genre_no = ? where book_isbn=?";
+		String sql = "update book set genre_no = ? , book_title = ? , book_author = ? , "
+				+ "book_publisher = ? , book_date = ? , book_content = ? , book_img = ? "
+				+ "where book_isbn = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, bookDto.getBookTitle());
-		ps.setString(2, bookDto.getBookAuthor());
-		ps.setInt(3, bookDto.getGenreNo());
-		ps.setLong(4, bookDto.getBookIsbn());
+		ps.setInt(1, bookDto.getGenreNo());
+		ps.setString(2, bookDto.getBookTitle());
+		ps.setString(3, bookDto.getBookAuthor());
+		ps.setString(4, bookDto.getBookPublisher());
+		ps.setDate(5, bookDto.getBookDate());
+		ps.setString(6, bookDto.getBookContent());
+		ps.setString(7, bookDto.getBookImg());
+		ps.setString(8, bookDto.getBookIsbn());
 		int count = ps.executeUpdate();
 		
 		con.close();
@@ -40,22 +47,26 @@ public class BookDao {
 		return count > 0;
 	}
 	
-	public BookDto get(long bookIsbn) throws Exception {
+	public BookDto get(String bookIsbn) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "select * from book where book_isbn = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setLong(1, bookIsbn);
+		ps.setString(1, bookIsbn);
 		ResultSet rs = ps.executeQuery();
 		
 		BookDto bookDto;
 		if(rs.next()) {
 			bookDto = new BookDto();
 			
-			bookDto.setBookIsbn(rs.getLong("book_isbn"));
+			bookDto.setBookIsbn(rs.getString("book_isbn"));
 			bookDto.setGenreNo(rs.getInt("genre_no"));
 			bookDto.setBookTitle(rs.getString("book_title"));
 			bookDto.setBookAuthor(rs.getString("book_author"));
+			bookDto.setBookPublisher(rs.getString("book_publisher"));
+			bookDto.setBookDate(rs.getDate("book_date"));
+			bookDto.setBookContent(rs.getString("book_content"));
+			bookDto.setBookImg(rs.getString("book_img"));
 		}
 		else {
 			bookDto = null;
@@ -69,7 +80,7 @@ public class BookDao {
 	public List<BookDto> list() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "select * from book order by book_isbn asc";
+		String sql = "select * from book order by to_number(book_isbn) asc";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		
@@ -78,10 +89,14 @@ public class BookDao {
 		while(rs.next()) {
 			BookDto bookDto = new BookDto();
 			
-			bookDto.setBookIsbn(rs.getLong("book_isbn"));
+			bookDto.setBookIsbn(rs.getString("book_isbn"));
 			bookDto.setGenreNo(rs.getInt("genre_no"));
 			bookDto.setBookTitle(rs.getString("book_title"));
 			bookDto.setBookAuthor(rs.getString("book_author"));
+			bookDto.setBookPublisher(rs.getString("book_publisher"));
+			bookDto.setBookDate(rs.getDate("book_date"));
+			bookDto.setBookContent(rs.getString("book_content"));
+			bookDto.setBookImg(rs.getString("book_img"));
 			
 			bookList.add(bookDto);
 		}
@@ -105,10 +120,14 @@ public class BookDao {
 		while(rs.next()) {
 			BookDto bookDto = new BookDto();
 			
-			bookDto.setBookIsbn(rs.getLong("book_isbn"));
+			bookDto.setBookIsbn(rs.getString("book_isbn"));
 			bookDto.setGenreNo(rs.getInt("genre_no"));
 			bookDto.setBookTitle(rs.getString("book_title"));
 			bookDto.setBookAuthor(rs.getString("book_author"));
+			bookDto.setBookPublisher(rs.getString("book_publisher"));
+			bookDto.setBookDate(rs.getDate("book_date"));
+			bookDto.setBookContent(rs.getString("book_content"));
+			bookDto.setBookImg(rs.getString("book_img"));
 			
 			bookList.add(bookDto);
 		}
@@ -133,10 +152,14 @@ public class BookDao {
 		while(rs.next()) {
 			BookDto bookDto = new BookDto();
 			
-			bookDto.setBookIsbn(rs.getLong("book_isbn"));
+			bookDto.setBookIsbn(rs.getString("book_isbn"));
 			bookDto.setGenreNo(rs.getInt("genre_no"));
 			bookDto.setBookTitle(rs.getString("book_title"));
 			bookDto.setBookAuthor(rs.getString("book_author"));
+			bookDto.setBookPublisher(rs.getString("book_publisher"));
+			bookDto.setBookDate(rs.getDate("book_date"));
+			bookDto.setBookContent(rs.getString("book_content"));
+			bookDto.setBookImg(rs.getString("book_img"));
 			
 			bookList.add(bookDto);
 		}
@@ -146,12 +169,12 @@ public class BookDao {
 		return bookList;
 	}
 	
-	public boolean delete(long bookIsbn) throws Exception {
+	public boolean delete(String bookIsbn) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "delete book where book_isbn = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setLong(1, bookIsbn);
+		ps.setString(1, bookIsbn);
 		int count = ps.executeUpdate();
 		
 		con.close();

@@ -12,7 +12,7 @@
 request.setCharacterEncoding("UTF-8");
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 ClientDao clientDao = new ClientDao();
-List<ClientDto> adminList = clientDao.adminPermmisionList();
+List<ClientDto> adminList = clientDao.adminPermissionList();
 AreaDao areaDao = new AreaDao();
 List<AreaDto> areaList = areaDao.list();
 
@@ -25,9 +25,6 @@ catch (Exception e){
 }
 
 String title = "권한수정";
-if(areaNo > 0){
-	title += " : " + areaDao.detail(areaNo).getAreaName();
-}
 
 int roleClientNo = Integer.parseInt(request.getParameter("roleClientNo"));
 int roleAreaNo = Integer.parseInt(request.getParameter("roleAreaNo"));
@@ -70,7 +67,7 @@ RoleAreaDto roleAreaDto = roleAreaDao.get(roleClientNo, roleAreaNo);
 					<select name="clientNo" required id="roleClient">
 						<option value="">관리자를 선택하세요</option>
 						<%for(ClientDto clientDto : adminList){ %>
-							<option value="<%=clientDto.getClientNo() %>"><%=clientDto.getClientName() %></option>
+							<option value="<%=clientDto.getClientNo() %>">[<%=clientDto.getClientNo() %>]<%=clientDto.getClientName() %>[<%=clientDto.getClientId() %>]</option>
 						<%} %>
 					</select>
 				</div>
@@ -79,7 +76,7 @@ RoleAreaDto roleAreaDto = roleAreaDao.get(roleClientNo, roleAreaNo);
 					<select name="areaNo" required id="roleArea">
 						<option value="">지점을 선택하세요</option>
 						<%for(AreaDto areaDto : areaList){ %>
-							<option value="<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+							<option value="<%=areaDto.getAreaNo()%>">[<%=areaDto.getAreaNo() %>]<%=areaDto.getAreaName() %></option>
 						<%} %>
 					</select>
 				</div>

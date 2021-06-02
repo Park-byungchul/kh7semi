@@ -23,7 +23,7 @@ public class BookWishlistDeleteServlet extends HttpServlet{
 			req.setCharacterEncoding("UTF-8");
 			WishlistDto wishlistDto = new WishlistDto();
 			wishlistDto.setClientNo(Integer.parseInt(req.getParameter("clientNo"))); 
-			wishlistDto.setBookIsbn(Long.parseLong(req.getParameter("bookIsbn")));
+			wishlistDto.setBookIsbn(req.getParameter("bookIsbn"));
 			
 			//처리
 			WishlistDao wishlistDao = new WishlistDao();

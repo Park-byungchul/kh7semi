@@ -7,11 +7,72 @@
 	pageEncoding="UTF-8"%>
 
 <%
+request.setCharacterEncoding("UTF-8");
+
 AreaDao areaDao = new AreaDao();
-List<AreaDto> list = areaDao.list();
+
+String search = request.getParameter("search");
+boolean isSearch = search != null;
+
+//////////페이지네이션
+int pageNo;
+try{
+pageNo = Integer.parseInt(request.getParameter("pageNo"));
+}
+catch (Exception e){
+pageNo = 1;
+}
+
+int pageSize = 10; // 1페이지에 보여줄 개수
+
+// rownum의 시작번호(startRow)와 종료번호(endRow)를 계산
+int strNum = pageSize * pageNo - (pageSize-1);
+int endNum = pageSize * pageNo;
+
+List<AreaDto> list;
+int count;
+
+if(!isSearch){
+	list = areaDao.list(strNum, endNum);
+	count = areaDao.getCount();
+} else{
+	list = areaDao.search(search, strNum, endNum);
+	count = areaDao.getCount(search);
+}
+
+int blockSize = 10;
+int lastBlock = (count + pageSize - 1) / pageSize;
+int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+int endBlock = startBlock + blockSize - 1;
+
+if(endBlock > lastBlock){ // 범위를 벗어나면
+endBlock = lastBlock; // 범위를 수정
+}
+
+int areaNo;
+try{
+	areaNo = (int)session.getAttribute("areaNo");
+}
+catch (Exception e){
+	areaNo = 0;
+}
+
+String title = "지점 목록";
 %>
 
-<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
+
+<%if(isSearch){ %>
+
+<script>
+	$(function(){
+		$("#search").val("<%=search %>");
+	});
+</script>
+
+<%} %>
 
 	<div class="row text-left">
 		<h2>지점 목록</h2>
@@ -34,7 +95,7 @@ List<AreaDto> list = areaDao.list();
 				for (AreaDto areaDto : list) {
 				%>
 				<tr>
-					<td>[<%=areaDto.getAreaNo()%>]<a href="areaDetail.jsp?areaNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName()%></a></td>
+					<td><a href="areaDetail.jsp?areaNo=<%=areaDto.getAreaNo()%>">[<%=areaDto.getAreaNo()%>]<%=areaDto.getAreaName()%></a></td>
 					<td><%=areaDto.getAreaCall() %></td>
 				</tr>
 				<%
@@ -44,6 +105,36 @@ List<AreaDto> list = areaDao.list();
 		</table>
 	</div>
 	
-</div>
+	<div class="text-center pagination">
+	<%if(startBlock > 1){ %>
+		<a class="move-link">이전</a>
+		<%} %>
+		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
+			<%if(i == pageNo){ %>
+				<a href="areaList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%}%>
+				" class="on"><%=i %></a>
+			<%}else{ %>
+				<a href="areaList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%}%>
+				"><%=i %></a>
+			<%} %>
+		<%} %>
+		<%if(endBlock < lastBlock){ %>
+		<a class="move-link">다음</a>
+		<%} %>
+	</div>
+	
+	<div class="row text-center">
+		<form action="areaList.jsp" method="post">
+			<input type="hidden" value="1" name="pageNo">
+			<input type="text" name="search" id="search" required>
+			<input type="submit" value="검색">
+		</form>
+	</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

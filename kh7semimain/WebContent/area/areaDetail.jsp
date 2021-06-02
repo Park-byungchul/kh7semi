@@ -4,12 +4,18 @@
     pageEncoding="UTF-8"%>
 
 <%
+	request.setCharacterEncoding("UTF-8");
+
 	int areaNo = Integer.parseInt(request.getParameter("areaNo"));
 	AreaDao areaDao = new AreaDao();
 	AreaDto areaDto = areaDao.detail(areaNo);
+	
+	String title = "지점 정보";
 %>
 
-<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 

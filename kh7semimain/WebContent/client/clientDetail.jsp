@@ -1,27 +1,31 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%
+	request.setCharacterEncoding("UTF-8");
 	int clientNo = (int)session.getAttribute("clientNo");
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto = clientDao.get(clientNo);
+	
+	AreaDao areaDao = new AreaDao();
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
+
+	String title = "마이페이지";
 %>
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/client/myMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-
-<jsp:include page="/template/sidebar1.jsp"></jsp:include>
-
-	<h2>마이페이지</h2>
-	<ul>
-		<li><a href="<%=request.getContextPath() %>/client/clientDetail.jsp">회원 정보</a></li>
-		<li><a href="#">대출/예약/신청 도서 관리</a></li>
-		<li><a href="#">관심도서</a></li>
-	</ul>
-
-<jsp:include page="/template/sidebar2.jsp"></jsp:include>
 
 	<div class="row text-left">
 		<h2>회원 정보</h2>

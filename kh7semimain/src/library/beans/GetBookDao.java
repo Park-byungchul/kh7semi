@@ -15,7 +15,7 @@ public class GetBookDao {
 				+ "get_book_date, get_book_status) "
 				+ "values(get_book_seq.next(), ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setLong(1, getBookDto.getBookIsbn());
+		ps.setString(1, getBookDto.getBookIsbn());
 		ps.setInt(2, getBookDto.getAreaNo());
 		ps.setDate(3, getBookDto.getGetBookDate());
 		ps.setString(4, getBookDto.getGetBookStatus());
@@ -52,7 +52,7 @@ public class GetBookDao {
 				
 				
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setBookIsbn(rs.getString("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
@@ -64,6 +64,27 @@ public class GetBookDao {
 			con.close();
 			
 			return getBookDto;
+		}
+		
+		public boolean checkOverlap(int getBookNo) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select * from get_book where get_book_no = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, getBookNo);
+			ResultSet rs = ps.executeQuery();
+			
+			boolean check;
+			if(rs.next()) {
+				check = true;
+			}
+			else {
+				check = false;
+			}
+			
+			con.close();
+			
+			return check;
 		}
 		
 		public List<GetBookDto> list() throws Exception {
@@ -78,7 +99,7 @@ public class GetBookDao {
 			while(rs.next()) {
 				GetBookDto getBookDto = new GetBookDto();
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setBookIsbn(rs.getString("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
@@ -121,7 +142,7 @@ public class GetBookDao {
 			while(rs.next()) {
 				GetBookDto getBookDto = new GetBookDto();
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setBookIsbn(rs.getString("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
@@ -154,7 +175,7 @@ public class GetBookDao {
 			while(rs.next()) {
 				GetBookDto getBookDto = new GetBookDto();
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setBookIsbn(rs.getString("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));

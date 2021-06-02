@@ -14,6 +14,9 @@ request.setCharacterEncoding("UTF-8");
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 ClientDao clientDao = new ClientDao();
 
+String search = request.getParameter("search");
+boolean isSearch = search != null;
+
 AreaDao areaDao = new AreaDao();
 int areaNo;
 try{
@@ -42,8 +45,16 @@ int endNum = pageSize * pageNo;
 
 
 List<ClientDto> adminPermissionList;
-adminPermissionList = clientDao.adminPermissionList(strNum, endNum);
-int count = clientDao.getAdminPermissionCount();
+int count;
+
+if(!isSearch){
+	adminPermissionList = clientDao.adminPermissionList(strNum, endNum);
+	count = clientDao.getAdminPermissionCount();
+}
+else{
+	adminPermissionList = clientDao.adminPermissionList(search, strNum, endNum);
+	count = clientDao.getAdminPermissionCount(search);
+}
 
 int blockSize = 10;
 int lastBlock = (count + pageSize - 1) / pageSize;
@@ -58,6 +69,18 @@ endBlock = lastBlock; // 범위를 수정
 <jsp:include page="/admin/adminMenuSidebar.jsp">
 	<jsp:param value="<%=title %>" name="title"/>
 </jsp:include>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<%if(isSearch){ %>
+
+<script>
+	$(function(){
+		$("#search").val("<%=search %>");
+	});
+</script>
+
+<%} %>
 
 	<div class="row text-left">
 		<h2>권한관리자 목록</h2>
@@ -100,14 +123,30 @@ endBlock = lastBlock; // 범위를 수정
 		<%} %>
 		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
 			<%if(i == pageNo){ %>
-				<a href="roleList.jsp?pageNo=<%=i %>" class="on"><%=i %></a>
+				<a href="roleList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%} %>
+				" class="on"><%=i %></a>
 			<%}else{ %>
-				<a href="roleList.jsp?pageNo=<%=i %>"><%=i %></a>
+				<a href="roleList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%} %>
+				"><%=i %></a>
 			<%} %>
 		<%} %>
 		<%if(endBlock < lastBlock){ %>
 		<a class="move-link">다음</a>
 		<%} %>
+	</div>
+	
+	<div class="row text-center">
+		<form action="roleList.jsp" method="post">
+			<input type="hidden" value="1" name="pageNo">
+			<input type="text" name="search" id="search">
+			<input type="submit" value="검색">
+		</form>
 	</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

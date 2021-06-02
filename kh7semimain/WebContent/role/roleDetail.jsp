@@ -25,9 +25,6 @@ catch (Exception e){
 }
 
 String title = "권한수정";
-if(areaNo > 0){
-	title += " : " + areaDao.detail(areaNo).getAreaName();
-}
 
 int roleClientNo = Integer.parseInt(request.getParameter("roleClientNo"));
 int roleAreaNo = Integer.parseInt(request.getParameter("roleAreaNo"));

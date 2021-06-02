@@ -59,7 +59,7 @@ RoleAreaDto roleCurrentAreaDto = roleAreaDao.get(rolePartialClientNo, rolePartia
 </script>
 
 	<div class="row text-left">
-		<h2>관리자 추가</h2>
+		<h2>관리자 수정</h2>
 	</div>
 
 	<div class="row">

@@ -1,3 +1,10 @@
+---테이블 제약조건 컬럼 등등 수정되었을때 create문으로만 table 만드는 코드 --
+-- 외래키 조건에 맞게 순서대로 적혀있음 -> 전체 선택 후 컨트롤+엔터 --
+-- 테이블 초기화가 필요한 경우 아래 코드 실행 -- 
+-- SELECT 'DROP TABLE "' || TABLE_NAME || '" CASCADE CONSTRAINTS;' FROM user_tables;
+-- 위 문구 실행 후 결과값 드래그로 전체 복사 후 실행 시 외래키조건 상관없이 테이블전체 강제삭제
+
+
 --회원 테이블
 CREATE TABLE Client (
 	client_no	number(19)	Primary key,
@@ -16,7 +23,7 @@ CREATE TABLE area (
 	area_no	number(10)	primary key,
 	area_name	varchar2(30)	NOT NULL,
 	area_location	varchar2(300)	NOT NULL,
-	area_call	varchar(13)	not NULL check(regexp_like(area_call,'^010-\d{4}-\d{4}$'))
+	area_call	char(13)	not NULL check(regexp_like(area_call,'^010-\d{4}-\d{4}$'))
 );
 
 --장르
@@ -25,12 +32,16 @@ CREATE TABLE genre (
 	genre_name	varchar2(60)	NOT NULL
 );
 
--- 책 테이블
+--책 테이블
 CREATE TABLE Book (
-	book_isbn	number(13)	primary key,
+	book_isbn   varchar2(24) primary key,
 	genre_no	references genre(genre_no) on delete set null,
 	book_title	varchar2(300)	NOT NULL,
-	book_author	varchar2(300)	NOT NULL
+	book_author	varchar2(300)	NOT NULL,
+    book_publisher varchar2(300) not null,
+    book_date date,
+    book_content varchar2(4000),
+    book_img varchar2(4000) not null unique
 );
 
 --관리자 권한 테이블
@@ -69,9 +80,9 @@ CREATE TABLE hopelist (
 	client_no	references client(client_no) on delete cascade,
 	book_isbn	references book(book_isbn) on delete cascade,
 	hopelist_reason	varchar2(4000)	NOT NULL,
-	hopelist_date	date	default sysdate  not null
+	hopelist_date	date	default sysdate  not null,
+	hopelist_library varchar2(100) not null
 );
-alter table hopelist add hopelist_library varchar2(100) not null; 
 
 --리뷰 테이블
 CREATE TABLE review (
@@ -100,8 +111,6 @@ CREATE TABLE get_book (
 	get_book_date	date	default sysdate not null,
 	get_book_status	varchar2(12)	default '대여가능' not null check (get_book_status in ('대여가능', '예약중', '대출중', '파손'))
 );
-alter table get_book add get_book_title varchar2(300) not null;
-alter table get_book add get_book_author varchar2(300) not null;
 
 -- 대출 테이블
 CREATE TABLE lend_book (
@@ -139,26 +148,6 @@ CREATE TABLE Reservation (
 	Reservation_date  date		default sysdate NOT NULL
 );
 
-----view 생성권한, 추천도서 count
-grant create view to kh7semi2;
-create or replace view recommendCount as select book_isbn, count(recommend_no) as recommendCount from recommend group by book_isbn; 
-
--- 관리자 권한
-create or replace view roleArea as
-select R.role_no, C.client_name, A.area_name, R.role_date
-from role R, client C, area A
-where R.area_no = A.area_no and R.client_no = C.client_no;
-
-create or replace view roleArea as
-select C.client_no, C.client_name, A.area_no, A.area_name, R.role_date
-from role R, client C, area A
-where R.area_no = A.area_no and R.client_no = C.client_no;
-
--------- 여기서부터 다 drop and create 해주세요 -------- 
-
-drop table reviewComment;
-drop table boardComment;
-
 -- 책리뷰 댓글
 CREATE TABLE review_comment (
 	comment_no	number(19)	primary key,
@@ -180,16 +169,6 @@ CREATE TABLE board_comment (
 	comment_like	number(19)	default 0 NOT NULL check(comment_like >= 0)
 );
 
--- 게시판은 고정이므로 developer에서 insert
-insert into board_type values(1, '공지사항');
-insert into board_type values(2, '질문답변');
-insert into board_type values(3, '자유게시판');
-insert into board_type values(4, '책리뷰');
-commit;
-
--- board table에 게시판 별 번호 부여하는 번호 추가 (board table에 추가도 해놨음)
-alter table board add (board_sep_no number(19) not null);
-
 -- 좋아요 table
 create table board_like (
 client_no references client(client_no) on delete cascade,
@@ -197,31 +176,6 @@ board_no references board(board_no) on delete cascade,
 like_time date default sysdate not null,
 primary key(client_no, board_no)
 );
-
--- comment에 게시판 번호 추가
-alter table board_comment add board_type_no references board_type(board_type_no) on delete cascade;
-
------ 210601 SQL 업데이트 -----
--- board_list 드랍하고 다시 create 해주세요
-
-alter table board add board_reply number(19) default 0 not null check(board_reply >= 0);
-
--- 도서 목록 출력을 위한 view
-drop view board_list;
-
-create view board_list as
-select B.board_no, B.area_no as board_area, B.board_type_no, B.board_title, 
-        B.board_date, B.board_read, B.board_like, B.client_no as board_writer,
-        B.board_sep_no, B.board_reply, B.board_open,
-        C.client_no, C.client_name, 
-        A.area_no, A.area_name,
-        BT.board_type_no as type_no, BT.board_type_name
-from board B
-left outer join client C on B.client_no = C.client_no
-left outer join area A on B.area_no = A.area_no
-left outer join board_type BT on B.board_type_no = bt.board_type_no;
-
-drop table board_answer;
 
 -- 질문 답변 게시판 상태를 위한 테이블
 create table board_answer (
@@ -233,49 +187,3 @@ answer_date Date,
 primary key(board_no)
 );
 
---게시판 질문-답변 조인한 view
-create view board_qna as
-select B.board_no, B.client_no, B.area_no as board_area_no,
-        B.board_title, B.board_field, B.board_read, B.board_date, B.board_open,
-        BA.board_no as answer_no, BA.board_status, BA.answer_content,
-        A.area_no, A.area_name
-from board B
-left outer join board_answer BA on B.board_no = BA.board_no
-left outer join area A on A.area_no = B.area_no
-where B.board_type_no = 2;
-
-
-
-alter table board add board_open varchar(9) default '공개' not null check(board_open in ('공개', '비공개'));
-
-create or replace view get_book_view as
-    select g.get_book_no, 
-    a.area_name, 
-    b.book_isbn, b.book_author, b.book_title 
-        from get_book g
-            inner join book b on g.book_isbn = b.book_isbn
-            inner join area a on g.area_no = a.area_no;
-    
-create or replace view lend_book_view as
-    select * from lend_book 
-            where return_book_date is null;
-
-create or replace view get_book_search_view as
-    select g.*, 
-        l.lend_book_date, 
-        r.reservation_date
-            from get_book_view g
-                left outer join lend_book_view l on g.get_book_no = l.get_book_no 
-                left outer join reservation r on g.get_book_no = r.get_book_no;
-                
-select * from area;
-select * from client;
-
-select C.* from client C 
-				inner join 
-				(select client_no from roleArea where area_no = 8) SC 
-				on C.client_no = SC.client_no 
-				where C.client_no = 4
-				union 
-				select * from client where client_type = '전체관리자'
-				and client_no = 4;

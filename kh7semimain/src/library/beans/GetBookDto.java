@@ -4,12 +4,11 @@ import java.sql.Date;
 
 public class GetBookDto {
 	private int getBookNo;
-	private long bookIsbn;
+	private String bookIsbn;
 	private int areaNo;
 	private Date getBookDate;
 	private String getBookStatus;
-	private String getBookTitle;
-	private String getBookAuthor;
+	
 	
 	public GetBookDto() {
 		super();
@@ -23,11 +22,11 @@ public class GetBookDto {
 		this.getBookNo = getBookNo;
 	}
 
-	public long getBookIsbn() {
+	public String getBookIsbn() {
 		return bookIsbn;
 	}
 
-	public void setBookIsbn(long bookIsbn) {
+	public void setBookIsbn(String bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 
@@ -55,21 +54,7 @@ public class GetBookDto {
 		this.getBookStatus = getBookStatus;
 	}
 
-	public String getGetBookTitle() {
-		return getBookTitle;
-	}
-
-	public void setGetBookTitle(String getBookTitle) {
-		this.getBookTitle = getBookTitle;
-	}
-
-	public String getGetBookAuthor() {
-		return getBookAuthor;
-	}
-
-	public void setGetBookAuthor(String getBookAuthor) {
-		this.getBookAuthor = getBookAuthor;
-	}
+	
 	
 	
 }

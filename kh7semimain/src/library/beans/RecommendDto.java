@@ -3,7 +3,7 @@ package library.beans;
 public class RecommendDto {
 	private int recommendNo;
 	private int clientNo;
-	private Long bookIsbn;
+	private String bookIsbn;
 	public int getRecommendNo() {
 		return recommendNo;
 	}
@@ -16,10 +16,10 @@ public class RecommendDto {
 	public void setClientNo(int clientNo) {
 		this.clientNo = clientNo;
 	}
-	public Long getBookIsbn() {
+	public String getBookIsbn() {
 		return bookIsbn;
 	}
-	public void setBookIsbn(Long bookIsbn) {
+	public void setBookIsbn(String bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 	public RecommendDto() {

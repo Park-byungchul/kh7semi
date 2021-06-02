@@ -145,11 +145,6 @@ create or replace view recommendCount as select book_isbn, count(recommend_no) a
 
 -- 관리자 권한
 create or replace view roleArea as
-select R.role_no, C.client_name, A.area_name, R.role_date
-from role R, client C, area A
-where R.area_no = A.area_no and R.client_no = C.client_no;
-
-create or replace view roleArea as
 select C.client_no, C.client_name, A.area_no, A.area_name, R.role_date
 from role R, client C, area A
 where R.area_no = A.area_no and R.client_no = C.client_no;
@@ -267,15 +262,3 @@ create or replace view get_book_search_view as
             from get_book_view g
                 left outer join lend_book_view l on g.get_book_no = l.get_book_no 
                 left outer join reservation r on g.get_book_no = r.get_book_no;
-                
-select * from area;
-select * from client;
-
-select C.* from client C 
-				inner join 
-				(select client_no from roleArea where area_no = 8) SC 
-				on C.client_no = SC.client_no 
-				where C.client_no = 4
-				union 
-				select * from client where client_type = '전체관리자'
-				and client_no = 4;

@@ -16,7 +16,8 @@ import library.beans.ClientDao;
 @WebFilter(urlPatterns = {
 		"/admin/*",
 		"/area/*",
-		"/role/*"
+		"/role/*",
+		 "/client/clientList.jsp", "/client/clientPartialList.jsp", "/client/clientEdit.jsp", "/client/clientInfo.jsp", "/client/clientPartialEdit.jsp"
 })
 public class AdminFilter implements Filter {
 
@@ -44,6 +45,8 @@ public class AdminFilter implements Filter {
 			boolean isAdminCurrentArea = clientDao.isAdminCurrentArea(clientNo, areaNo);
 			if (isAdminCurrentArea) {
 				chain.doFilter(request, response);
+			} else if(clientDao.get(clientNo) == null) {
+				resp.sendRedirect(req.getContextPath()+"/client/login.jsp");
 			} else if(clientDao.get(clientNo).getClientType().equals("권한관리자")) {
 				resp.sendRedirect(req.getContextPath());
 			} else {

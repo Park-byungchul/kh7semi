@@ -7,7 +7,12 @@
 	pageEncoding="UTF-8"%>
 
 <%
+request.setCharacterEncoding("UTF-8");
+
 AreaDao areaDao = new AreaDao();
+
+String search = request.getParameter("search");
+boolean isSearch = search != null;
 
 //////////페이지네이션
 int pageNo;
@@ -24,9 +29,16 @@ int pageSize = 10; // 1페이지에 보여줄 개수
 int strNum = pageSize * pageNo - (pageSize-1);
 int endNum = pageSize * pageNo;
 
-List<AreaDto> list = areaDao.list(strNum, endNum);
+List<AreaDto> list;
+int count;
 
-int count = areaDao.getCount();
+if(!isSearch){
+	list = areaDao.list(strNum, endNum);
+	count = areaDao.getCount();
+} else{
+	list = areaDao.search(search, strNum, endNum);
+	count = areaDao.getCount(search);
+}
 
 int blockSize = 10;
 int lastBlock = (count + pageSize - 1) / pageSize;
@@ -36,9 +48,21 @@ int endBlock = startBlock + blockSize - 1;
 if(endBlock > lastBlock){ // 범위를 벗어나면
 endBlock = lastBlock; // 범위를 수정
 }
+
+int areaNo;
+try{
+	areaNo = (int)session.getAttribute("areaNo");
+}
+catch (Exception e){
+	areaNo = 0;
+}
+
+String title = "지점 목록";
 %>
 
-<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 	<div class="row text-left">
 		<h2>지점 목록</h2>
@@ -85,6 +109,14 @@ endBlock = lastBlock; // 범위를 수정
 		<%if(endBlock < lastBlock){ %>
 		<a class="move-link">다음</a>
 		<%} %>
+	</div>
+	
+	<div class="row text-center">
+		<form action="areaList.jsp" method="post">
+			<input type="hidden" value="1" name="pageNo">
+			<input type="text" name="search" id="search">
+			<input type="submit" value="검색">
+		</form>
 	</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

@@ -12,7 +12,7 @@
 request.setCharacterEncoding("UTF-8");
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 ClientDao clientDao = new ClientDao();
-List<ClientDto> adminList = clientDao.adminPermmisionList();
+List<ClientDto> adminList = clientDao.adminPermissionList();
 AreaDao areaDao = new AreaDao();
 List<AreaDto> areaList = areaDao.list();
 

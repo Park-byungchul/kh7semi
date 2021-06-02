@@ -22,11 +22,17 @@ public class BoardEditServlet extends HttpServlet {
 			boardDto.setBoardNo(Integer.parseInt(req.getParameter("boardNo")));
 			boardDto.setAreaNo(Integer.parseInt(req.getParameter("areaNo")));
 			boardDto.setBoardTitle(req.getParameter("boardTitle"));
+			boardDto.setBoardField(req.getParameter("boardField"));
+			
+			int boardTypeNo = Integer.parseInt(req.getParameter("boardTypeNo"));
 			
 			BoardDao boardDao = new BoardDao();
 			boardDao.edit(boardDto);
 			
-			resp.sendRedirect("boardDetail.jsp?boardNo="+boardDto.getBoardNo());
+			if(boardTypeNo == 2) 
+				resp.sendRedirect("qnaDetail.jsp?boardNo="+boardDto.getBoardNo());
+			else
+				resp.sendRedirect("boardDetail.jsp?boardNo="+boardDto.getBoardNo());
 		}
 		catch (Exception e) {
 			e.printStackTrace();

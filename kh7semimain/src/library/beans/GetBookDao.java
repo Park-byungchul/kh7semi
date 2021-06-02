@@ -15,7 +15,7 @@ public class GetBookDao {
 				+ "get_book_date, get_book_status) "
 				+ "values(get_book_seq.next(), ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setLong(1, getBookDto.getBookIsbn());
+		ps.setString(1, getBookDto.getBookIsbn());
 		ps.setInt(2, getBookDto.getAreaNo());
 		ps.setDate(3, getBookDto.getGetBookDate());
 		ps.setString(4, getBookDto.getGetBookStatus());
@@ -52,7 +52,7 @@ public class GetBookDao {
 				
 				
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setBookIsbn(rs.getString("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
@@ -78,12 +78,11 @@ public class GetBookDao {
 			while(rs.next()) {
 				GetBookDto getBookDto = new GetBookDto();
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setBookIsbn(rs.getString("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
-				getBookDto.setGetBookTitle(rs.getString("get_book_title"));
-				getBookDto.setGetBookAuthor(rs.getString("get_book_author"));
+				
 				
 				getBookList.add(getBookDto);
 			}
@@ -121,12 +120,11 @@ public class GetBookDao {
 			while(rs.next()) {
 				GetBookDto getBookDto = new GetBookDto();
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setBookIsbn(rs.getString("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
-				getBookDto.setGetBookTitle(rs.getString("get_book_title"));
-				getBookDto.setGetBookAuthor(rs.getString("get_book_author"));
+				
 				
 				getBookList.add(getBookDto);
 			}
@@ -154,12 +152,11 @@ public class GetBookDao {
 			while(rs.next()) {
 				GetBookDto getBookDto = new GetBookDto();
 				getBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				getBookDto.setBookIsbn(rs.getLong("book_isbn"));
+				getBookDto.setBookIsbn(rs.getString("book_isbn"));
 				getBookDto.setAreaNo(rs.getInt("area_no"));
 				getBookDto.setGetBookDate(rs.getDate("get_Book_date"));
 				getBookDto.setGetBookStatus(rs.getString("get_book_status"));
-				getBookDto.setGetBookTitle(rs.getString("get_book_title"));
-				getBookDto.setGetBookAuthor(rs.getString("get_book_author"));
+		
 				
 				getBookList.add(getBookDto);
 			}

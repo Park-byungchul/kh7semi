@@ -21,9 +21,8 @@ public class GetBookSearchDao {
 			GetBookSearchDto getBookSearchDto = new GetBookSearchDto();
 			getBookSearchDto.setGetBookNo(rs.getInt("get_book_no"));
 			getBookSearchDto.setAreaName(rs.getString("area_name"));
-			getBookSearchDto.setBookIsbn(rs.getLong("book_isbn"));
-			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
-			getBookSearchDto.setBookTitle(rs.getString("book_title"));
+			getBookSearchDto.setBookIsbn(rs.getString("book_isbn"));
+			
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}
@@ -60,9 +59,7 @@ public class GetBookSearchDao {
 			GetBookSearchDto getBookSearchDto = new GetBookSearchDto();
 			getBookSearchDto.setGetBookNo(rs.getInt("get_book_no"));
 			getBookSearchDto.setAreaName(rs.getString("area_name"));
-			getBookSearchDto.setBookIsbn(rs.getLong("book_isbn"));
-			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
-			getBookSearchDto.setBookTitle(rs.getString("book_title"));
+			getBookSearchDto.setBookIsbn(rs.getString("book_isbn"));
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}
@@ -100,9 +97,7 @@ public class GetBookSearchDao {
 			GetBookSearchDto getBookSearchDto = new GetBookSearchDto();
 			getBookSearchDto.setGetBookNo(rs.getInt("get_book_no"));
 			getBookSearchDto.setAreaName(rs.getString("area_name"));
-			getBookSearchDto.setBookIsbn(rs.getLong("book_isbn"));
-			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
-			getBookSearchDto.setBookTitle(rs.getString("book_title"));
+			getBookSearchDto.setBookIsbn(rs.getString("book_isbn"));
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}

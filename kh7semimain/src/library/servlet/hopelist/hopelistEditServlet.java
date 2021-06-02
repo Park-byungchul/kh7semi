@@ -20,7 +20,7 @@ public class hopelistEditServlet extends HttpServlet{
 			req.setCharacterEncoding("UTF-8");
 			HopelistDto hopelistDto = new HopelistDto();
 			hopelistDto.setClientNo((int)req.getSession().getAttribute("clientNo"));
-			hopelistDto.setBookIsbn(Long.parseLong(req.getParameter("bookIsbn")));
+			hopelistDto.setBookIsbn(req.getParameter("bookIsbn"));
 			hopelistDto.setHopelistNo(Integer.parseInt(req.getParameter("hopelistNo")));
 			hopelistDto.setHopelistLibrary(req.getParameter("hopelistLibrary"));
 			hopelistDto.setHopelistReason(req.getParameter("hopelistReason"));

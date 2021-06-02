@@ -1,15 +1,15 @@
 package library.beans;
 
 public class BookDetailDto {
-	private long bookIsbn;
+	private String bookIsbn;
 	private String bookTitle;
 	private String bookAuthor;
 	private int genreNo;
 	private String genreName;
-	public long getBookIsbn() {
+	public String getBookIsbn() {
 		return bookIsbn;
 	}
-	public void setBookIsbn(long bookIsbn) {
+	public void setBookIsbn(String bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 	public String getBookTitle() {
@@ -36,7 +36,7 @@ public class BookDetailDto {
 	public void setGenreName(String genreName) {
 		this.genreName = genreName;
 	}
-	public BookDetailDto(long bookIsbn, String bookTitle, String bookAuthor, int genreNo, String genreName) {
+	public BookDetailDto(String bookIsbn, String bookTitle, String bookAuthor, int genreNo, String genreName) {
 		super();
 		this.bookIsbn = bookIsbn;
 		this.bookTitle = bookTitle;

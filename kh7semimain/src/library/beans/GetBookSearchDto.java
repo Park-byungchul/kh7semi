@@ -6,7 +6,7 @@ import java.sql.Date;
 public class GetBookSearchDto {
 	private int getBookNo;
 	private String areaName;
-	private long bookIsbn;
+	private String bookIsbn;
 	private String bookAuthor;
 	private String bookTitle;
 	private String getBookStatus;
@@ -23,10 +23,10 @@ public class GetBookSearchDto {
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
 	}
-	public long getBookIsbn() {
+	public String getBookIsbn() {
 		return bookIsbn;
 	}
-	public void setBookIsbn(long bookIsbn) {
+	public void setBookIsbn(String bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 	public String getBookAuthor() {
@@ -47,7 +47,7 @@ public class GetBookSearchDto {
 	public void setGetBookStatus(String getBookStatus) {
 		this.getBookStatus = getBookStatus;
 	}
-	public GetBookSearchDto(int getBookNo, String areaName, long bookIsbn, String bookAuthor, String bookTitle,
+	public GetBookSearchDto(int getBookNo, String areaName, String bookIsbn, String bookAuthor, String bookTitle,
 			String getBookStatus) {
 		super();
 		this.getBookNo = getBookNo;

@@ -1,6 +1,7 @@
 package library.servlet.book;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,11 +21,14 @@ public class BookEditServlet extends HttpServlet{
 			req.setCharacterEncoding("UTF-8");
 			
 			BookDto bookDto = new BookDto();
-			bookDto.setBookIsbn(Long.parseLong(req.getParameter("bookIsbn")));
+			bookDto.setBookIsbn(req.getParameter("bookIsbn"));
 			bookDto.setGenreNo(Integer.parseInt(req.getParameter("GenreNo")));
 			bookDto.setBookTitle(req.getParameter("bookTitle"));
 			bookDto.setBookAuthor(req.getParameter("bookAuthor"));
-			
+			bookDto.setBookPublisher(req.getParameter("bookPublisher"));
+			bookDto.setBookDate(Date.valueOf(req.getParameter("bookDate")));
+			bookDto.setBookContent(req.getParameter("bookContent"));
+			bookDto.setBookImg(req.getParameter("bookImg"));
 			BookDao bookDao = new BookDao();
 			boolean result = bookDao.editBook(bookDto);
 			

@@ -47,7 +47,8 @@ public class AdminFilter implements Filter {
 				chain.doFilter(request, response);
 			} else if(clientDao.get(clientNo) == null) {
 				resp.sendRedirect(req.getContextPath()+"/client/login.jsp");
-			} else if(clientDao.get(clientNo).getClientType().equals("권한관리자")) {
+			} else if(clientDao.get(clientNo).getClientType().equals("권한관리자") ||
+					clientDao.get(clientNo).getClientType().equals("일반관리자")) {
 				resp.sendRedirect(req.getContextPath());
 			} else {
 				resp.sendError(403);

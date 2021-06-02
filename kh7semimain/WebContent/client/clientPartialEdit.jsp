@@ -33,11 +33,11 @@ int endNum = pageSize * pageNo;
 List<ClientDto> list;
 int count = clientDao.getCount();
 if(!isSearch){
-	list = clientDao.list(strNum, endNum);
-	count = clientDao.getCount();
+	list = clientDao.partialList(strNum, endNum);
+	count = clientDao.getPartialCount();
 } else{
-	list = clientDao.search(search, strNum, endNum);
-	count = clientDao.getCount(search);
+	list = clientDao.partialSearch(search, strNum, endNum);
+	count = clientDao.getPartialCount(search);
 }
 
 int blockSize = 10;
@@ -126,7 +126,9 @@ String title = "회원 목록";
 					if (isEdit) {
 					%>
 					<form action="clientEdit.kh?type=partial" method="post">
-						<input type="hidden" name="search" value="<%=search %>">
+						<%if(isSearch){ %>
+							<input type="hidden" name="search" value="<%=search %>">
+						<%} %>
 						<input type="hidden" name="pageNo" value="<%=pageNo %>">
 						<input type="hidden" name="clientNo"
 							value="<%=clientDto.getClientNo()%>">
@@ -192,7 +194,7 @@ String title = "회원 목록";
 	<div class="row text-center">
 		<form action="clientPartialList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
-			<input type="text" name="search" id="search">
+			<input type="text" name="search" id="search" required>
 			<input type="submit" value="검색">
 		</form>
 	</div>

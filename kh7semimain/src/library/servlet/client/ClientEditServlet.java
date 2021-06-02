@@ -46,6 +46,7 @@ public class ClientEditServlet extends HttpServlet {
 					resp.sendRedirect("clientList.jsp?pageNo="+pageNo);
 				}
 				else {
+					String search = URLEncoder.encode(req.getParameter("search"), "UTF-8");
 					resp.sendRedirect("clientList.jsp?pageNo=" + pageNo + "&search=" + search);
 				}
 			}
@@ -54,6 +55,7 @@ public class ClientEditServlet extends HttpServlet {
 					resp.sendRedirect("clientPartialList.jsp?pageNo="+pageNo);
 				}
 				else {
+					String search = URLEncoder.encode(req.getParameter("search"), "UTF-8");
 					resp.sendRedirect("clientPartialList.jsp?pageNo=" + pageNo + "&search=" + search);
 				}
 			}

@@ -125,7 +125,11 @@ String title = "회원 목록";
 					<%
 					if (isEdit) {
 					%>
-					<form action="clientEdit.kh?pageNo=<%=pageNo %>&search=<%=search %>" method="post">
+					<form action="clientEdit.kh" method="post">
+						<%if(isSearch){ %>
+							<input type="hidden" name="search" value="<%=search %>">
+						<%} %>
+						<input type="hidden" name="pageNo" value="<%=pageNo %>">
 						<input type="hidden" name="clientNo"
 							value="<%=clientDto.getClientNo()%>">
 						<td><input type="text" name="clientName" required
@@ -199,7 +203,7 @@ String title = "회원 목록";
 	<div class="row text-center">
 		<form action="clientList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
-			<input type="text" name="search" id="search">
+			<input type="text" name="search" id="search" required>
 			<input type="submit" value="검색">
 		</form>
 	</div>

@@ -1,31 +1,17 @@
-insert into area values(area_seq.nextval, '당산점1', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점2', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점3', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점4', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점5', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점6', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점7', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점8', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점9', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점10', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점11', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점12', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점13', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점14', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점15', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점16', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점17', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점18', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점19', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점20', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점21', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점22', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점23', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점24', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점25', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점26', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점27', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점28', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점29', '당산', '010-6626-3202');
-insert into area values(area_seq.nextval, '당산점30', '당산', '010-6626-3202');
+-- 지점 추가 ( 찾아오는길 페이지 나오게 )
+
+drop sequence area_seq;
+
+create sequence area_seq
+minvalue 1
+start with 1
+increment by 1
+nocycle
+nocache;
+
+delete from area;
+
+insert into area values(area_seq.nextval,'당산도서관','서울특별시 영등포구 선유동2로 57 이레빌딩 (구관) 19F, 20F','010-1111-1111');
+insert into area values(area_seq.nextval,'종로도서관','서울특별시 중구 남대문로 120 대일빌딩 2F, 3F','010-2222-2222');
+insert into area values(area_seq.nextval,'강남도서관','서울특별시 강남구 테헤란로 14길 6 남도빌딩 2F, 3F, 4F, 5F, 6F','010-3333-3333');
 commit;

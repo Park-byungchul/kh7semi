@@ -5,9 +5,11 @@
     pageEncoding="UTF-8"%>
 
 <%
-	long bookIsbn = Long.parseLong(request.getParameter("bookIsbn"));
+
+	String bookIsbn = request.getParameter("bookIsbn");
 	BookDetailDao bookDetailDao = new BookDetailDao();
 	BookDetailDto bookDetailDto = bookDetailDao.get(bookIsbn);
+
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>

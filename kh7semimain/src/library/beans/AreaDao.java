@@ -53,6 +53,38 @@ public class AreaDao {
 		return list;
 	}
 	
+	public List<AreaDto> search(String search, int strNum, int endNum) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from("
+				+ "select * from("
+				+ "select * from area where instr(area_name, ?) > 0 "
+				+ "union select * from area where instr(area_location, ?) > 0 "
+				+ "union select * from area where instr(area_call, ?) > 0) "
+				+ "order by area_no desc) TMP"
+				+ ") where rn between ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, search);
+		ps.setString(2, search);
+		ps.setString(3, search);
+		ps.setInt(4, strNum);
+		ps.setInt(5, endNum);
+		ResultSet rs = ps.executeQuery();
+		List<AreaDto> list = new ArrayList<>();
+		while (rs.next()) {
+			AreaDto areaDto = new AreaDto();
+			areaDto.setAreaNo(rs.getInt("area_no"));
+			areaDto.setAreaName(rs.getString("area_name"));
+			areaDto.setAreaLocation(rs.getString("area_location"));
+			areaDto.setAreaCall(rs.getString("area_call"));
+			list.add(areaDto);
+		}
+
+		con.close();
+		return list;
+	}
+	
 	public List<AreaDto> list(int clientNo) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 
@@ -165,6 +197,25 @@ public class AreaDao {
 		
 		String sql = "select count(*) from area";
 		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		
+		con.close();
+		return count;
+	}
+	
+	public int getCount(String search) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select count(*) from ("
+				+ "select * from area where instr(area_name, ?) > 0 "
+				+ "union select * from area where instr(area_location, ?) > 0 "
+				+ "union select * from area where instr(area_call, ?) > 0)";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, search);
+		ps.setString(2, search);
+		ps.setString(3, search);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
 		int count = rs.getInt(1);

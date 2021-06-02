@@ -220,6 +220,27 @@ public class ClientDao {
 		return count > 0;
 	}
 	
+	public boolean checkOverlap(int clientNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from client where client_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, clientNo);
+		ResultSet rs = ps.executeQuery();
+		
+		boolean check;
+		if(rs.next()) {
+			check = true;
+		}
+		else {
+			check = false;
+		}
+		
+		con.close();
+		
+		return check;
+	}
+	
 	public ClientDto login(ClientDto clientDto) throws Exception{
 		Connection con = JdbcUtils.getConnection();
 		

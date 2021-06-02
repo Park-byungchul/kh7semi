@@ -66,6 +66,27 @@ public class GetBookDao {
 			return getBookDto;
 		}
 		
+		public boolean checkOverlap(int getBookNo) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select * from get_book where get_book_no = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, getBookNo);
+			ResultSet rs = ps.executeQuery();
+			
+			boolean check;
+			if(rs.next()) {
+				check = true;
+			}
+			else {
+				check = false;
+			}
+			
+			con.close();
+			
+			return check;
+		}
+		
 		public List<GetBookDto> list() throws Exception {
 			Connection con = JdbcUtils.getConnection();
 			

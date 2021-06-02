@@ -58,3 +58,10 @@ left outer join board_answer BA on B.board_no = BA.board_no
 left outer join area A on A.area_no = B.area_no
 where B.board_type_no = 2;
                 
+--리뷰 목록 출력을 위한 view
+create view review_list as
+select R.review_no, R.client_no as reviewer, R.book_isbn, R.review_subject,
+        R.review_content, R.review_read, R.review_like, R.review_date,
+        C.client_no, C.client_name
+from review R
+left outer join client C on R.client_no = C.client_no;

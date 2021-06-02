@@ -1,5 +1,5 @@
-<%@page import="library.beans.BoardListDto"%>
-<%@page import="library.beans.BoardListDao"%>
+<%@page import="library.beans.ReviewListDto"%>
+<%@page import="library.beans.ReviewListDao"%>
 <%@page import="library.beans.AreaDto"%>
 <%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>
@@ -40,8 +40,8 @@
 		pageSize = 10;
 	}
 	
-	BoardListDao boardListDao = new BoardListDao();
-	List<BoardListDto> boardList;
+	ReviewListDao reviewListDao = new ReviewListDao();
+	List<ReviewListDto> reviewList;
 	
 	// 시작과 끝번호
 	int startRow = pageNo * pageSize - (pageSize - 1);
@@ -50,13 +50,12 @@
 	// 페이지 네비게이션 영역 계산
 	int count;
 	
-	if(isSearch) count = boardListDao.getCount(type, keyword, 4);
-	else count = boardListDao.getCount(4);
+	if(isSearch) count = reviewListDao.getCount(type, keyword);
+	else count = reviewListDao.getCount();
 	
 	int blockSize = 10;
 	
 	int lastBlock = (count + pageSize - 1) / pageSize;	
-	// int lastBlock = (count - 1) / pageSize + 1;
 	
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 	int endBlock = startBlock + blockSize - 1;
@@ -66,9 +65,9 @@
 
 	// 목록 출력 (일반 목록 / 검색)
 	if(!isSearch)
-		boardList = boardListDao.list(4, startRow, endRow);
+		reviewList = reviewListDao.list(startRow, endRow);
 	else
-		boardList = boardListDao.search(4, type, keyword, startRow, endRow);
+		reviewList = reviewListDao.search(type, keyword, startRow, endRow);
 	
 	// 회원 정보
 	Integer clientNo = (Integer)session.getAttribute("clientNo");
@@ -137,18 +136,18 @@
 			</thead>
 			
 			<tbody>
-				<%for(BoardListDto boardListDto : boardList) { %>
+				<%for(ReviewListDto reviewListDto : reviewList) { %>
 				<tr>
-					<td><%=boardListDto.getBoardSepNo() %></td>
+					<td><%=reviewListDto.getReviewNo() %></td>
 					<td align=left>
-						<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
-							<%=boardListDto.getBoardTitle() %>
+						<a href="reviewDetail.jsp?reviewNo=<%=reviewListDto.getReviewNo()%>">
+							<%=reviewListDto.getReviewSubject() %>
 						</a>
 					</td>
-					<td><%=boardListDto.getClientName() %></td>
-					<td><%=boardListDto.getBoardDate() %></td>
-					<td><%=boardListDto.getBoardRead() %></td>
-					<td><%=boardListDto.getBoardLike() %></td>
+					<td><%=reviewListDto.getClientName() %></td>
+					<td><%=reviewListDto.getReviewDate() %></td>
+					<td><%=reviewListDto.getReviewRead() %></td>
+					<td><%=reviewListDto.getReviewLike() %></td>
 				</tr>
 				<%} %>
 			</tbody>
@@ -157,7 +156,7 @@
 
 	<%if(isLogin) { %>
 		<div class="row text-right">
-			<a href="boardWrite.jsp?boardTypeNo=4" class="link-btn">글쓰기</a>
+			<a href="reviewWrite.jsp" class="link-btn">글쓰기</a>
 		</div>
 	<%} %>
 	
@@ -183,7 +182,7 @@
 		<input type="hidden" name="pageNo">
 	
 		<select name="type">
-			<option value="board_title">제목</option>
+			<option value="review_subject">제목</option>
 			<option value="client_name">작성자</option>
 		</select>
 		

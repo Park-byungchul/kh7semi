@@ -241,6 +241,45 @@ public class ClientDao {
 		return list;
 	}
 	
+	public List<ClientDto> adminPermissionList(String search, int strNum, int endNum) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql =  "select * from ("
+				+ "select rownum rn, TMP.* from("
+				+ "(select * from"
+				+ "(select * from client where instr(client_name, ?) > 0 "
+				+ "union select * from client where instr(client_id, ?) > 0 "
+				+ "union select C.* from client C "
+				+ "inner join roleArea RA on C.client_no = RA.client_no "
+				+ "where instr(RA.area_name, ?) > 0)"
+				+ "where client_type = '권한관리자' order by client_no desc)"
+				+ ") TMP"
+				+ ") where rn between ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, search);
+		ps.setString(2, search);
+		ps.setString(3, search);
+		ps.setInt(4, strNum);
+		ps.setInt(5, endNum);
+		ResultSet rs = ps.executeQuery();
+		List<ClientDto> list = new ArrayList<>();
+		while(rs.next()) {
+			ClientDto clientDto = new ClientDto();
+			clientDto.setClientNo(rs.getInt("client_no"));
+			clientDto.setClientId(rs.getString("client_id"));
+			clientDto.setClientName(rs.getString("client_name"));
+			clientDto.setClientEmail(rs.getString("client_email"));
+			clientDto.setClientMade(rs.getDate("client_made"));
+			clientDto.setClientPossible(rs.getDate("client_possible"));
+			clientDto.setClientType(rs.getString("client_type"));
+			clientDto.setClientPhone(rs.getString("client_phone"));
+			list.add(clientDto);
+		}
+		
+		con.close();
+		return list;
+	}
+	
 	public List<ClientDto> adminPermissionList() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
@@ -345,6 +384,28 @@ public class ClientDao {
 		
 		String sql = "select count(*) from client where client_type = '권한관리자'";
 		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		
+		con.close();
+		return count;
+	}
+	
+	public int getAdminPermissionCount(String search) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select count(*) from "
+				+ "(select * from client where instr(client_name, ?) > 0 "
+				+ "union select * from client where instr(client_id, ?) > 0 "
+				+ "union select C.* from client C "
+				+ "inner join roleArea RA on C.client_no = RA.client_no "
+				+ "where instr(RA.area_name, ?) > 0)"
+				+ "where client_type = '권한관리자'";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, search);
+		ps.setString(2, search);
+		ps.setString(3, search);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
 		int count = rs.getInt(1);

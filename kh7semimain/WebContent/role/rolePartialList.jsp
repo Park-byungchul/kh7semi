@@ -13,6 +13,10 @@
 <%
 request.setCharacterEncoding("UTF-8");
 AreaDao areaDao = new AreaDao();
+
+String search = request.getParameter("search");
+boolean isSearch = search != null;
+
 int areaNo;
 try{
 	areaNo = (int)session.getAttribute("areaNo");
@@ -54,13 +58,19 @@ int endNum = pageSize * pageNo;
 
 
 List<AreaDto> areaList;
+int count;
 if(clientDto.getClientType().equals("전체관리자")){
-	areaList = areaDao.list(strNum, endNum);
+	if(isSearch){
+		areaList = areaDao.searchAdmin(search, strNum, endNum);
+		count = areaDao.getAdminCount(search);
+	}else{
+		areaList = areaDao.list(strNum, endNum);
+		count = areaDao.getCount();
+	}
 } else{
-	areaList = areaDao.list(clientNo, strNum, endNum);
+	areaList = areaDao.list(strNum, endNum);
+	count = areaDao.getCount();
 }
-
-int count = areaDao.getCount();
 
 int blockSize = 10;
 int lastBlock = (count + pageSize - 1) / pageSize;
@@ -75,6 +85,16 @@ endBlock = lastBlock; // 범위를 수정
 <jsp:include page="/admin/adminMenuSidebar.jsp">
 	<jsp:param value="<%=title %>" name="title"/>
 </jsp:include>
+
+<%if(isSearch){ %>
+
+<script>
+	$(function(){
+		$("#search").val("<%=search %>");
+	});
+</script>
+
+<%} %>
 
 	<div class="row">
 		<h1>일반관리자 목록 
@@ -138,20 +158,38 @@ endBlock = lastBlock; // 범위를 수정
 		</table>
 	</div>
 
+	<%if(areaNo == 0){ %>
 	<div class="text-center pagination">
 	<%if(startBlock > 1){ %>
 		<a class="move-link">이전</a>
 		<%} %>
 		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
 			<%if(i == pageNo){ %>
-				<a href="rolePartialList.jsp?pageNo=<%=i %>" class="on"><%=i %></a>
+				<a href="rolePartialList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%} %>
+				" class="on"><%=i %></a>
 			<%}else{ %>
-				<a href="rolePartialList.jsp?pageNo=<%=i %>"><%=i %></a>
+				<a href="rolePartialList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%} %>
+				"><%=i %></a>
 			<%} %>
 		<%} %>
 		<%if(endBlock < lastBlock){ %>
 		<a class="move-link">다음</a>
 		<%} %>
 	</div>
-
+	
+	<div class="row text-center">
+		<form action="rolePartialList.jsp" method="post">
+			<input type="hidden" value="1" name="pageNo">
+			<input type="text" name="search" id="search" required>
+			<input type="submit" value="검색">
+		</form>
+	</div>
+	<%} %>
+	
 <jsp:include page="/template/footer.jsp"></jsp:include>

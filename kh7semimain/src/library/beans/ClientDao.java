@@ -80,6 +80,36 @@ public class ClientDao {
 		return list;
 	}
 	
+	public List<ClientDto> partialList(int strNum, int endNum) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from("
+				+"select * from client where client_type = '일반관리자' or client_type = '일반사용자' order by client_no desc"
+				+ ") TMP"
+				+ ") where rn between ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, strNum);
+		ps.setInt(2, endNum);
+		ResultSet rs = ps.executeQuery();
+		List<ClientDto> list = new ArrayList<>();
+		while(rs.next()) {
+			ClientDto clientDto = new ClientDto();
+			clientDto.setClientNo(rs.getInt("client_no"));
+			clientDto.setClientId(rs.getString("client_id"));
+			clientDto.setClientName(rs.getString("client_name"));
+			clientDto.setClientEmail(rs.getString("client_email"));
+			clientDto.setClientMade(rs.getDate("client_made"));
+			clientDto.setClientPossible(rs.getDate("client_possible"));
+			clientDto.setClientType(rs.getString("client_type"));
+			clientDto.setClientPhone(rs.getString("client_phone"));
+			list.add(clientDto);
+		}
+		
+		con.close();
+		return list;
+	}
+	
 	public List<ClientDto> search(String search, int strNum, int endNum) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
@@ -92,6 +122,46 @@ public class ClientDao {
 				+ "union select * from client where instr(client_possible, ?) > 0 "
 				+ "union select * from client where instr(client_type, ?) > 0) "
 				+ "order by client_no desc) TMP"
+				+ ") where rn between ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, search);
+		ps.setString(2, search);
+		ps.setString(3, search);
+		ps.setString(4, search);
+		ps.setString(5, search);
+		ps.setInt(6, strNum);
+		ps.setInt(7, endNum);
+		ResultSet rs = ps.executeQuery();
+		List<ClientDto> list = new ArrayList<>();
+		while(rs.next()) {
+			ClientDto clientDto = new ClientDto();
+			clientDto.setClientNo(rs.getInt("client_no"));
+			clientDto.setClientId(rs.getString("client_id"));
+			clientDto.setClientName(rs.getString("client_name"));
+			clientDto.setClientEmail(rs.getString("client_email"));
+			clientDto.setClientMade(rs.getDate("client_made"));
+			clientDto.setClientPossible(rs.getDate("client_possible"));
+			clientDto.setClientType(rs.getString("client_type"));
+			clientDto.setClientPhone(rs.getString("client_phone"));
+			list.add(clientDto);
+		}
+		
+		con.close();
+		return list;
+	}
+	
+	public List<ClientDto> partialSearch(String search, int strNum, int endNum) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from("
+				+ "select * from("
+				+ "select * from client where instr(client_id, ?) > 0 "
+				+ "union select * from client where instr(client_name, ?) > 0 "
+				+ "union select * from client where instr(client_email, ?) > 0 "
+				+ "union select * from client where instr(client_possible, ?) > 0 "
+				+ "union select * from client where instr(client_type, ?) > 0) "
+				+ "where client_type = '일반관리자' or client_type = '일반사용자' order by client_no desc) TMP"
 				+ ") where rn between ? and ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, search);
@@ -379,6 +449,19 @@ public class ClientDao {
 		return count;
 	}
 	
+	public int getPartialCount() throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select count(*) from client where client_type='일반사용자' or client_type='일반관리자'";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		
+		con.close();
+		return count;
+	}
+	
 	public int getAdminPermissionCount() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
@@ -423,6 +506,30 @@ public class ClientDao {
 				+ "union select * from client where instr(client_email, ?) > 0 "
 				+ "union select * from client where instr(client_possible, ?) > 0 "
 				+ "union select * from client where instr(client_type, ?) > 0)";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, search);
+		ps.setString(2, search);
+		ps.setString(3, search);
+		ps.setString(4, search);
+		ps.setString(5, search);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		
+		con.close();
+		return count;
+	}
+	
+	public int getPartialCount(String search) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select count(*) from ("
+				+ "select * from client where instr(client_id, ?) > 0 "
+				+ "union select * from client where instr(client_name, ?) > 0 "
+				+ "union select * from client where instr(client_email, ?) > 0 "
+				+ "union select * from client where instr(client_possible, ?) > 0 "
+				+ "union select * from client where instr(client_type, ?) > 0) "
+				+ "where client_type = '일반관리자' or client_type = '일반사용자'";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, search);
 		ps.setString(2, search);

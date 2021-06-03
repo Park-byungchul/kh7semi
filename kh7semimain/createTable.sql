@@ -109,8 +109,7 @@ CREATE TABLE get_book (
 	get_book_no	number(19)	primary key,
 	book_isbn	references book(book_isbn) on delete cascade,
 	area_no	references area(area_no) on delete cascade,
-	get_book_date	date	default sysdate not null,
-	get_book_status	varchar2(12)	default '대여가능' not null check (get_book_status in ('대여가능', '예약중', '대출중', '파손'))
+	get_book_date	date	default sysdate not null
 );
 
 -- 대출 테이블

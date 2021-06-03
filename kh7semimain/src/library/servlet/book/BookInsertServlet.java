@@ -2,6 +2,8 @@ package library.servlet.book;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import library.beans.BookDao;
 import library.beans.BookDto;
+
 
 @WebServlet(urlPatterns = "/book/insert.kh")
 public class BookInsertServlet extends HttpServlet {
@@ -24,7 +27,13 @@ public class BookInsertServlet extends HttpServlet {
 			bookDto.setBookTitle(req.getParameter("bookTitle"));
 			bookDto.setBookAuthor(req.getParameter("bookAuthor"));
 			bookDto.setBookPublisher(req.getParameter("bookPublisher"));
-			bookDto.setBookDate(Date.valueOf(req.getParameter("bookDate")));
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			
+			java.util.Date util_StartDate = format.parse(req.getParameter("bookDate"));
+			java.sql.Date sql_StartDate = new java.sql.Date(util_StartDate.getTime());
+			
+			bookDto.setBookDate(sql_StartDate);
 			bookDto.setBookContent(req.getParameter("bookContent"));
 			bookDto.setBookImg(req.getParameter("bookImg"));
 			

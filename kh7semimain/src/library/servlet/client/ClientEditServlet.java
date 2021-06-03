@@ -1,6 +1,7 @@
 package library.servlet.client;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Date;
 
 import javax.servlet.ServletException;
@@ -39,10 +40,22 @@ public class ClientEditServlet extends HttpServlet {
 			}
 			
 			if(req.getParameter("type") == null) {
-				resp.sendRedirect("clientList.jsp?pageNo="+pageNo);
+				if(req.getParameter("search") == null) {
+					resp.sendRedirect("clientList.jsp?pageNo="+pageNo);
+				}
+				else {
+					String search = URLEncoder.encode(req.getParameter("search"), "UTF-8");
+					resp.sendRedirect("clientList.jsp?pageNo=" + pageNo + "&search=" + search);
+				}
 			}
 			else {
-				resp.sendRedirect("clientPartialList.jsp?pageNo="+pageNo);
+				if(req.getParameter("search") == null) {
+					resp.sendRedirect("clientPartialList.jsp?pageNo="+pageNo);
+				}
+				else {
+					String search = URLEncoder.encode(req.getParameter("search"), "UTF-8");
+					resp.sendRedirect("clientPartialList.jsp?pageNo=" + pageNo + "&search=" + search);
+				}
 			}
 			
 		} catch (Exception e) {

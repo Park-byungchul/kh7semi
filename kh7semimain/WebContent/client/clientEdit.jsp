@@ -5,6 +5,8 @@
 	pageEncoding="UTF-8"%>
 
 <%
+request.setCharacterEncoding("UTF-8");
+
 String root = request.getContextPath();
 ClientDao clientDao = new ClientDao();
 int clientNo = Integer.parseInt(request.getParameter("clientNo"));
@@ -46,9 +48,13 @@ int endBlock = startBlock + blockSize - 1;
 if(endBlock > lastBlock){ // 범위를 벗어나면
 endBlock = lastBlock; // 범위를 수정
 }
+
+String title = "회원 목록";
 %>
 
-<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -119,7 +125,11 @@ endBlock = lastBlock; // 범위를 수정
 					<%
 					if (isEdit) {
 					%>
-					<form action="clientEdit.kh?pageNo=<%=pageNo %>" method="post">
+					<form action="clientEdit.kh" method="post">
+						<%if(isSearch){ %>
+							<input type="hidden" name="search" value="<%=search %>">
+						<%} %>
+						<input type="hidden" name="pageNo" value="<%=pageNo %>">
 						<input type="hidden" name="clientNo"
 							value="<%=clientDto.getClientNo()%>">
 						<td><input type="text" name="clientName" required
@@ -193,7 +203,7 @@ endBlock = lastBlock; // 범위를 수정
 	<div class="row text-center">
 		<form action="clientList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
-			<input type="text" name="search" id="search">
+			<input type="text" name="search" id="search" required>
 			<input type="submit" value="검색">
 		</form>
 	</div>

@@ -1,3 +1,5 @@
+<%@page import="library.beans.RoleAreaDao"%>
+<%@page import="library.beans.RoleAreaDto"%>
 <%@page import="library.beans.RoleDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
@@ -15,7 +17,6 @@
 	boolean isLogin = session.getAttribute("clientNo") != null;
 	
 	AreaDao areaDao = new AreaDao();
-	List<AreaDto> list = areaDao.list();
 	
 	int areaNo;
 	try{
@@ -36,15 +37,22 @@
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto = clientDao.get(clientNo);
 	
-	boolean adminAll = false;
-	boolean adminPart = false;
+	boolean isAdminAll = false;
+	boolean isAdminPermission = false;
+	boolean isAdminNormal = false;
 	
 	if(clientDto != null){
-		adminAll = clientDto.getClientType().equals("전체관리자");
-		adminPart = clientDto.getClientType().equals("권한관리자");
+		isAdminAll = clientDto.getClientType().equals("전체관리자");
+		isAdminPermission = clientDto.getClientType().equals("권한관리자");
+		isAdminNormal = clientDto.getClientType().equals("일반관리자");
 	}
 	
 	boolean isAdminCurrentArea = clientDao.isAdminCurrentArea(clientNo, areaNo);
+	
+	RoleAreaDao roleAreaDao = new RoleAreaDao();
+	
+	List<AreaDto> list = areaDao.list();
+	List<RoleAreaDto> permissionList = roleAreaDao.areaListByClient(clientNo);
 %>
  
 <!DOCTYPE html>
@@ -63,14 +71,19 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 	window.onload = function(){
-		var area = document.querySelector("#area");
-		area.value="<%=root %>/areaSelect.kh?areaNo=<%=areaNo%>";
+		var area = document.querySelectorAll(".area");
+			area[0].value="<%=root %>/areaSelect.kh?areaNo=<%=areaNo%>";
+			area[1].value="";
 	}
 	
 	function areaChange(){
-		var area = document.querySelector("#area");
-		if(area.value){
-			location.href = area.value + "&back=<%=pageNow%>";
+		var area = document.querySelectorAll(".area");
+		for(var i = 0 ; i < area.length ; i++){
+			if(area[i].value){
+				if(String(area[i].value) != "<%=root %>/areaSelect.kh?areaNo=<%=areaNo %>"){
+					location.href = area[i].value + "&back=<%=pageNow%>";
+				}		
+			}
 		}
 	}
 	
@@ -100,7 +113,7 @@
 			<a href="<%=root %>/client/clientDetail.jsp" class="right">마이페이지</a>
 			<a href="<%=root %>/client/logout.kh" class="right">로그아웃</a>
 			<%} %>
-			<select id="area" onchange="areaChange();" class="left">
+			<select class="area" onchange="areaChange();" class="left">
 				<option value="">도서관 바로가기</option>
 				<option value="<%=root %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
 				<%for (AreaDto areaDto : list){ %>
@@ -125,15 +138,25 @@
 					<input type="submit" value="검색">
 				</form>
 			</div>
-				<%if(adminAll || adminPart){ %>
+				<%if(isAdminAll || isAdminPermission || isAdminNormal){ %>
 					<div class="right">
 						<span><%=clientDto.getClientType() %></span>
+						
+						<select class="area" onchange="areaChange();">
+							<option value="">내 관리지점</option>
+								<%if(isAdminAll){ %>
+									<option value="<%=root %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
+									<%for (AreaDto areaDto : list){ %>
+									<option value="<%=root %>/areaSelect.kh?areaNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+									<%} %>
+								<%}else{ %>
+									<%for (RoleAreaDto roleAreaDto : permissionList){ %>
+									<option value="<%=root %>/areaSelect.kh?areaNo=<%=roleAreaDto.getAreaNo()%>"><%=roleAreaDto.getAreaName() %></option>
+									<%} %>
+								<%} %>
+						</select>
+						
 						<a href="<%=root %>/admin/adminMenu.jsp">관리자메뉴</a>
-					</div>
-				<%} %>
-				<%if(isAdminCurrentArea){ %>
-					<div class="right">
-						<span>해당 지점의 관리자입니다</span>
 					</div>
 				<%} %>
 		</div>

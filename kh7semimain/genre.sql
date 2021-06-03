@@ -98,3 +98,4 @@ insert into genre values (960, '오세아니아(대양주)');
 insert into genre values (970, '양극지방');
 insert into genre values (980, '지리');
 insert into genre values (990, '전기');
+commit;

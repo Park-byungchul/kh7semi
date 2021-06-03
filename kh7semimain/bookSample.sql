@@ -1,0 +1,13 @@
+insert into book values('1111111111111', 140, '테스트', '123', '테스트', sysdate, '설명', 'ㅇㅇ');
+insert into book values('1111111111112', 150, '테스트1', '123', '테스트', sysdate, '설명', 'ㅇ1ㅇ');
+insert into book values('1111111111113', 160, '테스트2', '123', '테스트', sysdate, '설명', 'ㅇ32ㅇ');
+insert into book values('1111111111114', 140, '테스트3', '123', '테스트', sysdate, '설명', 'ㅇ4ㅇ');
+insert into book values('1111111111115', 160, '1테스트', '123', '테스트', sysdate, '설명', 'ㅇ6ㅇ');
+insert into book values('1111111111116', 170, '2테스트', '123', '테스트', sysdate, '설명', 'ㅇ7ㅇ');
+insert into book values('1111111111117', 110, '3테스트', '123', '테스트', sysdate, '설명', 'ㅇ1342ㅇ');
+insert into book values('1111111111118', 170, '테스트', '123', '테스트', sysdate, '설명', 'ㅇ122ㅇ');
+insert into book values('1111111111119', 160, '123', '테스트', '테스트', sysdate, '설명', '61234ㅇㅇ');
+insert into book values('1111111111120', 130, '123', '테스트', '테스트', sysdate, '설명', 'ㅇ162ㅇ');
+insert into book values('1111111113111', 140, '123', '테스트', '테스트', sysdate, '설명', 'ㅇ332ㅇ');
+insert into book values('1111114111111', 150, '123테스트', '테스트123', '테스트', sysdate, '설명', 'ㅇ12525ㅇ');
+commit;

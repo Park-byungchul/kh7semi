@@ -64,6 +64,16 @@ String title = "지점 목록";
 	<jsp:param value="<%=title %>" name="title"/>
 </jsp:include>
 
+<%if(isSearch){ %>
+
+<script>
+	$(function(){
+		$("#search").val("<%=search %>");
+	});
+</script>
+
+<%} %>
+
 	<div class="row text-left">
 		<h2>지점 목록</h2>
 	</div>
@@ -101,9 +111,17 @@ String title = "지점 목록";
 		<%} %>
 		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
 			<%if(i == pageNo){ %>
-				<a href="areaList.jsp?pageNo=<%=i %>" class="on"><%=i %></a>
+				<a href="areaList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%}%>
+				" class="on"><%=i %></a>
 			<%}else{ %>
-				<a href="areaList.jsp?pageNo=<%=i %>"><%=i %></a>
+				<a href="areaList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%}%>
+				"><%=i %></a>
 			<%} %>
 		<%} %>
 		<%if(endBlock < lastBlock){ %>
@@ -114,7 +132,7 @@ String title = "지점 목록";
 	<div class="row text-center">
 		<form action="areaList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
-			<input type="text" name="search" id="search">
+			<input type="text" name="search" id="search" required>
 			<input type="submit" value="검색">
 		</form>
 	</div>

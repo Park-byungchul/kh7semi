@@ -7,7 +7,7 @@ public class LendBookDto {
 	private int lendBookNo;
 	private int clientNo;
 	private int getBookNo;
-	private long bookIsbn;
+	private String bookIsbn;
 	private int areaNo;
 	private Date lendBookDate;
 	private Date lendBookLimit;
@@ -41,11 +41,11 @@ public class LendBookDto {
 		this.getBookNo = getBookNo;
 	}
 
-	public long getBookIsbn() {
+	public String getBookIsbn() {
 		return bookIsbn;
 	}
 
-	public void setBookIsbn(long bookIsbn) {
+	public void setBookIsbn(String bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 

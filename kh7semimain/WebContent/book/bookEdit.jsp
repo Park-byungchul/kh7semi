@@ -7,7 +7,7 @@
 <%
 BookDao bookDao = new BookDao();
 List<BookDto> list = bookDao.list();
-int bookIsbn = Integer.parseInt(request.getParameter("bookIsbn"));
+String bookIsbn = request.getParameter("bookIsbn");
 
 int p;
 

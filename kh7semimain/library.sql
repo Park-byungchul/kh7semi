@@ -16,7 +16,7 @@ CREATE TABLE area (
 	area_no	number(10)	primary key,
 	area_name	varchar2(30)	NOT NULL,
 	area_location	varchar2(300)	NOT NULL,
-	area_call	char(13)	not NULL check(regexp_like(area_call,'^010-\d{4}-\d{4}$'))
+	area_call	varchar(13)	not NULL check(regexp_like(area_call,'^010-\d{4}-\d{4}$'))
 );
 
 --장르
@@ -59,7 +59,8 @@ CREATE TABLE board (
 	board_like	number(19)	default 0 NOT NULL check(board_like >= 0),
 	board_date	date	default sysdate not null,
     board_sep_no number(19) not null,
-    board_reply number(19) default 0 not null check(board_reply >= 0)
+    board_reply number(19) default 0 not null check(board_reply >= 0),
+    board_open varchar(9) default '공개' not null check(board_open in ('공개', '비공개'))
 );
 
 --희망도서 신청 테이블
@@ -144,11 +145,6 @@ create or replace view recommendCount as select book_isbn, count(recommend_no) a
 
 -- 관리자 권한
 create or replace view roleArea as
-select R.role_no, C.client_name, A.area_name, R.role_date
-from role R, client C, area A
-where R.area_no = A.area_no and R.client_no = C.client_no;
-
-create or replace view roleArea as
 select C.client_no, C.client_name, A.area_no, A.area_name, R.role_date
 from role R, client C, area A
 where R.area_no = A.area_no and R.client_no = C.client_no;
@@ -211,7 +207,7 @@ drop view board_list;
 create view board_list as
 select B.board_no, B.area_no as board_area, B.board_type_no, B.board_title, 
         B.board_date, B.board_read, B.board_like, B.client_no as board_writer,
-        B.board_sep_no, B.board_reply,
+        B.board_sep_no, B.board_reply, B.board_open,
         C.client_no, C.client_name, 
         A.area_no, A.area_name,
         BT.board_type_no as type_no, BT.board_type_name
@@ -219,3 +215,50 @@ from board B
 left outer join client C on B.client_no = C.client_no
 left outer join area A on B.area_no = A.area_no
 left outer join board_type BT on B.board_type_no = bt.board_type_no;
+
+drop table board_answer;
+
+-- 질문 답변 게시판 상태를 위한 테이블
+create table board_answer (
+board_no references board(board_no) on delete cascade,
+board_status varchar2(12) default '접수중' not null check (board_status in ('접수중', '답변완료')),
+client_no references client(client_no) on delete set null,
+answer_content varchar2(4000) default '아직 답변이 등록되지 않았습니다.' not null,
+answer_date Date,
+primary key(board_no)
+);
+
+--게시판 질문-답변 조인한 view
+create view board_qna as
+select B.board_no, B.client_no, B.area_no as board_area_no,
+        B.board_title, B.board_field, B.board_read, B.board_date, B.board_open,
+        BA.board_no as answer_no, BA.board_status, BA.answer_content,
+        A.area_no, A.area_name
+from board B
+left outer join board_answer BA on B.board_no = BA.board_no
+left outer join area A on A.area_no = B.area_no
+where B.board_type_no = 2;
+
+
+
+alter table board add board_open varchar(9) default '공개' not null check(board_open in ('공개', '비공개'));
+
+create or replace view get_book_view as
+    select g.get_book_no, 
+    a.area_name, 
+    b.book_isbn, b.book_author, b.book_title 
+        from get_book g
+            inner join book b on g.book_isbn = b.book_isbn
+            inner join area a on g.area_no = a.area_no;
+    
+create or replace view lend_book_view as
+    select * from lend_book 
+            where return_book_date is null;
+
+create or replace view get_book_search_view as
+    select g.*, 
+        l.lend_book_date, 
+        r.reservation_date
+            from get_book_view g
+                left outer join lend_book_view l on g.get_book_no = l.get_book_no 
+                left outer join reservation r on g.get_book_no = r.get_book_no;

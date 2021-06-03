@@ -1,3 +1,4 @@
+<%@page import="library.beans.BoardAnswerDao"%>
 <%@page import="library.beans.BoardListDto"%>
 <%@page import="library.beans.BoardListDao"%>
 <%@page import="library.beans.AreaDto"%>
@@ -70,15 +71,25 @@
 	
 	// 회원 정보
 	Integer clientNo = (Integer)session.getAttribute("clientNo");
-	boolean isLogin = (clientNo != null);
+	boolean isLogin = false;
+	boolean isAdmin = false;
 	
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto;
 	
-	if(clientNo == null)
+	if(clientNo == null){
 		clientDto = null;
-	else
+		clientNo = 0;
+	}
+	else {
+		isLogin = true;
 		clientDto = clientDao.get(clientNo);
+		
+		if(!clientDto.getClientType().equals("일반사용자"))
+			isAdmin = true;
+	}
+	
+	BoardAnswerDao answerDao = new BoardAnswerDao();
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -127,10 +138,10 @@
 				<tr>
 					<th>번호</th>
 					<th width="40%">제목</th>
+					<th>상태</th>
+					<th>도서관</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th>조회</th>
-					<th>좋아요</th>
 				</tr>
 			</thead>
 			
@@ -139,26 +150,35 @@
 				<tr>
 					<td><%=boardListDto.getBoardSepNo() %></td>
 					<td align=left>
+						<%if(boardListDto.getBoardOpen().equals("비공개") && !isAdmin && boardListDto.getClientNo() != clientNo) {%>
+							<%=boardListDto.getBoardTitle() %>
+						<%} else { %>
+							<a href="qnaDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
+								<%=boardListDto.getBoardTitle() %>
+							</a>
+						<%} %>
+						
+						<%if(boardListDto.getBoardOpen().equals("비공개")) { %> 
+							 [비공개]
+						<%} %>
+					</td>
+					<td><%=answerDao.getAnswerStatus(boardListDto.getBoardNo()) %></td>
+					<td>
 						<%if(boardListDto.getAreaNo() != 0){ %>
 							[<%=boardListDto.getAreaName() %>]
 						<%} else { %>
-							[전체]
+							[전체도서관]
 						<%} %>
-						<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
-							<%=boardListDto.getBoardTitle() %>
-						</a>
 					</td>
 					<td><%=boardListDto.getClientName() %></td>
 					<td><%=boardListDto.getBoardDate() %></td>
-					<td><%=boardListDto.getBoardRead() %></td>
-					<td><%=boardListDto.getBoardLike() %></td>
 				</tr>
 				<%} %>
 			</tbody>
 		</table>
 	</div>
 
-	<%if(isLogin && !clientDto.getClientType().equals("일반사용자")) { %>
+	<%if(isLogin) { %>
 		<div class="row text-right">
 			<a href="boardWrite.jsp?boardTypeNo=2" class="link-btn">글쓰기</a>
 		</div>

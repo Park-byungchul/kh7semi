@@ -20,7 +20,7 @@ public class BookRecommendDeleteServlet extends HttpServlet{
 			req.setCharacterEncoding("UTF-8");
 			RecommendDto recommendDto = new RecommendDto();
 			recommendDto.setClientNo(Integer.parseInt(req.getParameter("clientNo"))); 
-			recommendDto.setBookIsbn(Integer.parseInt(req.getParameter("bookIsbn")));
+			recommendDto.setBookIsbn(req.getParameter("bookIsbn"));
 			
 			//처리
 			RecommendDao recommendDao = new RecommendDao();

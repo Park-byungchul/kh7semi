@@ -26,7 +26,7 @@ public class HopelistDao {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, hopelistDto.getHopelistNo());
 		ps.setInt(2, hopelistDto.getClientNo());
-		ps.setInt(3, hopelistDto.getBookIsbn());
+		ps.setString(3, hopelistDto.getBookIsbn());
 		ps.setString(4, hopelistDto.getHopelistReason());
 		ps.setString(5,hopelistDto.getHopelistLibrary());
 		ps.execute();
@@ -61,7 +61,7 @@ public class HopelistDao {
 				
 				hopelistDto.setHopelistNo(rs.getInt("hopelist_no"));
 				hopelistDto.setClientNo(rs.getInt("client_no"));
-				hopelistDto.setBookIsbn(rs.getInt("book_isbn"));
+				hopelistDto.setBookIsbn(rs.getString("book_isbn"));
 				hopelistDto.setHopelistReason(rs.getString("hopelist_reason"));
 				hopelistDto.setHopelistDate(rs.getDate("hopelist_date"));
 				hopelistDto.setHopelistLibrary(rs.getString("hopelist_library"));
@@ -99,7 +99,7 @@ public class HopelistDao {
 				HopelistDto hopelistDto = new HopelistDto();
 				hopelistDto.setHopelistNo(rs.getInt("hopelist_no"));
 				hopelistDto.setClientNo(rs.getInt("client_no"));
-				hopelistDto.setBookIsbn(rs.getInt("book_isbn"));
+				hopelistDto.setBookIsbn(rs.getString("book_isbn"));
 				hopelistDto.setHopelistReason(rs.getString("hopelist_reason"));
 				hopelistDto.setHopelistDate(rs.getDate("hopelist_date"));
 				hopelistDto.setHopelistLibrary(rs.getString("hopelist_library"));
@@ -123,7 +123,7 @@ public class HopelistDao {
 				HopelistDto hopelistDto = new HopelistDto();
 				hopelistDto.setHopelistNo(rs.getInt("hopelist_no"));
 				hopelistDto.setClientNo(rs.getInt("client_no"));
-				hopelistDto.setBookIsbn(rs.getInt("book_isbn"));
+				hopelistDto.setBookIsbn(rs.getString("book_isbn"));
 				hopelistDto.setHopelistReason(rs.getString("hopelist_reason"));
 				hopelistDto.setHopelistDate(rs.getDate("hopelist_date"));
 				hopelistDto.setHopelistLibrary(rs.getString("hopelist_library"));
@@ -149,7 +149,7 @@ public class HopelistDao {
 				
 				hopelistDto.setHopelistNo(rs.getInt("hopelist_no"));
 				hopelistDto.setClientNo(rs.getInt("client_no"));
-				hopelistDto.setBookIsbn(rs.getInt("book_isbn"));
+				hopelistDto.setBookIsbn(rs.getString("book_isbn"));
 				hopelistDto.setHopelistDate(rs.getDate("hopelist_date"));
 				hopelistDto.setHopelistReason(rs.getString("hopelist_reason"));
 				hopelistDto.setHopelistLibrary(rs.getString("hopelist_library"));
@@ -184,7 +184,7 @@ public class HopelistDao {
 									+ "set book_isbn=?,hopelist_reason=?,hopelist_library=?,hopelist_date=sysdate "
 									+ "where hopelist_no=?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, hopelistDto.getBookIsbn());
+			ps.setString(1, hopelistDto.getBookIsbn());
 			ps.setString(2, hopelistDto.getHopelistReason());
 			ps.setString(3, hopelistDto.getHopelistLibrary());
 			ps.setInt(4, hopelistDto.getHopelistNo());

@@ -14,6 +14,7 @@ public class BoardDto {
 	private Date boardDate;
 	private int boardSepNo;
 	private int boardReply;
+	private String boardOpen;
 	
 	public BoardDto() {
 		super();
@@ -71,6 +72,12 @@ public class BoardDto {
 	}
 	public void setBoardDate(Date boardDate) {
 		this.boardDate = boardDate;
+	}
+	public String getBoardOpen() {
+		return boardOpen;
+	}
+	public void setBoardOpen(String boardOpen) {
+		this.boardOpen = boardOpen;
 	}
 	public int getBoardSepNo() {
 		return boardSepNo;

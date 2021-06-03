@@ -21,7 +21,7 @@ public class hopelistInsertServlet extends HttpServlet {
 			HopelistDto hopelistDto = new HopelistDto();
 			int clientNo = (int)req.getSession().getAttribute("clientNo");
 			hopelistDto.setClientNo(clientNo);
-			hopelistDto.setBookIsbn(Integer.parseInt(req.getParameter("bookIsbn")));
+			hopelistDto.setBookIsbn(req.getParameter("bookIsbn"));
 			hopelistDto.setHopelistLibrary(req.getParameter("hopelistLibrary"));
 			hopelistDto.setHopelistReason(req.getParameter("hopelistReason"));
 			

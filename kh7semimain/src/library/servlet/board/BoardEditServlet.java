@@ -24,15 +24,15 @@ public class BoardEditServlet extends HttpServlet {
 			boardDto.setBoardTitle(req.getParameter("boardTitle"));
 			boardDto.setBoardField(req.getParameter("boardField"));
 			
-			System.out.println(req.getParameter("boardNo"));
-			System.out.println(req.getParameter("areaNo"));
-			System.out.println(req.getParameter("boardTitle"));
-			System.out.println(req.getParameter("boardField"));
+			int boardTypeNo = Integer.parseInt(req.getParameter("boardTypeNo"));
 			
 			BoardDao boardDao = new BoardDao();
 			boardDao.edit(boardDto);
 			
-			resp.sendRedirect("boardDetail.jsp?boardNo="+boardDto.getBoardNo());
+			if(boardTypeNo == 2) 
+				resp.sendRedirect("qnaDetail.jsp?boardNo="+boardDto.getBoardNo());
+			else
+				resp.sendRedirect("boardDetail.jsp?boardNo="+boardDto.getBoardNo());
 		}
 		catch (Exception e) {
 			e.printStackTrace();

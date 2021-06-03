@@ -1,6 +1,7 @@
 package library.servlet.book;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,10 +19,14 @@ public class BookInsertServlet extends HttpServlet {
 		try {
 			req.setCharacterEncoding("UTF-8");
 			BookDto bookDto = new BookDto();
-			bookDto.setBookIsbn(Integer.parseInt(req.getParameter("bookIsbn")));
-			bookDto.setGenreNo(Integer.parseInt(req.getParameter("GenreNo")));
-			bookDto.setBookTitle(req.getParameter("bookName"));
+			bookDto.setBookIsbn(req.getParameter("bookIsbn"));
+			bookDto.setGenreNo(Integer.parseInt(req.getParameter("genreNo")));
+			bookDto.setBookTitle(req.getParameter("bookTitle"));
 			bookDto.setBookAuthor(req.getParameter("bookAuthor"));
+			bookDto.setBookPublisher(req.getParameter("bookPublisher"));
+			bookDto.setBookDate(Date.valueOf(req.getParameter("bookDate")));
+			bookDto.setBookContent(req.getParameter("bookContent"));
+			bookDto.setBookImg(req.getParameter("bookImg"));
 			
 			BookDao bookDao = new BookDao();
 			bookDao.insert(bookDto);

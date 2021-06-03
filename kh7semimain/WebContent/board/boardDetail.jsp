@@ -1,3 +1,5 @@
+<%@page import="library.beans.BoardAnswerDto"%>
+<%@page import="library.beans.BoardAnswerDao"%>
 <%@page import="library.beans.BoardCommentDto"%>
 <%@page import="java.util.List"%>
 <%@page import="library.beans.BoardCommentDao"%>
@@ -94,6 +96,9 @@
 	// 댓글 목록 출력
 	BoardCommentDao commentDao = new BoardCommentDao();
 	List<BoardCommentDto> commentList = commentDao.list(boardNo);
+	
+	BoardAnswerDao answerDao = new BoardAnswerDao();
+	BoardAnswerDto answerDto = answerDao.get(boardNo);
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -200,50 +205,76 @@
 		<pre><%=boardDto.getBoardField()%></pre>
 	</div>
 	
-	<form action="commentInsert.kh" method="post">
-		<input type="hidden" name="boardNo" value="<%=boardNo%>">
-		<input type="hidden" name="boardTypeNo" value="<%=boardListDto.getBoardTypeNo()%>">
-		<div class="row">
-			<textarea id="commentContent" name="commentContent" required></textarea>
+	<!-- 질문답변 게시판에는 댓글이 없음 -->
+	<%if(boardDto.getBoardTypeNo() != 2) { %>
+		<form action="commentInsert.kh" method="post">
+			<input type="hidden" name="boardNo" value="<%=boardNo%>">
+			<input type="hidden" name="boardTypeNo" value="<%=boardListDto.getBoardTypeNo()%>">
+			<div class="row">
+				<textarea id="commentContent" name="commentContent" required></textarea>
+			</div>
+			<div class="row">
+				<input type="submit" value="댓글 작성">
+			</div>
+		</form>
+		
+		<div class="row text-left">
+			<h4>댓글 목록</h4>
 		</div>
-		<div class="row">
-			<input type="submit" value="댓글 작성">
-		</div>
-	</form>
-	
-	<div class="row text-left">
-		<h4>댓글 목록</h4>
-	</div>
-	<%for(BoardCommentDto commentDto : commentList) { %>
-		<div class="row text-left" style="border:1px solid gray;">
-			<div class="float-container">
-				<div class="left"><%=commentDao.getClientName(commentDto.getClientNo()) %></div>
-				
-				 <%if(commentDto.getClientNo() == clientNo) { %>
-					<div class="right">
-						<a class="comment-edit-btn">수정</a>
-						| 
-						<a class="comment-delete-btn" href="commentDelete.kh?commentNo=<%=commentDto.getCommentNo()%>&boardNo=<%=boardNo%>">삭제</a>
+		<%for(BoardCommentDto commentDto : commentList) { %>
+			<div class="row text-left" style="border:1px solid gray;">
+				<div class="float-container">
+					<div class="left"><%=commentDao.getClientName(commentDto.getClientNo()) %></div>
+					
+					 <%if(commentDto.getClientNo() == clientNo) { %>
+						<div class="right">
+							<a class="comment-edit-btn">수정</a>
+							| 
+							<a class="comment-delete-btn" href="commentDelete.kh?commentNo=<%=commentDto.getCommentNo()%>&boardNo=<%=boardNo%>">삭제</a>
+						</div>
+					<%} %>
+				</div>
+				<!-- 화면 표시 댓글 -->
+				<div class="comment-display-area">
+					<pre><%=commentDto.getCommentContent() %></pre>
+				</div>
+				<%if(commentDto.getClientNo() == clientNo) { %>
+					<div class="comment-edit-area">
+						<form action="commentEdit.kh" method="post">
+							<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
+							<input type="hidden" name="boardNo" value="<%=boardNo%>">
+							<textarea name="commentContent" required><%=commentDto.getCommentContent()%></textarea>
+							<input type="submit" value="댓글 수정">
+							<input type="button" value="작성 취소" class="comment-edit-cancel-btn">
+						</form>
 					</div>
 				<%} %>
+				<div><%=commentDto.getCommentDate().toLocaleString() %></div>
 			</div>
-			<!-- 화면 표시 댓글 -->
-			<div class="comment-display-area">
-				<pre><%=commentDto.getCommentContent() %></pre>
+		<%} %>
+	<%} else { %>
+		<!-- 대신 답변이 들어감 -->
+		<div class="row float-container">
+			<div class="left">
+				작성자 | 
+				<%if(answerDto.getClientNo() != 0) {%>
+					<%=answerDao.getClientName(answerDto.getClientNo()) %>
+				<%} %>
 			</div>
-			<%if(commentDto.getClientNo() == clientNo) { %>
-				<div class="comment-edit-area">
-					<form action="commentEdit.kh" method="post">
-						<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
-						<input type="hidden" name="boardNo" value="<%=boardNo%>">
-						<textarea name="commentContent" required><%=commentDto.getCommentContent()%></textarea>
-						<input type="submit" value="댓글 수정">
-						<input type="button" value="작성 취소" class="comment-edit-cancel-btn">
-					</form>
-				</div>
-			<%} %>
-			<div><%=commentDto.getCommentDate().toLocaleString() %></div>
+			<div class="right">
+				답변일 | 
+				<%if(answerDto.getAnswerDate() != null) {%>
+					<%=answerDto.getAnswerDate().toLocaleString() %>
+				<%} %>
+			</div>		
 		</div>
+		
+		<div class="row text-left" style="min-height:300px;">
+			<pre>
+				<%=answerDto.getAnswerContent() %>
+			</pre>
+		</div>
+	</div>
 	<%} %>
 	
 	<div class="row text-right">
@@ -251,6 +282,9 @@
 		<%if(clientNo != 0) {%>
 			<%if(boardDto.getClientNo() == clientNo) { %>
 				<a href="boardEdit.jsp?boardNo=<%=boardNo%>" class="link-btn">수정</a>
+			<%} %>
+			<%if(isAdmin && boardDto.getBoardTypeNo() == 2 && answerDto.getBoardStatus().equals("접수중")) { %>
+				<a href="boardAnswer.jsp?boardNo=<%=boardNo%>" class="link-btn">답변</a>
 			<%} %>
 			<%if(isAdmin || boardDto.getClientNo() == clientNo) {%>
 				<a href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn">삭제</a>

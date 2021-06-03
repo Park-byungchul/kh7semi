@@ -19,7 +19,7 @@ public class LendBookDao {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, lendbookDto.getClientNo());
 		ps.setInt(2, lendbookDto.getGetBookNo());
-		ps.setLong(3, lendbookDto.getBookIsbn());
+		ps.setString(3, lendbookDto.getBookIsbn());
 		ps.setInt(4, lendbookDto.getAreaNo());
 		
 		ps.execute();

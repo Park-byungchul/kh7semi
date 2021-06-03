@@ -43,6 +43,8 @@
 		adminAll = clientDto.getClientType().equals("전체관리자");
 		adminPart = clientDto.getClientType().equals("권한관리자");
 	}
+	
+	boolean isAdminCurrentArea = clientDao.isAdminCurrentArea(clientNo, areaNo);
 %>
  
 <!DOCTYPE html>
@@ -52,12 +54,13 @@
 <meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
+	<link rel="stylesheet" type="text/css" href="<%=root%>/css/scrolledMenu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css">
 	<style>
-		
-	</style>
 	
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 	window.onload = function(){
 		var area = document.querySelector("#area");
@@ -70,6 +73,20 @@
 			location.href = area.value + "&back=<%=pageNow%>";
 		}
 	}
+	
+	$(function(){
+		$(window).scroll(function(){
+			var menu = $(".menu");
+			var top = $("html").scrollTop() || $("body").scrollTop();
+			if(top >= 140){
+				menu.addClass("fixed");
+			}else {
+				menu.removeClass("fixed");
+			}
+		});
+	});
+	
+	
 </script>
 </head>
 <body>
@@ -114,16 +131,20 @@
 						<a href="<%=root %>/admin/adminMenu.jsp">관리자메뉴</a>
 					</div>
 				<%} %>
-			
+				<%if(isAdminCurrentArea){ %>
+					<div class="right">
+						<span>해당 지점의 관리자입니다</span>
+					</div>
+				<%} %>
 		</div>
 	
 		<nav>
 			<!-- 메뉴 -->
-			<ul class="menu">
+			<ul class="menu" style="z-index:1">
 				<li>
-					<a href="#">도서관 소개</a>
+					<a href="<%=root%>/location/location.jsp">도서관 소개</a>
 					<ul>
-						<li><a href="#">찾아오는길</a></li>
+						<li><a href="<%=root%>/location/location.jsp">찾아오는길</a></li>
 						<li><a href="#">자료 현황</a></li>
 						<li><a href="#">이용 안내</a></li>
 					</ul>

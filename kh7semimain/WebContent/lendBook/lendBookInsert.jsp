@@ -13,8 +13,8 @@
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css">
-	<script>
-		function insertOnClick(){
+	<script>	
+		function insertOnClick(){	
 			alert('대여 접수가 완료되었습니다.');
 		}
 	</script>

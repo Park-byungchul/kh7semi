@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
-	<h2>회원가입</h2>
+	<h2>도서 추가</h2>
 
-		<form action="insert.kh" method="post">
+		<form action="bookInsert.kh" method="post">
 			<label>ISBN : </label><input type="text" name="bookIsbn" required><br><br>
 			<label>장르 번호 : </label><input type="text" name="genreNo" required><br><br>
 			<label>제목 : </label><input type="text" name="bookName" required><br><br>

@@ -153,13 +153,18 @@ public class AreaDao {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, areaNo);
 		ResultSet rs = ps.executeQuery();
-		rs.next();
-		AreaDto areaDto = new AreaDto();
-		areaDto.setAreaNo(rs.getInt("area_no"));
-		areaDto.setAreaName(rs.getString("area_name"));
-		areaDto.setAreaLocation(rs.getString("area_location"));
-		areaDto.setAreaCall(rs.getString("area_call"));
-
+		AreaDto areaDto;
+		if(rs.next()) {
+			areaDto = new AreaDto();
+			areaDto.setAreaNo(rs.getInt("area_no"));
+			areaDto.setAreaName(rs.getString("area_name"));
+			areaDto.setAreaLocation(rs.getString("area_location"));
+			areaDto.setAreaCall(rs.getString("area_call"));
+		}
+		else {
+			areaDto = null;
+		}
+		
 		con.close();
 		return areaDto;
 	}

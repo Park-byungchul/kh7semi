@@ -31,9 +31,8 @@
 		- box-sizing:content-box; 로 설정하면 width 가 내용물을 기준으로 설정
 		- box-sizing:border-box; 로 설정하면 width 가 테두리를 기준으로 설정
 */
-
 * {
-	font-family: Neo Sans Pro , sans-serif;
+	font-family: Neo Sans Pro, sans-serif;
 	box-sizing: border-box;
 }
 
@@ -42,54 +41,101 @@
 	- 영역은 100px부터 1500px까지 100px 간격으로 설정할 수 있다.
 	- container-100 과 같은 형태의 클래스 모양으로 디자인한다.
 */
+.container-100 {
+	width: 100px;
+}
 
-.container-100 { width:100px; }
-.container-200 { width:200px; }
-.container-300 { width:300px; }
-.container-400 { width:400px; }
-.container-500 { width:500px; }
-.container-600 { width:600px; }
-.container-700 { width:700px; }
-.container-800 { width:800px; }
-.container-900 { width:900px; }
-.container-1000 { width:1000px; }
-.container-1100 { width:1100px; }
-.container-1200 { width:1200px; }
-.container-1300 { width:1300px; }
-.container-1400 { width:1400px; }
-.container-1500 { width:1500px; }
+.container-200 {
+	width: 200px;
+}
+
+.container-300 {
+	width: 300px;
+}
+
+.container-400 {
+	width: 400px;
+}
+
+.container-500 {
+	width: 500px;
+}
+
+.container-600 {
+	width: 600px;
+}
+
+.container-700 {
+	width: 700px;
+}
+
+.container-800 {
+	width: 800px;
+}
+
+.container-900 {
+	width: 900px;
+}
+
+.container-1000 {
+	width: 1000px;
+}
+
+.container-1100 {
+	width: 1100px;
+}
+
+.container-1200 {
+	width: 1200px;
+}
+
+.container-1300 {
+	width: 1300px;
+}
+
+.container-1400 {
+	width: 1400px;
+}
+
+.container-1500 {
+	width: 1500px;
+}
 
 /*
 	바깥 영역의 정렬 규칙
 	- 영역은 원한다면 좌, 우, 가운데 위치할 수 있어야 한다.
 	- 기본적으로 가운데 위치하게 만들고 원한다면 왼쪽 좌, 우 위치가 가능하도록 스타일을 미리 구현
 */
-.container-100, .container-200, .container-300, .container-400, .container-500,
-.container-600, .container-700, .container-800, .container-900, .container-1000,
-.container-1100, .container-1200, .container-1300, .container-1400, .container-1500 {
-	margin-left:auto;
-	margin-right:auto;
+.container-100, .container-200, .container-300, .container-400,
+	.container-500, .container-600, .container-700, .container-800,
+	.container-900, .container-1000, .container-1100, .container-1200,
+	.container-1300, .container-1400, .container-1500 {
+	margin-left: auto;
+	margin-right: auto;
 }
+
 .container-left {
-	margin-left:0px;
-	margin-right:auto;
+	margin-left: 0px;
+	margin-right: auto;
 }
+
 .container-center {
 	margin-left: auto;
 	margin-right: auto;
 }
+
 .container-right {
 	margin-left: auto;
-	margin-right:0px;
+	margin-right: 0px;
 }
 
 /*
 	영역 내부에 줄을 배치하여 원하는 도구들을 위치시키도록 구현
 */
 .row {
-	width:100%;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 /*
@@ -98,9 +144,11 @@
 .text-left {
 	text-align: left;
 }
+
 .text-right {
 	text-align: right;
 }
+
 .text-center {
 	text-align: center;
 }
@@ -117,26 +165,31 @@
 	- .image-leaf : 이미지를 나뭇잎 모양으로 표시
 */
 .image {
-
+	
 }
+
 .image.image-circle {
 	border-radius: 50%;
 }
+
 .image.image-frame {
 	border: 2px solid gray;
 }
+
 .image.image-shadow {
 	/* box-shadow : X위치 Y위치 번짐정도 퍼짐정도 색상; */
 	box-shadow: 0px 0px 4px 4px gray;
 }
+
 .image.image-blur {
 	/* opacity가 1이면 선명 , 0이면 투명 */
-	opacity:0.5;
+	opacity: 0.5;
 }
 /* class="image-blur" 인 항목에 마우스가 올라가면(hover) : 상태선택자 */
 .image.image-blur:hover {
 	opacity: 1;
 }
+
 .image.image-leaf {
 	border-top-left-radius: 50%;
 	border-bottom-right-radius: 50%;
@@ -154,42 +207,35 @@
 		- .table-striped : 테이블에 2줄마다 배경색을 강조하는 효과를 부여(줄무늬 효과)
 */
 .table {
-	width:100%;
+	width: 100%;
 	table-layout: fixed;
 	word-break: break-all;
 }
-.table > thead > tr > th, 
-.table > thead > tr > td,
-.table > tbody > tr > th,
-.table > tbody > tr > td,
-.table > tfoot > tr > th,
-.table > tfoot > tr > td {
-	padding:0.5rem;
+
+.table>thead>tr>th, .table>thead>tr>td, .table>tbody>tr>th, .table>tbody>tr>td,
+	.table>tfoot>tr>th, .table>tfoot>tr>td {
+	padding: 0.5rem;
 }
 
 .table.table-border {
 	border: 1px solid black;
-	border-collapse: collapse; 
+	border-collapse: collapse;
 }
-.table.table-border > thead > tr > th, 
-.table.table-border > thead > tr > td,
-.table.table-border > tbody > tr > th,
-.table.table-border > tbody > tr > td,
-.table.table-border > tfoot > tr > th,
-.table.table-border > tfoot > tr > td {
+
+.table.table-border>thead>tr>th, .table.table-border>thead>tr>td, .table.table-border>tbody>tr>th,
+	.table.table-border>tbody>tr>td, .table.table-border>tfoot>tr>th,
+	.table.table-border>tfoot>tr>td {
 	border: 1px solid black;
 }
 
-.table.table-striped > thead > tr,
-.table.table-striped > tbody > tr:nth-child(2n) {
-	background-color:rgb(231, 241, 253);
+.table.table-striped>thead>tr, .table.table-striped>tbody>tr:nth-child(2n)
+	{
+	background-color: rgb(231, 241, 253);
 }
 
-.table.table-hover > thead > tr,		
-.table.table-hover > tbody > tr:hover {
-	background-color:rgb(231, 241, 253);
+.table.table-hover>thead>tr, .table.table-hover>tbody>tr:hover {
+	background-color: rgb(231, 241, 253);
 }
-
 
 /*
 	입력창 스타일링
@@ -209,96 +255,98 @@
 		
 	(주의) textarea는 가로 크기 변경이 되면 디자인이 망가진다(세로 허용 또는 전면 금지)
 */
-.form-input , .form-btn{
-	width:100%;
-	padding:0.5rem;
-	outline:none;
+.form-input, .form-btn {
+	width: 100%;
+	padding: 0.5rem;
+	outline: none;
 }
 
 .form-input.form-input-underline {
-	border:none;
+	border: none;
 	border-bottom: 2px solid lightgray;
 }
+
 .form-input.form-input-underline:focus {
-	border-bottom-color: black;		
+	border-bottom-color: black;
 }
 
-.form-input.form-input-inline,
-.form-btn.form-btn-inline {
-	width:auto;
+.form-input.form-input-inline, .form-btn.form-btn-inline {
+	width: auto;
 }
+
 textarea.form-input {
 	resize: vertical;
-	min-height:150px;/*수치는 자유롭게 설정*/
-	height:150px;/*수치는 자유롭게 설정*/
-	max-height:500px;/*수치는 자유롭게 설정*/
+	min-height: 150px; /*수치는 자유롭게 설정*/
+	height: 150px; /*수치는 자유롭게 설정*/
+	max-height: 500px; /*수치는 자유롭게 설정*/
 }
 
 .form-btn {
-	border:none;
+	border: none;
 }
+
 .form-btn.form-btn-normal {
 	background-color: white;
-	color:gray;
-	border:1px solid gray;	
+	color: gray;
+	border: 1px solid gray;
 }
+
 .form-btn.form-btn-positive {
 	background-color: rgb(46, 163, 79);
-	color:white;
+	color: white;
 }
+
 .form-btn.form-btn-negative {
 	background-color: rgb(202, 36, 49);
-	color:white;
+	color: white;
 }
 
 /*
 	Pagination 스타일
 */
-.pagination > a {
-	color:grey;
+.pagination>a {
+	color: grey;
 	text-decoration: none;
-	display:inline-block; 
-	min-width:35px;
-	
-	border:1px solid transparent;
-	padding:0.5rem;
+	display: inline-block;
+	min-width: 35px;
+	border: 1px solid transparent;
+	padding: 0.5rem;
 	text-align: center;
-	
-	cursor:pointer;
+	cursor: pointer;
 }
-.pagination > a:hover,
-.pagination > a.on {
-	border:1px solid lightgray;
-	color:rgb(255,85,146);
+
+.pagination>a:hover, .pagination>a.on {
+	border: 1px solid lightgray;
+	color: rgb(255, 85, 146);
 }
 
 .pagination-list {
 	list-style: none;
-	margin:0px;
-	padding:0px;
-}
-.pagination-list > li {
-	display: inline-block;
-	min-width: 35px;
-	
-	border:1px solid transparent;
-	padding:0.5rem;
-	text-align:center;
-	cursor: pointer;
-}
-.pagination-list > li > a {
-	color:gray;
-	text-decoration: none;
-}
-.pagination-list > li:hover,
-.pagination-list > li.on {
-	border:1px solid lightgray;
-}
-.pagination-list > li:hover > a,
-.pagination-list > li.on > a {
-	color:rgb(255,85,146);
+	margin: 0px;
+	padding: 0px;
 }
 
+.pagination-list>li {
+	display: inline-block;
+	min-width: 35px;
+	border: 1px solid transparent;
+	padding: 0.5rem;
+	text-align: center;
+	cursor: pointer;
+}
+
+.pagination-list>li>a {
+	color: gray;
+	text-decoration: none;
+}
+
+.pagination-list>li:hover, .pagination-list>li.on {
+	border: 1px solid lightgray;
+}
+
+.pagination-list>li:hover>a, .pagination-list>li.on>a {
+	color: rgb(255, 85, 146);
+}
 
 /*
 	float 스타일(다단 레이아웃)
@@ -313,16 +361,17 @@ textarea.form-input {
 	3. 영역이 한 줄에 걸쳐서 생성되었으므로, 해당 영역에 clear 설정
 */
 .float-container::after {
-	content:"";
-	display:block;
-	clear:both;
+	content: "";
+	display: block;
+	clear: both;
 }
 
-.float-container > .left {
-	float:left;
+.float-container>.left {
+	float: left;
 }
-.float-container > .right {
-	float:right;
+
+.float-container>.right {
+	float: right;
 }
 
 /*
@@ -330,38 +379,160 @@ textarea.form-input {
 */
 .link-btn {
 	display: inline-block;
-	padding:0.75rem;
-	border:1px solid lightgray;
+	padding: 0.75rem;
+	border: 1px solid lightgray;
 	text-decoration: none;
-	color:gray;	
-}
-.link-btn:hover{
-	border-color:black;
-	color:black;	
+	color: gray;
 }
 
+.link-btn:hover {
+	border-color: black;
+	color: black;
+}
 
 /* 
 	오류 메세지 스타일
 */
 .error {
-	color:red;	
+	color: red;
 }
 
 pre {
-white-space:pre-wrap;
-word-break:break-all;
-			
-/* 말 줄임표 스타일 설정 */
-/*
+	white-space: pre-wrap;
+	word-break: break-all;
+
+	/* 말 줄임표 스타일 설정 */
+	/*
 	overflow:hidden;
 	white-space:nowrap;
 	text-overflow:ellipsis;
 */
 }
 
-
 /*bookSearchForm inline설정 */
 .bookSearchForm {
-	display:inline;
+	display: inline;
+}
+
+/* 심용보 작업 */
+
+/* 
+메인페이지 지점이동 
+*/
+.areaBtn, .areaBtnMove, .areaBtnMoveNone {
+	background-color: gray;
+	border: none;
+	height: 100px;
+	outline: none;
+	font-size: 16px;
+}
+
+.areaBtn {
+	width: 180px;
+}
+
+.areaBtnMove {
+	width: 100px;
+}
+
+.areaBtn:hover, .areaBtnMove:hover {
+	background-color: blue;
+	cursor: pointer;
+}
+
+.areaBtnMoveNone {
+	cursor: default;
+	background-color: white;
+	width: 100px;
+}
+
+/* 	
+로그인&회원가입
+ */
+.main {
+	padding: 20px;
+}
+
+.header {
+	border-bottom: 1px solid lightgray;
+	padding-bottom: 5px;
+	margin-bottom: 30px;
+}
+
+.section {
+	border: 1px solid lightgray;
+}
+
+.header .title {
+	font-size: 32px;
+	text-align: left;
+	font-weight: 500;
+}
+
+.header .path {
+	color: RGB(100, 100, 100);
+}
+
+.img_area {
+	height: 100%;
+}
+
+.imageArea>img {
+	vertical-align: middle;
+}
+
+/* 
+통합검색
+ */
+ .searchHeader{
+ 	display: inline-block;
+ 	position: relative;
+ 	margin-top: 20px;
+ }
+ 
+.searchHeader .searchInput {
+	width: 500px;
+	height: 50px;
+	padding: 0.5rem;
+	outline: none;
+	border: 1px solid lightgray;
+	font-size: 16px;
+}
+
+.searchHeader .searchImage{
+	height: 40px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.form-input.form-input-underline:focus {
+	border-bottom-color: black;
+}
+
+.form-input.form-input-inline, .form-btn.form-btn-inline {
+	width: auto;
+}
+.logo, .myMenu{
+	width: 250px;
+	height: 100px;
+}
+
+.logo{
+	text-align: center;
+}
+
+.logo>a:link, .logo>a:visited, .logo>a:hover, .logo>a:active{
+	color: black;
+	display: inline-block;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 24px;
+	position: relative;
+    top: 36px;
+}
+
+.loginNav{
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgb(220, 220, 220);
 }

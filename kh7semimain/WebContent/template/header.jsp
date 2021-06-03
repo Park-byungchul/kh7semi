@@ -10,6 +10,7 @@
     pageEncoding="UTF-8"%>
 
 <%
+	request.setCharacterEncoding("UTF-8");
 	String pageNow = request.getRequestURI();
 	String title = request.getParameter("title");
 
@@ -70,24 +71,13 @@
 	</style>
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
-	window.onload = function(){
-		var area = document.querySelectorAll(".area");
-			area[0].value="<%=root %>/areaSelect.kh?areaNo=<%=areaNo%>";
-			area[1].value="";
-	}
-	
-	function areaChange(){
-		var area = document.querySelectorAll(".area");
-		for(var i = 0 ; i < area.length ; i++){
-			if(area[i].value){
-				if(String(area[i].value) != "<%=root %>/areaSelect.kh?areaNo=<%=areaNo %>"){
-					location.href = area[i].value + "&back=<%=pageNow%>";
-				}		
-			}
-		}
-	}
-	
 	$(function(){
+		var area = $(".area");
+		area.val("<%=root %>/areaSelect.kh?areaNo=<%=areaNo%>");
+		if(area[1]){
+			area[1].value = "";
+		}
+		
 		$(window).scroll(function(){
 			var menu = $(".menu");
 			var top = $("html").scrollTop() || $("body").scrollTop();
@@ -97,33 +87,47 @@
 				menu.removeClass("fixed");
 			}
 		});
+		
+		$(".area").change(function(){
+			var area = $(this);
+			for(var i = 0 ; i < area.length ; i++){
+				if(area[i].value){
+					if(String(area[i].value) != "<%=root %>/areaSelect.kh?areaNo=<%=areaNo %>"){
+						location.href = area[i].value + "&back=<%=pageNow%>";
+					}		
+				}
+			}
+		});
 	});
-	
-	
 </script>
 </head>
 <body>
 	<main>
-		<div class="float-container">
-			<a href="#" class="right">사이트맵</a>
-			<%if(!isLogin){ %>
-			<a href="<%=root %>/client/clientInsert.jsp" class="right">회원가입</a>
-			<a href="<%=root %>/client/login.jsp" class="right">로그인</a>
-			<%}else{ %>
-			<a href="<%=root %>/client/clientDetail.jsp" class="right">마이페이지</a>
-			<a href="<%=root %>/client/logout.kh" class="right">로그아웃</a>
-			<%} %>
-			<select class="area" onchange="areaChange();" class="left">
-				<option value="">도서관 바로가기</option>
-				<option value="<%=root %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
-				<%for (AreaDto areaDto : list){ %>
-				<option value="<%=root %>/areaSelect.kh?areaNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+		<div class="float-container loginNav">
+			<div class="right">
+				<a href="#">사이트맵</a>
+				<%if(!isLogin){ %>
+				<a href="<%=root %>/client/clientInsert.jsp">회원가입</a>
+				<a href="<%=root %>/client/login.jsp">로그인</a>
+				<%}else{ %>
+				<a href="<%=root %>/client/clientDetail.jsp">마이페이지</a>
+				<a href="<%=root %>/client/logout.kh">로그아웃</a>
 				<%} %>
-			</select>
+			</div>
+			
+			<div class="left">
+				<select class="area">
+					<option value="">도서관 바로가기</option>
+					<option value="<%=root %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
+					<%for (AreaDto areaDto : list){ %>
+					<option value="<%=root %>/areaSelect.kh?areaNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+					<%} %>
+				</select>
+			</div>
 		</div>
 		
-		<div class="float-container">
-			<div class="left">
+		<div class="float-container text-center">
+			<div class="left logo">
 				<a href="<%=request.getContextPath() %>">
 				<%if(areaNo > 0){ %>
 					<%=areaDao.detail(areaNo).getAreaName() %>
@@ -132,17 +136,21 @@
 				<%} %>
 				</a>
 			</div>
-			<div class="left">
+			
+			<div class="searchHeader">
 				<form action="#" method="post">
-					<input type="text" placeholder="검색어를 입력하세요">
-					<input type="submit" value="검색">
+					<input type="text" placeholder="도서명을 입력하세요" class="searchInput">
+					<input type="image" src="<%=root %>/image/search.png" alt="검색버튼" class="searchImage">
 				</form>
 			</div>
+							
+			<div class="right myMenu">
+			
 				<%if(isAdminAll || isAdminPermission || isAdminNormal){ %>
 					<div class="right">
 						<span><%=clientDto.getClientType() %></span>
 						
-						<select class="area" onchange="areaChange();">
+						<select class="area">
 							<option value="">내 관리지점</option>
 								<%if(isAdminAll){ %>
 									<option value="<%=root %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
@@ -159,6 +167,9 @@
 						<a href="<%=root %>/admin/adminMenu.jsp">관리자메뉴</a>
 					</div>
 				<%} %>
+				
+			</div>
+				
 		</div>
 	
 		<nav>

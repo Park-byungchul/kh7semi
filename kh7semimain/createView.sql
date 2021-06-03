@@ -61,7 +61,9 @@ where B.board_type_no = 2;
 --리뷰 목록 출력을 위한 view
 create view review_list as
 select R.review_no, R.client_no as reviewer, R.book_isbn, R.review_subject,
-        R.review_content, R.review_read, R.review_like, R.review_date,
+        R.review_content, R.review_read, R.review_like, R.review_date, R.review_reply,
         C.client_no, C.client_name
 from review R
 left outer join client C on R.client_no = C.client_no;
+
+drop view review_list;

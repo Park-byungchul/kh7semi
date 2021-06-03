@@ -18,19 +18,20 @@ $(function(){
 
 </script>
 <jsp:include page="/template/header.jsp"></jsp:include>
-	<h2>회원가입</h2>
+	<h2>도서 데이터 추가하기</h2>
 <div class="float-container">
 	<div class="left">
 		<form action="insert.kh" method="post">
-			<label>ISBN : </label><input type="text" name="bookIsbn" class="bookIsbn"><br><br>
-			<label>장르 번호 : </label><input type="text" name="genreNo" ><br><br>
-			<label>제목 : </label><input type="text" name="bookTitle" class="bookTitle" ><br><br>
-			<label>저자 : </label><input type="text" name="bookAuthor" class="bookAuthor"><br><br>
-			<label>출판사 : </label><input type="text" name="bookPublisher" class="bookPublisher"><br><br>
-			<label>출판 날짜 : </label><input type="text" name="bookDate" class="bookDate"><br><br>
-			<label>도서 소개 : </label><textarea name="bookContent" cols="100" rows="10" style="resize:none;'" class="bookContent"></textarea><br><br>
-			<label>이미지 : </label><input type="text" name="bookImg" class="bookImgUrl"><br><br>
+			<label>ISBN : </label><input type="text" name="bookIsbn" id="bookIsbn" required><br><br>
+			<label>장르 번호 : </label><input type="text" name="genreNo"  required><br><br>
+			<label>제목 : </label><input type="text" name="bookTitle" id="bookTitle" required><br><br>
+			<label>저자 : </label><input type="text" name="bookAuthor" id="bookAuthor" required><br><br>
+			<label>출판사 : </label><input type="text" name="bookPublisher" id="bookPublisher" required><br><br>
+			<label>출판 날짜 : </label><input type="text" name="bookDate" id="bookDate" required><br><br>
+			<label>도서 소개 : </label><textarea name="bookContent" cols="100" rows="10" style="resize:none;'" id="bookContent"></textarea><br><br>
+			<label>이미지 : </label><input type="text" name="bookImg" id="bookImg" required><br><br>
 			<input type="submit" value="추가하기">
+			<input type="reset" class="reset" value="취소">
 		</form>
 	</div>
 	<div class="left">

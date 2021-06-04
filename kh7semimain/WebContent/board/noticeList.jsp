@@ -11,9 +11,20 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
+	String root = request.getContextPath();
+
 	// 검색 변수
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
+	String areaNoStr = request.getParameter("areaNo");
+	
+	if(keyword == null)
+		keyword = "";
+	
+	int areaNo = 0;
+	if(areaNoStr != null) {
+		areaNo = Integer.parseInt(areaNoStr);
+	}
 	
 	boolean isSearch = type != null && keyword != null && !keyword.trim().equals("");
 	
@@ -48,7 +59,12 @@
 	// 페이지 네비게이션 영역 계산
 	int count;
 	
-	if(isSearch) count = boardListDao.getCount(type, keyword, 1);
+	if(isSearch) {
+		if(areaNo == 0)
+			count = boardListDao.getCount(type, keyword, 1);
+		else
+			count = boardListDao.getCount(type, areaNo, keyword, 1);
+	}
 	else count = boardListDao.getCount(1);
 	
 	int blockSize = 10;
@@ -65,8 +81,12 @@
 	// 목록 출력 (일반 목록 / 검색)
 	if(!isSearch)
 		boardList = boardListDao.list(1, startRow, endRow);
-	else
-		boardList = boardListDao.search(1, type, keyword, startRow, endRow);
+	else {
+		if(areaNo == 0)
+			boardList = boardListDao.search(1, type, keyword, startRow, endRow);
+		else
+			boardList = boardListDao.search(1, areaNo, type, keyword, startRow, endRow);
+	}
 	
 	// 회원 정보
 	Integer clientNo = (Integer)session.getAttribute("clientNo");
@@ -79,58 +99,90 @@
 		clientDto = null;
 	else
 		clientDto = clientDao.get(clientNo);
+	
+	AreaDao areaDao = new AreaDao();
+	List<AreaDto> areaList = areaDao.list();
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <%if(isSearch) { %>
 	<script>
 		$(function() {
-			$("select[name=type]").val("<%=type%>");
+			$("select[name=type]").val("<%=type%>").prop("selected", true);
 			$("input[name=keyword]").val("<%=keyword%>");
+			$("select[name=areaNo]").val("<%=areaNo%>").prop("selected", true);
 		});
 	</script>
 <%} %>
 
 <script>
-	$(function() {
-		$(".pagination > a").click(function() {
+	$(function(){
+		$(".pagination > a").click(function(){
 			var pageNo = $(this).text();
 			
 			if(pageNo == "이전") {
-				pageNo = parseInt($(".pagination > a :not(.move-link)").first().text()) - 1;
-				$("input[name=pageNo]".val(pageNo));
-				$(".serach-form").submit();
-			}
+				pageNo = parseInt($(".pagination > a:not(.move-link)").first().text()) - 1;
+				$("input[name=pageNo]").val(pageNo);
+				$(".search-form").submit();
+			}	
 			else if(pageNo == "다음") {
 				pageNo = parseInt($(".pagination > a:not(.move-link)").last().text()) + 1;
-				$("input[name=pageNo]".val(pageNo));
-				$(".serach-form").submit();
+				$("input[name=pageNo]").val(pageNo);
+				$(".search-form").submit();
 			}
 			else {
-				$("input[name=pageNo]".val(pageNo));
-				$(".serach-form").submit();
+				$("input[name=pageNo]").val(pageNo);
+				$(".search-form").submit();
 			}
 		});
 	});
 </script>
 
-<div class="container-1000">
-	<div class="row text-left">
-		<h2>공지사항</h2>
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title">공지사항</span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 공지사항</span>
+		</div>
+		
+		<hr>
 	</div>
+	
+	<!-- 검색 -->
+	<form class="search-form text-center" action="noticeList.jsp" method="get">
+		<input type="hidden" name="pageNo">
+	
+		<select name="areaNo" class="select-form">
+			<option value="0">도서관 전체</option>
+			<%for(int i = 0; i < areaList.size(); i++) { %>
+				<option value="<%=areaList.get(i).getAreaNo()%>"><%=areaList.get(i).getAreaName()%></option>
+			<%} %>
+		</select>
+		
+		<select name="type" class="select-form">
+			<option value="board_title">제목</option>
+			<option value="client_name">작성자</option>
+		</select>
+			
+		<input type="text" name="keyword" class="text-search-form" placeholder="검색어를 입력하세요" value="<%=keyword %>" required>
+		<input type="submit" value="검색" class="form-btn form-btn-inline">
+	</form>
 
 	<div class="row">
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th width="8%">번호</th>
+					<th width="8%"></th>
 					<th width="40%">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th>조회</th>
-					<th>좋아요</th>
+					<th width="8%">조회</th>
+					<th width="8%">추천</th>
 				</tr>
 			</thead>
 			
@@ -138,12 +190,12 @@
 				<%for(BoardListDto boardListDto : boardList) { %>
 				<tr>
 					<td><%=boardListDto.getBoardSepNo() %></td>
+					<%if(boardListDto.getAreaNo() != 0){ %>
+						<td>[<%=boardListDto.getAreaName().substring(0, boardListDto.getAreaName().length() - 3)%>]</td>
+					<%} else { %>
+						<td>[전체]</td>
+					<%} %>
 					<td align=left>
-						<%if(boardListDto.getAreaNo() != 0){ %>
-							[<%=boardListDto.getAreaName() %>]
-						<%} else { %>
-							[전체]
-						<%} %>
 						<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
 							<%=boardListDto.getBoardTitle() %>
 						</a>
@@ -167,35 +219,23 @@
 		</div>
 	<%} %>
 	
-	<div class="row">
+	<div class="row text-center">
 		<div class="pagination">
-			<%if(startBlock > 1) { %>
-				<a class="move-link">이전</a>
+			<%if(startBlock > 1){ %>
+			<a class="move-link">이전</a>
 			<%} %>
-			<%for(int i = startBlock; i <= endBlock; i++) {%>
-				<%if(i == pageNo) {%>
-					<a class="on"><%=i %></a>
-				<%} else { %>
-					<a><%=i %></a>
+			<%for(int i = startBlock; i <= endBlock; i++){ %>
+				<%if(i == pageNo){ %>
+					<a class="on"><%=i%></a>
+				<%}else{ %>
+					<a><%=i%></a>
 				<%} %>
 			<%} %>
-	 		<%if(endBlock < lastBlock) { %>
-				<a class="move-link">다음</a>
-			<%} %>
-		</div>
+			<%if(endBlock < lastBlock){ %>
+			<a class="move-link">다음</a>
+			<%} %>	
+		</div>	
 	</div>
-	
-	<form class="search-form" action="noticeList.jsp" method="get">
-		<input type="hidden" name="pageNo">
-	
-		<select name="type">
-			<option value="board_title">제목</option>
-			<option value="client_name">작성자</option>
-		</select>
-		
-		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
-		<input type="submit" value="검색" class="btn-style">
-	</form>
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

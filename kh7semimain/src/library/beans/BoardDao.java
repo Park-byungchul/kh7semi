@@ -106,9 +106,7 @@ public class BoardDao {
 		ps.setString(6, boardDto.getBoardField());
 		ps.setInt(7, boardDto.getBoardSepNo());
 		ps.setString(8, boardDto.getBoardOpen());
-		
-		// 새글/답글일 경우 추가해야 함 (superNo, groupNo, Depth)
-		
+
 		ps.execute();
 		con.close();
 	}

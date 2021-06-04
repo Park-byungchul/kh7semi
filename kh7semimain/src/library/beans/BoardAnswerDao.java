@@ -78,7 +78,7 @@ public class BoardAnswerDao {
 	
 	public String getAnswerStatus(int boardNo) throws Exception {
 		Connection con = JdbcUtils.getConnection();
-		
+
 		String sql = "select board_status from board_answer where board_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, boardNo);

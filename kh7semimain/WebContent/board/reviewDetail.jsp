@@ -42,7 +42,6 @@
 	}
 
 	if(reviewNoSet.add(reviewNo)) {
-		System.out.println("test");
 		reviewDao.read(reviewNo, clientNo);
 	}
 

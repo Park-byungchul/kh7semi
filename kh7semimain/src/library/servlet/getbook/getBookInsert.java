@@ -19,7 +19,7 @@ public class getBookInsert extends HttpServlet {
 		try {
 			req.setCharacterEncoding("UTF-8");
 			GetBookDto getBookDto = new GetBookDto();
-			getBookDto.setGetBookNo(Integer.parseInt(req.getParameter("getBookNo")));
+
 			getBookDto.setBookIsbn(req.getParameter("bookIsbn"));
 			getBookDto.setAreaNo(Integer.parseInt(req.getParameter("areaNo")));
 			getBookDto.setGetBookDate(Date.valueOf(req.getParameter("getBookDate")));

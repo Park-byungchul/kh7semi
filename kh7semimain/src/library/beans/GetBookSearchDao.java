@@ -25,6 +25,10 @@ public class GetBookSearchDao {
 			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
 			getBookSearchDto.setBookTitle(rs.getString("book_title"));
 			getBookSearchDto.setGetBookDate(rs.getDate("get_book_date"));
+			getBookSearchDto.setBookPublisher(rs.getString("book_publisher"));
+			getBookSearchDto.setBookDate(rs.getDate("book_date"));
+			getBookSearchDto.setBookContent(rs.getString("book_content"));
+			getBookSearchDto.setBookImg(rs.getString("book_img"));
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}
@@ -64,6 +68,10 @@ public class GetBookSearchDao {
 			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
 			getBookSearchDto.setBookTitle(rs.getString("book_title"));
 			getBookSearchDto.setGetBookDate(rs.getDate("get_book_date"));
+			getBookSearchDto.setBookPublisher(rs.getString("book_publisher"));
+			getBookSearchDto.setBookDate(rs.getDate("book_date"));
+			getBookSearchDto.setBookContent(rs.getString("book_content"));
+			getBookSearchDto.setBookImg(rs.getString("book_img"));
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}
@@ -104,6 +112,10 @@ public class GetBookSearchDao {
 			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
 			getBookSearchDto.setBookTitle(rs.getString("book_title"));
 			getBookSearchDto.setGetBookDate(rs.getDate("get_book_date"));
+			getBookSearchDto.setBookPublisher(rs.getString("book_publisher"));
+			getBookSearchDto.setBookDate(rs.getDate("book_date"));
+			getBookSearchDto.setBookContent(rs.getString("book_content"));
+			getBookSearchDto.setBookImg(rs.getString("book_img"));
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}
@@ -141,6 +153,10 @@ public class GetBookSearchDao {
 			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
 			getBookSearchDto.setBookTitle(rs.getString("book_title"));
 			getBookSearchDto.setGetBookDate(rs.getDate("get_book_date"));
+			getBookSearchDto.setBookPublisher(rs.getString("book_publisher"));
+			getBookSearchDto.setBookDate(rs.getDate("book_date"));
+			getBookSearchDto.setBookContent(rs.getString("book_content"));
+			getBookSearchDto.setBookImg(rs.getString("book_img"));
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}

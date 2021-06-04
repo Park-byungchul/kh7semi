@@ -73,7 +73,8 @@
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/scrolledMenu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css">
-	<link rel="stylesheet" type="text/css" href="<%=root%>/css/board.css">
+  <link rel="stylesheet" type="text/css" href="<%=root%>/css/calendar.css">
+  <link rel="stylesheet" type="text/css" href="<%=root%>/css/board.css">
 	<style>
 	
 	</style>
@@ -154,7 +155,7 @@
 				
 			</div>
 			
-			<div class="left homeBtn" onclick="location.href='<%=root %>/areaSelect.kh?areaNo=0&back=<%=pageNow%>'">
+			<div class="left homeBtn" onclick="location.href='<%=root %>/areaSelect.kh?areaNo=0'">
 				<img alt="home" src="<%=root %>/image/home.png">
 				<span>MAIN</span>
 			</div>
@@ -234,7 +235,7 @@
 					<ul>
 						<li><a href="<%=root%>/reservation/reservationInfo.jsp">도서 예약</a></li>
 						<li><a href="<%=root%>/hopelist/hopelist.jsp">희망도서</a></li>
-						<li><a href="#">행사일정</a></li>
+						<li><a href="<%=root %>/plan/plan.jsp">행사일정</a></li>
 					</ul>
 				</li>
 				

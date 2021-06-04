@@ -80,7 +80,7 @@
 						<th>썸네일</th>
 						<th width="10%">책번호</th>
 						<th width="10%">지점명</th>
-						<th width="50%">책제목</th>
+						<th width="20%">책제목</th>
 						<th width="20%">저자</th>						
 						<th>상태</th>
 						<th>기능</th>

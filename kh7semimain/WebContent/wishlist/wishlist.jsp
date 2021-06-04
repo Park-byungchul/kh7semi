@@ -25,6 +25,13 @@
 				return false;
 			}
 		});
+		
+		$(".booklist-wishlistBtn-neg").click(function(){
+			window.alert("관심도서가 해제되었습니다.")
+		});
+		$(".booklist-wishlistBtn-pos").click(function(){
+			window.alert("관심도서 목록에 추가되었습니다.")
+		});
 	});
 </script>
 <!-- -->
@@ -41,6 +48,7 @@
 					<th>장르</th>
 					<th>도서명</th>
 					<th>저자</th>
+					<th>썸네일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -51,7 +59,8 @@
 					<td><%=bookDto.getGenreNo()%></td>
 					<td><a href="<%=root%>/book/bookDetail.jsp?bookIsbn=<%=wishlistDto.getBookIsbn()%>"><%=bookDto.getBookTitle()%></a></td>
 					<td><%=bookDto.getBookAuthor()%></td>
-					<td class="bookList">
+					<td><img src="<%=bookDto.getBookImg()%>"></td>
+					<td class="bookList text-center">
 					<button class="wishlistDelete"><a href="wishlistDelete.kh?bookIsbn=<%=wishlistDto.getBookIsbn()%>&clientNo=<%=clientNo%>">삭제</a></button>
 					</td>
 				</tr>

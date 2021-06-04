@@ -80,7 +80,7 @@ public class BookDao {
 	public List<BookDto> list() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "select * from book order by to_number(book_isbn) asc";
+		String sql = "select * from book order by book_isbn asc";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		
@@ -104,6 +104,41 @@ public class BookDao {
 		con.close();
 		
 		return bookList;
+	}
+	
+	//목록 - 페이징
+			public List<BookDto> list(int startRow, int endRow) throws Exception {
+				Connection con = JdbcUtils.getConnection();
+				
+				String sql = "select * from("
+										+ "select rownum rn, TMP.* from("
+											+ "select * from book order by book_isbn asc"
+										+ ")TMP"
+									+ ") where rn between ? and ?";
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setInt(1, startRow);
+				ps.setInt(2, endRow);
+				ResultSet rs = ps.executeQuery();
+				
+				List<BookDto> bookList = new ArrayList<>();
+				while(rs.next()) {
+					BookDto bookDto = new BookDto();
+					
+					bookDto.setBookIsbn(rs.getString("book_isbn"));
+					bookDto.setGenreNo(rs.getInt("genre_no"));
+					bookDto.setBookTitle(rs.getString("book_title"));
+					bookDto.setBookAuthor(rs.getString("book_author"));
+					bookDto.setBookPublisher(rs.getString("book_publisher"));
+					bookDto.setBookDate(rs.getDate("book_date"));
+					bookDto.setBookContent(rs.getString("book_content"));
+					bookDto.setBookImg(rs.getString("book_img"));
+					
+					bookList.add(bookDto);
+				}
+				
+				con.close();
+				
+				return bookList;
 	}
 	
 	public List<BookDto> search(String keyword) throws Exception {
@@ -180,5 +215,18 @@ public class BookDao {
 		con.close();
 		return count > 0;
 	}
-	
+	//페이지블럭 계산을 위한 카운트 기능(목록/검색)
+			public int getCount() throws Exception {
+				Connection con = JdbcUtils.getConnection();
+				
+				String sql = "select count(*) from book";
+				PreparedStatement ps = con.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();
+				rs.next();
+				int count = rs.getInt(1);
+				
+				con.close();
+				
+				return count;
+		}
 }

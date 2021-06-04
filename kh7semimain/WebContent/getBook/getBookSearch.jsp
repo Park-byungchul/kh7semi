@@ -47,14 +47,12 @@ $(function(){
 		
 		
 		var isbn = td.eq(0).text();
-		var genre = td.eq(1).text();
-		var title = td.eq(2).text();
-		var author = td.eq(3).text();
+		var title = td.eq(1).text();
+		var author = td.eq(2).text();
 			
 	    opener.document.getElementById("bookAuthor").value = author;
 	    opener.document.getElementById("bookTitle").value = title;
 	    opener.document.getElementById("bookIsbn").value = isbn;
-	    opener.document.getElementById("genreNo").value = genre;
 	    window.close();
 	});
 	
@@ -74,7 +72,7 @@ $(function(){
 	
 	</div>
 	<div class="row">
-			<form class="bookSearchForm" name="bookSearchForm" action="hopelistBookSearch.jsp" method="post" target="target">
+			<form class="bookSearchForm" name="bookSearchForm" action="getBookSearch.jsp" method="post" target="target">
 				<select name="type" class="choice-type">
 					<option value="all" selected>전체</option>
 					<option value="book_title">제목</option>
@@ -95,20 +93,16 @@ $(function(){
 			<thead>
 				<tr>
 					<th>ISBN</th>
-					<th>장르</th>
 					<th>도서명</th>
 					<th>저자</th>
-					<th>썸네일</th>
 				</tr>
 			</thead>
 			<tbody>
 				<%for (BookDto bookDto : bookList) { %>
 				<tr>
-					<td Id="searched-bookIsbn"><%=bookDto.getBookIsbn()%></td>
-					<td Id="searched-genreNo"><%=bookDto.getGenreNo()%></td>
+					<td Id="searched-bookIsbn"><%=bookDto.getBookIsbn()%></td>	
 					<td Id="searched-bookTitle"><%=bookDto.getBookTitle()%></td>
 					<td Id="searched-bookAuthor"><%=bookDto.getBookAuthor()%></td>
-					<td Id="searched-bookImg"><img src="<%=bookDto.getBookImg() %>"></td>
 					<td>
 					<button class="choice-btn">선택하기</button>
 					</td>

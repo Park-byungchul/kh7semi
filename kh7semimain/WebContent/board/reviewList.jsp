@@ -1,3 +1,6 @@
+<%@page import="library.beans.BookDto"%>
+<%@page import="library.beans.ReviewDao"%>
+<%@page import="library.beans.ReviewDto"%>
 <%@page import="library.beans.ReviewListDto"%>
 <%@page import="library.beans.ReviewListDao"%>
 <%@page import="library.beans.AreaDto"%>
@@ -45,6 +48,7 @@
 	
 	ReviewListDao reviewListDao = new ReviewListDao();
 	List<ReviewListDto> reviewList;
+	ReviewDao reviewDao = new ReviewDao();
 	
 	// 시작과 끝번호
 	int startRow = pageNo * pageSize - (pageSize - 1);
@@ -149,11 +153,8 @@
 			<thead>
 				<tr>
 					<th width="8%">번호</th>
-					<th width="40%">제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-					<th width="8%">조회</th>
-					<th width="8%">추천</th>
+					<th width="15%"></th>
+					<th>제목</th>
 				</tr>
 			</thead>
 			
@@ -161,18 +162,25 @@
 				<%for(ReviewListDto reviewListDto : reviewList) { %>
 				<tr>
 					<td><%=reviewListDto.getReviewNo() %></td>
+					<td><img src=<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookImg() %>></td>
 					<td align=left>
-						<a href="reviewDetail.jsp?reviewNo=<%=reviewListDto.getReviewNo()%>">
-							<%=reviewListDto.getReviewSubject() %>
+						<a href="../book/bookDetail.jsp?bookIsbn=<%=reviewListDto.getBookIsbn() %>" class="review-title">
+							<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookTitle() %>
 						</a>
-						<%if(reviewListDto.getReviewReply() > 0){ %>
-							[<%=reviewListDto.getReviewReply()%>]
-						<%} %>
+						<p><%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookAuthor() %></p>
+						<p>
+							<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookPublisher() %>,
+							<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookDate().getYear() + 1900 %>
+						</p>
+						<div class="review-border">
+							<a href="reviewDetail.jsp?reviewNo=<%=reviewListDto.getReviewNo()%>" class="review-subject">
+								<%=reviewListDto.getReviewSubject() %>
+							</a>
+							<span class="review-right"><%=reviewListDto.getClientName() %></span>
+							<span class="review-right">&nbsp;</span>
+							<span class="review-right"><%=reviewListDto.getReviewDate() %></span>
+						</div>
 					</td>
-					<td><%=reviewListDto.getClientName() %></td>
-					<td><%=reviewListDto.getReviewDate() %></td>
-					<td><%=reviewListDto.getReviewRead() %></td>
-					<td><%=reviewListDto.getReviewLike() %></td>
 				</tr>
 				<%} %>
 			</tbody>

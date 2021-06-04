@@ -27,3 +27,21 @@
 .lock-img {
 	height: -5px;
 }
+
+.review-title {
+	font-weight:bold;
+}
+
+.review-border {
+	border:1px solid lightgray;
+	padding:0.5em;
+}
+
+.review-subject {
+	text-decoration: none;
+	color: black;
+}
+
+.review-right {
+	float:right;
+}

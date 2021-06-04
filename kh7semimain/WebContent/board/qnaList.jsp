@@ -191,7 +191,7 @@
 					<th width="8%">번호</th>
 					<th width="8%"></th>
 					<th width="40%">제목</th>
-					<th width="8%">상태</th>
+					<th width="10%">상태</th>
 					<th>작성자</th>
 					<th>작성일</th>
 				</tr>

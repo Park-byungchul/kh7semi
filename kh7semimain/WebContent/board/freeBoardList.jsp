@@ -59,7 +59,6 @@
 	int blockSize = 10;
 	
 	int lastBlock = (count + pageSize - 1) / pageSize;	
-	// int lastBlock = (count - 1) / pageSize + 1;
 	
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 	int endBlock = startBlock + blockSize - 1;

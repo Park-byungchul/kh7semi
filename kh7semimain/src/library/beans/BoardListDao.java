@@ -216,6 +216,25 @@ public class BoardListDao {
 		return count;
 	}
 	
+	public int getCount(String type, int areaNo, String keyword, int boardTypeNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select count(*) from board_list where instr(#1, ?) > 0 and board_type_no = ? and area_no = ?";
+		sql = sql.replace("#1", type);
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ps.setInt(2, boardTypeNo);
+		ps.setInt(3, areaNo);
+		
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		
+		con.close();
+		
+		return count;
+	}
+	
 	public int getCount(String type, String keyword, int boardTypeNo) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		

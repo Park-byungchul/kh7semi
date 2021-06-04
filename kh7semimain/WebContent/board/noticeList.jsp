@@ -103,6 +103,7 @@
 		$(function() {
 			$("select[name=type]").val("<%=type%>");
 			$("input[name=keyword]").val("<%=keyword%>");
+			$("select[name="areaNo"]").val("<%=areaNo%>");
 		});
 	</script>
 <%} %>
@@ -147,7 +148,7 @@
 	<form class="search-form text-center" action="noticeList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	
-		<select name="areaNo"class="select-form">
+		<select name="areaNo" class="select-form">
 			<option value="0">도서관 전체</option>
 			<%for(int i = 0; i < areaList.size(); i++) { %>
 				<option value="<%=areaList.get(i).getAreaNo()%>"><%=areaList.get(i).getAreaName()%></option>
@@ -211,12 +212,10 @@
 	<%} %>
 	
 	<div class="row text-center">
-		<!-- 페이지 네비게이션 자리 -->
 		<div class="pagination">
 			<%if(startBlock > 1){ %>
 			<a class="move-link">이전</a>
 			<%} %>
-			
 			<%for(int i = startBlock; i <= endBlock; i++){ %>
 				<%if(i == pageNo){ %>
 					<a class="on"><%=i%></a>
@@ -224,7 +223,6 @@
 					<a><%=i%></a>
 				<%} %>
 			<%} %>
-			
 			<%if(endBlock < lastBlock){ %>
 			<a class="move-link">다음</a>
 			<%} %>	

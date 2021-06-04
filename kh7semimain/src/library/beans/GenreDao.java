@@ -38,7 +38,7 @@ public class GenreDao {
 	public GenreDto get(int genreNo) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "select * from book where book_isbn = ?";
+		String sql = "select * from genre where genre_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, genreNo);
 		ResultSet rs = ps.executeQuery();

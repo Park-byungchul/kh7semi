@@ -82,6 +82,7 @@ $(document).ready(function () {
                       	    opener.document.getElementById("bookDate").value = date;
                       	    opener.document.getElementById("bookContent").value = content;
                       	    opener.document.getElementById("bookImg").value = img;
+                      	  	opener.document.getElementById("thumnail").src = img;
                       	window.close();
                       	});
                  	}
@@ -141,7 +142,8 @@ $(document).ready(function () {
                      	    opener.document.getElementById("bookDate").value = date;
                      	    opener.document.getElementById("bookContent").value = content;
                      	    opener.document.getElementById("bookImg").value = img;
-                     	window.close();
+                     	    opener.document.getElementById("thumnail").src = img;
+                   		 	window.close();
                      	});
                     }               
                 });
@@ -198,7 +200,8 @@ $(document).ready(function () {
                      	    opener.document.getElementById("bookDate").value = date;
                      	    opener.document.getElementById("bookContent").value = content;
                      	    opener.document.getElementById("bookImg").value = img;
-                     	window.close();
+                     	    opener.document.getElementById("thumnail").src = img;
+                       		window.close();
                      	});
                     }          
                 });

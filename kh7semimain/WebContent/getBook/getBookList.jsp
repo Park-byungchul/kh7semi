@@ -1,19 +1,17 @@
-<%@page import="library.beans.GenreDto"%>
-<%@page import="library.beans.GenreDao"%>
-<%@page import="library.beans.WishlistDto"%>
-<%@page import="library.beans.WishlistDao"%>
 <%@page import="library.beans.RecommendDto"%>
 <%@page import="library.beans.RecommendDao"%>
+<%@page import="library.beans.GetBookSearchDto"%>
+<%@page import="library.beans.GetBookSearchDao"%>
 <%@page import="library.beans.BookDto"%>
-<%@page import="java.util.List"%>
 <%@page import="library.beans.BookDao"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
 String root = request.getContextPath(); 
-BookDao bookDao = new BookDao();
-List<BookDto> list = bookDao.list();
+GetBookSearchDao getBookSearchDao = new GetBookSearchDao();
+List<GetBookSearchDto> list = getBookSearchDao.list();
 int clientNo;
 try {
 	clientNo = (int)session.getAttribute("clientNo");
@@ -63,7 +61,8 @@ catch(Exception e){
 int startRow = pageNo * pageSize - (pageSize-1);
 int endRow = pageNo * pageSize;
 
-int count  = bookDao.getCount();
+int count = 1;
+//int count  = getBookSearchDao.getCount(); // 구현하자!
 int blockSize = 10;
 int lastBlock = (count + pageSize - 1) / pageSize;
 int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
@@ -80,7 +79,7 @@ if(endBlock > lastBlock){
 <script src="<%=root%>/pagination/pagination.js"></script>
 <script>
 	$(function(){
-		$(".bookDelete").click(function(){
+		$(".getBookDelete").click(function(){
 			var choice = window.confirm("정말 삭제하시겠습니까?");
 			if (choice) {
 				return true;
@@ -98,40 +97,35 @@ if(endBlock > lastBlock){
 </style>
 <div class="container-1000">
 	<div class="row text-left">
-		<h2>책 목록</h2>
+		<h2>입고된 도서 목록</h2>
 	</div>
 	<div class="row text-right">
-		<a href="bookInsert.jsp">책 등록하기</a>
+		<a href="getBookInsert.jsp">입고하기</a>
 	</div>
 	
 	<div class="row">
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
+					<th>입고 번호</th>
 					<th>ISBN</th>
-					<th>장르</th>
-					<th>도서명</th>
-					<th>저자</th>
 					<th>썸네일</th>
 					<th>기능</th>
 				</tr>
 			</thead>
 			<tbody>
-				<%for (BookDto bookDto : list) { 
+				<%for (GetBookSearchDto getBookSearchDto : list) { 
 	
-					GenreDao genreDao = new GenreDao();
-					GenreDto genreDto = genreDao.get(bookDto.getGenreNo());
 				%>
 				<tr>
-					<td><%=bookDto.getBookIsbn()%></td>
-					<td><%=genreDto.getGenreName()%></td>
-					<td><%=bookDto.getBookTitle()%></td>
-					<td><%=bookDto.getBookAuthor()%></td>
-					<td><img src="<%=bookDto.getBookImg() %>"></td>
+					<td><%=getBookSearchDto.getBookIsbn()%></td>
+					<td><%=getBookSearchDto.getBookTitle()%></td>
+					<td><%=getBookSearchDto.getBookAuthor()%></td>
+					<td><img src="<%=getBookSearchDto.getBookImg() %>"></td>
 					<td class="bookList">
-					<button><a href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
-					<button><a class="bookDelete" href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>">삭제</a></button>
-					<button><a href="bookDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">상세보기</a></button>
+					<button><a href="getBookEdit.jsp?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>">수정</a></button>
+					<button><a class="getBookDelete" href="getBookDelete.kh?getBookNo=<%=getBookSearchDto.getGetBookNo()%>">삭제</a></button>
+					<button><a href="bookDetail.jsp?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>">상세보기</a></button>
 					</td>
 				</tr>
 				<%}%>
@@ -161,7 +155,7 @@ if(endBlock > lastBlock){
 	</form>
 
 	<div class="row text-right">
-		<a href="bookInsert.jsp">책 등록하기</a>
+		<a href="getBookInsert.jsp">책 등록하기</a>
 	</div>
 
 </div>

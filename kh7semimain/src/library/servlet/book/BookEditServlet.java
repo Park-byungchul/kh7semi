@@ -22,7 +22,7 @@ public class BookEditServlet extends HttpServlet{
 			
 			BookDto bookDto = new BookDto();
 			bookDto.setBookIsbn(req.getParameter("bookIsbn"));
-			bookDto.setGenreNo(Integer.parseInt(req.getParameter("GenreNo")));
+			bookDto.setGenreNo(Integer.parseInt(req.getParameter("genreNo")));
 			bookDto.setBookTitle(req.getParameter("bookTitle"));
 			bookDto.setBookAuthor(req.getParameter("bookAuthor"));
 			bookDto.setBookPublisher(req.getParameter("bookPublisher"));
@@ -33,8 +33,7 @@ public class BookEditServlet extends HttpServlet{
 			boolean result = bookDao.editBook(bookDto);
 			
 			if(result) {
-//				resp.sendRedirect("bookDetail.jsp?no="+bookDto.getBookIsbn());
-				resp.sendRedirect("clientList.jsp");
+				resp.sendRedirect("bookDetail.jsp?bookIsbn="+bookDto.getBookIsbn());
 			}
 
 		}

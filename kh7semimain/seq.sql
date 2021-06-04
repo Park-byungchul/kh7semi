@@ -109,3 +109,17 @@ start with 1
 increment by 1
 nocycle
 nocache;
+
+create sequence promotion_seq
+minvalue 1
+start with 1
+increment by 1
+nocycle
+nocache;
+
+create sequence promotion_file_seq
+minvalue 1
+start with 1
+increment by 1
+nocycle
+nocache;

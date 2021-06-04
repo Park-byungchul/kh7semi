@@ -12,6 +12,7 @@ import java.util.List;
 
 
 
+
 public class HopelistDao {
 
 	public static final String USERNAME = "kh7semi2";
@@ -94,6 +95,37 @@ public class HopelistDao {
 			String sql = "select * from hopelist order by hopelist_no desc";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+			List<HopelistDto> list = new ArrayList<>();
+			while(rs.next()) {
+				HopelistDto hopelistDto = new HopelistDto();
+				hopelistDto.setHopelistNo(rs.getInt("hopelist_no"));
+				hopelistDto.setClientNo(rs.getInt("client_no"));
+				hopelistDto.setBookIsbn(rs.getString("book_isbn"));
+				hopelistDto.setHopelistReason(rs.getString("hopelist_reason"));
+				hopelistDto.setHopelistDate(rs.getDate("hopelist_date"));
+				hopelistDto.setHopelistLibrary(rs.getString("hopelist_library"));
+				
+				list.add(hopelistDto);
+			}
+			
+			con.close();
+			return list;
+		}
+		//목록 - 페이징
+		public List<HopelistDto> myHopeList(int clientNo,int startRow, int endRow) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select * from("
+									+ "select rownum rn, TMP.* from("
+										+ "select * from hopelist where client_no = ? order by hopelist_no desc"
+									+ ")TMP"
+								+ ") where rn between ? and ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, clientNo);
+			ps.setInt(2, startRow);
+			ps.setInt(3, endRow);
+			ResultSet rs = ps.executeQuery();
+			
 			List<HopelistDto> list = new ArrayList<>();
 			while(rs.next()) {
 				HopelistDto hopelistDto = new HopelistDto();

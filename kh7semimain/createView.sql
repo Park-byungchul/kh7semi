@@ -29,7 +29,8 @@ left outer join board_type BT on B.board_type_no = bt.board_type_no;
 create or replace view get_book_view as
     select g.get_book_no, g.get_book_date,
     a.area_name, 
-    b.book_isbn, b.book_author, b.book_title 
+    b.book_isbn, b.book_author, b.book_title, b.book_publisher, 
+    b.book_date, b.book_content, b.book_img
         from get_book g
             inner join book b on g.book_isbn = b.book_isbn
             inner join area a on g.area_no = a.area_no;

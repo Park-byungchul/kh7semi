@@ -174,6 +174,11 @@
 	height: 100px;
 }
 
+.logo span{
+	padding: 33px 0px;
+	display: inline-block;
+}
+
 .logo>a:link, .logo>a:visited, .logo>a:hover, .logo>a:active {
 	height: 100%;
 	color: black;

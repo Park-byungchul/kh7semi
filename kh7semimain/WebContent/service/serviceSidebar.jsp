@@ -25,7 +25,7 @@
 	<li><a href="<%=root %>/service/serviceInfo.jsp">이용안내</a></li>
 	<li><a href="<%=root %>/reservation/reservationInfo.jsp">도서 예약</a></li>
 	<li><a href="<%=root %>/hopelist/hopelist.jsp">희망도서</a></li>
-	<li><a href="#">행사일정</a></li>
+	<li><a href="<%=root %>/plan/plan.jsp">행사일정</a></li>
 </ul>
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>

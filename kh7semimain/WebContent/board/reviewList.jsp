@@ -143,6 +143,9 @@
 						<a href="reviewDetail.jsp?reviewNo=<%=reviewListDto.getReviewNo()%>">
 							<%=reviewListDto.getReviewSubject() %>
 						</a>
+						<%if(reviewListDto.getReviewReply() > 0){ %>
+							[<%=reviewListDto.getReviewReply()%>]
+						<%} %>
 					</td>
 					<td><%=reviewListDto.getClientName() %></td>
 					<td><%=reviewListDto.getReviewDate() %></td>

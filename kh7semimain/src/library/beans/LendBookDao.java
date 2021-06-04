@@ -10,24 +10,12 @@ public class LendBookDao {
 //	= 입력 : (대출번호, 회원번호, 입고번호, 책번호, 지점번호, 대출일, 반납기한, 반납일)
 //	= 출력(반환) : 없음(void)
 	public boolean lendBookInsert(LendBookDto lendbookDto) throws Exception{
-
-//		Connection con = JdbcUtils.getConnection();
 		
-//		String sql = "insert into lend_book values("
-//				+ "lend_book_seq.nextval, ?, ?, ?, ?, sysdate, sysdate+14, null)";
-		
-//		PreparedStatement ps = con.prepareStatement(sql);
-//		ps.setInt(1, lendbookDto.getClientNo());
-//		ps.setInt(2, lendbookDto.getGetBookNo());
-//		ps.setString(3, lendbookDto.getBookIsbn());
-//		ps.setInt(4, lendbookDto.getAreaNo());
-		
-//		ps.execute();
 		
 		GetBookDao getBookDao = new GetBookDao();
 		ClientDao clientDao = new ClientDao();
 		boolean check;
-		if(!getBookDao.checkOverlap(lendbookDto.getGetBookNo())) {
+		if(!getBookDao.check(lendbookDto.getGetBookNo())) {
 			check = false;
 		} else if (!clientDao.checkOverlap(lendbookDto.getClientNo())) {
 			check = false;

@@ -7,7 +7,6 @@
 <%
 	String root = request.getContextPath();
 
-	//목록을 구하는 서버단 코드(Java)
 	request.setCharacterEncoding("UTF-8");
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
@@ -57,12 +56,11 @@
 					</tr>
 				</thead>
 				<tbody>
-<!-- 					검색메소드가 실행되면 list가 펼쳐지게 코드 구현해야함 -->
 					<%for(GetBookSearchDto getBookSearchDto : getBookList) {%>
 					<tr>
 						<td><%=getBookSearchDto.getBookIsbn() %></td>
 						<td><%=getBookSearchDto.getAreaName() %></td>					
-						<td><%=getBookSearchDto.getBookTitle()%></td>
+						<td> <a href = "<%=root%>/getBook/getBookDetail.jsp?getBookNo=<%=getBookSearchDto.getGetBookNo()%>"><%=getBookSearchDto.getBookTitle()%></a></td>
 						<td><%=getBookSearchDto.getBookAuthor() %></td>
 						<td><%=getBookSearchDto.getGetBookStatus() %></td>
 					</tr>

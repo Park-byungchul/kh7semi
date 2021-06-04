@@ -24,8 +24,8 @@ public class LendBookInsertServlet extends HttpServlet{
 			GetBookDto getBookDto = getBookDao.get(Integer.parseInt(req.getParameter("getBookNo")));
 			lendBookDto.setClientNo(Integer.parseInt(req.getParameter("clientNo")));
 			lendBookDto.setGetBookNo(Integer.parseInt(req.getParameter("getBookNo")));
-			lendBookDto.setAreaNo(Integer.parseInt(req.getParameter("areaNo"))); //수정해야됨
-			if(getBookDao.checkOverlap(lendBookDto.getGetBookNo())) {
+			lendBookDto.setAreaNo(Integer.parseInt(req.getParameter("areaNo"))); 
+			if(getBookDao.check(lendBookDto.getGetBookNo())) {
 				lendBookDto.setBookIsbn(getBookDto.getBookIsbn()); //파라미터로 받지 않음. getBookNo 파라미터를 사용해 getBookDao에서 검색
 				LendBookDao lendBookDao = new LendBookDao();
 				if(lendBookDao.get(getBookDto.getGetBookNo())) {//누군가 빌린 기록이 view안에 들어있다면?
@@ -41,12 +41,6 @@ public class LendBookInsertServlet extends HttpServlet{
 			else {
 				resp.sendRedirect("lendBookInsertFail2.jsp");
 			}
-			System.out.println("왔는지");
-			//lendBookDto.setAreaNo(Integer.parseInt(req.getParameter("areaNo")));//이제 헤더에 지점 따라다닐예정이니 그거 받아오면됨
-			//계산
-//			boolean result2 =lendBookDao.get(getBookDto.getGetBookNo());
-//			boolean result = lendBookDao.lendBookInsert(lendBookDto);
-			//출력
 		}
 		catch(Exception e) {
 			e.printStackTrace();

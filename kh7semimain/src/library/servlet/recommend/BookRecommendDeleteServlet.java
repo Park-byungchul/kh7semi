@@ -1,4 +1,4 @@
-package library.servlet.book;
+package library.servlet.recommend;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import library.beans.RecommendDao;
 import library.beans.RecommendDto;
 
-@WebServlet(urlPatterns="/book/bookRecommendDelete.kh")
+@WebServlet(urlPatterns="/recommend/recommendDelete.kh")
 public class BookRecommendDeleteServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,9 +26,10 @@ public class BookRecommendDeleteServlet extends HttpServlet{
 			RecommendDao recommendDao = new RecommendDao();
 			recommendDao.delete(recommendDto);
 			
+			String root = req.getContextPath();
 			
 			//출력 : 책 리스트로 복귀
-			resp.sendRedirect("bookList.jsp");
+			resp.sendRedirect(root+"/search/searchList.jsp");
 			
 		}
 		catch(Exception e) {

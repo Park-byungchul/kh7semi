@@ -1,3 +1,12 @@
+<%@page import="library.beans.BookDto"%>
+<%@page import="library.beans.BookDao"%>
+<%@page import="library.beans.GetBookDto"%>
+<%@page import="library.beans.GenreDto"%>
+<%@page import="library.beans.GenreDao"%>
+<%@page import="library.beans.RecommendDto"%>
+<%@page import="library.beans.RecommendDao"%>
+<%@page import="library.beans.WishlistDto"%>
+<%@page import="library.beans.WishlistDao"%>
 <%@page import="library.beans.GetBookSearchDto"%>
 <%@page import="java.util.List"%>
 <%@page import="library.beans.GetBookSearchDao"%>
@@ -11,6 +20,26 @@
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
 		
+	int clientNo;
+	try {
+		clientNo = (int)session.getAttribute("clientNo");
+		
+	}
+	catch (Exception e){
+		clientNo = 0;
+	}
+
+
+	RecommendDao recommendDao = new RecommendDao();
+	RecommendDto recommendDto = new RecommendDto();
+
+	WishlistDao wishlistDao = new WishlistDao();
+	WishlistDto wishlistDto = new WishlistDto();
+	
+	BookDao bookDao = new BookDao();
+	BookDto bookDto = new BookDto();
+
+	boolean isLogin = session.getAttribute("clientNo") != null;
 	
  	GetBookSearchDao getBookSearchDao = new GetBookSearchDao();
  		List<GetBookSearchDto> getBookList;
@@ -48,21 +77,52 @@
 			<table border = "1" width="800" class="row text-center">
 				<thead>
 					<tr>
+						<th>썸네일</th>
 						<th width="10%">책번호</th>
 						<th width="10%">지점명</th>
 						<th width="50%">책제목</th>
 						<th width="20%">저자</th>						
 						<th>상태</th>
+						<th>기능</th>
 					</tr>
 				</thead>
 				<tbody>
-					<%for(GetBookSearchDto getBookSearchDto : getBookList) {%>
+					<%for(GetBookSearchDto getBookSearchDto : getBookList) {
+							recommendDto.setClientNo(clientNo);
+							recommendDto.setBookIsbn(getBookSearchDto.getBookIsbn());
+							
+							wishlistDto.setClientNo(clientNo);
+							wishlistDto.setBookIsbn(getBookSearchDto.getBookIsbn());
+							
+							boolean isRecommend = recommendDao.check(recommendDto);
+							boolean isWishlist = wishlistDao.check(wishlistDto);
+							
+							bookDto = bookDao.get(getBookSearchDto.getBookIsbn());
+							
+							
+						
+					%>
 					<tr>
+						<td><img src="<%=bookDto.getBookImg() %>"></td>
 						<td><%=getBookSearchDto.getBookIsbn() %></td>
 						<td><%=getBookSearchDto.getAreaName() %></td>					
 						<td> <a href = "<%=root%>/getBook/getBookDetail.jsp?getBookNo=<%=getBookSearchDto.getGetBookNo()%>"><%=getBookSearchDto.getBookTitle()%></a></td>
 						<td><%=getBookSearchDto.getBookAuthor() %></td>
 						<td><%=getBookSearchDto.getGetBookStatus() %></td>
+						<td class="bookList">
+						<%if(isLogin && isRecommend) {%>
+						<button class="booklist-btn"><a href="<%=root%>/recommend/recommendDelete.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천취소</a></button>
+						<%} else if(isLogin && !isRecommend){%>
+						<button class="booklist-btn"><a href="<%=root%>/recommend/recommendInsert.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천하기</a></button>
+						<%}%>
+						
+						<%if(isLogin && isWishlist) { %>
+						<button class="booklist-wishlistBtn-neg"><a href="<%=root%>/wishlist/wishlistDelete.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>">관심도서 해제</a></button>
+						<%} else if(isLogin && !isWishlist) { %>
+						<button class="booklist-wishlistBtn-pos"><a href="<%=root%>/wishlist/wishlistInsert.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>">관심도서 담기</a></button>
+						<%} %>
+						
+						</td>
 					</tr>
 					<%} %>
 				</tbody>

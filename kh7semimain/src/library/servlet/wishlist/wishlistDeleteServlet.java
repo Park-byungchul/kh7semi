@@ -26,10 +26,10 @@ public class wishlistDeleteServlet extends HttpServlet{
 			WishlistDao wishlistDao = new WishlistDao();
 			wishlistDao.delete(wishlistDto.getClientNo(), wishlistDto.getBookIsbn());
 			
-			
+			String root = req.getContextPath();
 			//출력 : 책 리스트로 복귀
 		
-			resp.sendRedirect("wishlist.jsp");	
+			resp.sendRedirect(root+"/search/searchList.jsp");	
 		
 		}
 		catch(Exception e) {

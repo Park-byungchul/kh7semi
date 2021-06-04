@@ -6,12 +6,16 @@ public class GetBookDto {
 	private int getBookNo;
 	private String bookIsbn;
 	private int areaNo;
-	private Date getBookDate;
-	private String getBookStatus;
-	
 	
 	public GetBookDto() {
 		super();
+	}
+	
+	public GetBookDto(int getBookNo, String bookIsbn, int areaNo, Date getBookDate) {
+		super();
+		this.getBookNo = getBookNo;
+		this.bookIsbn = bookIsbn;
+		this.areaNo = areaNo;
 	}
 
 	public int getGetBookNo() {
@@ -38,23 +42,4 @@ public class GetBookDto {
 		this.areaNo = areaNo;
 	}
 
-	public Date getGetBookDate() {
-		return getBookDate;
-	}
-
-	public void setGetBookDate(Date getBookDate) {
-		this.getBookDate = getBookDate;
-	}
-
-	public String getGetBookStatus() {
-		return getBookStatus;
-	}
-
-	public void setGetBookStatus(String getBookStatus) {
-		this.getBookStatus = getBookStatus;
-	}
-
-	
-	
-	
 }

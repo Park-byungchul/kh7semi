@@ -1,3 +1,5 @@
+<%@page import="library.beans.ReviewLikeDto"%>
+<%@page import="library.beans.ReviewLikeDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.ReviewCommentDto"%>
 <%@page import="library.beans.ReviewCommentDao"%>
@@ -38,12 +40,13 @@
 	else {
 		reviewNoSet = new HashSet<>();
 	}
-	
+
 	if(reviewNoSet.add(reviewNo)) {
+		System.out.println("test");
 		reviewDao.read(reviewNo, clientNo);
 	}
 
-	session.setAttribute("boardNoSet", reviewNoSet);
+	session.setAttribute("reviewNoSet", reviewNoSet);
 	
 	ReviewDto reviewDto = reviewDao.find(reviewNo);
 	BookDto bookDto = reviewDao.getBookInfo(reviewDto.getBookIsbn());
@@ -64,24 +67,18 @@
 	}
 
 	// 좋아요 체크
-// 	boolean isLike = false;
-// 	if(clientNo != 0) {
-// 		BoardLikeDao boardLikeDao = new BoardLikeDao();
-// 		BoardLikeDto boardLikeDto = new BoardLikeDto();
-// 		boardLikeDto.setBoardNo(boardNo);
-// 		boardLikeDto.setClientNo(clientNo);
-// 		isLike = boardLikeDao.check(boardLikeDto);
-// 	}
-	
-	//이전글 정보 불러오기
-// 	ReviewDto prevReviewDto = reviewDao.getPrevious(reviewNo);
-	
-// 	//다음글 정보 불러오기
-// 	ReviewDto nextReviewDto = reviewDao.getNext(reviewNo);
+	boolean isLike = false;
+	if(clientNo != 0) {
+		ReviewLikeDao reviewLikeDao = new ReviewLikeDao();
+		ReviewLikeDto reviewLikeDto = new ReviewLikeDto();
+		reviewLikeDto.setReviewNo(reviewNo);
+		reviewLikeDto.setClientNo(clientNo);
+		isLike = reviewLikeDao.check(reviewLikeDto);
+	}
 
-// 	// 댓글 목록 출력
-// 	ReviewCommentDao commentDao = new ReviewCommentDao();
-// 	List<ReviewCommentDto> commentList = commentDao.list(reviewNo);
+	// 댓글 목록 출력
+	ReviewCommentDao commentDao = new ReviewCommentDao();
+	List<ReviewCommentDto> commentList = commentDao.list(reviewNo);
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -103,12 +100,12 @@
 		}
 
 		if(clientNo === 0) {
-			$("#commentContent").attr("readonly", true);
-			$("#commentContent").val("로그인 후 이용하세요");
+			$("#commentField").attr("readonly", true);
+			$("#commentField").val("로그인 후 이용하세요");
 		}
 		else {
-			$("#commentContent").removeAttr("readonly");
-			$("#commentContent").val("");
+			$("#commentField").removeAttr("readonly");
+			$("#commentField").val("");
 		}
 	});
 	
@@ -172,93 +169,72 @@
 		<pre><%=reviewDto.getReviewContent()%></pre>
 	</div>
 	
-	<form action="commentInsert.kh" method="post">
+	<form action="reviewCommentInsert.kh" method="post">
 			<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
 			<div class="row">
-				<textarea id="commentContent" name="commentContent" required></textarea>
+				<textarea id="commentField" name="commentField" required></textarea>
 			</div>
 			<div class="row">
 				<input type="submit" value="댓글 작성">
 			</div>
 		</form>
 		
-<!-- 		<div class="row text-left"> -->
-<!-- 			<h4>댓글 목록</h4> -->
-<!-- 		</div> -->
-<%-- 		<%for(ReviewCommentDto commentDto : commentList) { %> --%>
-<!-- 			<div class="row text-left" style="border:1px solid gray;"> -->
-<!-- 				<div class="float-container"> -->
-<%-- 					<div class="left"><%=commentDao.getClientName(commentDto.getClientNo()) %></div> --%>
+		<div class="row text-left">
+			<h4>댓글 목록</h4>
+		</div>
+		<%for(ReviewCommentDto commentDto : commentList) { %>
+			<div class="row text-left" style="border:1px solid gray;">
+				<div class="float-container">
+					<div class="left"><%=commentDao.getClientName(commentDto.getClientNo()) %></div>
 					
-<%-- 					 <%if(commentDto.getClientNo() == clientNo) { %> --%>
-<!-- 						<div class="right"> -->
-<!-- 							<a class="comment-edit-btn">수정</a> -->
-<!-- 							|  -->
-<%-- 							<a class="comment-delete-btn" href="commentDelete.kh?commentNo=<%=commentDto.getCommentNo()%>&reviewNo=<%=reviewNo%>">삭제</a> --%>
-<!-- 						</div> -->
-<%-- 					<%} %> --%>
-<!-- 				</div> -->
-<!-- 				화면 표시 댓글 -->
-<!-- 				<div class="comment-display-area"> -->
-<%-- 					<pre><%=commentDto.getCommentContent() %></pre> --%>
-<!-- 				</div> -->
-<%-- 				<%if(commentDto.getClientNo() == clientNo) { %> --%>
-<!-- 					<div class="comment-edit-area"> -->
-<!-- 						<form action="commentEdit.kh" method="post"> -->
-<%-- 							<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>"> --%>
-<%-- 							<input type="hidden" name="reviewNo" value="<%=reviewNo%>"> --%>
-<%-- 							<textarea name="commentContent" required><%=commentDto.getCommentContent()%></textarea> --%>
-<!-- 							<input type="submit" value="댓글 수정"> -->
-<!-- 							<input type="button" value="작성 취소" class="comment-edit-cancel-btn"> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<%-- 				<%} %> --%>
-<%-- 				<div><%=commentDto.getCommentDate().toLocaleString() %></div> --%>
-<!-- 			</div> -->
-<%-- 		<%} %> --%>
+					 <%if(commentDto.getClientNo() == clientNo) { %>
+						<div class="right">
+							<a class="comment-edit-btn">수정</a>
+							| 
+							<a class="comment-delete-btn" href="reviewCommentDelete.kh?commentNo=<%=commentDto.getCommentNo()%>&reviewNo=<%=reviewNo%>">삭제</a>
+						</div>
+					<%} %>
+				</div>
+
+				<div class="comment-display-area">
+					<pre><%=commentDto.getCommentField() %></pre>
+				</div>
+				<%if(commentDto.getClientNo() == clientNo) { %>
+					<div class="comment-edit-area">
+						<form action="reviewCommentEdit.kh" method="post">
+							<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
+							<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
+							<textarea name="commentField" required><%=commentDto.getCommentField()%></textarea>
+							<input type="submit" value="댓글 수정">
+							<input type="button" value="작성 취소" class="comment-edit-cancel-btn">
+						</form>
+					</div>
+				<%} %>
+				<div><%=commentDto.getCommentDate().toLocaleString() %></div>
+			</div>
+		<%} %>
 	
 	<div class="row text-right">
 		<!-- 본인 및 관리자에게만 표시되도록 하는 것이 좋다 -->
 		<%if(clientNo != 0) {%>
 			<%if(reviewDto.getClientNo() == clientNo) { %>
-				<a href="boardEdit.jsp?reviewNo=<%=reviewNo%>" class="link-btn">수정</a>
+				<a href="reviewEdit.jsp?reviewNo=<%=reviewNo%>" class="link-btn">수정</a>
 			<%} %>
 			<%if(isAdmin || reviewDto.getClientNo() == clientNo) {%>
-				<a href="boardDelete.kh?reviewNo=<%=reviewNo%>" class="link-btn">삭제</a>
+				<a href="reviewDelete.kh?reviewNo=<%=reviewNo%>" class="link-btn">삭제</a>
 			<%} %>
-<%-- 			<%if(isLike) { %> --%>
-<!-- 				<span class="heart"> -->
-<%-- 				<a href="boardLikeDelete.kh?reviewNo=<%=reviewNo%>&clientNo=<%=clientNo%>" class="link-btn">♥</a> --%>
-<!-- 				</span> -->
-<%-- 			<%} else { %> --%>
-<!-- 				<span class="heart"> -->
-<%-- 				<a href="boardLikeInsert.kh?reviewNo=<%=reviewNo%>&clientNo=<%=clientNo%>" class="link-btn">♡</a> --%>
-<!-- 				</span> -->
-<%-- 			<%} %> --%>
+			<%if(isLike) { %>
+				<span class="heart">
+				<a href="reviewLikeDelete.kh?reviewNo=<%=reviewNo%>&clientNo=<%=clientNo%>" class="link-btn">♥</a>
+				</span>
+			<%} else { %>
+				<span class="heart">
+				<a href="reviewLikeInsert.kh?reviewNo=<%=reviewNo%>&clientNo=<%=clientNo%>" class="link-btn">♡</a>
+				</span>
+			<%} %>
 		<%} %>
 		<a href="reviewList.jsp" class="link-btn">목록</a>
 	</div>
-	
-<!-- 	<div class="row text-left"> -->
-<!-- 		다음글 :  -->
-<%-- 		<%if(nextReviewDto == null){%> --%>
-<!-- 		다음글이 없습니다. -->
-<%-- 		<%}else{ %> --%>
-<%-- 		<a href="boardDetail.jsp?reviewNo=<%=nextReviewDto.getReviewNo()%>"> --%>
-<%-- 			<%=nextReviewDto.getReviewSubject()%> --%>
-<!-- 		</a> -->
-<%-- 		<%} %> --%>
-<!-- 	</div> -->
-<!-- 	<div class="row text-left"> -->
-<!-- 		이전글 :  -->
-<%-- 		<%if(prevReviewDto == null){%> --%>
-<!-- 		이전글이 없습니다. -->
-<%-- 		<%}else{ %> --%>
-<%-- 		<a href="boardDetail.jsp?reviewNo=<%=prevReviewDto.getReviewNo()%>"> --%>
-<%-- 			<%=prevReviewDto.getReviewSubject()%> --%>
-<!-- 		</a> -->
-<%-- 		<%} %> --%>
-<!-- 	</div> -->
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

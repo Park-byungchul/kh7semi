@@ -22,7 +22,9 @@ public class GetBookSearchDao {
 			getBookSearchDto.setGetBookNo(rs.getInt("get_book_no"));
 			getBookSearchDto.setAreaName(rs.getString("area_name"));
 			getBookSearchDto.setBookIsbn(rs.getString("book_isbn"));
-			
+			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
+			getBookSearchDto.setBookTitle(rs.getString("book_title"));
+			getBookSearchDto.setGetBookDate(rs.getDate("get_book_date"));
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}
@@ -48,7 +50,6 @@ public class GetBookSearchDao {
 		String sql = "select * from get_book_search_view "
 				+ "where (book_title || book_author) like '%'||?||'%' "
 				+ "order by book_title asc";
-//				+ "where instr(get_book_title || get_book_author, ?) > 0 order by get_book_title asc";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
 		ResultSet rs = ps.executeQuery();
@@ -60,6 +61,9 @@ public class GetBookSearchDao {
 			getBookSearchDto.setGetBookNo(rs.getInt("get_book_no"));
 			getBookSearchDto.setAreaName(rs.getString("area_name"));
 			getBookSearchDto.setBookIsbn(rs.getString("book_isbn"));
+			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
+			getBookSearchDto.setBookTitle(rs.getString("book_title"));
+			getBookSearchDto.setGetBookDate(rs.getDate("get_book_date"));
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}
@@ -82,7 +86,6 @@ public class GetBookSearchDao {
 	public List<GetBookSearchDto> searchList(String type, String keyword) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 
-//				String sql = "select * from get_book where instr(#1, ?) > 0 order by #1 asc";
 		String sql = "select * from get_book_search_view " 
 				+ "where #1 like '%'||?||'%' order by #1 asc";
 		sql = sql.replace("#1", type);
@@ -98,6 +101,9 @@ public class GetBookSearchDao {
 			getBookSearchDto.setGetBookNo(rs.getInt("get_book_no"));
 			getBookSearchDto.setAreaName(rs.getString("area_name"));
 			getBookSearchDto.setBookIsbn(rs.getString("book_isbn"));
+			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
+			getBookSearchDto.setBookTitle(rs.getString("book_title"));
+			getBookSearchDto.setGetBookDate(rs.getDate("get_book_date"));
 			if(rs.getString("lend_book_date") != null) {
 				getBookSearchDto.setGetBookStatus("대여중");
 			}
@@ -115,5 +121,42 @@ public class GetBookSearchDao {
 
 		return getBookSearchList;
 
+	}
+	
+	public GetBookSearchDto get(int getBookNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from get_book_search_view where get_book_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, getBookNo);
+		ResultSet rs = ps.executeQuery();
+		
+		GetBookSearchDto getBookSearchDto;
+		if(rs.next()) {
+			getBookSearchDto = new GetBookSearchDto();
+			
+			getBookSearchDto.setGetBookNo(rs.getInt("get_book_no"));
+			getBookSearchDto.setAreaName(rs.getString("area_name"));
+			getBookSearchDto.setBookIsbn(rs.getString("book_isbn"));
+			getBookSearchDto.setBookAuthor(rs.getString("book_author"));
+			getBookSearchDto.setBookTitle(rs.getString("book_title"));
+			getBookSearchDto.setGetBookDate(rs.getDate("get_book_date"));
+			if(rs.getString("lend_book_date") != null) {
+				getBookSearchDto.setGetBookStatus("대여중");
+			}
+			else if(rs.getString("reservation_date") != null) {
+				getBookSearchDto.setGetBookStatus("예약중");
+			}
+			else {
+				getBookSearchDto.setGetBookStatus("대여가능");
+			}
+		}
+		else {
+			getBookSearchDto = null;
+		}
+		
+		con.close();
+		
+		return getBookSearchDto;
 	}
 }

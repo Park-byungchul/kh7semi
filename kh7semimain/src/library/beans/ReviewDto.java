@@ -11,6 +11,7 @@ public class ReviewDto {
 	private int reviewRead;
 	private int reviewLike;
 	private Date reviewDate;
+	private int reviewReply;
 	
 	public ReviewDto() {
 		super();
@@ -62,5 +63,11 @@ public class ReviewDto {
 	}
 	public void setReviewDate(Date reviewDate) {
 		this.reviewDate = reviewDate;
+	}
+	public int getReviewReply() {
+		return reviewReply;
+	}
+	public void setReviewReply(int reviewReply) {
+		this.reviewReply = reviewReply;
 	}
 }

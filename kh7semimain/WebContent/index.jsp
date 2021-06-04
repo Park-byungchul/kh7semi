@@ -110,7 +110,7 @@ endBlock = lastBlock; // 범위를 수정
 				
 				<div class="float-container row">
 					<div class="promotion left">
-						<img alt="banner" src="<%=root%>/image/banner.png" width="360">
+            
 					</div>
 					
 					<div class="notice" style="display: inline-block;">

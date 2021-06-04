@@ -9,13 +9,16 @@
     pageEncoding="UTF-8"%>
 
 <%
-	/////// 리뷰 테이블로 바꿔야 함 ///////
-
 	request.setCharacterEncoding("UTF-8");
+
+	String root = request.getContextPath();
 
 	// 검색 변수
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
+	
+	if(keyword == null)
+		keyword = "";
 	
 	boolean isSearch = type != null && keyword != null && !keyword.trim().equals("");
 	
@@ -87,7 +90,7 @@
 <%if(isSearch) { %>
 	<script>
 		$(function() {
-			$("select[name=type]").val("<%=type%>");
+			$("select[name=type]").val("<%=type%>").prop("selected", true);
 			$("input[name=keyword]").val("<%=keyword%>");
 		});
 	</script>
@@ -95,41 +98,62 @@
 
 <script>
 	$(function() {
-		$(".pagination > a").click(function() {
+		$(".pagination > a").click(function(){
 			var pageNo = $(this).text();
 			
 			if(pageNo == "이전") {
-				pageNo = parseInt($(".pagination > a :not(.move-link)").first().text()) - 1;
-				$("input[name=pageNo]").val(pageNo));
-				$(".serach-form").submit();
-			}
+				pageNo = parseInt($(".pagination > a:not(.move-link)").first().text()) - 1;
+				$("input[name=pageNo]").val(pageNo);
+				$(".search-form").submit();
+			}	
 			else if(pageNo == "다음") {
 				pageNo = parseInt($(".pagination > a:not(.move-link)").last().text()) + 1;
-				$("input[name=pageNo]").val(pageNo));
-				$(".serach-form").submit();
+				$("input[name=pageNo]").val(pageNo);
+				$(".search-form").submit();
 			}
 			else {
-				$("input[name=pageNo]").val(pageNo));
-				$(".serach-form").submit();
+				$("input[name=pageNo]").val(pageNo);
+				$(".search-form").submit();
 			}
 		});
 	});
 </script>
 
 <div class="row text-left">
-		<h2>도서 리뷰</h2>
+	<div class="header">
+		<div class="row">
+			<span class="title">도서 리뷰</span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 도서 리뷰</span>
+		</div>
+		
+		<hr>
 	</div>
+	
+	<form class="search-form text-center" action="reviewList.jsp" method="get">
+		<input type="hidden" name="pageNo">
+	
+		<select name="type" class="select-form">
+			<option value="review_subject">제목</option>
+			<option value="client_name">작성자</option>
+		</select>
+		
+		<input type="text" name="keyword" class="text-search-form" placeholder="검색어를 입력하세요" value="<%=keyword %>" required>
+		<input type="submit" value="검색" class="form-btn form-btn-inline">
+	</form>
 
 	<div class="row">
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th width="8%">번호</th>
 					<th width="40%">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th>조회</th>
-					<th>좋아요</th>
+					<th width="8%">조회</th>
+					<th width="8%">추천</th>
 				</tr>
 			</thead>
 			
@@ -161,7 +185,7 @@
 		</div>
 	<%} %>
 	
-	<div class="row">
+	<div class="row text-center">
 		<div class="pagination">
 			<%if(startBlock > 1) { %>
 				<a class="move-link">이전</a>
@@ -178,17 +202,6 @@
 			<%} %>
 		</div>
 	</div>
+</div>
 	
-	<form class="search-form" action="reviewList.jsp" method="get">
-		<input type="hidden" name="pageNo">
-	
-		<select name="type">
-			<option value="review_subject">제목</option>
-			<option value="client_name">작성자</option>
-		</select>
-		
-		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
-		<input type="submit" value="검색" class="btn-style">
-	</form>
-
 <jsp:include page="/template/footer.jsp"></jsp:include>

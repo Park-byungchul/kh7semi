@@ -49,7 +49,7 @@ public class ReviewListDao {
 	public int getCount() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "select count(*) from board_list";
+		String sql = "select count(*) from review_list";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		rs.next();

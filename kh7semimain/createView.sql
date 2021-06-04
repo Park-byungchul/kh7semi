@@ -48,6 +48,8 @@ create or replace view get_book_search_view as
                 
                 
 --게시판 질문-답변 조인한 view
+drop view board_qna;
+
 create view board_qna as
 select B.board_no, B.client_no, B.area_no as board_area_no,
         B.board_title, B.board_field, B.board_read, B.board_date, B.board_open,

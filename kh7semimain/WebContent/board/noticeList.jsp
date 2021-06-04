@@ -18,6 +18,9 @@
 	String keyword = request.getParameter("keyword");
 	String areaNoStr = request.getParameter("areaNo");
 	
+	if(keyword == null)
+		keyword = "";
+	
 	int areaNo = 0;
 	if(areaNoStr != null) {
 		areaNo = Integer.parseInt(areaNoStr);
@@ -56,7 +59,12 @@
 	// 페이지 네비게이션 영역 계산
 	int count;
 	
-	if(isSearch) count = boardListDao.getCount(type, keyword, 1);
+	if(isSearch) {
+		if(areaNo == 0)
+			count = boardListDao.getCount(type, keyword, 1);
+		else
+			count = boardListDao.getCount(type, areaNo, keyword, 1);
+	}
 	else count = boardListDao.getCount(1);
 	
 	int blockSize = 10;
@@ -101,9 +109,9 @@
 <%if(isSearch) { %>
 	<script>
 		$(function() {
-			$("select[name=type]").val("<%=type%>");
+			$("select[name=type]").val("<%=type%>").prop("selected", true);
 			$("input[name=keyword]").val("<%=keyword%>");
-			$("select[name="areaNo"]").val("<%=areaNo%>");
+			$("select[name=areaNo]").val("<%=areaNo%>").prop("selected", true);
 		});
 	</script>
 <%} %>
@@ -160,7 +168,7 @@
 			<option value="client_name">작성자</option>
 		</select>
 			
-		<input type="text" name="keyword" class="text-search-form" placeholder="검색어를 입력하세요" required>
+		<input type="text" name="keyword" class="text-search-form" placeholder="검색어를 입력하세요" value="<%=keyword %>" required>
 		<input type="submit" value="검색" class="form-btn form-btn-inline">
 	</form>
 

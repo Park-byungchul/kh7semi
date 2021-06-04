@@ -1,7 +1,6 @@
 package library.servlet.getbook;
 
 import java.io.IOException;
-import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +21,6 @@ public class getBookInsert extends HttpServlet {
 
 			getBookDto.setBookIsbn(req.getParameter("bookIsbn"));
 			getBookDto.setAreaNo(Integer.parseInt(req.getParameter("areaNo")));
-			getBookDto.setGetBookDate(Date.valueOf(req.getParameter("getBookDate")));
-			getBookDto.setGetBookStatus(req.getParameter("getBookStatus"));
 			
 			GetBookDao getBookDao = new GetBookDao();
 			getBookDao.insert(getBookDto);

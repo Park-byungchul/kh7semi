@@ -1,17 +1,17 @@
-<%@page import="library.beans.LendBookDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@page import="library.beans.LendBookDto"%>
+<%@page import="library.beans.LendBookDao"%>
+<%@page import="java.util.List"%>
+<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>	
 <%
-	LendBookDao lendBookDao = new LendBookDao();
-%>    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+	String root = request.getContextPath();
 
-</body>
-</html>
+	request.setCharacterEncoding("UTF-8");
+	String clientNo = request.getParameter("clientNo");
+	String getBookNo = request.getParameter("getBookNo");
+	
+	
+%>
+
+<jsp:include page="/template/footer.jsp"></jsp:include>

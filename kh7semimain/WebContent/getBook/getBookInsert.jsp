@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<<<<<<< HEAD
     <%
     	int areaNo = (int)session.getAttribute("areaNo");
     
@@ -20,6 +21,10 @@ $(function(){
 	
 </script>
 <jsp:include page="/template/header.jsp"></jsp:include>
+=======
+
+<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>	
+>>>>>>> refs/remotes/origin/main
 
 	<h2>도서관에 도서 추가</h2>
 	<hr>

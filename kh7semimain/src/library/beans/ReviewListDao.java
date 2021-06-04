@@ -33,6 +33,7 @@ public class ReviewListDao {
 			reviewListDto.setReviewRead(rs.getInt("review_read"));
 			reviewListDto.setReviewLike(rs.getInt("review_like"));
 			reviewListDto.setReviewDate(rs.getDate("review_date"));
+			reviewListDto.setReviewReply(rs.getInt("review_reply"));
 			
 			reviewListDto.setClientNo(rs.getInt("client_no"));
 			reviewListDto.setClientName(rs.getString("client_name"));
@@ -81,6 +82,7 @@ public class ReviewListDao {
 			reviewDto.setReviewRead(rs.getInt("review_read"));
 			reviewDto.setReviewLike(rs.getInt("review_like"));
 			reviewDto.setReviewDate(rs.getDate("review_date"));
+			reviewDto.setReviewReply(rs.getInt("review_reply"));
 		
 			reviewDto.setClientNo(rs.getInt("client_no"));
 			reviewDto.setClientName(rs.getString("client_name"));
@@ -122,6 +124,7 @@ public class ReviewListDao {
 			reviewListDto.setReviewRead(rs.getInt("review_read"));
 			reviewListDto.setReviewLike(rs.getInt("review_like"));
 			reviewListDto.setReviewDate(rs.getDate("review_date"));
+			reviewListDto.setReviewReply(rs.getInt("review_reply"));
 
 			reviewListDto.setClientNo(rs.getInt("client_no"));
 			reviewListDto.setClientName(rs.getString("client_name"));

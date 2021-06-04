@@ -51,9 +51,6 @@ public class BoardWriteServlet extends HttpServlet {
 			else if(boardTypeNo == 3) {
 				boardSepNo = boardDao.getFreeBoardSequence();
 			}
-			else if(boardTypeNo == 4) {
-				boardSepNo = boardDao.getReviewSequence();
-			}
 			boardDto.setBoardSepNo(boardSepNo);
 
 			boardDao.write(boardDto);

@@ -92,9 +92,8 @@
 	BoardAnswerDao answerDao = new BoardAnswerDao();
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <%if(isSearch) { %>
 	<script>
 		$(function() {
@@ -127,7 +126,6 @@
 	});
 </script>
 
-<div class="container-1000">
 	<div class="row text-left">
 		<h2>질문 답변</h2>
 	</div>
@@ -213,6 +211,5 @@
 		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
 		<input type="submit" value="검색" class="btn-style">
 	</form>
-</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

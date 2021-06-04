@@ -1,5 +1,3 @@
-<%@page import="library.beans.GenreDto"%>
-<%@page import="library.beans.GenreDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.BookDao"%>
 <%@page import="library.beans.RecommendDto"%>
@@ -128,7 +126,7 @@ endBlock = lastBlock; // 범위를 수정
 				
 				<div class="float-container row">
 					<div class="promotion left">
-						
+            
 					</div>
 					
 					<div class="notice" style="display: inline-block;">
@@ -167,4 +165,5 @@ endBlock = lastBlock; // 범위를 수정
 			<%} %>
 		</section>
 		
+
 <jsp:include page="/template/footer.jsp"></jsp:include>

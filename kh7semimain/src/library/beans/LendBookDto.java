@@ -8,6 +8,7 @@ public class LendBookDto {
 	private int clientNo;
 	private int getBookNo;
 	private String bookIsbn;
+	private String bookTitle;
 	private int areaNo;
 	private Date lendBookDate;
 	private Date lendBookLimit;
@@ -16,6 +17,17 @@ public class LendBookDto {
 	public LendBookDto() {
 		super();
 	}
+
+	
+	public String getBookTitle() {
+		return bookTitle;
+	}
+
+
+	public void setBookTitle(String bookTitle) {
+		this.bookTitle = bookTitle;
+	}
+
 
 	public int getLendBookNo() {
 		return lendBookNo;
@@ -80,7 +92,18 @@ public class LendBookDto {
 	public void setReturnBookDate(Date returnBookDate) {
 		this.returnBookDate = returnBookDate;
 	}
-	
-	
+
+	public LendBookDto(int lendBookNo, int clientNo, int getBookNo, String bookIsbn, int areaNo, Date lendBookDate,
+			Date lendBookLimit, Date returnBookDate) {
+		super();
+		this.lendBookNo = lendBookNo;
+		this.clientNo = clientNo;
+		this.getBookNo = getBookNo;
+		this.bookIsbn = bookIsbn;
+		this.areaNo = areaNo;
+		this.lendBookDate = lendBookDate;
+		this.lendBookLimit = lendBookLimit;
+		this.returnBookDate = returnBookDate;
+	}
 
 }

@@ -1,3 +1,5 @@
+<%@page import="library.beans.CalendarDao"%>
+<%@page import="java.util.Date"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.BookDao"%>
 <%@page import="library.beans.RecommendDto"%>
@@ -11,6 +13,31 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String pageNow = request.getRequestURI();
+
+
+CalendarDao calendarDao = new CalendarDao();
+int year;
+int month;
+
+try {
+	year = Integer.parseInt(request.getParameter("year"));
+	month = Integer.parseInt(request.getParameter("month"));
+
+	if (month >= 13) {
+		year++;
+		month = 1;
+	} else if (month <= 0) {
+		year--;
+		month = 12;
+	}
+} catch (Exception e) {
+	year = calendarDao.year;
+	month = calendarDao.month;
+}
+
+int first = calendarDao.first(year, month);
+int last = calendarDao.last(year, month);
+
 
 String root = request.getContextPath();
 int areaNo;
@@ -74,19 +101,15 @@ endBlock = lastBlock; // 범위를 수정
 
 <style>
 	
-	.promotion, .notice, .plan{
+	.promotion, .notice, .planIndex{
 		width: 32%;
 		height: 300px;
 	}
 </style>
 	
 		<section>
-			<%if(isChild){ %>
+			<%if(!isChild){ %>
 			
-				<h1><%=areaDto.getAreaName() %> 메인</h1>
-				
-			<%} else{ %>
-				
 				<div class="float-container row">
 					<%if(startBlock > 1){ %>
 						<button class="areaBtnMove left" onClick="location.href='<%=root %>?areaPageNo=<%=areaPageNo - 1 %>'">이전</button>
@@ -108,6 +131,10 @@ endBlock = lastBlock; // 범위를 수정
 					<%} %>
 				</div>
 				
+			<%} %>
+				
+				
+				
 				<div class="float-container row">
 					<div class="promotion left">
 						<img alt="banner" src="<%=root%>/image/banner.png" width="360">
@@ -117,11 +144,11 @@ endBlock = lastBlock; // 범위를 수정
 					
 					</div>
 					
-					<div class="plan right">
-					
+					<div class="planIndex right">
+						<jsp:include page="/plan/calendar.jsp"></jsp:include>
 					</div>
 				</div>
-			<%} %>
+
 		</section>
 		
 		<section>

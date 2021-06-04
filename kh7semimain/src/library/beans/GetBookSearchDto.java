@@ -11,6 +11,10 @@ public class GetBookSearchDto {
 	private String bookTitle;
 	private String getBookStatus;
 	private Date getBookDate;
+	private String bookPublisher;
+	private Date bookDate;
+	private String bookContent;
+	private String bookImg;
 	
 	public int getGetBookNo() {
 		return getBookNo;
@@ -55,8 +59,34 @@ public class GetBookSearchDto {
 		this.getBookDate = getBookDate;
 	}
 	
+	public String getBookPublisher() {
+		return bookPublisher;
+	}
+	public void setBookPublisher(String bookPublisher) {
+		this.bookPublisher = bookPublisher;
+	}
+	public Date getBookDate() {
+		return bookDate;
+	}
+	public void setBookDate(Date bookDate) {
+		this.bookDate = bookDate;
+	}
+	public String getBookContent() {
+		return bookContent;
+	}
+	public void setBookContent(String bookContent) {
+		this.bookContent = bookContent;
+	}
+	public String getBookImg() {
+		return bookImg;
+	}
+	public void setBookImg(String bookImg) {
+		this.bookImg = bookImg;
+	}
+	
 	public GetBookSearchDto(int getBookNo, String areaName, String bookIsbn, String bookAuthor, String bookTitle,
-			String getBookStatus, Date getBookDate) {
+			String getBookStatus, Date getBookDate, String bookPublisher, Date bookDate, String bookContent,
+			String bookImg) {
 		super();
 		this.getBookNo = getBookNo;
 		this.areaName = areaName;
@@ -65,6 +95,10 @@ public class GetBookSearchDto {
 		this.bookTitle = bookTitle;
 		this.getBookStatus = getBookStatus;
 		this.getBookDate = getBookDate;
+		this.bookPublisher = bookPublisher;
+		this.bookDate = bookDate;
+		this.bookContent = bookContent;
+		this.bookImg = bookImg;
 	}
 	public GetBookSearchDto() {
 		super();

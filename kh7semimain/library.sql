@@ -262,3 +262,19 @@ create or replace view get_book_search_view as
             from get_book_view g
                 left outer join lend_book_view l on g.get_book_no = l.get_book_no 
                 left outer join reservation r on g.get_book_no = r.get_book_no;
+
+-- 프로모션 테이블
+create table promotion(
+promotion_no number(19) primary key,
+area_no references area(area_no)
+);
+
+-- 프로모션 파일 테이블
+create table promotion_file(
+file_no number(19) primary key,
+file_upload_name varchar2(256) not null,
+file_save_name varchar2(256) not null,
+file_content_type varchar2(30),
+file_size number(19) not null,
+file_origin number(19)
+);

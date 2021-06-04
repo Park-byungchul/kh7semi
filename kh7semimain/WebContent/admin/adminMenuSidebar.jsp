@@ -43,14 +43,14 @@
 	<ul>
 		<li><a href="<%=root %>/client/clientPartialList.jsp">회원 목록</a></li>
 		<li><a href="<%=root %>/role/rolePartialList.jsp">일반관리자 목록</a></li>
+		<li><a href="<%=root %>/promotion/promotionInsert.jsp">배너 등록</a></li>
 	</ul>
 	<%} %>
-	<h3>일반관리자</h3>
+	<h3>대여접수</h3>
 	<ul>
-		<li><a href="#">기능1</a></li>
-		<li><a href="#">기능2</a></li>
-		<li><a href="#">기능3</a></li>
-		<li><a href="#">기능4</a></li>
+		<li><a href="<%=root%>/lendBook/lendBookInsert.jsp">대여접수</a></li>
+		<li><a href="<%=root%>/lendBook/lendBookUpdate.jsp">대여반납</a></li>
+		<li><a href="<%=root%>/lendBook/lendBookList.jsp">대여목록</a></li>
 	</ul>
 <%} %>
 

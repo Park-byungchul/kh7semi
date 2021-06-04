@@ -1,0 +1,44 @@
+@charset "UTF-8";
+	
+	#calendar{
+		background-color: white;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+	}
+	
+	#calendar a{
+		text-decoration: none;
+		color: black;
+	}
+	
+	td.sun, td.sunday{
+		color: red;
+	}
+	
+	td.sat, td.saturday{
+		color: blue;
+	}
+	
+	td.sunday:hover, td.saturday:hover, td.etc:hover {
+		background-color: yellow;
+	}
+	
+	.planIndex td{
+		font-weight: bold;
+		font-size: 12px;
+	}
+	
+	.plan{
+		height: 400px;
+	}
+	
+	.plan td, .plan th{
+		font-weight: bold;
+		font-size: 18px;
+	}
+	
+	.calendarDetail th{
+		font-size: 24px;
+		heifht: 400px;
+	}

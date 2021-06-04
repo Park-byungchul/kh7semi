@@ -1,3 +1,5 @@
+<%@page import="library.beans.GenreDto"%>
+<%@page import="library.beans.GenreDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.BookDao"%>
 <%@page import="library.beans.RecommendDto"%>

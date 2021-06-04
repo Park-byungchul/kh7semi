@@ -44,7 +44,7 @@ $(function(){
 			<label>저자 : </label><input type="text" name="bookAuthor" id="bookAuthor" required class="form-input form-input-underline"><br><br>
 			<label>출판사 : </label><input type="text" name="bookPublisher" id="bookPublisher" required class="form-input form-input-underline"><br><br>
 			<label>출판 날짜 : </label><input type="text" name="bookDate" id="bookDate" required class="form-input form-input-underline"><br><br>
-			<label>도서 소개 : </label><textarea name="bookContent" cols="100" rows="10" style="resize:none;'" id="bookContent"></textarea><br><br>
+			<label>도서 소개 : </label><br><br><textarea name="bookContent" cols="95" rows="6" style="resize:none;border:0;" id="bookContent"></textarea><br><br>
 			<label>이미지 URL : </label><input type="text" name="bookImg" id="bookImg" required class="form-input form-input-underline"><br><br>
 			<div class="text-center">
 				<input type="submit" value="추가하기">

@@ -24,12 +24,6 @@ catch (Exception e){
 }
 
 
-RecommendDao recommendDao = new RecommendDao();
-RecommendDto recommendDto = new RecommendDto();
-
-WishlistDao wishlistDao = new WishlistDao();
-WishlistDto wishlistDto = new WishlistDto();
-
 boolean isLogin = session.getAttribute("clientNo") != null;
 
 
@@ -94,13 +88,7 @@ if(endBlock > lastBlock){
 				return false;
 			}
 		});
-		
-		$(".booklist-wishlistBtn-neg").click(function(){
-			window.alert("관심도서가 해제되었습니다.")
-		});
-		$(".booklist-wishlistBtn-pos").click(function(){
-			window.alert("관심도서 목록에 추가되었습니다.")
-		});
+
 	});
 </script>
 <style>
@@ -130,15 +118,7 @@ if(endBlock > lastBlock){
 			</thead>
 			<tbody>
 				<%for (BookDto bookDto : list) { 
-					recommendDto.setClientNo(clientNo);
-					recommendDto.setBookIsbn(bookDto.getBookIsbn());
-					
-					wishlistDto.setClientNo(clientNo);
-					wishlistDto.setBookIsbn(bookDto.getBookIsbn());
-					
-					boolean isRecommend = recommendDao.check(recommendDto);
-					boolean isWishlist = wishlistDao.check(wishlistDto);
-					
+	
 					GenreDao genreDao = new GenreDao();
 					GenreDto genreDto = genreDao.get(bookDto.getGenreNo());
 				%>
@@ -152,17 +132,6 @@ if(endBlock > lastBlock){
 					<button><a href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
 					<button><a class="bookDelete" href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>">삭제</a></button>
 					<button><a href="bookDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">상세보기</a></button>
-					<%if(isLogin && isRecommend) {%>
-					<button class="booklist-btn"><a href="bookRecommendDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천취소</a></button>
-					<%} else if(isLogin && !isRecommend){%>
-					<button class="booklist-btn"><a href="bookRecommendInsert.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">추천하기</a></button>
-					<%}%>
-					
-					<%if(isLogin && isWishlist) { %>
-					<button class="booklist-wishlistBtn-neg"><a href="bookWishlistDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">관심도서 해제</a></button>
-					<%} else if(isLogin && !isWishlist) { %>
-					<button class="booklist-wishlistBtn-pos"><a href="bookWishlistInsert.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&clientNo=<%=clientNo%>">관심도서 담기</a></button>
-					<%} %>	
 					</td>
 				</tr>
 				<%}%>

@@ -40,7 +40,7 @@ public class BookInsertServlet extends HttpServlet {
 			BookDao bookDao = new BookDao();
 			bookDao.insert(bookDto);
 			
-			resp.sendRedirect("bookInsertSuccess.jsp");
+			resp.sendRedirect("bookList.jsp");
 
 		} catch (Exception e) {
 			e.printStackTrace();

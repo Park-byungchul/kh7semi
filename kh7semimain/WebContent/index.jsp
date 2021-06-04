@@ -1,3 +1,5 @@
+<%@page import="library.beans.GenreDto"%>
+<%@page import="library.beans.GenreDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.BookDao"%>
 <%@page import="library.beans.RecommendDto"%>
@@ -78,6 +80,22 @@ endBlock = lastBlock; // 범위를 수정
 		width: 32%;
 		height: 300px;
 	}
+	.float-container.recommend {
+		margin:10px;
+		width:300px; 
+		height:300px; 
+		display:inline-block;
+	}
+	.recommend-input{
+		padding:0.2rem;
+		text-align:center;
+		width:300px;
+		height:30px;
+		display:block;
+		white-space: nowrap; 
+		overflow: hidden; 
+		text-overflow: ellipsis;
+	}
 </style>
 	
 		<section>
@@ -131,12 +149,21 @@ endBlock = lastBlock; // 범위를 수정
 				String bookIsbn = recommendDto.getBookIsbn();
 				BookDao bookDao = new BookDao();
 				BookDto bookDto = bookDao.get(bookIsbn);
-				%>
 				
- 				isbn= <%=recommendDto.getBookIsbn()%>
-				저자= <%=bookDto.getBookAuthor()%>
-				제목= <%=bookDto.getBookTitle()%>
-				장르= <%=bookDto.getGenreNo()%><br>
+				GenreDao genreDao = new GenreDao();
+				GenreDto genreDto = genreDao.get(bookDto.getGenreNo());
+				%>	
+				<div class="float-container recommend">
+					<div class="row text-center">
+						<img src="<%=bookDto.getBookImg()%>">
+						<br>
+						<span class="recommend-input"><%=bookDto.getBookTitle()%></span>
+						<strong>저자</strong><span class="recommend-input"><%=bookDto.getBookAuthor()%></span>
+						<strong>장르</strong><span class="recommend-input"><%=genreDto.getGenreName()%></span>
+					</div>
+	
+				</div>
+		
 			<%} %>
 		</section>
 		

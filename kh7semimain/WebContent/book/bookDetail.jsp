@@ -1,41 +1,55 @@
+<%@page import="library.beans.GenreDto"%>
+<%@page import="library.beans.GenreDao"%>
+<%@page import="library.beans.BookDto"%>
+<%@page import="library.beans.BookDao"%>
 <%@page import="library.beans.AreaDao"%>
-<%@page import="library.beans.BookDetailDto"%>
-<%@page import="library.beans.BookDetailDao"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%
 
 	String bookIsbn = request.getParameter("bookIsbn");
-	BookDetailDao bookDetailDao = new BookDetailDao();
-	BookDetailDto bookDetailDto = bookDetailDao.get(bookIsbn);
+	BookDao bookDao = new BookDao();
+	BookDto bookDto = bookDao.get(bookIsbn);
 
 %>
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+$(function() {
+	$(".bookDelete").click(function() {
+		var choice = window.confirm("정말 삭제하시겠습니까?");
+		if (choice) {
+			return true;
+		} else {
+			return false;
+		}
+	});
+});
+</script>
 <jsp:include page="/template/header.jsp"></jsp:include>
 
-	<div class="container-800">
+<div class="container-600">
+	<div class="row text-center">
+		<h2>도서 상세 정보</h2>
+			<img id="thumnail" style="width:240px;height:348px;"src="<%=bookDto.getBookImg()%>">
+		</div>		
 		<div class="row text-left">
-			<h2>상세 정보</h2>
-		</div>
-		
-		<div class="row">
-				<div class="row">
-					<label>ISBN : <%=bookDetailDto.getBookIsbn() %></label>
-				</div>
-				<div class="row">
-					<label>장르 번호 : <%=bookDetailDto.getGenreNo()%></label>
-				</div>
-				<div class="row">
-					<label>장르 : <%=bookDetailDto.getGenreName()%></label>
-				</div>
-				<div class="row">
-					<label>제목 : <%=bookDetailDto.getBookTitle()%></label>
-				</div>
-				<div class="row">
-					<label>저자 : <%=bookDetailDto.getBookAuthor()%></label>		
-				</div>
-		</div>
+			<label>ISBN</label><input type="text" name="bookIsbn" id="bookIsbn" class="form-input form-input-underline" required value="<%=bookDto.getBookIsbn()%>" disabled><br><br>
+			<label>장르 번호 </label><input type="text" name="genreNo"  required class="form-input form-input-underline" value="<%=bookDto.getGenreNo()%>" disabled><br><br>
+			<label>제목 </label><input type="text" name="bookTitle" id="bookTitle" required class="form-input form-input-underline" value="<%=bookDto.getBookTitle()%>" disabled><br><br>
+			<label>저자</label><input type="text" name="bookAuthor" id="bookAuthor" required class="form-input form-input-underline" value="<%=bookDto.getBookAuthor()%>" disabled><br><br>
+			<label>출판사</label><input type="text" name="bookPublisher" id="bookPublisher" required class="form-input form-input-underline" value="<%=bookDto.getBookPublisher()%>" disabled><br><br>
+			<label>출판 날짜</label><input type="text" name="bookDate" id="bookDate" required class="form-input form-input-underline" value="<%=bookDto.getBookDate()%>" disabled><br><br>
+			<label>도서 소개</label><br><br><textarea name="bookContent" cols="95" rows="6" style="resize:none;border:0 ;'" id="bookContent"  disabled><%=bookDto.getBookContent()%></textarea><br><br>
+			<label>이미지 URL</label><input type="text" name="bookImg" id="bookImg" required class="form-input form-input-underline" value="<%=bookDto.getBookImg()%>" disabled><br><br>
 	</div>
+	<div class="row text-right">
+			<button><a href="bookList.jsp">목록</a></button>
+			<button><a href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
+			<button><a href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>" class="bookDelete">삭제</a></button>
+	</div>
+		
+</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

@@ -25,7 +25,7 @@
 $(function(){	
 		
 	$(".bookSearch-btn").on("click",function(){
-		var option = "width=700,height=900";
+		var option = "width=850,height=900";
 		window.name = "parentForm"
 		window.open("","target",option);
 		$(".bookSearchForm").submit();
@@ -81,23 +81,18 @@ $(function(){
 			
 			<div class="row text-left">
 				<label>저자</label>
-				<input type="text"  Id="bookAuthor"readonly placeholder = "도서detail-희망도서신청으로 들어오거나" class="form-input form-input-underline">
+				<input type="text"  Id="bookAuthor" readonly placeholder = "검색을 통해 저자를 불러옵니다." class="form-input form-input-underline">
 			</div>
 			<div class="row text-left">
 				<label>제목</label>
-				<input type="text" Id ="bookTitle" readonly placeholder = "위의 검색버튼으로 검색 후 detail-도서신청" class="form-input form-input-underline">
+				<input type="text" Id ="bookTitle"  readonly placeholder = "검색을 통해 제목을 불러옵니다." class="form-input form-input-underline">
 			</div>
-			<div class="row text-left">
-				<label>장르번호</label>
-				<input type="text" Id ="genreNo" readonly placeholder = "위의 검색버튼으로 검색 후 detail-도서신청" class="form-input form-input-underline">
-			</div>
-			
-			
+				<input type="hidden" Id ="genreNo" required>
 		<form action ="hopelistInsert.kh" method="post">
 			<input type="hidden" id="bookIsbn" name="bookIsbn" value="1">
 			<div class="row text-left">
 				<label>비치희망 도서관</label>
-				<select class="choice-library" name="hopelistLibrary">
+				<select class="choice-library" name="hopelistLibrary" required>
 					<option value="1번도서관">1번도서관</option>
 					<option value="2번도서관">2번도서관</option>
 					<option value="3번도서관">3번도서관</option>
@@ -105,7 +100,7 @@ $(function(){
 			</div>
 			<div class="row text-left">
 				<label>신청사유</label>
-				<textarea name="hopelistReason" rows="10" class="form-input"></textarea> 
+				<textarea name="hopelistReason" rows="10" class="form-input" required></textarea> 
 			</div>
 			<input type="submit" value="신청" class="form-btn form-btn-positive"> 
 		</form>

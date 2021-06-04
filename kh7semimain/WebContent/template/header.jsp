@@ -54,6 +54,13 @@
 	
 	List<AreaDto> list = areaDao.list();
 	List<RoleAreaDto> permissionList = roleAreaDao.areaListByClient(clientNo);
+
+	String currentAreaName;
+	if(areaNo > 0){
+		currentAreaName = areaDao.detail(areaNo).getAreaName();
+	} else {
+		currentAreaName = "메인 도서관";
+	}
 %>
  
 <!DOCTYPE html>
@@ -72,6 +79,11 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 	$(function(){
+		
+		<%if(areaNo != 0){%>
+			$("#currentArea").text("<%=currentAreaName %>");
+		<%}%>
+		
 		var area = $(".area");
 		area.val("<%=root %>/areaSelect.kh?areaNo=<%=areaNo%>");
 		if(area[1]){
@@ -98,42 +110,63 @@
 				}
 			}
 		});
+		
+		$(".activeAreaMenu").click(function(){
+			var areaMenu = $(".areaMenu");
+			if(areaMenu.css("display") == "block"){
+				$(".areaMenu").css("display", "none");
+			} else{
+				$(".areaMenu").css("display", "block");
+			}
+		});
 	});
 </script>
 </head>
 <body>
 	<main>
 		<div class="float-container loginNav">
-			<div class="right">
-				<a href="#">사이트맵</a>
-				<%if(!isLogin){ %>
-				<a href="<%=root %>/client/clientInsert.jsp">회원가입</a>
-				<a href="<%=root %>/client/login.jsp">로그인</a>
-				<%}else{ %>
-				<a href="<%=root %>/client/clientDetail.jsp">마이페이지</a>
-				<a href="<%=root %>/client/logout.kh">로그아웃</a>
+			
+			<%if(!isLogin){ %>
+				<button class="right loginNavBtn" onclick="location.href='<%=root %>/client/clientInsert.jsp'">회원가입</button>
+				<button class="right loginNavBtn" onclick="location.href='<%=root %>/client/login.jsp'">로그인</button>
+			<%}else{ %>
+				<button class="right loginNavBtn" onclick="location.href='<%=root %>/client/clientDetail.jsp'">마이페이지</button>
+				<button class="right loginNavBtn" onclick="location.href='<%=root %>/client/logout.kh'">로그아웃</button>
 				<%} %>
-			</div>
+			
+<!-- 			<div class="right"> -->
+<!-- 				<a href="#">사이트맵</a> -->
+<!-- 			</div> -->
 			
 			<div class="left">
-				<select class="area">
-					<option value="">도서관 바로가기</option>
-					<option value="<%=root %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
-					<%for (AreaDto areaDto : list){ %>
-					<option value="<%=root %>/areaSelect.kh?areaNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
-					<%} %>
-				</select>
+				
+				<button class="activeAreaMenu">
+					<span id="currentArea">도서관 바로가기 ▼</span>
+				</button>
+				
+				<ul class="areaMenu">
+					<button class="activeAreaMenu"><span>도서관 바로가기 ▲</span></button>
+						<%for (AreaDto areaDto : list){ %>
+							<li onclick="location.href='<%=root %>/areaSelect.kh?areaNo=<%=areaDto.getAreaNo()%>&back=<%=pageNow%>'"><%=areaDto.getAreaName() %></li>
+						<%} %>
+				</ul>
+				
+			</div>
+			
+			<div class="left homeBtn" onclick="location.href='<%=root %>/areaSelect.kh?areaNo=0&back=<%=pageNow%>'">
+				<img alt="home" src="<%=root %>/image/home.png">
+				<span>MAIN</span>
 			</div>
 		</div>
 		
-		<div class="float-container text-center">
+		<div class="float-container text-center zPlane">
 			<div class="left logo">
-				<a href="<%=request.getContextPath() %>">
-				<%if(areaNo > 0){ %>
-					<%=areaDao.detail(areaNo).getAreaName() %>
-				<%} else { %>
-					메인 도서관
-				<%} %>
+				<a href="<%=root %>">
+					<%if(areaNo != 0){ %>
+						<span><%=currentAreaName %></span>
+					<%}else{ %>
+						<img class="logoMain" alt="logoMain" src="<%=root %>/image/logoMain.png">
+					<%} %>
 				</a>
 			</div>
 			

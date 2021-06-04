@@ -3,6 +3,8 @@ package library.beans;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LendBookDao {
 	
@@ -67,4 +69,62 @@ public class LendBookDao {
 		
 		return result;
 	}
+	//lendBookList에 보여질 dto리스트 만드는 함수
+
+		public List<LendBookDto> list(int keyword) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+
+			String sql = "select * from lend_book_view "
+					+ "where client_no = ? "
+					+ "order by lend_book_date desc";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, keyword);
+			ResultSet rs = ps.executeQuery();
+
+			List<LendBookDto> lendBookList = new ArrayList<>();
+
+			while (rs.next()) {
+				LendBookDto lendBookDto = new LendBookDto();
+				lendBookDto.setClientNo(rs.getInt("client_no"));
+				lendBookDto.setGetBookNo(rs.getInt("get_book_no"));
+				lendBookDto.setBookTitle(rs.getString("book_title"));
+				lendBookDto.setLendBookDate(rs.getDate("lend_book_date"));
+				lendBookDto.setLendBookLimit(rs.getDate("lend_book_limit"));
+				
+				
+				lendBookList.add(lendBookDto);
+			}
+
+			con.close();
+
+			return lendBookList;
+		}
+		
+		public List<LendBookDto> list() throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select * from lend_book_view order by lend_book_date desc";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			List<LendBookDto> lendBookList = new ArrayList<>();
+			
+			while (rs.next()) {
+				LendBookDto lendBookDto = new LendBookDto();
+				lendBookDto.setClientNo(rs.getInt("client_no"));
+				lendBookDto.setGetBookNo(rs.getInt("get_book_no"));
+				lendBookDto.setBookTitle(rs.getString("book_title"));
+				lendBookDto.setLendBookDate(rs.getDate("lend_book_date"));
+				lendBookDto.setLendBookLimit(rs.getDate("lend_book_limit"));
+				
+				
+				lendBookList.add(lendBookDto);
+			}
+			
+			con.close();
+			
+			return lendBookList;
+		}
+		
+		
 }

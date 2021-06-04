@@ -25,7 +25,7 @@
 $(function(){	
 		
 	$(".bookSearch-btn").on("click",function(){
-		var option = "width=700,height=900";
+		var option = "width=850,height=900";
 		window.name = "parentForm"
 		window.open("","target",option);
 		$(".bookSearchForm").submit();
@@ -73,10 +73,8 @@ $(function(){
 				<label>제목</label>
 				<input type="text" Id ="bookTitle" readonly value = "<%=bookDto.getBookTitle()%>" class="form-input form-input-underline">
 			</div>
-			<div class="row text-left">
-				<label>장르번호</label>
-				<input type="text" Id ="genreNo" readonly value = "<%=bookDto.getGenreNo()%>" class="form-input form-input-underline">
-			</div>
+				<input type="hidden" Id ="genreNo"  value = "<%=bookDto.getGenreNo()%>" class="form-input form-input-underline">
+	
 			
 			
 		<form action ="hopelistEdit.kh" method="post">

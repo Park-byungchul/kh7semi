@@ -6,12 +6,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
+
 <%
+	String root = request.getContextPath();
 	request.setCharacterEncoding("UTF-8");
 	HopelistDao hopelistDao = new HopelistDao();
 	List<HopelistDto> hopelist;
 	int clientNo = (int)session.getAttribute("clientNo");
-	hopelist = hopelistDao.myhopeList(clientNo);
+	
 	
 	
 	int pageNo;//현재 페이지 번호
@@ -51,9 +54,32 @@
 		endBlock = lastBlock;//범위를 수정
 	}
 
+	
+	hopelist = hopelistDao.myHopeList(clientNo, startRow, endRow);
 %>
+<script src="<%=root%>/pagination/pagination.js">
+// $(function() {
+// 	$(".pagination > a").click(function() {
+// 		var pageNo = $(this).text();
+		
+// 		if(pageNo == "이전") {
+// 			pageNo = parseInt($(".pagination > a :not(.move-link)").first().text()) - 1;
+// 			$("input[name=pageNo]").val(pageNo);
+// 			$(".search-form").submit();//강제 submit 발생
+// 		}
+// 		else if(pageNo == "다음") {
+// 			pageNo = parseInt($(".pagination > a:not(.move-link)").last().text()) + 1;
+// 			$("input[name=pageNo]").val(pageNo);
+// 			$(".search-form").submit();//강제 submit 발생
+// 		}
+// 		else {
+// 			$("input[name=pageNo]").val(pageNo);
+// 			$(".search-form").submit();//강제 submit 발생
+// 		}
+// 	});
+// });
+</script>
 
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
 
 	<div class="row">
 		<h2>희망도서 신청 목록페이지</h2>
@@ -102,27 +128,27 @@
 		<a href="hopelistInsert.jsp" class="link-btn">신청하기</a>
 	</div>
 	
+<!-- 	pageNo전송폼 -->
+	
 	<div class="row">
-		<!-- 페이지 네비게이션 자리 -->
 		<div class="pagination">
-		
-			<%if(startBlock > 1){ %>
-			<a class="move-link">이전</a>
+			<%if(startBlock > 1) { %>
+				<a class="move-link">이전</a>
 			<%} %>
-			
-			<%for(int i = startBlock; i <= endBlock; i++){ %>
-				<%if(i == pageNo){ %>
-					<a class="on"><%=i%></a>
-				<%}else{ %>
-					<a><%=i%></a>
+			<%for(int i = startBlock; i <= endBlock; i++) {%>
+				<%if(i == pageNo) {%>
+					<a class="on"><%=i %></a>
+				<%} else { %>
+					<a><%=i %></a>
 				<%} %>
 			<%} %>
-			
-			<%if(endBlock < lastBlock){ %>
-			<a class="move-link">다음</a>
+	 		<%if(endBlock < lastBlock) { %>
+				<a class="move-link">다음</a>
 			<%} %>
-			
-		</div>	
+		</div>
 	</div>
+	<form class="search-form" action="hopelist.jsp" method="get">
+		<input type="hidden" name="pageNo">
+	</form>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

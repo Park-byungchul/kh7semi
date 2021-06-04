@@ -31,7 +31,7 @@
 .menu.fixed > li {
 	display: inline-block;
 	position: relative;
-	left:600;
+	left:600px;
 }
 .menu.fixed ul {
 	display:none; 

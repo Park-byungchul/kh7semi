@@ -68,3 +68,9 @@ from review R
 left outer join client C on R.client_no = C.client_no;
 
 drop view review_list;
+
+-- 추천도서 목록 출력 view
+create or replace view recommendBook as
+select RC.recommendCount, B.*
+from recommendCount RC 
+left outer join book B on RC.book_isbn = B.book_isbn;

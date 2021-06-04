@@ -13,7 +13,7 @@ public class GetBookDao {
 		String sql = "insert into get_book "
 				+ "(get_book_no, book_isbn, area_no, "
 				+ "get_book_date) "
-				+ "values(get_book_seq.next(), ?, ?, sysdate)";
+				+ "values(get_book_seq.nextval, ?, ?, sysdate)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, getBookDto.getBookIsbn());
 		ps.setInt(2, getBookDto.getAreaNo());

@@ -98,6 +98,7 @@ $(function(){
 					<th>장르</th>
 					<th>도서명</th>
 					<th>저자</th>
+					<th>썸네일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -107,6 +108,7 @@ $(function(){
 					<td Id="searched-genreNo"><%=bookDto.getGenreNo()%></td>
 					<td Id="searched-bookTitle"><%=bookDto.getBookTitle()%></td>
 					<td Id="searched-bookAuthor"><%=bookDto.getBookAuthor()%></td>
+					<td Id="searched-bookImg"><img src="<%=bookDto.getBookImg() %>"></td>
 					<td>
 					<button class="choice-btn">선택하기</button>
 					</td>

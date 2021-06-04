@@ -10,7 +10,7 @@ public class AreaDao {
 	public List<AreaDto> list() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 
-		String sql = "select * from area order by area_no desc";
+		String sql = "select * from area order by area_no asc";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		List<AreaDto> list = new ArrayList<>();

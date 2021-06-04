@@ -35,7 +35,8 @@ create or replace view get_book_view as
             inner join area a on g.area_no = a.area_no;
     
 create or replace view lend_book_view as
-    select * from lend_book 
+    select l.*, b.book_title from lend_book l 
+        inner join book b on l.book_isbn = b.book_isbn
             where return_book_date is null;
 
 create or replace view get_book_search_view as

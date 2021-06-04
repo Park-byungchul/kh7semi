@@ -25,6 +25,13 @@
 				return false;
 			}
 		});
+		
+		$(".booklist-wishlistBtn-neg").click(function(){
+			window.alert("관심도서가 해제되었습니다.")
+		});
+		$(".booklist-wishlistBtn-pos").click(function(){
+			window.alert("관심도서 목록에 추가되었습니다.")
+		});
 	});
 </script>
 <!-- -->

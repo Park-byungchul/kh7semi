@@ -27,7 +27,7 @@ left outer join board_type BT on B.board_type_no = bt.board_type_no;
 
 --get_book / lend_book view
 create or replace view get_book_view as
-    select g.get_book_no, 
+    select g.get_book_no, g.get_book_date,
     a.area_name, 
     b.book_isbn, b.book_author, b.book_title 
         from get_book g

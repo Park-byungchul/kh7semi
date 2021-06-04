@@ -10,6 +10,7 @@ public class GetBookSearchDto {
 	private String bookAuthor;
 	private String bookTitle;
 	private String getBookStatus;
+	private Date getBookDate;
 	
 	public int getGetBookNo() {
 		return getBookNo;
@@ -47,8 +48,15 @@ public class GetBookSearchDto {
 	public void setGetBookStatus(String getBookStatus) {
 		this.getBookStatus = getBookStatus;
 	}
+	public Date getGetBookDate() {
+		return getBookDate;
+	}
+	public void setGetBookDate(Date getBookDate) {
+		this.getBookDate = getBookDate;
+	}
+	
 	public GetBookSearchDto(int getBookNo, String areaName, String bookIsbn, String bookAuthor, String bookTitle,
-			String getBookStatus) {
+			String getBookStatus, Date getBookDate) {
 		super();
 		this.getBookNo = getBookNo;
 		this.areaName = areaName;
@@ -56,6 +64,7 @@ public class GetBookSearchDto {
 		this.bookAuthor = bookAuthor;
 		this.bookTitle = bookTitle;
 		this.getBookStatus = getBookStatus;
+		this.getBookDate = getBookDate;
 	}
 	public GetBookSearchDto() {
 		super();

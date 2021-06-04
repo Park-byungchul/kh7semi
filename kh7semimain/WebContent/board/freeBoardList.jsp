@@ -99,16 +99,16 @@
 			
 			if(pageNo == "이전") {
 				pageNo = parseInt($(".pagination > a :not(.move-link)").first().text()) - 1;
-				$("input[name=pageNo]".val(pageNo));
+				$("input[name=pageNo]").val(pageNo));
 				$(".serach-form").submit();
 			}
 			else if(pageNo == "다음") {
 				pageNo = parseInt($(".pagination > a:not(.move-link)").last().text()) + 1;
-				$("input[name=pageNo]".val(pageNo));
+				$("input[name=pageNo]").val(pageNo));
 				$(".serach-form").submit();
 			}
 			else {
-				$("input[name=pageNo]".val(pageNo));
+				$("input[name=pageNo]").val(pageNo));
 				$(".serach-form").submit();
 			}
 		});

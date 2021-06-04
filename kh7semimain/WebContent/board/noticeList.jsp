@@ -139,38 +139,41 @@
 		<div class="row">
 			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 공지사항</span>
 		</div>
+		
+		<hr>
 	</div>
 	
 	<!-- 검색 -->
-	<form class="search-form" action="noticeList.jsp" method="get">
+	<form class="search-form text-center" action="noticeList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	
-		<select name="areaNo">
-			<option value="0">전체</option>
+		<select name="areaNo"class="select-form">
+			<option value="0">도서관 전체</option>
 			<%for(int i = 0; i < areaList.size(); i++) { %>
 				<option value="<%=areaList.get(i).getAreaNo()%>"><%=areaList.get(i).getAreaName()%></option>
 			<%} %>
 		</select>
-	
-		<select name="type">
+		
+		<select name="type" class="select-form">
 			<option value="board_title">제목</option>
 			<option value="client_name">작성자</option>
 		</select>
-		
-		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
-		<input type="submit" value="검색" class="btn-style">
+			
+		<input type="text" name="keyword" class="text-search-form" placeholder="검색어를 입력하세요" required>
+		<input type="submit" value="검색" class="form-btn form-btn-inline">
 	</form>
 
 	<div class="row">
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th width="8%">번호</th>
+					<th width="8%"></th>
 					<th width="40%">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th>조회</th>
-					<th>좋아요</th>
+					<th width="8%">조회</th>
+					<th width="8%">추천</th>
 				</tr>
 			</thead>
 			
@@ -178,12 +181,12 @@
 				<%for(BoardListDto boardListDto : boardList) { %>
 				<tr>
 					<td><%=boardListDto.getBoardSepNo() %></td>
+					<%if(boardListDto.getAreaNo() != 0){ %>
+						<td>[<%=boardListDto.getAreaName().substring(0, boardListDto.getAreaName().length() - 3)%>]</td>
+					<%} else { %>
+						<td>[전체]</td>
+					<%} %>
 					<td align=left>
-						<%if(boardListDto.getAreaNo() != 0){ %>
-							[<%=boardListDto.getAreaName() %>]
-						<%} else { %>
-							[전체]
-						<%} %>
 						<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
 							<%=boardListDto.getBoardTitle() %>
 						</a>
@@ -207,7 +210,7 @@
 		</div>
 	<%} %>
 	
-	<div class="row">
+	<div class="row text-center">
 		<!-- 페이지 네비게이션 자리 -->
 		<div class="pagination">
 			<%if(startBlock > 1){ %>

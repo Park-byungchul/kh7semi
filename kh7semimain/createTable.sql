@@ -94,7 +94,8 @@ CREATE TABLE review (
 	review_content	varchar2(4000)	NOT NULL,
 	review_read	number(19)	default 0 not NULL check(review_read >= 0),
 	review_like	number(19)	default 0 not NULL check(review_like >= 0),
-	review_date	date	default sysdate  not null
+	review_date	date	default sysdate  not null,
+    review_reply number(19) default 0 not null check(review_reply >= 0)
 );
 
 --사용자추천도서
@@ -180,13 +181,28 @@ primary key(client_no, board_no)
 
 -- 질문 답변 게시판 상태를 위한 테이블
 create table board_answer (
-board_no references board(board_no) on delete cascade,
-board_status varchar2(12) default '접수중' not null check (board_status in ('접수중', '답변완료')),
-client_no references client(client_no) on delete set null,
-answer_content varchar2(4000) default '아직 답변이 등록되지 않았습니다.' not null,
-answer_date Date,
-primary key(board_no)
+    board_no references board(board_no) on delete cascade,
+    board_status varchar2(12) default '접수중' not null check (board_status in ('접수중', '답변완료')),
+    client_no references client(client_no) on delete set null,
+    answer_content varchar2(4000) default '아직 답변이 등록되지 않았습니다.' not null,
+    answer_date Date,
+    primary key(board_no)
 );
+
+create table review_like (
+    client_no references client(client_no) on delete cascade,
+    review_no references review(review_no) on delete cascade,
+    like_time date default sysdate not null,
+    primary key(client_no, review_no)
+);
+
+insert into board_type values(1, '공지사항');
+insert into board_type values(2, '질문답변');
+insert into board_type values(3, '자유게시판');
+insert into board_type values(4, '도서리뷰');
+commit;
+
+alter table review add review_reply number(19) default 0 not null check(review_reply >= 0);
 
 DROP TABLE "CLIENT" CASCADE CONSTRAINTS;
 DROP TABLE "AREA" CASCADE CONSTRAINTS;

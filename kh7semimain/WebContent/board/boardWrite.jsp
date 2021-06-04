@@ -34,9 +34,6 @@
 		else if(boardTypeNo === 3) {
 			location.href = "freeBoardList.jsp";
 		}
-		else if(boardTypeNo === 4) {
-			location.href = "reviewList.jsp";
-		}
 	}
 </script>
     

@@ -11,6 +11,7 @@ public class ReviewListDto {
 	private int reviewRead;
 	private int reviewLike;
 	private Date reviewDate;
+	private int reviewReply;
 	
 	private int clientNo;
 	private String clientName;
@@ -77,5 +78,11 @@ public class ReviewListDto {
 	}
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
+	}
+	public int getReviewReply() {
+		return reviewReply;
+	}
+	public void setReviewReply(int reviewReply) {
+		this.reviewReply = reviewReply;
 	}
 }

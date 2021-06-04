@@ -3,6 +3,7 @@ package library.beans;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 
 public class ReviewDao {
 	public int getSequence() throws Exception {
@@ -23,7 +24,7 @@ public class ReviewDao {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "insert into review "
-				+ "values(?, ?, ?, ?, ?, 0, 0, sysdate)";
+				+ "values(?, ?, ?, ?, ?, 0, 0, sysdate, 0)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, reviewDto.getReviewNo());
 		ps.setInt(2, reviewDto.getClientNo());
@@ -74,6 +75,7 @@ public class ReviewDao {
 			reviewDto.setReviewRead(rs.getInt("review_read"));
 			reviewDto.setReviewLike(rs.getInt("review_like"));
 			reviewDto.setReviewDate(rs.getDate("review_date"));
+			reviewDto.setReviewReply(rs.getInt("review_reply"));
 		}
 		else
 			reviewDto = null;
@@ -112,5 +114,71 @@ public class ReviewDao {
 		con.close();
 		
 		return bookDto;
+	}
+	
+	// 게시글 수정
+	public boolean edit(ReviewDto reviewDto) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "update review set book_isbn = ?, review_subject = ?, "
+				+ "review_content = ? where review_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, reviewDto.getBookIsbn());
+		ps.setString(2, reviewDto.getReviewSubject());
+		ps.setString(3, reviewDto.getReviewContent());
+		ps.setInt(4, reviewDto.getReviewNo());
+		int count = ps.executeUpdate();
+		
+		con.close();
+		
+		return count > 0;
+	}
+	
+	// 게시글 삭제
+	public boolean delete(int reviewNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "delete review where review_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, reviewNo);
+		int count = ps.executeUpdate();
+		
+		con.close();
+		
+		return count > 0;
+	}
+	
+	// 좋아요 갱신 기능
+	public boolean refreshBoardLike(int reviewNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "update review "
+				+ "set review_like = (select count(*) from review_like where review_no = ?) "
+				+ "where review_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, reviewNo);
+		ps.setInt(2, reviewNo);
+		int count = ps.executeUpdate();
+		
+		con.close();
+		
+		return count > 0;
+	}
+	
+	// 댓글 수 갱신 기능
+	public boolean refreshComment(int reviewNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+			
+		String sql = "update review "
+				+ "set review_reply = (select count(*) from review_comment where review_no = ?) "
+				+ "where review_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, reviewNo);
+		ps.setInt(2, reviewNo);
+		int count = ps.executeUpdate();
+
+		con.close();
+			
+		return count > 0;
 	}
 }

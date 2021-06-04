@@ -32,6 +32,8 @@
 	// 현재 보드 번호
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	BoardDao boardDao = new BoardDao();
+	
+	System.out.println(boardNo);
 
 	// 조회수를 위한 set
 	Set<Integer> boardNoSet;
@@ -41,7 +43,7 @@
 	else {
 		boardNoSet = new HashSet<>();
 	}
-	
+
 	if(boardNoSet.add(boardNo)) {
 		boardDao.read(boardNo, clientNo);
 	}
@@ -124,9 +126,6 @@
 		}
 		else if(boardTypeNo === 3) {
 			location.href = "freeBoardList.jsp";
-		}
-		else if(boardTypeNo === 4) {
-			location.href = "reviewList.jsp";
 		}
 	}
 	

@@ -34,26 +34,22 @@ catch (Exception e){
 			});
 			if(is_empty) {
 			    alert('값을 전부 입력하시오');
+			    return false;
+			}
+			
+		}
+		function onSubmit(){
+			if (<%=areaNo%> == null || <%=areaNo%> == 0) {
+				alert('도서관페이지가 아닌 메인페이지에서는 대여가 불가능합니다.')
+				return false;	
 			}
 			else{
-			alert('대여 접수가 완료되었습니다.');
+				alert('대여 접수가 완료되었습니다.');
+				return true;
 			}
 		}
 	</script>
-	<%
-	request.setCharacterEncoding("UTF-8");
-	Integer clientNo = (Integer)session.getAttribute("clientNo");
 	
-	ClientDao clientDao = new ClientDao();
-	ClientDto clientDto;
-	if(clientNo == null) {
-		clientDto = null;
-	}
-	else {
-		clientDto = clientDao.get(clientNo);
-	}
-
-%>
 <jsp:include page="/service/serviceSidebar.jsp"></jsp:include>	
 
 <style>
@@ -78,7 +74,7 @@ catch (Exception e){
 				
 			<!-- 	대여 접수 입력창 구현 -->
 				<div>
-					<form action = "lendBookInsert.kh" method="post" class = "form">		
+					<form action = "lendBookInsert.kh" method="post" class = "form" onsubmit="return onSubmit()">		
 						회원번호 : <input type="text" name="clientNo" size="50" height = "20" required>
 <%--  						회원번호 : <input type="text" name="clientNo" size="50" height = "20" value = <%=clientNo%> required> --%>
 						 <br><br>

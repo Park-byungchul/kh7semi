@@ -80,7 +80,7 @@ public class BookDao {
 	public List<BookDto> list() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "select * from book order by to_number(book_isbn) asc";
+		String sql = "select * from book order by book_isbn asc";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		

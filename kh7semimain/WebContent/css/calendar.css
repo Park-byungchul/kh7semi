@@ -54,14 +54,14 @@
 		transition: background-color 0.2s ease-in-out;
 	}
 	
-	.plan, .planList{
+	.plan, .planList, .planInsert{
 		border: 1px solid rgb(240, 240, 240);
 	}
 	.plan{
 		width: 400px;
 		height: 300px;
 	}
-	.planList{
+	.planList, .planInsert{
 		width: 450px;
 		min-height: 300px;
 		padding: 15px;
@@ -78,12 +78,44 @@
 	.planTable>thead>tr>th{
 		font-size: 20px;
 		color: rgb(67, 164, 157);
-		text-align: left;
 		padding-left: 10px;
 		border-bottom: 1px solid lightgray;
 	}
 	
+	.planTable>thead>tr>th.left{
+		text-align: left;
+	}
+	
+	.planTable>thead>tr>th.right{
+		text-align: right;
+	}
+	
 	.planTable td{
+		padding: 5px;
 		text-align: center;
 		height: 20px;
+		border-bottom: 1px solid rgb(240, 240, 240);
+	}
+	
+	.planTable>tbody>tr:hover{
+		background-color: rgb(245, 245, 245);
+		cursor: pointer;
+	}
+	
+	.upDownBtn{
+		display: inline-block;
+		text-align: center;
+		border-style: none;
+	    position: relative;
+	    height: 20px;
+	    width: 20px;
+	    font-size: 14px;
+	    font-weight: bold;
+	    color: black;
+	    opacity: 0.3;
+	    text-decoration: none;
+	}
+	
+	.upDownBtn:hover{
+		opacity: 0.8;
 	}

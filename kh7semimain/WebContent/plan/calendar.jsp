@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.PlanDao"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="library.beans.CalendarDao"%>
@@ -31,6 +32,16 @@
 	int last = calendarDao.last(year, month);
 	
 	PlanDao planDao = new PlanDao();
+	
+	AreaDao areaDao = new AreaDao();
+	
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
 	
 %>
 
@@ -75,9 +86,21 @@
 						<% for(int i = 1 ; i <= last ; i++){ %>
 								<td onclick="location.href='<%=root %>/plan/plan.jsp?year=<%=year %>&month=<%=month %>&day=<%=i %>'" class="<%=calendarDao.isToday(year, month, i) %>
 									<%String today = Integer.toString(year) + (month < 10 ? "0" + Integer.toString(month) : Integer.toString(month)) + (i < 10 ? "0" + Integer.toString(i) : Integer.toString(i)); %>
-									<%if(planDao.isBreakDay(today)){ %> breakDay
-									<%}else if(planDao.isPlanDay(today)){ %>planDay
+									
+									<%if(areaNo == 0){ %>
+										
+										<%if(planDao.isBreakDay(today)){ %> breakDay
+										<%}else if(!planDao.isBreakDay(today) && planDao.isPlanDay(today)){ %>planDay
+										<%} %>
+									
+									<%} else {%>
+									
+										<%if(planDao.isBreakDay(today, areaNo)){ %> breakDay
+										<%}else if(!planDao.isBreakDay(today, areaNo) && planDao.isPlanDay(today, areaNo)){ %>planDay
+										<%} %>
+									
 									<%} %>
+										
 								"><%=i %>
 									
 								</td>

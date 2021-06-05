@@ -126,12 +126,13 @@ CREATE TABLE lend_book (
 );
 
 --일정
-CREATE TABLE Plan (
+CREATE TABLE plan (
 	plan_no 	number(19)	primary key,
 	area_no	references area(area_no) on delete cascade,
-	plan_start_date	date	NOT NULL,
-	plan_end_date	date	NOT NULL,
-	plan_content	varchar2(300)	not NULL
+	plan_start_date	date	default sysdate NOT NULL,
+	plan_end_date	date	default sysdate NOT NULL,
+	plan_content	varchar2(300)	not NULL,
+    check(plan_end_date >= plan_start_date)
 );
 
 --관심목록

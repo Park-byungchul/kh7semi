@@ -148,4 +148,18 @@ public class RecommendDao {
 				return recommendList;
 			}		
 
+		//페이지블럭 계산을 위한 카운트 기능(목록/검색)
+		public int getCount() throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select count(*) from recommend";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			int count = rs.getInt(1);
+			
+			con.close();
+			
+			return count;
+	}
 }

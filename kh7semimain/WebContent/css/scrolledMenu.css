@@ -23,7 +23,7 @@
 	margin:0;
 	padding:0;
 	list-style: none;
-	background-color:#4B97FF;
+	background-color:RGB(67, 164, 157);
 	position : fixed;
 	top:0;
 	left:0;
@@ -50,8 +50,13 @@
 	width:150px;
 }
 .menu.fixed li:hover {
-	background-color:#1359B5;
+	background-color: RGB(228, 244, 243);
 }
+
+.menu.fixed li:hover>a {
+	color: gray;
+}
+
 .menu.fixed li > a {
 	color:white;
 	text-decoration: none;

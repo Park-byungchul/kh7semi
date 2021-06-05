@@ -22,9 +22,6 @@ if(areaNo > 0){
 		text-align:left;
 		padding: 0px 0px 0px 30px;
 	}
-	span {
-	    margin-left: 35px;
-	}
 </style>
 <jsp:include page="/template/header.jsp">
 	<jsp:param value="<%=title%>" name="title"/>

@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.GenreDto"%>
 <%@page import="library.beans.GenreDao"%>
 <%@page import="library.beans.WishlistDto"%>
@@ -13,7 +14,8 @@
 <%
 String root = request.getContextPath(); 
 BookDao bookDao = new BookDao();
-List<BookDto> list = bookDao.list();
+
+
 int clientNo;
 try {
 	clientNo = (int)session.getAttribute("clientNo");
@@ -72,9 +74,27 @@ int endBlock = startBlock + blockSize - 1;
 if(endBlock > lastBlock){
 	endBlock = lastBlock;
 }
+
+List<BookDto> list = bookDao.list(startRow, endRow);
+
+AreaDao areaDao = new AreaDao();
+int areaNo;
+try{
+	areaNo = (int)session.getAttribute("areaNo");
+}
+catch (Exception e){
+	areaNo = 0;
+}
+
+String title = "관리자 메뉴";
+if(areaNo > 0){
+	title += " : " + areaDao.detail(areaNo).getAreaName();
+}
 //페이징 -------------------------------------------------------
 %>
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="<%=root%>/pagination/pagination.js"></script>
@@ -156,6 +176,7 @@ if(endBlock > lastBlock){
 			<%} %>
 		</div>
 	</div>
+	
 	<form class="search-form" action="bookList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	</form>

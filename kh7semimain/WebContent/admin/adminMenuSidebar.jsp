@@ -43,7 +43,7 @@
 	<ul>
 		<li><a href="<%=root %>/client/clientPartialList.jsp">회원 목록</a></li>
 		<li><a href="<%=root %>/role/rolePartialList.jsp">일반관리자 목록</a></li>
-		<li><a href="<%=root %>/promotion/promotionInsert.jsp">배너 등록</a></li>
+		<li><a href="<%=root %>/promotion/promotionList.jsp">배너 목록</a></li>
 	</ul>
 	<%} %>
 	<h3>대여접수</h3>
@@ -51,6 +51,16 @@
 		<li><a href="<%=root%>/lendBook/lendBookInsert.jsp">대여접수</a></li>
 		<li><a href="<%=root%>/lendBook/lendBookUpdate.jsp">대여반납</a></li>
 		<li><a href="<%=root%>/lendBook/lendBookList.jsp">대여목록</a></li>
+	</ul>
+	<h3>도서 데이터 추가하기</h3>
+	<ul>
+		<li><a href="<%=root%>/book/bookInsert.jsp">도서등록</a></li>
+		<li><a href="<%=root%>/book/bookList.jsp">도서목록</a></li>
+	</ul>
+	<h3>도서 지점별 입고하기</h3>
+	<ul>
+		<li><a href="<%=root%>/getBook/getBookInsert.jsp">입고등록</a></li>
+		<li><a href="<%=root%>/getBook/getBookList.jsp">입고목록</a></li>
 	</ul>
 <%} %>
 

@@ -160,12 +160,16 @@ if(areaNo != 0){
 						
 						
 						
-						<img id="promotionImg" src="<%=root %>/promotion/promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">
-						<span>
-							<%if(promotionInfoDto.getAreaNo() != 0){%>
-								<%=areaDao.detail(promotionInfoDto.getAreaNo()).getAreaName() %> 
-							<%} %>
-						</span>
+						<%if(promotionInfoDto != null){%>
+			                  <img id="promotionImg" src="<%=root %>/promotion/promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">
+			                  <span>
+			                     <%if(promotionInfoDto.getAreaNo() != 0){%>
+			                        
+			                           <%=areaDao.detail(promotionInfoDto.getAreaNo()).getAreaName() %> 
+			                        
+			                     <%} %>
+			                  </span>
+		                  <%} %>
 						
 						<button class="btn-pre" onclick="location.href='?promotionPage=<%=promotionPage -1 %>'">&lt</button>
 						

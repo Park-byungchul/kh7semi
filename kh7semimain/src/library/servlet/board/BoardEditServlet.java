@@ -23,6 +23,7 @@ public class BoardEditServlet extends HttpServlet {
 			boardDto.setAreaNo(Integer.parseInt(req.getParameter("areaNo")));
 			boardDto.setBoardTitle(req.getParameter("boardTitle"));
 			boardDto.setBoardField(req.getParameter("boardField"));
+			boardDto.setBoardOpen(req.getParameter("boardOpen"));
 			
 			int boardTypeNo = Integer.parseInt(req.getParameter("boardTypeNo"));
 			

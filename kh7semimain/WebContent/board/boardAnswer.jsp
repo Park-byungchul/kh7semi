@@ -13,37 +13,62 @@
 
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto = clientDao.get(clientNo);
+	
+	String root = request.getContextPath();
 %>
     
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+
+<style>
+	th {
+		width:15%;
+	}
+</style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
-<h1>답변쓰기</h1>
+<script>
+	// 높이 자동 설정
+	function resize(obj) {
+			obj.style.height = "1px";
+			obj.style.height = (12+obj.scrollHeight)+"px";
+	}
+</script>
 
-<div class="container-800">
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title">질문 답변</span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 질문 답변</span>
+		</div>
+	</div>
+	
 	<form action="boardAnswer.kh" method="post">
 		<input type="hidden" name="boardNo" value="<%=boardNo%>">
-		<table>
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">작성자</th>
+					<th>작성자</th>
 					<td>
 						<p><%=clientDto.getClientName()%></p>
 					</td>
 				</tr>
 				
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">내용</th>
+					<th>내용</th>
 					<td>
-						<textarea name="answerContent" rows="15" class="text-right form-input"></textarea>
+						<textarea name="answerContent" rows="15" maxlength="4000" class="board-write-area" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<div class="row">
-			<button class="link-btn">등록</button>
+		<div class="row text-right">
+			<button class="board-btn">등록</button>
+			<a href="qnaDetail.jsp?boardNo=<%=boardNo %>" class="link-btn">취소</a>
 		</div>
 	</form>
 </div>

@@ -1,3 +1,4 @@
+<%@page import="library.beans.board.BoardTypeDao"%>
 <%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.AreaDto"%>
 <%@page import="java.util.List"%>
@@ -16,9 +17,14 @@
 	
 	AreaDao areaDao = new AreaDao();
 	List<AreaDto> areaList = areaDao.list();
+	
+	String root = request.getContextPath();
+	
+	BoardTypeDao boardTypeDao = new BoardTypeDao();
+	String boardName = boardTypeDao.getBoardName(boardTypeNo);
 %>
     
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
@@ -35,21 +41,40 @@
 			location.href = "freeBoardList.jsp";
 		}
 	}
+	
+	// 높이 자동 설정
+	function resize(obj) {
+  		obj.style.height = "1px";
+  		obj.style.height = (12+obj.scrollHeight)+"px";
+	}
 </script>
-    
-<h1>글쓰기</h1>
 
-<div class="container-800">
+<style>
+	th {
+		width:15%;
+	}
+</style>
+
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title"><%=boardName%></span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > <%=boardName %></span>
+		</div>
+	</div>
+	
 	<form action="boardWrite.kh" method="post">
 		<input type="hidden" name="boardTypeNo" value="<%=boardTypeNo%>">
-		<table>
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<%if(boardTypeNo == 1 || boardTypeNo == 2) {%>
 					<tr>
-						<th class="text-left" style="background-color:lightgray;">도서관</th>
+						<th>도서관</th>
 						<td>
 							<select name="areaNo">
-								<option value="0">전체</option>
 								<%for(int i = 0; i < areaList.size(); i++) { %>
 									<option value="<%=areaList.get(i).getAreaNo()%>"><%=areaList.get(i).getAreaName()%></option>
 								<%} %>
@@ -57,31 +82,27 @@
 						</td>
 					</tr>
 				<%} %>
-			
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">제목</th>
+					<th>제목</th>
 					<td>
-						<input type="text" name="boardTitle" class="form-input" style="width:750px">
+						<input type="text" maxlength="300" name="boardTitle" class="form-input" style="width:750px">
 					</td>
 				</tr>
-					
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">작성자</th>
+					<th>작성자</th>
 					<td>
 						<p><%=clientDto.getClientName()%></p>
 					</td>
 				</tr>
-				
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">내용</th>
+					<th>내용</th>
 					<td>
-						<textarea name="boardField" rows="15" class="text-right form-input"></textarea>
+						<textarea maxlength="4000" class="board-write-area" onkeydown="resize(this)" onkeyup="resize(this)" name="boardField" rows="15"></textarea>
 					</td>
 				</tr>
-				
 				<%if(boardTypeNo == 2) { %>
 					<tr>
-						<th class="text-left" style="background-color:lightgray;">공개 여부</th>
+						<th>공개 여부</th>
 						<td>
 							<div>
 							    <input type="radio" name="boardOpen" value="공개">
@@ -98,8 +119,8 @@
 			</tbody>
 		</table>
 
-		<div class="row">
-			<button class="link-btn">등록</button>
+		<div class="row text-right">
+			<button class="board-btn">등록</button>
 			<a href="#" onclick="chooseList()" class="link-btn">목록</a>
 		</div>
 	</form>

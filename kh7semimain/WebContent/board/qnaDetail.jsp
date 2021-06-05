@@ -100,7 +100,7 @@
 	</div>
 	
 	<div class="row">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
 					<th>제목</th>
@@ -132,7 +132,7 @@
 	</div>
 	
 	<div class="row">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
 					<th>작성자</th>

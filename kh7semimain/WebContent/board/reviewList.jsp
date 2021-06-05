@@ -132,8 +132,6 @@
 		<div class="row">
 			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 도서 리뷰</span>
 		</div>
-		
-		<hr>
 	</div>
 	
 	<form class="search-form text-center" action="reviewList.jsp" method="get">
@@ -149,18 +147,19 @@
 	</form>
 
 	<div class="row">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<thead>
 				<tr>
 					<th width="8%">번호</th>
 					<th width="15%"></th>
-					<th>제목</th>
+					<th>리뷰 정보</th>
 				</tr>
 			</thead>
 			
 			<tbody>
 				<%for(ReviewListDto reviewListDto : reviewList) { %>
 				<tr>
+					<%System.out.println(reviewListDto.getReviewNo()); %>
 					<td><%=reviewListDto.getReviewNo() %></td>
 					<td><img src=<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookImg() %>></td>
 					<td align=left>
@@ -176,9 +175,11 @@
 							<a href="reviewDetail.jsp?reviewNo=<%=reviewListDto.getReviewNo()%>" class="review-subject">
 								<%=reviewListDto.getReviewSubject() %>
 							</a>
-							<span class="review-right"><%=reviewListDto.getClientName() %></span>
-							<span class="review-right">&nbsp;</span>
-							<span class="review-right"><%=reviewListDto.getReviewDate() %></span>
+							<span class="review-right">
+								<span><%=reviewListDto.getClientName() %></span>
+								<span>&nbsp;</span>
+								<span><%=reviewListDto.getReviewDate() %></span>
+							</span>
 						</div>
 					</td>
 				</tr>

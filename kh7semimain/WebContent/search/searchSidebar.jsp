@@ -28,8 +28,8 @@
 
 <h2>자료 검색</h2>
 <ul>
-	<li><a href="<%=root %>/search/searchInput.jsp">통합자료검색</a></li>
-	<li><a href="">신착자료</a></li>
+	<li><a href="<%=root%>/search/searchInput.jsp">통합자료검색</a></li>
+	<li><a href="<%=root%>/newbook/newbooklist.jsp">신착자료</a></li>
 	<li><a href="<%=root%>/recommend/recommendList.jsp">추천도서</a></li>
 	<li><a href="#">대출베스트</a></li>
 </ul>

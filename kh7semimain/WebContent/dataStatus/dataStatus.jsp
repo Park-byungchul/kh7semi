@@ -6,7 +6,14 @@
 	AreaDao areaDao = new AreaDao();
 	String root = request.getContextPath();
 	request.setCharacterEncoding("UTF-8");
-	int areaNo = (int)session.getAttribute("areaNo");
+	int areaNo;
+	try {
+		areaNo = (int)session.getAttribute("areaNo");
+		
+	}
+	catch (Exception e) {
+		areaNo = 0;
+	}
 
 	BookCountDao bookCountDao = new BookCountDao();
 

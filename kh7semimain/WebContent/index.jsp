@@ -1,3 +1,5 @@
+<%@page import="library.beans.NewBookDto"%>
+<%@page import="library.beans.NewBookDao"%>
 <%@page import="library.beans.PromotionInfoDto"%>
 <%@page import="library.beans.PromotionInfoDao"%>
 <%@page import="library.beans.CalendarDao"%>
@@ -46,8 +48,13 @@ catch (Exception e){
 }
 AreaDto areaDto = areaDao.detail(areaNo);
 boolean isChild = areaNo != 0;	
+
 RecommendDao recommendDao = new RecommendDao();
 List<RecommendDto> recommendRank = recommendDao.rank(1, 3);
+NewBookDao newBookDao = new NewBookDao();
+List<NewBookDto> newBookRank = newBookDao.rank(1, 3); 
+
+
 request.setCharacterEncoding("UTF-8");
 String title;
 if(areaNo > 0){
@@ -109,13 +116,13 @@ if(areaNo != 0){
 </jsp:include>
 
 <style>
-	.float-container.recommend {
+	.float-container.recommend , .float-container.newbook {
 		margin:10px;
 		width:300px; 
 		height:300px; 
 		display:inline-block;
 	}
-	.recommend-input{
+	.recommend-input , .newbook-input{
 		padding:0.2rem;
 		text-align:center;
 		width:300px;
@@ -125,8 +132,35 @@ if(areaNo != 0){
 		overflow: hidden; 
 		text-overflow: ellipsis;
 	}
+	.main-btn {
+		width: 300px;
+	    height: 60px;
+	    margin: 10px -4px;
+	    border: 1px none gray;
+	    background-color:#4B97FF; 
+	    color: white;
+	    font-size:18px;
+	}
+	.main-btn:hover{
+		background-color:#1359B5; 
+	}
 </style>
-	
+<script>
+$(function(){
+	$(".main-btn.recommend").on("click",function(e){
+		
+		$(".float-container.recommend").show();
+		$(".float-container.newbook").hide();
+		$(".float-container.lendbest").hide();
+	});
+	$(".main-btn.newbook").on("click",function(e){
+		
+		$(".float-container.newbook").show();
+		$(".float-container.recommend").hide();
+		$(".float-container.lendbest").hide();
+	});
+});
+</script>
 		<section>
 			<%if(!isChild){ %>
 			
@@ -186,8 +220,13 @@ if(areaNo != 0){
 
 		</section>
 		
-		<section>
-			<p>추천도서-추천수순위 프로토타입</p>
+		<section style="height:500px;">
+		<div class="row">
+		<button class="main-btn recommend">추천도서</button>
+		<button class="main-btn newbook">신착도서</button>
+		<button class="main-btn lendbest">대출베스트</button>
+		</div>
+			
 			<%for(RecommendDto recommendDto : recommendRank) { %>
 				<%
 				String bookIsbn = recommendDto.getBookIsbn();
@@ -207,7 +246,20 @@ if(areaNo != 0){
 					</div>
 	
 				</div>
-		
+			<%} %>
+			
+			
+			<%for(NewBookDto newBookDto : newBookRank) { %>
+				<div class="float-container newbook" style="display:none;">
+					<div class="row text-center">
+						<img src="<%=newBookDto.getBookImg()%>">
+						<br>
+						<span class="newbook-input"><%=newBookDto.getBookTitle()%></span>
+						<strong>저자</strong><span class="newbook-input"><%=newBookDto.getBookAuthor()%></span>
+						<strong>장르</strong><span class="newbook-input"><%=newBookDto.getGenreName()%></span>
+					</div>
+	
+				</div>
 			<%} %>
 		</section>
 		

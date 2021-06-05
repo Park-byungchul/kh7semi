@@ -162,4 +162,35 @@ public class RecommendDao {
 			
 			return count;
 	}
+		
+		public int getCount(String keyword) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select count(*) from recommendBook where (book_title || book_author) like '%'||?||'%'";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, keyword);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			int count = rs.getInt(1);
+			
+			con.close();
+			
+			return count;
+	}
+		
+		public int getCount(String type, String keyword) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select count(*) from recommendBook where #1 like '%'||?||'%'";
+			sql = sql.replace("#1", type);
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, keyword);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			int count = rs.getInt(1);
+			
+			con.close();
+			
+			return count;
+	}
 }

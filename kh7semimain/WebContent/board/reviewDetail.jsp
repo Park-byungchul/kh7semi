@@ -163,7 +163,7 @@
 	</div>
 	
 	<div class="row">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
 					<td width="15%"><img src=<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookImg() %>></td>
@@ -196,7 +196,7 @@
 			</tbody>
 		</table>
 		
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
 					<th>제목</th>
@@ -290,7 +290,9 @@
 			<div class="row">
 				<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea" id="commentField" name="commentField" required></textarea>
 				<div class="text-right">
-					<input class="form-btn form-btn-inline" type="submit" value="댓글 작성">
+					<%if(clientNo != 0) {%>
+						<input class="form-btn form-btn-inline" type="submit" value="댓글 작성">
+					<%} %>
 				</div>
 			</div>
 		</form>

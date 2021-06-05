@@ -51,7 +51,7 @@
 	</div>
 	
 	<form action="reviewInsert.kh" method="post">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
 					<th>리뷰 제목</th>
@@ -92,7 +92,7 @@
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea maxlength="4000" class="board-write-area" onkeydown="resize(this)" onkeyup="resize(this)" name="reviewContent" rows="15" class="text-right form-input"></textarea>
+						<textarea maxlength="4000" class="board-write-area" onkeydown="resize(this)" onkeyup="resize(this)" name="reviewContent" rows="15"></textarea>
 					</td>
 				</tr>
 			</tbody>

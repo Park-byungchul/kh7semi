@@ -203,7 +203,7 @@
 	</div>
 	
 	<div class="row">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<%if(boardDto.getBoardTypeNo() == 1) {%>
 					<tr>
@@ -312,18 +312,20 @@
 			<input type="hidden" name="boardTypeNo" value="<%=boardListDto.getBoardTypeNo()%>">
 			<div class="row">
 				<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea" id="commentContent" name="commentContent" required></textarea>
-				<div class="text-right">
-					<input class="form-btn form-btn-inline" type="submit" value="댓글 작성">
-				</div>
+				<%if(clientNo != 0) {%>
+					<div class="text-right">
+						<input class="form-btn form-btn-inline" type="submit" value="댓글 작성">
+					</div>
+				<%} %>
 			</div>
 		</form>
 	</ul>
 	
 	<div class="row">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
-					<th>다음글</th>
+					<th style="width:15%">다음글</th>
 					<%if(nextBoardDto == null){%>
 						<td>다음글이 없습니다.</td>
 					<%}else{ %>
@@ -333,7 +335,7 @@
 					<%} %>
 				</tr>
 				<tr>
-					<th>이전글</th>
+					<th style="width:15%">이전글</th>
 					<%if(prevBoardDto == null){%>
 						<td>이전글이 없습니다.</td>
 					<%}else{ %>

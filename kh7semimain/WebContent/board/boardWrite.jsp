@@ -68,7 +68,7 @@
 	
 	<form action="boardWrite.kh" method="post">
 		<input type="hidden" name="boardTypeNo" value="<%=boardTypeNo%>">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<%if(boardTypeNo == 1 || boardTypeNo == 2) {%>
 					<tr>

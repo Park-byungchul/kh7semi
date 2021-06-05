@@ -48,7 +48,7 @@
 	
 	<form action="boardAnswer.kh" method="post">
 		<input type="hidden" name="boardNo" value="<%=boardNo%>">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
 					<th>작성자</th>

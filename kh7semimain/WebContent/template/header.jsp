@@ -217,7 +217,7 @@
 					<ul>
 						<li><a href="<%=root%>/location/location.jsp">찾아오는길</a></li>
 						<li><a href="<%=root%>/dataStatus/dataStatus.jsp">자료 현황</a></li>
-						<li><a href="#">이용 안내</a></li>
+						<li><a href="<%=root%>/useInfo/useInfo.jsp">이용 안내</a></li>
 					</ul>
 				</li>
 				

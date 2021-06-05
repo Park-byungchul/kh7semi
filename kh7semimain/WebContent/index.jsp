@@ -132,9 +132,9 @@ if(areaNo != 0){
 			
 				<div class="float-container row">
 					<%if(startBlock > 1){ %>
-						<button class="areaBtnMove left" onClick="location.href='<%=root %>?areaPageNo=<%=areaPageNo - 1 %>'">이전</button>
+						<button class="areaBtnMove left" onClick="location.href='<%=root %>?areaPageNo=<%=areaPageNo - 1 %>'">&lt;</button>
 					<%} else{ %>
-						<button class="areaBtnMoveNone left"></button>
+						<button class="areaBtnMoveInactive left">&lt;</button>
 					<%} %>
 				
 					<div style="display: inline-block;">
@@ -145,9 +145,9 @@ if(areaNo != 0){
 					</div>
 					
 					<%if(endBlock < lastBlock){ %>
-						<button class="areaBtnMove right" onClick="location.href='<%=root %>?areaPageNo=<%=areaPageNo + 1 %>'">다음</button>
+						<button class="areaBtnMove right" onClick="location.href='<%=root %>?areaPageNo=<%=areaPageNo + 1 %>'">&gt;</button>
 					<%} else{ %>
-						<button class="areaBtnMoveNone right"></button>
+						<button class="areaBtnMoveInactive right">&gt;</button>
 					<%} %>
 				</div>
 				

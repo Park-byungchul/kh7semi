@@ -159,6 +159,7 @@ if(areaNo != 0){
 					<div class="promotion left">
 						
 						
+
 						<%if(promotionInfoDto != null){%>
 						<img id="promotionImg" src="<%=root %>/promotion/promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">
 						<span>

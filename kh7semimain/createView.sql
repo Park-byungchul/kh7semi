@@ -13,11 +13,15 @@ from role R, client C, area A
 where R.area_no = A.area_no and R.client_no = C.client_no;
 
 -- 도서 목록 출력을 위한 view
-create or replace view board_list as
+
+drop view board_list;
+
+create view board_list as
+
 select B.board_no, B.area_no as board_area, B.board_type_no, B.board_title, 
         B.board_date, B.board_read, B.board_like, B.client_no as board_writer,
-        b.board_sep_no, b.board_reply,
-        C.client_no, C.client_name, 
+        b.board_sep_no, b.board_reply, b.board_open,
+        C.client_no, C.client_name,
         A.area_no, A.area_name,
         BT.board_type_no as type_no, BT.board_type_name
 from board B

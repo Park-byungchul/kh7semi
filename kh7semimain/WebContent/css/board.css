@@ -119,7 +119,7 @@
  	min-height:287px;
 }
 
-.board-btn, .edit-btn {
+.board-btn, .edit-btn, .login-btn {
 	display: inline-block;
 	padding: 0.75rem;
 	border: none;
@@ -133,4 +133,27 @@
 	width: 85%;
 	padding: 0.5rem;
 	outline: none;
+}
+
+.login-wrap {
+	margin:auto;
+	padding:30px;
+}
+
+.login {
+	text-align:right;
+}
+
+.login-form {
+	width: 250px;
+	padding: 0.5rem;
+	outline: none;
+	margin:5px;
+}
+
+.login-btn {
+	font-weight:bold;
+	width: 90px;
+	height: 90px;
+	font-size:20px;
 }

@@ -73,7 +73,6 @@
 	
 		<div class="row">
 			<input type="submit" value="수정" class="link-btn">
-			<a id="delete" href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn">삭제</a>
 			<%if(boardDto.getBoardTypeNo() == 2) { %>
 				<a href="qnaDetail.jsp?boardNo=<%=boardNo%>" class="link-btn">취소</a>
 			<%} else { %>

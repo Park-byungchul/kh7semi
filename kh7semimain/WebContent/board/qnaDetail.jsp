@@ -28,6 +28,8 @@
 	catch (Exception e) {
 		clientNo = 0;
 	}
+	
+	String root = request.getContextPath();
 
 	// 현재 보드 번호
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
@@ -73,56 +75,88 @@
 	BoardAnswerDto answerDto = answerDao.get(boardNo);
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
 
-<div class="container-800">
-	<div class="row text-left">
-		<h1><%=boardListDto.getBoardTypeName() %></h1>
-	</div>
-	
-	<div class="row text-left">
-		<h3>
-			<%if(boardDto.getAreaNo() != 0){ %>
-				[<%=areaDto.getAreaName() %>]
-			<%} else { %>
-				[전체도서관]
-			<%} %>
-			<%=boardDto.getBoardTitle()%>
-		</h3>
-	</div>
-	
-	<div class="row float-container">
-		<div class="left">
-			<%=clientDto.getClientName()%>
-		</div>
-		<div class="right">
-			<%=boardDto.getBoardDate().toLocaleString()%>
-		</div>
-	</div>
-	
-	<div class="row text-left" style="min-height:300px;">
-		<pre><%=boardDto.getBoardField()%></pre>
-	</div>
+<script>
+	$(function(){
+		$(".board-delete-btn").click(function(e) {
+			var choice = window.confirm("정말 삭제하시겠습니까?");
+			if(!choice){
+				e.preventDefault();
+			}
+		});
+	});
+</script>
 
-	<div class="row float-container">
-		<div class="left">
-			작성자 | 
-			<%if(answerDto.getClientNo() != 0) {%>
-				<%=answerDao.getClientName(answerDto.getClientNo()) %>
-			<%} %>
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title"><%=boardListDto.getBoardTypeName() %></span>
 		</div>
-		<div class="right">
-			답변일 | 
-			<%if(answerDto.getAnswerDate() != null) {%>
-				<%=answerDto.getAnswerDate().toLocaleString() %>
-			<%} %>
-		</div>		
-		
-		<div class="row text-left" style="min-height:300px;">
-			<pre>
-				<%=answerDto.getAnswerContent() %>
-			</pre>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > <%=boardListDto.getBoardTypeName() %></span>
 		</div>
+	</div>
+	
+	<div class="row">
+		<table class="table table-border table-hover">
+			<tbody>
+				<tr>
+					<th>제목</th>
+					<td colspan="5"><%=boardDto.getBoardTitle()%></td>
+				</tr>
+				<tr>
+					<th>도서관</th>
+					<td>
+						<%if(boardDto.getAreaNo() != 0){ %>
+							<%=areaDto.getAreaName() %>
+						<%} else { %>
+							전체
+						<%} %>
+					</td>
+					<th>작성자</th>
+					<td><%=clientDto.getClientName()%></td>
+					<th>작성일</th>
+					<td><%=boardDto.getBoardDate()%></td>
+				</tr>
+				<tr>
+					<td colspan="6">
+						<div class="row text-left">
+							<pre><%=boardDto.getBoardField()%></pre>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="row">
+		<table class="table table-border table-hover">
+			<tbody>
+				<tr>
+					<th>작성자</th>
+					<td>
+						<%if(answerDto.getClientNo() != 0) {%>
+							<%=answerDao.getClientName(answerDto.getClientNo()) %>
+						<%} %>
+					</td>
+					<th>답변일</th>
+					<td>
+						<%if(answerDto.getAnswerDate() != null) {%>
+							<%=answerDto.getAnswerDate() %>
+						<%} %>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<div class="row text-left">
+							<pre><%=answerDto.getAnswerContent()%></pre>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	
 	<div class="row text-right">
@@ -134,7 +168,7 @@
 				<a href="boardEdit.jsp?boardNo=<%=boardNo%>" class="link-btn">수정</a>
 			<%} %>
 			<%if(isAdmin) {%>
-				<a href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn">삭제</a>
+				<a href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn board-delete-btn">삭제</a>
 			<%} %>                                                                                      
 		<%} %>
 		<a href="qnaList.jsp" class="link-btn">목록</a>

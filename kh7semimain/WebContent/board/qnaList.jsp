@@ -160,8 +160,6 @@
 		<div class="row">
 			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 질문 답변</span>
 		</div>
-		
-		<hr>
 	</div>
 	
 		<!-- 검색 -->
@@ -189,9 +187,9 @@
 			<thead>
 				<tr>
 					<th width="8%">번호</th>
-					<th width="8%"></th>
+					<th width="10%"></th>
 					<th width="40%">제목</th>
-					<th width="10%">상태</th>
+					<th width="13%">상태</th>
 					<th>작성자</th>
 					<th>작성일</th>
 				</tr>

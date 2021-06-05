@@ -72,7 +72,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/scrolledMenu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
-	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css">
+	<!-- <link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css"> -->
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/calendar.css">
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/board.css">
 	<style>

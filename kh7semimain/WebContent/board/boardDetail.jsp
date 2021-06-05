@@ -150,6 +150,16 @@
 		}
 	});
 	
+	// 글 삭제
+	$(function(){
+		$(".board-delete-btn").click(function(e) {
+			var choice = window.confirm("정말 삭제하시겠습니까?");
+			if(!choice){
+				e.preventDefault();
+			}
+		});
+	});
+	
 	// 댓글 삭제
 	$(function(){
 		$(".comment-delete-btn").click(function(e) {
@@ -195,13 +205,13 @@
 	<div class="row">
 		<table class="table table-border table-hover">
 			<tbody>
-				<%if(boardDto.getBoardTypeNo() == 1 || boardDto.getBoardTypeNo() == 2) {%>
+				<%if(boardDto.getBoardTypeNo() == 1) {%>
 					<tr>
 						<th>도서관</th>
 						<td>
 							<%if(boardDto.getAreaNo() != 0){ %>
 								<%=areaDto.getAreaName() %>
-							<%} else if(boardDto.getBoardTypeNo() == 1 || boardDto.getBoardTypeNo() == 2) { %>
+							<%} else { %>
 								전체
 							<%} %>
 						</td>
@@ -247,7 +257,7 @@
 				<a href="boardAnswer.jsp?boardNo=<%=boardNo%>" class="link-btn">답변</a>
 			<%} %>
 			<%if(isAdmin || boardDto.getClientNo() == clientNo) {%>
-				<a href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn">삭제</a>
+				<a href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="board-delete-btn link-btn">삭제</a>
 			<%} %>
 			<%if(isLike) { %>
 				<span class="heart">

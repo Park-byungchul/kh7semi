@@ -19,7 +19,7 @@ catch (Exception e){
 	areaNo = 0;
 }
 
-String title = "일정등록";
+String title = "일정수정";
 if(areaNo > 0){
 	title += " : " + areaDao.detail(areaNo).getAreaName();
 }
@@ -55,6 +55,10 @@ try{
 	month = calendarDao.month;
 	day = calendarDao.day;
 }
+
+PlanDao planDao = new PlanDao();
+int planNo = Integer.parseInt(request.getParameter("planNo"));
+PlanDto planDto = planDao.detail(planNo);
 %>
 
 <jsp:include page="/service/serviceSidebar.jsp">
@@ -64,11 +68,11 @@ try{
 <div class="main">
 	<div class="header">
 		<div>
-			<span class="title">일정등록</span>
+			<span class="title">일정수정</span>
 		</div>
 		<div class="row">
 			<span class="path"><a class="imgArea" href="<%=root %>"><img
-					alt="home" src="<%=root %>/image/home.png"></a> > 도서관 서비스 > 일정등록</span>
+					alt="home" src="<%=root %>/image/home.png"></a> > 도서관 서비스 > 일정수정</span>
 		</div>
 		
 	</div>
@@ -80,21 +84,23 @@ try{
 
 		<div class="planInsert right">
 			<div class="planInsertForm">
-				<form action="planInsert.kh" method="post">
+				<form action="planEdit.kh" method="post">
+					<input type="hidden" value="<%=planDto.getPlanNo() %>" name="planNo">
 					<input type="hidden"  value="<%=areaNo %>" name="areaNo">
 				<div class="row">
-					<input type="text" name="planContent">
+					<input type="text" name="planContent" value="<%=planDto.getPlanContent()%>">
 				</div>
 				<div class="row">
-					<input type="date" name="planStartDate" value="<%=year%>-<%=month < 10 ? "0" + Integer.toString(month) : Integer.toString(month) %>-<%=day < 10 ? "0" + Integer.toString(day) : Integer.toString(day)%>">
+					<input type="date" name="planStartDate" value="<%=planDto.getPlanStartDate()%>">
 				</div>
 				<div class="row">
-					<input type="date" name="planEndDate" value="<%=year%>-<%=month < 10 ? "0" + Integer.toString(month) : Integer.toString(month) %>-<%=day < 10 ? "0" + Integer.toString(day) : Integer.toString(day)%>">
-				</div>
+					<input type="date" name="planEndDate" value="<%=planDto.getPlanEndDate()%>">
 				<div class="row">
-					<input type="submit" value="등록">
-				</div>
+					<input type="submit" value="수정">
 				</form>
+					<button><a href="plan.jsp">취소</a></button>
+					<button><a href="planDelete.kh?planNo=<%=planDto.getPlanNo()%>">삭제</a></button>
+				</div>
 			</div>
 		</div>
 

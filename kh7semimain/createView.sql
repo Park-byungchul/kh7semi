@@ -77,3 +77,19 @@ create or replace view recommendBook as
 select RC.recommendCount, B.*
 from recommendCount RC 
 left outer join book B on RC.book_isbn = B.book_isbn;
+
+-- 신착도서 출력 view
+create or replace view newBook as
+select a.area_name,
+gb.book_isbn,
+gb.get_book_date,
+b.book_author,
+b.book_date,
+b.book_img,
+b.book_publisher,
+b.book_title,
+g.genre_name
+from get_book GB 
+left outer join book B on GB.book_isbn = B.book_isbn
+left outer join area A on gb.area_no = a.area_no
+left outer join genre G on g.genre_no = b.genre_no;

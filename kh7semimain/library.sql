@@ -266,7 +266,7 @@ create or replace view get_book_search_view as
 -- 프로모션 테이블
 create table promotion(
 promotion_no number(19) primary key,
-area_no references area(area_no)
+area_no references area(area_no) on delete set null
 );
 
 -- 프로모션 파일 테이블

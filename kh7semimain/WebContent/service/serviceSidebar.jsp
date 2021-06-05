@@ -20,12 +20,29 @@
 
 <jsp:include page="/template/sidebar1.jsp"></jsp:include>
 
-<h2>도서관 서비스</h2>
-<ul>
-	<li><a href="<%=root %>/service/serviceInfo.jsp">이용안내</a></li>
-	<li><a href="<%=root %>/reservation/reservationInfo.jsp">도서 예약</a></li>
-	<li><a href="<%=root %>/hopelist/hopelist.jsp">희망도서</a></li>
-	<li><a href="<%=root %>/plan/plan.jsp">행사일정</a></li>
-</ul>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<script>
+	$(function(){
+
+		$(".menuItem").each(function(index, data){
+			if(window.location.pathname == $(this).attr('href')){
+				$(this).addClass("active");
+			}
+		});
+
+	});
+</script>
+
+<div class="sidebarContainer">
+	<span class="sidebarTitle">도서관 서비스</span>
+	
+	<ul class="sidebarMenu">
+		<li><a class="menuItem" href="<%=root %>/service/serviceInfo.jsp">이용안내</a></li>
+		<li><a class="menuItem" href="<%=root %>/reservation/reservationInfo.jsp">도서 예약</a></li>
+		<li><a class="menuItem" href="<%=root %>/hopelist/hopelist.jsp">희망도서</a></li>
+		<li><a class="menuItem" href="<%=root %>/plan/plan.jsp">행사일정</a></li>
+	</ul>
+</div>
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>

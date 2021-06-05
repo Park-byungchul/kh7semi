@@ -1,4 +1,4 @@
-package library.beans;
+package library.beans.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,17 +6,19 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.beans.JdbcUtils;
+
 public class BoardCommentDao {
 	public void insert(BoardCommentDto boardCommentDto) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "insert into board_comment "
-				+ "values(comment_seq.nextval, ?, ?, ?, sysdate, 0, ?)";
+				+ "values(comment_seq.nextval, ?, ?, ?, ?, sysdate, 0)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, boardCommentDto.getClientNo());
 		ps.setInt(2, boardCommentDto.getBoardNo());
-		ps.setString(3, boardCommentDto.getCommentContent());
-		ps.setInt(4, boardCommentDto.getBoardTypeNo());
+		ps.setInt(3, boardCommentDto.getBoardTypeNo());
+		ps.setString(4, boardCommentDto.getCommentContent());
 		ps.execute();
 		
 		con.close();

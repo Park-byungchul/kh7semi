@@ -1,7 +1,7 @@
-<%@page import="library.beans.BoardAnswerDto"%>
-<%@page import="library.beans.BoardAnswerDao"%>
-<%@page import="library.beans.BoardListDto"%>
-<%@page import="library.beans.BoardListDao"%>
+<%@page import="library.beans.board.BoardAnswerDto"%>
+<%@page import="library.beans.board.BoardAnswerDao"%>
+<%@page import="library.beans.board.BoardListDto"%>
+<%@page import="library.beans.board.BoardListDao"%>
 <%@page import="library.beans.AreaDto"%>
 <%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>

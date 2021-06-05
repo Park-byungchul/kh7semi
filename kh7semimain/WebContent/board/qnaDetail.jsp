@@ -1,20 +1,20 @@
-<%@page import="library.beans.BoardAnswerDto"%>
-<%@page import="library.beans.BoardAnswerDao"%>
-<%@page import="library.beans.BoardCommentDto"%>
+<%@page import="library.beans.board.BoardAnswerDto"%>
+<%@page import="library.beans.board.BoardAnswerDao"%>
+<%@page import="library.beans.board.BoardCommentDto"%>
 <%@page import="java.util.List"%>
-<%@page import="library.beans.BoardCommentDao"%>
-<%@page import="library.beans.BoardLikeDto"%>
-<%@page import="library.beans.BoardLikeDao"%>
+<%@page import="library.beans.board.BoardCommentDao"%>
+<%@page import="library.beans.board.BoardLikeDto"%>
+<%@page import="library.beans.board.BoardLikeDao"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.Set"%>
-<%@page import="library.beans.BoardListDto"%>
-<%@page import="library.beans.BoardListDao"%>
+<%@page import="library.beans.board.BoardListDto"%>
+<%@page import="library.beans.board.BoardListDao"%>
 <%@page import="library.beans.AreaDto"%>
 <%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
-<%@page import="library.beans.BoardDao"%>
-<%@page import="library.beans.BoardDto"%>
+<%@page import="library.beans.board.BoardDao"%>
+<%@page import="library.beans.board.BoardDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     

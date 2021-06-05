@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import library.beans.ReviewDao;
+import library.beans.board.ReviewDao;
 
 @WebServlet (urlPatterns = "/board/reviewDelete.kh")
 public class ReviewDeleteServlet extends HttpServlet {

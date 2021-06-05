@@ -1,8 +1,10 @@
-package library.beans;
+package library.beans.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import library.beans.JdbcUtils;
 
 public class ReviewLikeDao {
 	public void insert(ReviewLikeDto reviewLikeDto) throws Exception {

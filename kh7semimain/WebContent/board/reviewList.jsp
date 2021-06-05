@@ -1,8 +1,8 @@
 <%@page import="library.beans.BookDto"%>
-<%@page import="library.beans.ReviewDao"%>
-<%@page import="library.beans.ReviewDto"%>
-<%@page import="library.beans.ReviewListDto"%>
-<%@page import="library.beans.ReviewListDao"%>
+<%@page import="library.beans.board.ReviewDao"%>
+<%@page import="library.beans.board.ReviewDto"%>
+<%@page import="library.beans.board.ReviewListDto"%>
+<%@page import="library.beans.board.ReviewListDao"%>
 <%@page import="library.beans.AreaDto"%>
 <%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>

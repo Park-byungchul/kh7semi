@@ -1,6 +1,6 @@
 <%@page import="library.beans.BookDto"%>
-<%@page import="library.beans.ReviewDto"%>
-<%@page import="library.beans.ReviewDao"%>
+<%@page import="library.beans.board.ReviewDto"%>
+<%@page import="library.beans.board.ReviewDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="library.beans.ClientDto"%>

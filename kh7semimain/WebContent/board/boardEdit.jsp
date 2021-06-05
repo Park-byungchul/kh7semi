@@ -1,8 +1,8 @@
 <%@page import="library.beans.AreaDto"%>
 <%@page import="java.util.List"%>
 <%@page import="library.beans.AreaDao"%>
-<%@page import="library.beans.BoardDto"%>
-<%@page import="library.beans.BoardDao"%>
+<%@page import="library.beans.board.BoardDto"%>
+<%@page import="library.beans.board.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     

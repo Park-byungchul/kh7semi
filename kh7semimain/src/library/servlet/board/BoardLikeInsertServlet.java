@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import library.beans.BoardDao;
-import library.beans.BoardLikeDao;
-import library.beans.BoardLikeDto;
+import library.beans.board.BoardDao;
+import library.beans.board.BoardLikeDao;
+import library.beans.board.BoardLikeDto;
 
 @WebServlet (urlPatterns = "/board/boardLikeInsert.kh")
 public class BoardLikeInsertServlet extends HttpServlet {

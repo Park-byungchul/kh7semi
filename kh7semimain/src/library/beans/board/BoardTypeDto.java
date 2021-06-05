@@ -1,4 +1,4 @@
-package library.beans;
+package library.beans.board;
 
 public class BoardTypeDto {
 	private int boardTypeNo;

@@ -1,8 +1,8 @@
 <%@page import="library.beans.AreaDto"%>
 <%@page import="java.util.List"%>
 <%@page import="library.beans.AreaDao"%>
-<%@page import="library.beans.BoardDto"%>
-<%@page import="library.beans.BoardDao"%>
+<%@page import="library.beans.board.BoardDto"%>
+<%@page import="library.beans.board.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -73,7 +73,6 @@
 	
 		<div class="row">
 			<input type="submit" value="수정" class="link-btn">
-			<a id="delete" href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn">삭제</a>
 			<%if(boardDto.getBoardTypeNo() == 2) { %>
 				<a href="qnaDetail.jsp?boardNo=<%=boardNo%>" class="link-btn">취소</a>
 			<%} else { %>

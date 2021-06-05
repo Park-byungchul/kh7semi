@@ -203,6 +203,22 @@ commit;
 
 alter table review add review_reply number(19) default 0 not null check(review_reply >= 0);
 
+-- 프로모션 테이블
+create table promotion(
+promotion_no number(19) primary key,
+area_no references area(area_no) on delete set null
+);
+
+-- 프로모션 파일 테이블
+create table promotion_file(
+file_no number(19) primary key,
+file_upload_name varchar2(256) not null,
+file_save_name varchar2(256) not null,
+file_content_type varchar2(30),
+file_size number(19) not null,
+file_origin number(19)
+);
+
 DROP TABLE "CLIENT" CASCADE CONSTRAINTS;
 DROP TABLE "AREA" CASCADE CONSTRAINTS;
 DROP TABLE "GENRE" CASCADE CONSTRAINTS;

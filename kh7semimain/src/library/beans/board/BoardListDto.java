@@ -1,4 +1,4 @@
-package library.beans;
+package library.beans.board;
 
 import java.sql.Date;
 

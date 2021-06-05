@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import library.beans.ReviewDao;
-import library.beans.ReviewDto;
+import library.beans.board.ReviewDao;
+import library.beans.board.ReviewDto;
 
 @WebServlet (urlPatterns = "/board/reviewEdit.kh")
 public class ReviewEditServlet extends HttpServlet {

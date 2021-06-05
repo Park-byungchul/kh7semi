@@ -45,3 +45,39 @@
 .review-right {
 	float:right;
 }
+
+table > tbody > tr > th {
+	background-color: #f5f5f5;
+	width: 15%;
+	text-align:left;
+}
+
+table > tbody > tr > td {
+	text-align:left;
+}
+
+.comment-textarea {
+  	overflow-y: hidden;
+ 	resize: none;
+ 	padding: 1em;
+ 	padding-bottom: 0.2em;
+ 	width: 840px;
+ 	border-color: lightgray;
+}
+
+.comment-area {
+	background-color: #f5f5f5;
+	list-style:none;
+	padding-right: 40px;
+	padding-top: 24px;
+	padding-bottom: 24px;
+}
+
+.comment-list {
+	border-bottom: 1px solid lightgray;
+}
+
+.comment-delete-btn, .comment-edit-btn {
+	color:gray;
+	text-decoration:none;
+}

@@ -1,16 +1,17 @@
-package library.beans;
+package library.beans.board;
 
 import java.sql.Date;
 
-public class ReviewCommentDto {
+public class BoardCommentDto {
 	private int commentNo;
 	private int clientNo;
-	private int reviewNo;
-	private String commentField;
+	private int boardNo;
+	private String commentContent;
 	private Date commentDate;
 	private int commentLike;
+	private int boardTypeNo;
 	
-	public ReviewCommentDto() {
+	public BoardCommentDto() {
 		super();
 	}
 	public int getCommentNo() {
@@ -25,17 +26,17 @@ public class ReviewCommentDto {
 	public void setClientNo(int clientNo) {
 		this.clientNo = clientNo;
 	}
-	public int getReviewNo() {
-		return reviewNo;
+	public int getBoardNo() {
+		return boardNo;
 	}
-	public void setReviewNo(int reviewNo) {
-		this.reviewNo = reviewNo;
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
 	}
-	public String getCommentField() {
-		return commentField;
+	public String getCommentContent() {
+		return commentContent;
 	}
-	public void setCommentField(String commentField) {
-		this.commentField = commentField;
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
 	}
 	public Date getCommentDate() {
 		return commentDate;
@@ -48,5 +49,11 @@ public class ReviewCommentDto {
 	}
 	public void setCommentLike(int commentLike) {
 		this.commentLike = commentLike;
+	}
+	public int getBoardTypeNo() {
+		return boardTypeNo;
+	}
+	public void setBoardTypeNo(int boardTypeNo) {
+		this.boardTypeNo = boardTypeNo;
 	}
 }

@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import library.beans.BoardCommentDao;
-import library.beans.BoardCommentDto;
-import library.beans.BoardDao;
+import library.beans.board.BoardCommentDao;
+import library.beans.board.BoardCommentDto;
+import library.beans.board.BoardDao;
 
 @WebServlet (urlPatterns = "/board/commentDelete.kh")
 public class CommentDeleteServlet extends HttpServlet {

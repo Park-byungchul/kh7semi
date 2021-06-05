@@ -215,7 +215,7 @@
 
 .table>thead>tr>th, .table>thead>tr>td, .table>tbody>tr>th, .table>tbody>tr>td,
 	.table>tfoot>tr>th, .table>tfoot>tr>td {
-	padding: 0.5rem;
+	padding: 1rem;
 	height: 51px;
 }
 

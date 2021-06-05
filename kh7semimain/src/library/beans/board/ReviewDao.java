@@ -1,9 +1,11 @@
-package library.beans;
+package library.beans.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
+
+import library.beans.BookDto;
+import library.beans.JdbcUtils;
 
 public class ReviewDao {
 	public int getSequence() throws Exception {

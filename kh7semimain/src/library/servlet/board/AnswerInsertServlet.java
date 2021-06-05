@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import library.beans.BoardAnswerDao;
-import library.beans.BoardAnswerDto;
-import library.beans.BoardDao;
-import library.beans.BoardDto;
+import library.beans.board.BoardAnswerDao;
+import library.beans.board.BoardAnswerDto;
+import library.beans.board.BoardDao;
+import library.beans.board.BoardDto;
 
 @WebServlet (urlPatterns = "/board/boardAnswer.kh")
 public class AnswerInsertServlet extends HttpServlet {

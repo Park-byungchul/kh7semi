@@ -1,10 +1,12 @@
-package library.beans;
+package library.beans.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import library.beans.JdbcUtils;
 
 public class BoardListDao {
 	public List<BoardListDto> list(int boardTypeNo, int startRow, int endRow) throws Exception {
@@ -54,6 +56,8 @@ public class BoardListDao {
 		
 		return boardList;
 	}
+
+
 	
 	// 검색 (도서관 포함)
 	public List<BoardListDto> search(int boardTypeNo, int areaNo, String type, String keyword, int startRow, int endRow) throws Exception {

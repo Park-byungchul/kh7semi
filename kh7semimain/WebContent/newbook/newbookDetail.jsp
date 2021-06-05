@@ -13,42 +13,16 @@
 	BookDao bookDao = new BookDao();
 	BookDto bookDto = bookDao.get(bookIsbn);
 
-	
-	request.setCharacterEncoding("UTF-8");
-	AreaDao areaDao = new AreaDao();
-	int areaNo;
-	try{
-		areaNo = (int)session.getAttribute("areaNo");
-	}
-	catch (Exception e){
-		areaNo = 0;
-	}
-
-	String title = "관리자 메뉴";
-	if(areaNo > 0){
-		title += " : " + areaDao.detail(areaNo).getAreaName();
-	}
+	String title = "신착 도서";
 %>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
-$(function() {
-	$(".bookDelete").click(function() {
-		var choice = window.confirm("정말 삭제하시겠습니까?");
-		if (choice) {
-			return true;
-		} else {
-			return false;
-		}
-	});
-});
 </script>
-<jsp:include page="/admin/adminMenuSidebar.jsp">
-	<jsp:param value="<%=title %>" name="title"/>
-</jsp:include>
+<jsp:include page="/search/searchSidebar.jsp"></jsp:include>
 
 <div class="container-600">
 	<div class="row text-center">
-		<h2>도서 상세 정보</h2>
+		<h2>신착 도서 상세 정보</h2>
 			<img id="thumnail" style="width:240px;height:348px;"src="<%=bookDto.getBookImg()%>">
 		</div>		
 		<div class="row text-left">
@@ -58,13 +32,11 @@ $(function() {
 			<label>저자</label><input type="text" name="bookAuthor" id="bookAuthor" required class="form-input form-input-underline" value="<%=bookDto.getBookAuthor()%>" disabled><br><br>
 			<label>출판사</label><input type="text" name="bookPublisher" id="bookPublisher" required class="form-input form-input-underline" value="<%=bookDto.getBookPublisher()%>" disabled><br><br>
 			<label>출판 날짜</label><input type="text" name="bookDate" id="bookDate" required class="form-input form-input-underline" value="<%=bookDto.getBookDate()%>" disabled><br><br>
-			<label>도서 소개</label><br><br><textarea name="bookContent" cols="95" rows="6" style="resize:none;border:0 ;'" id="bookContent"  disabled><%=bookDto.getBookContent()%></textarea><br><br>
+			<label>도서 소개</label><br><br><textarea name="bookContent" cols="87" rows="6" style="resize:none;border:0 ;'" id="bookContent"  disabled><%=bookDto.getBookContent()%></textarea><br><br>
 			<label>이미지 URL</label><input type="text" name="bookImg" id="bookImg" required class="form-input form-input-underline" value="<%=bookDto.getBookImg()%>" disabled><br><br>
 	</div>
 	<div class="row text-right">
-			<button><a href="bookList.jsp">목록</a></button>
-			<button><a href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
-			<button><a href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>" class="bookDelete">삭제</a></button>
+			<button><a href="newbooklist.jsp">목록</a></button>
 	</div>
 		
 </div>

@@ -80,4 +80,86 @@ public class RecommendDao {
 			con.close();
 			return result;
 		}
+		
+		
+		//키워드만
+		public List<RecommendDto> search(String keyword,int startRow,int endRow) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql =	"select * from ("
+							+ "select rownum rn, TMP.* from ("
+								+ "select * from recommendBook where (book_title || book_author) like '%'||?||'%'"
+								+ ") TMP"
+							+ ") where rn between ? and ?";
+		
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ps.setInt(2, startRow);
+		ps.setInt(3, endRow);
+		
+		ResultSet rs = ps.executeQuery();
+
+		List<RecommendDto> recommendList = new ArrayList<>();
+		
+		while(rs.next()) {
+			RecommendDto recommendDto = new RecommendDto();
+
+			recommendDto.setBookIsbn(rs.getString("book_isbn"));
+			
+			
+			recommendList.add(recommendDto);
+		}
+		
+		con.close();
+		
+		return recommendList;
+	}
+
+		//타입+키워드
+		public List<RecommendDto> search(String type, String keyword,int startRow,int endRow) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+				
+				String sql =	"select * from ("
+									+ "select rownum rn, TMP.* from ("
+										+ "select * from recommendBook where #1 like '%'||?||'%'"
+										+ ") TMP"
+									+ ") where rn between ? and ?";
+				sql = sql.replace("#1", type);
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setString(1, keyword);
+				ps.setInt(2, startRow);
+				ps.setInt(3, endRow);
+				
+				ResultSet rs = ps.executeQuery();
+
+				List<RecommendDto> recommendList = new ArrayList<>();
+				
+				while(rs.next()) {
+					RecommendDto recommendDto = new RecommendDto();
+
+					recommendDto.setBookIsbn(rs.getString("book_isbn"));
+					
+					
+					recommendList.add(recommendDto);
+				}
+				
+				con.close();
+				
+				return recommendList;
+			}		
+
+		//페이지블럭 계산을 위한 카운트 기능(목록/검색)
+		public int getCount() throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select count(*) from recommend";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			int count = rs.getInt(1);
+			
+			con.close();
+			
+			return count;
+	}
 }

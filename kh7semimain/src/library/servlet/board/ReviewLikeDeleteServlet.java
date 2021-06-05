@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import library.beans.ReviewDao;
-import library.beans.ReviewLikeDao;
-import library.beans.ReviewLikeDto;
+import library.beans.board.ReviewDao;
+import library.beans.board.ReviewLikeDao;
+import library.beans.board.ReviewLikeDto;
 
 @WebServlet (urlPatterns = "/board/reviewLikeDelete.kh")
 public class ReviewLikeDeleteServlet extends HttpServlet{

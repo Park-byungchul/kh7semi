@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.RecommendDto"%>
 <%@page import="library.beans.RecommendDao"%>
 <%@page import="library.beans.GetBookSearchDto"%>
@@ -9,23 +10,52 @@
 	pageEncoding="UTF-8"%>
 
 <%
-String root = request.getContextPath(); 
-GetBookSearchDao getBookSearchDao = new GetBookSearchDao();
-List<GetBookSearchDto> list = getBookSearchDao.list();
-int clientNo;
-try {
-	clientNo = (int)session.getAttribute("clientNo");
+	String root = request.getContextPath(); 
+	GetBookSearchDao getBookSearchDao = new GetBookSearchDao();
+	List<GetBookSearchDto> list = getBookSearchDao.list();
+	int clientNo;
+	try {
+		clientNo = (int)session.getAttribute("clientNo");
 	
-}
-catch (Exception e){
-	clientNo = 0;
-}
+	}
+	catch (Exception e){
+		clientNo = 0;
+	}
 
+	
+// 브라우저 이름 정하기
+	AreaDao areaDao = new AreaDao();
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
 
-boolean isLogin = session.getAttribute("clientNo") != null;
+	String title = "관리자 메뉴";
+	if(areaNo > 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 
+	//--------------------------------
+	request.setCharacterEncoding("UTF-8");
+	String type = request.getParameter("type");
+	String keyword = request.getParameter("keyword");
 
-
+	boolean isLogin = session.getAttribute("clientNo") != null;
+	List<GetBookSearchDto> getBookList;
+		//select값이 기본 -> '전체' 값을 null로 주고 keyword만 전송
+		if(type == null && keyword == null) {
+			getBookList = getBookSearchDao.list();
+		}
+		else if(type.equals("all") || type.equals(null)){
+			getBookList = getBookSearchDao.searchList(keyword);
+		}
+		else{ //select가 '전체'가 아니면 type과 keyword 같이 전송
+			getBookList = getBookSearchDao.searchList(type, keyword);
+		}
+//-----------------------------------
 int p;
 
 try {
@@ -34,48 +64,56 @@ try {
 catch (Exception e) {
 	p = 1;
 }
-
+	
+	
 // 페이징 -------------------------------------------------------
-int pageNo;
-try{
-	pageNo = Integer.parseInt(request.getParameter("pageNo"));
-	if(pageNo < 1) {
-		throw new Exception();
+	int pageNo;
+	
+	try{
+		pageNo = Integer.parseInt(request.getParameter("pageNo"));
+		if(pageNo < 1) { 
+			throw new Exception();
+		}
 	}
-}
-catch(Exception e){
-	pageNo = 1;
-}
-
-int pageSize;
-try{
-	pageSize = Integer.parseInt(request.getParameter("pageSize"));
-	if(pageSize < 10){
-		throw new Exception();
+	catch(Exception e){
+		pageNo = 1;
 	}
-}
-catch(Exception e){
-	pageSize = 10;
-}
 
-int startRow = pageNo * pageSize - (pageSize-1);
-int endRow = pageNo * pageSize;
+	//한 페이지 글 개수
+	int pageSize;
+	try{
+		pageSize = Integer.parseInt(request.getParameter("pageSize"));
+		if(pageSize < 10) {
+			throw new Exception();
+		}
+	}
+	catch(Exception e){
+		pageSize = 10;
+	}	
 
-int count = 1;
-//int count  = getBookSearchDao.getCount(); // 구현하자!
-int blockSize = 10;
-int lastBlock = (count + pageSize - 1) / pageSize;
-int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
-int endBlock = startBlock + blockSize - 1;
+	//시작과 끝번호
+	int startRow = pageNo * pageSize - (pageSize-1);
+	int endRow = pageNo * pageSize;
+	
+	
+	//페이지 네비게이션 영역 계산
+	int count  = 1;
+	//int count = getBookSearchDao.getCount(); //구현하자!
+	int blockSize = 10;
+	int lastBlock = (count + pageSize - 1) / pageSize;
+	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+	int endBlock = startBlock + blockSize - 1;
 
-if(endBlock > lastBlock){
-	endBlock = lastBlock;
-}
+	if(endBlock > lastBlock){
+		endBlock = lastBlock;
+	}
 //페이징 -------------------------------------------------------
 %>
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
 <script src="<%=root%>/pagination/pagination.js"></script>
 <script>
 	$(function(){
@@ -95,10 +133,22 @@ if(endBlock > lastBlock){
 	text-decoration: none;
 }
 </style>
-<div class="container-1000">
-	<div class="row text-left">
+<div class="container-900">
+	<div class="row text-center">
 		<h2>입고된 도서 목록</h2>
 	</div>
+	<div class="row text-center">
+				<form action = "getBookList.jsp" method="get">
+					<select name="type">
+						<option value="all">전체</option>
+						<option value="book_title">서명</option>
+						<option value= "book_author">저자</option>
+					</select>
+				
+				<input type="text" name="keyword" size="50" height = "20" >
+				<input type="submit" value="검색">
+				</form>					
+			</div>
 	<div class="row text-right">
 		<a href="getBookInsert.jsp">입고하기</a>
 	</div>
@@ -107,14 +157,15 @@ if(endBlock > lastBlock){
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>입고 번호</th>
-					<th>ISBN</th>
+					<th>입고번호</th>
+					<th>도서명</th>
+					<th>저자</th>
 					<th>썸네일</th>
 					<th>기능</th>
 				</tr>
 			</thead>
 			<tbody>
-				<%for (GetBookSearchDto getBookSearchDto : list) { 
+				<%for (GetBookSearchDto getBookSearchDto : getBookList) { 
 	
 				%>
 				<tr>

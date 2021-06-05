@@ -6,7 +6,14 @@
 	AreaDao areaDao = new AreaDao();
 	String root = request.getContextPath();
 	request.setCharacterEncoding("UTF-8");
-	int areaNo = (int)session.getAttribute("areaNo");
+	int areaNo;
+	try {
+		areaNo = (int)session.getAttribute("areaNo");
+		
+	}
+	catch (Exception e) {
+		areaNo = 0;
+	}
 
 	BookCountDao bookCountDao = new BookCountDao();
 
@@ -26,7 +33,7 @@ if(areaNo > 0){
 <ul>
 	<li><a href="<%=root%>/location/location.jsp">찾아오는길</a></li>
 	<li><a href="dataStatus.jsp">자료현황</a></li>
-	<li><a href="#">이용 안내</a></li>
+	<li><a href="<%=root%>/useInfo/useInfo.jsp">이용 안내</a></li>
 </ul>
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>

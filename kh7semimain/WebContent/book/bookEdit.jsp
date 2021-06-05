@@ -13,6 +13,21 @@
 	BookDao bookDao = new BookDao();
 	BookDto bookDto = bookDao.get(bookIsbn);
 
+	
+	request.setCharacterEncoding("UTF-8");
+	AreaDao areaDao = new AreaDao();
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
+
+	String title = "관리자 메뉴";
+	if(areaNo > 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 %>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
@@ -27,7 +42,9 @@ $(function() {
 	});
 });
 </script>
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 <div class="container-600">
 	<div class="row text-center">

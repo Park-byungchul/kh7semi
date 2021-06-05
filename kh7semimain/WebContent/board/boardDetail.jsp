@@ -1,24 +1,28 @@
-<%@page import="library.beans.BoardAnswerDto"%>
-<%@page import="library.beans.BoardAnswerDao"%>
-<%@page import="library.beans.BoardCommentDto"%>
+<%@page import="library.beans.board.BoardAnswerDto"%>
+<%@page import="library.beans.board.BoardAnswerDao"%>
+<%@page import="library.beans.board.BoardCommentDto"%>
 <%@page import="java.util.List"%>
-<%@page import="library.beans.BoardCommentDao"%>
-<%@page import="library.beans.BoardLikeDto"%>
-<%@page import="library.beans.BoardLikeDao"%>
+<%@page import="library.beans.board.BoardCommentDao"%>
+<%@page import="library.beans.board.BoardLikeDto"%>
+<%@page import="library.beans.board.BoardLikeDao"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.Set"%>
-<%@page import="library.beans.BoardListDto"%>
-<%@page import="library.beans.BoardListDao"%>
+<%@page import="library.beans.board.BoardListDto"%>
+<%@page import="library.beans.board.BoardListDao"%>
 <%@page import="library.beans.AreaDto"%>
 <%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
-<%@page import="library.beans.BoardDao"%>
-<%@page import="library.beans.BoardDto"%>
+<%@page import="library.beans.board.BoardDao"%>
+<%@page import="library.beans.board.BoardDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%
+	request.setCharacterEncoding("UTF-8");
+	
+	String root = request.getContextPath();
+
 	// 테스트
 	// 세션 번호
 	int clientNo;
@@ -103,7 +107,7 @@
 	BoardAnswerDto answerDto = answerDao.get(boardNo);
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
 
 <style>
 	.heart > a {
@@ -146,6 +150,16 @@
 		}
 	});
 	
+	// 글 삭제
+	$(function(){
+		$(".board-delete-btn").click(function(e) {
+			var choice = window.confirm("정말 삭제하시겠습니까?");
+			if(!choice){
+				e.preventDefault();
+			}
+		});
+	});
+	
 	// 댓글 삭제
 	$(function(){
 		$(".comment-delete-btn").click(function(e) {
@@ -166,118 +180,75 @@
 		});
 		$(".comment-edit-cancel-btn").click(function() {
 			$(this).parent().parent().hide();
-			$(this).parent().parent().prwv.show();
+			$(this).parent().parent().parent().prev().show();
 		});
 	});
+	
+	// 댓글 높이 자동 설정
+	function resize(obj) {
+  		obj.style.height = "1px";
+  		obj.style.height = (12+obj.scrollHeight)+"px";
+	}
 </script>
 
-<div class="container-800">
-	<div class="row text-left">
-		<h1><%=boardListDto.getBoardTypeName() %></h1>
-	</div>
-	
-	<div class="row text-left">
-		<h3>
-			<%if(boardDto.getAreaNo() != 0){ %>
-				[<%=areaDto.getAreaName() %>]
-			<%} else if(boardDto.getBoardTypeNo() == 1 || boardDto.getBoardTypeNo() == 2) { %>
-				[전체]
-			<%} %>
-			<%=boardDto.getBoardTitle()%>
-		</h3>
-	</div>
-	
-	<div class="row float-container">
-		<div class="left">
-			<%=clientDto.getClientName()%>
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title"><%=boardListDto.getBoardTypeName() %></span>
 		</div>
-		<div class="right">
-			조회수 <%=boardDto.getBoardRead()%>
-			좋아요 <%=boardDto.getBoardLike()%>				
-		</div>		
-		<div class="right">
-			<%=boardDto.getBoardDate().toLocaleString()%>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > <%=boardListDto.getBoardTypeName() %></span>
 		</div>
 	</div>
 	
-	<div class="row text-left" style="min-height:300px;">
-		<pre><%=boardDto.getBoardField()%></pre>
-	</div>
-	
-	<!-- 질문답변 게시판에는 댓글이 없음 -->
-	<%if(boardDto.getBoardTypeNo() != 2) { %>
-		<form action="commentInsert.kh" method="post">
-			<input type="hidden" name="boardNo" value="<%=boardNo%>">
-			<input type="hidden" name="boardTypeNo" value="<%=boardListDto.getBoardTypeNo()%>">
-			<div class="row">
-				<textarea id="commentContent" name="commentContent" required></textarea>
-			</div>
-			<div class="row">
-				<input type="submit" value="댓글 작성">
-			</div>
-		</form>
-		
-		<div class="row text-left">
-			<h4>댓글 목록</h4>
-		</div>
-		<%for(BoardCommentDto commentDto : commentList) { %>
-			<div class="row text-left" style="border:1px solid gray;">
-				<div class="float-container">
-					<div class="left"><%=commentDao.getClientName(commentDto.getClientNo()) %></div>
-					
-					 <%if(commentDto.getClientNo() == clientNo) { %>
-						<div class="right">
-							<a class="comment-edit-btn">수정</a>
-							| 
-							<a class="comment-delete-btn" href="commentDelete.kh?commentNo=<%=commentDto.getCommentNo()%>&boardNo=<%=boardNo%>">삭제</a>
+	<div class="row">
+		<table class="table table-border table-hover">
+			<tbody>
+				<%if(boardDto.getBoardTypeNo() == 1) {%>
+					<tr>
+						<th>도서관</th>
+						<td>
+							<%if(boardDto.getAreaNo() != 0){ %>
+								<%=areaDto.getAreaName() %>
+							<%} else { %>
+								전체
+							<%} %>
+						</td>
+					</tr>
+				<%} %>
+				<tr>
+					<th>제목</th>
+					<td><%=boardDto.getBoardTitle()%></td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td><%=clientDto.getClientName()%></td>
+				</tr>
+				<tr>
+					<th>작성일</th>
+					<td><%=boardDto.getBoardDate().toLocaleString()%></td>
+				</tr>
+				<tr>
+					<th>조회수</th>
+					<td><%=boardDto.getBoardRead()%></td>
+				</tr>
+				<tr>
+					<th>추천</th>
+					<td><%=boardDto.getBoardLike()%></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="row text-left">
+							<pre><%=boardDto.getBoardField()%></pre>
 						</div>
-					<%} %>
-				</div>
-				<!-- 화면 표시 댓글 -->
-				<div class="comment-display-area">
-					<pre><%=commentDto.getCommentContent() %></pre>
-				</div>
-				<%if(commentDto.getClientNo() == clientNo) { %>
-					<div class="comment-edit-area">
-						<form action="commentEdit.kh" method="post">
-							<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
-							<input type="hidden" name="boardNo" value="<%=boardNo%>">
-							<textarea name="commentContent" required><%=commentDto.getCommentContent()%></textarea>
-							<input type="submit" value="댓글 수정">
-							<input type="button" value="작성 취소" class="comment-edit-cancel-btn">
-						</form>
-					</div>
-				<%} %>
-				<div><%=commentDto.getCommentDate().toLocaleString() %></div>
-			</div>
-		<%} %>
-	<%} else { %>
-		<!-- 대신 답변이 들어감 -->
-		<div class="row float-container">
-			<div class="left">
-				작성자 | 
-				<%if(answerDto.getClientNo() != 0) {%>
-					<%=answerDao.getClientName(answerDto.getClientNo()) %>
-				<%} %>
-			</div>
-			<div class="right">
-				답변일 | 
-				<%if(answerDto.getAnswerDate() != null) {%>
-					<%=answerDto.getAnswerDate().toLocaleString() %>
-				<%} %>
-			</div>		
-		</div>
-		
-		<div class="row text-left" style="min-height:300px;">
-			<pre>
-				<%=answerDto.getAnswerContent() %>
-			</pre>
-		</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<%} %>
 	
 	<div class="row text-right">
-		<!-- 본인 및 관리자에게만 표시되도록 하는 것이 좋다 -->
 		<%if(clientNo != 0) {%>
 			<%if(boardDto.getClientNo() == clientNo) { %>
 				<a href="boardEdit.jsp?boardNo=<%=boardNo%>" class="link-btn">수정</a>
@@ -286,7 +257,7 @@
 				<a href="boardAnswer.jsp?boardNo=<%=boardNo%>" class="link-btn">답변</a>
 			<%} %>
 			<%if(isAdmin || boardDto.getClientNo() == clientNo) {%>
-				<a href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="link-btn">삭제</a>
+				<a href="boardDelete.kh?boardTypeNo=<%=boardDto.getBoardTypeNo()%>&boardNo=<%=boardNo%>" class="board-delete-btn link-btn">삭제</a>
 			<%} %>
 			<%if(isLike) { %>
 				<span class="heart">
@@ -301,25 +272,106 @@
 		<a href="#" onclick="chooseList()" class="link-btn">목록</a>
 	</div>
 	
-	<div class="row text-left">
-		다음글 : 
-		<%if(nextBoardDto == null){%>
-		다음글이 없습니다.
-		<%}else{ %>
-		<a href="boardDetail.jsp?boardNo=<%=nextBoardDto.getBoardNo()%>">
-			<%=nextBoardDto.getBoardTitle()%>
-		</a>
+	<ul class="comment-area">
+		<%if(boardDto.getBoardTypeNo() != 2) { %>
+			<!-- 댓글 목록 출력 -->
+			<%for(BoardCommentDto commentDto : commentList) { %>
+				<li class="row text-left comment-list">
+					<div class="float-container">
+						<div class="left">
+							<span style="font-weight:bold"><%=commentDao.getClientName(commentDto.getClientNo()) %>&nbsp;</span>
+							<span style="color:gray"><%=commentDto.getCommentDate().toLocaleString() %></span>
+						</div>
+						
+						 <%if(commentDto.getClientNo() == clientNo) { %>
+							<div class="right">
+								<a class="comment-edit-btn">수정</a>
+								| 
+								<a class="comment-delete-btn" href="commentDelete.kh?commentNo=<%=commentDto.getCommentNo()%>&boardNo=<%=boardNo%>">삭제</a>
+							</div>
+						<%} %>
+					</div>
+					<!-- 화면 표시 댓글 -->
+					<div class="comment-display-area">
+						<pre><%=commentDto.getCommentContent() %></pre>
+					</div>
+					<%if(commentDto.getClientNo() == clientNo) { %>
+						<div class="comment-edit-area">
+							<form action="commentEdit.kh" method="post">
+								<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
+								<input type="hidden" name="boardNo" value="<%=boardNo%>">
+								<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea"  name="commentContent" required><%=commentDto.getCommentContent()%></textarea>
+								<div class="text-right">
+									<input type="submit" class="form-btn form-btn-inline" value="댓글 수정">
+									<input type="button" class="form-btn form-btn-inline comment-edit-cancel-btn" value="작성 취소">
+								</div>
+							</form>
+						</div>
+					<%} %>
+				</li>
+			<%} %>
+			
+			<!-- 댓글 작성 -->
+			<form action="commentInsert.kh" method="post">
+				<input type="hidden" name="boardNo" value="<%=boardNo%>">
+				<input type="hidden" name="boardTypeNo" value="<%=boardListDto.getBoardTypeNo()%>">
+				<div class="row">
+					<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea" id="commentContent" name="commentContent" required></textarea>
+					<div class="text-right">
+						<input class="form-btn form-btn-inline" type="submit" value="댓글 작성">
+					</div>
+				</div>
+			</form>
+		<%} else { %>
+			<!-- 대신 답변이 들어감 -->
+			<li class="row float-container">
+				<div class="left">
+					작성자 | 
+					<%if(answerDto.getClientNo() != 0) {%>
+						<%=answerDao.getClientName(answerDto.getClientNo()) %>
+					<%} %>
+				</div>
+				<div class="right">
+					답변일 | 
+					<%if(answerDto.getAnswerDate() != null) {%>
+						<%=answerDto.getAnswerDate().toLocaleString() %>
+					<%} %>
+				</div>		
+			</li>
+			
+			<li class="row text-left" style="min-height:300px;">
+				<pre>
+					<%=answerDto.getAnswerContent() %>
+				</pre>
+			</li>
 		<%} %>
-	</div>
-	<div class="row text-left">
-		이전글 : 
-		<%if(prevBoardDto == null){%>
-		이전글이 없습니다.
-		<%}else{ %>
-		<a href="boardDetail.jsp?boardNo=<%=prevBoardDto.getBoardNo()%>">
-			<%=prevBoardDto.getBoardTitle()%>
-		</a>
-		<%} %>
+	</ul>
+	
+	<div class="row">
+		<table class="table table-border table-hover">
+			<tbody>
+				<tr>
+					<th>다음글</th>
+					<%if(nextBoardDto == null){%>
+						<td>다음글이 없습니다.</td>
+					<%}else{ %>
+						<td><a href="boardDetail.jsp?boardNo=<%=nextBoardDto.getBoardNo()%>">
+							<%=nextBoardDto.getBoardTitle()%>
+						</a></td>
+					<%} %>
+				</tr>
+				<tr>
+					<th>이전글</th>
+					<%if(prevBoardDto == null){%>
+						<td>이전글이 없습니다.</td>
+					<%}else{ %>
+						<td><a href="boardDetail.jsp?boardNo=<%=prevBoardDto.getBoardNo()%>">
+							<%=prevBoardDto.getBoardTitle()%>
+						</a></td>
+					<%} %>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 

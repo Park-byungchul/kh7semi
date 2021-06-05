@@ -1,12 +1,12 @@
-<%@page import="library.beans.ReviewLikeDto"%>
-<%@page import="library.beans.ReviewLikeDao"%>
+<%@page import="library.beans.board.ReviewLikeDto"%>
+<%@page import="library.beans.board.ReviewLikeDao"%>
 <%@page import="library.beans.BookDto"%>
-<%@page import="library.beans.ReviewCommentDto"%>
-<%@page import="library.beans.ReviewCommentDao"%>
-<%@page import="library.beans.ReviewListDto"%>
-<%@page import="library.beans.ReviewListDao"%>
-<%@page import="library.beans.ReviewDto"%>
-<%@page import="library.beans.ReviewDao"%>
+<%@page import="library.beans.board.ReviewCommentDto"%>
+<%@page import="library.beans.board.ReviewCommentDao"%>
+<%@page import="library.beans.board.ReviewListDto"%>
+<%@page import="library.beans.board.ReviewListDao"%>
+<%@page import="library.beans.board.ReviewDto"%>
+<%@page import="library.beans.board.ReviewDao"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.Set"%>
@@ -27,6 +27,8 @@
 	catch (Exception e) {
 		clientNo = 0;
 	}
+	
+	String root = request.getContextPath();
 
 	// 현재 리뷰 번호
 	int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
@@ -80,7 +82,7 @@
 	List<ReviewCommentDto> commentList = commentDao.list(reviewNo);
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
 
 <style>
 	.heart > a {
@@ -108,6 +110,17 @@
 		}
 	});
 	
+	// 글 삭제
+	$(function(){
+		$(".board-delete-btn").click(function(e) {
+			var choice = window.confirm("정말 삭제하시겠습니까?");
+			if(!choice){
+				e.preventDefault();
+			}
+		});
+	});
+
+	
 	// 댓글 삭제
 	$(function(){
 		$(".comment-delete-btn").click(function(e) {
@@ -133,13 +146,25 @@
 	});
 </script>
 
-<div class="container-800">
-	<div class="row text-left">
-		<h1>리뷰 게시판</h1>
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title">도서 리뷰</span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 도서 리뷰 </span>
+		</div>
 	</div>
 	
-	<div class="row text-left">
-		<h3><%=reviewDto.getReviewSubject() %></h3>
+	<div class="row">
+		<table class="table table-border table-hover">
+			<tbody>
+				<tr>
+					<td><a href="../book/bookDetail.jsp?bookIsbn=<%=reviewListDto.getBookIsbn() %>" class="review-title"></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
 	<div class="row float-container">
@@ -220,7 +245,7 @@
 				<a href="reviewEdit.jsp?reviewNo=<%=reviewNo%>" class="link-btn">수정</a>
 			<%} %>
 			<%if(isAdmin || reviewDto.getClientNo() == clientNo) {%>
-				<a href="reviewDelete.kh?reviewNo=<%=reviewNo%>" class="link-btn">삭제</a>
+				<a href="reviewDelete.kh?reviewNo=<%=reviewNo%>" class="link-btn board-delete-btn">삭제</a>
 			<%} %>
 			<%if(isLike) { %>
 				<span class="heart">

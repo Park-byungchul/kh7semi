@@ -29,9 +29,6 @@ List<AreaDto> areaList = areaDao.list();
 %>
 
 <style>
-	#map1, #map2, #map3 {
-		z-index: -1;
-	}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -52,9 +49,7 @@ List<AreaDto> areaList = areaDao.list();
 	
 </script>
 
-<style>
 
-</style>
 <jsp:include page="/template/header.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
@@ -65,7 +60,7 @@ List<AreaDto> areaList = areaDao.list();
 <ul>
 	<li><a href="location.jsp">찾아오는길</a></li>
 	<li><a href="<%=root%>/dataStatus/dataStatus.jsp">자료현황</a></li>
-	<li><a href="#">이용 안내</a></li>
+	<li><a href="<%=root%>/useInfo/useInfo.jsp">이용 안내</a></li>
 </ul>
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>

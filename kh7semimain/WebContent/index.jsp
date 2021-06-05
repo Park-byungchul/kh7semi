@@ -157,13 +157,11 @@ if(areaNo != 0){
 				
 				<div class="float-container row">
 					<div class="promotion left">
-						
-						
-						<%if(promotionInfoDto != null){ %>
+
+						<%if(promotionInfoDto != null){%>
 						<img id="promotionImg" src="<%=root %>/promotion/promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">
 						<span>
 							<%if(promotionInfoDto.getAreaNo() != 0){%>
-								
 								<%=areaDao.detail(promotionInfoDto.getAreaNo()).getAreaName() %> 
 							<%} %>
 						</span>

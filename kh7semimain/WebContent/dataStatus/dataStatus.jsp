@@ -37,8 +37,17 @@ if(areaNo > 0){
 </ul>
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>
+	<div class="header">
+		<div class="row">
+			<span class="title">자료현황</span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 소개 > 자료현황</span>
+		</div>
+	</div>
 <div class="container-800">
-	<h2>자료현황</h2>
+	
 		<h3>전체 도서</h3>
 			<table class="table table-border table-hover text-center">
 				<tr>

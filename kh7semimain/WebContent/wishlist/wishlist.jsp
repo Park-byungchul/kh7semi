@@ -1,3 +1,5 @@
+<%@page import="library.beans.AreaDao"%>
+<%@page import="library.beans.ClientDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.BookDao"%>
 <%@page import="java.util.List"%>
@@ -5,14 +7,27 @@
 <%@page import="library.beans.WishlistDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/template/header.jsp"></jsp:include>
 <%
+	request.setCharacterEncoding("UTF-8");
 	int clientNo = (int)session.getAttribute("clientNo");
 	WishlistDao wishlistDao = new WishlistDao();
 	List<WishlistDto> wishList = wishlistDao.myWishList(clientNo);
 
 	BookDao bookDao = new BookDao();
 	String root = request.getContextPath();
+	
+	AreaDao areaDao = new AreaDao();
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
+	String title = "관심도서";
+	if(areaNo > 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 %>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
@@ -25,20 +40,23 @@
 				return false;
 			}
 		});
-		
-		$(".booklist-wishlistBtn-neg").click(function(){
-			window.alert("관심도서가 해제되었습니다.")
-		});
-		$(".booklist-wishlistBtn-pos").click(function(){
-			window.alert("관심도서 목록에 추가되었습니다.")
-		});
 	});
 </script>
+<jsp:include page="/client/myMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 <!-- -->
 <div class="container-1000">
-	<h2>내 관심 도서 목록</h2>
+	<div class="header">
+		<div class="row">
+			<span class="title">관심도서</span>
+		</div>
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 마이페이지 > 관심도서</span>
+		</div>
+	</div>		
 	<%if(wishList.size()==0) {%>
-	<span>비어있습니다. db테이블에 데이터를 추가하거나 bookdetail에서 관심도서등록 진행해주세요</span>
+	<span>비어있습니다. 관심도서를 추가해보세요</span>
 	<%} else { %>
 	<div class="row">
 		<table class="table table-border table-hover">

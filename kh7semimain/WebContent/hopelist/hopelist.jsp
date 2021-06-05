@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.BookDao"%>
 <%@page import="library.beans.HopelistDto"%>
@@ -5,9 +6,6 @@
 <%@page import="library.beans.HopelistDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
-
 <%
 	String root = request.getContextPath();
 	request.setCharacterEncoding("UTF-8");
@@ -56,38 +54,35 @@
 
 	
 	hopelist = hopelistDao.myHopeList(clientNo, startRow, endRow);
-%>
-<script src="<%=root%>/pagination/pagination.js">
-// $(function() {
-// 	$(".pagination > a").click(function() {
-// 		var pageNo = $(this).text();
-		
-// 		if(pageNo == "이전") {
-// 			pageNo = parseInt($(".pagination > a :not(.move-link)").first().text()) - 1;
-// 			$("input[name=pageNo]").val(pageNo);
-// 			$(".search-form").submit();//강제 submit 발생
-// 		}
-// 		else if(pageNo == "다음") {
-// 			pageNo = parseInt($(".pagination > a:not(.move-link)").last().text()) + 1;
-// 			$("input[name=pageNo]").val(pageNo);
-// 			$(".search-form").submit();//강제 submit 발생
-// 		}
-// 		else {
-// 			$("input[name=pageNo]").val(pageNo);
-// 			$(".search-form").submit();//강제 submit 발생
-// 		}
-// 	});
-// });
-</script>
-
-
-	<div class="row">
-		<h2>희망도서 신청 목록페이지</h2>
-	</div>
 	
-	<div class="row text-right">
-		<a href="hopelistInsert.jsp" class="link-btn">신청하기</a>
-	</div>
+	AreaDao areaDao = new AreaDao();
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
+	String title = "희망도서";
+	if(areaNo > 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
+	
+%>
+<jsp:include page="/service/serviceSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
+<script src="<%=root%>/pagination/pagination.js">
+
+</script>
+	<div class="header">
+		<div class="row">
+			<span class="title">희망도서</span>
+		</div>
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 희망도서</span>
+		</div>
+	</div>		
 	
 	<div class="row">
 		<table class="table table-striped">

@@ -183,4 +183,36 @@ public class NewBookDao {
 		
 		return count;
 	}	
+	
+	//신착도서 1~3위 메인페이지용
+	public List<NewBookDto> rank(int begin, int end) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from ("
+							+ "select rownum rn, TMP.* from ("
+								+ "select * from newbook order by get_book_date desc"
+							+ ") TMP"
+						+ ") where rn between ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, begin);
+		ps.setInt(2, end);
+		ResultSet rs = ps.executeQuery();
+		
+		//List로 변환
+		List<NewBookDto> newBookList = new ArrayList<>();
+		while(rs.next()) {
+			NewBookDto newBookDto = new NewBookDto();
+
+			newBookDto.setGenreName(rs.getString("genre_name"));
+			newBookDto.setBookAuthor(rs.getString("book_author"));
+			newBookDto.setBookTitle(rs.getString("book_title"));
+			newBookDto.setBookImg(rs.getString("book_img"));
+			
+			newBookList.add(newBookDto);
+		}
+		
+		con.close();
+		
+		return newBookList;
+	}
 }

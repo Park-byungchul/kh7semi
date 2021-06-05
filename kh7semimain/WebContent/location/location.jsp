@@ -64,8 +64,18 @@ List<AreaDto> areaList = areaDao.list();
 </ul>
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>
+	<div class="header">
+		<div class="row">
+			<span class="title">찾아오는길</span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 소개 > 찾아오는길</span>
+		</div>
+	</div>
 <%if(areaNo==0) { %>
 <div class="float-container">
+	
 	<div class="left" id="map1" style="width:400px;height:400px;margin:20px 20px;display:inline-block;">
 	</div>	
 	<div class="left">

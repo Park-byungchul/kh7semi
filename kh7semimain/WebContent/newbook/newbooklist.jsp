@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.NewBookDto"%>
 <%@page import="library.beans.NewBookDao"%>
 <%@page import="library.beans.GenreDto"%>
@@ -13,6 +14,7 @@
 	pageEncoding="UTF-8"%>
 
 <%
+request.setCharacterEncoding("UTF-8");
 String root = request.getContextPath(); 
 
 NewBookDao newBookDao = new NewBookDao();
@@ -115,30 +117,60 @@ else {
 }
 
 
+AreaDao areaDao = new AreaDao();
+int areaNo;
+try{
+	areaNo = (int)session.getAttribute("areaNo");
+}
+catch (Exception e){
+	areaNo = 0;
+}
 String title = "신착 도서";
+if(areaNo > 0){
+	title += " : " + areaDao.detail(areaNo).getAreaName();
+}
 %>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="<%=root%>/pagination/pagination.js"></script>
-<script>
-</script>
-<jsp:include page="/search/searchSidebar.jsp"></jsp:include>
+<jsp:include page="/template/header.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
+
+<jsp:include page="/template/sidebar1.jsp"></jsp:include>
+
+<h2>자료 검색</h2>
+<ul>
+	<li><a href="<%=root%>/search/searchInput.jsp">통합자료검색</a></li>
+	<li><a href="<%=root%>/newbook/newbooklist.jsp">신착자료</a></li>
+	<li><a href="<%=root%>/recommend/recommendList.jsp">추천도서</a></li>
+	<li><a href="#">대출베스트</a></li>
+</ul>
+
+<jsp:include page="/template/sidebar2.jsp"></jsp:include>
 <style>
 .bookList>button>a{
 	text-decoration: none;
 }
 </style>
-<div class="container-1000">
-	<div class="row text-center" style="margin-left:-50px;">
-		<h1>신착 도서</h1>
+	<div class="header">
+		<div class="row">
+			<span class="title">신착 도서</span>
+		</div>
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 신착 도서</span>
+		</div>
+	</div>		
+<div class="container-800">
+	<div class="row text-center">
 			<form action = "newbooklist.jsp" method="get">
-				<select name="area">
+				<select name="area" class="select-form">
 					<option value="메인도서관">전체도서관</option>
 					<option value="강남도서관">강남도서관</option>
 					<option value= "종로도서관">종로도서관</option>
 					<option value= "당산도서관">당산도서관</option>
 				</select>
-				<select name="genre">
+				<select name="genre" class="select-form">
 					<option value="all">전체</option>
 					<option value="총류">총류</option>
 					<option value= "철학">철학</option>
@@ -151,12 +183,12 @@ String title = "신착 도서";
 					<option value= "문학">문학</option>
 					<option value= "역사">역사</option>
 				</select>
-				<select name="term">
+				<select name="term" class="select-form">
 					<option value="90">3달이내</option>
 					<option value="60">1달이내</option>
 					<option value="30">1주이내</option>
 				</select>
-				<input type="submit" value="검색">
+				<input type="submit" value="검색" class="form-btn form-btn-inline">
 			</form>					
 	</div> <br>
 	

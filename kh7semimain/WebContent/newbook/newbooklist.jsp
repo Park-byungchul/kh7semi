@@ -116,7 +116,6 @@ else {
 
 
 String title = "신착 도서";
-//페이징 -------------------------------------------------------
 %>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>

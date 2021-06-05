@@ -13,6 +13,7 @@
 <%
 String root = request.getContextPath(); 
 BookDao bookDao = new BookDao();
+RecommendDao recommendDao = new RecommendDao();
 BookDto bookDto = new BookDto();
 
 
@@ -65,17 +66,18 @@ catch(Exception e){
 int startRow = pageNo * pageSize - (pageSize-1);
 int endRow = pageNo * pageSize;
 
-int count  = bookDao.getCount();
+int count  = recommendDao.getCount();
 int blockSize = 10;
 int lastBlock = (count + pageSize - 1) / pageSize;
 int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 int endBlock = startBlock + blockSize - 1;
 
+
 if(endBlock > lastBlock){
 	endBlock = lastBlock;
 }
 
-RecommendDao recommendDao = new RecommendDao();
+
 List<RecommendDto> recommendList;
 
 String type = request.getParameter("type");
@@ -106,8 +108,8 @@ String title = "추천 도서";
 	text-decoration: none;
 }
 </style>
-<div class="container-1000">
-	<div class="row text-center" style="margin-left:-50px;">
+<div class="container-800">
+	<div class="row text-center" style="margin-left:0px;">
 		<h1>추천 도서</h1>
 			<form action = "recommendList.jsp" method="get" class="search-form text-center">
 				<select name="type" class="select-form">
@@ -150,12 +152,13 @@ String title = "추천 도서";
 			
 	
 
-	<div class="row text-center">
+		<div class="row text-center">
 		<div class="pagination">
 			<%if(startBlock > 1) { %>
 				<a class="move-link">이전</a>
 			<%} %>
-			<%for(int i = startBlock; i <= endBlock; i++) {%>
+			<%for(int i = startBlock; i <= endBlock; i++) {
+			%>
 				<%if(i == pageNo) {%>
 					<a class="on"><%=i %></a>
 				<%} else { %>

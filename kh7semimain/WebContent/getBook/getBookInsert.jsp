@@ -1,8 +1,23 @@
+<%@page import="library.beans.AreaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
-    	int areaNo = (int)session.getAttribute("areaNo");
+    	
     
+    request.setCharacterEncoding("UTF-8");
+    AreaDao areaDao = new AreaDao();
+    int areaNo;
+    try{
+    	areaNo = (int)session.getAttribute("areaNo");
+    }
+    catch (Exception e){
+    	areaNo = 0;
+    }
+
+    String title = "관리자 메뉴";
+    if(areaNo > 0){
+    	title += " : " + areaDao.detail(areaNo).getAreaName();
+    }
     %>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
@@ -19,7 +34,9 @@ $(function(){
 });
 	
 </script>
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>	
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 	<h2>도서관에 도서 추가</h2>
 	<hr>
@@ -44,6 +61,7 @@ $(function(){
 		<label>제목 : </label><input type="text" name="bookTitle" id="bookTitle" required class="form-input form-input-underline"><br><br>
 		<label>지점번호 : </label><input type="text" name="areaNo" required value="<%=areaNo%>" class="form-input form-input-underline"><br><br>
 		<input type="submit" value="도서 추가">
+		<button><a href="getBookList.jsp">목록</a></button>
 	</form>
 	
 	

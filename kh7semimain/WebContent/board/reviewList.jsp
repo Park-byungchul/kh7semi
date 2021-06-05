@@ -176,9 +176,11 @@
 							<a href="reviewDetail.jsp?reviewNo=<%=reviewListDto.getReviewNo()%>" class="review-subject">
 								<%=reviewListDto.getReviewSubject() %>
 							</a>
-							<span class="review-right"><%=reviewListDto.getClientName() %></span>
-							<span class="review-right">&nbsp;</span>
-							<span class="review-right"><%=reviewListDto.getReviewDate() %></span>
+							<span class="review-right">
+								<span><%=reviewListDto.getClientName() %></span>
+								<span>&nbsp;</span>
+								<span><%=reviewListDto.getReviewDate() %></span>
+							</span>
 						</div>
 					</td>
 				</tr>

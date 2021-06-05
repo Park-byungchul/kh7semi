@@ -161,38 +161,86 @@
 		<table class="table table-border table-hover">
 			<tbody>
 				<tr>
-					<td><a href="../book/bookDetail.jsp?bookIsbn=<%=reviewListDto.getBookIsbn() %>" class="review-title"></td>
+					<td width="15%"><img src=<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookImg() %>></td>
+					<td>
+						<ul class="review-area">
+							<li>
+								<label>도서명</label>
+								<a href="../book/bookDetail.jsp?bookIsbn=<%=reviewListDto.getBookIsbn() %>" class="review-title">
+									<%=bookDto.getBookTitle()%>
+								</a>
+								<hr>
+							</li>
+							<li>
+								<label>저자명</label>
+								<span><%=bookDto.getBookAuthor()%></span>
+								<hr>
+							</li>
+							<li>
+								<label>발행사항</label>
+								<span><%=bookDto.getBookPublisher()%>, <%=bookDto.getBookDate().getYear() + 1900%></span>
+								<hr>
+							</li>
+							<li>
+								<label>ISBN</label>
+								<span><%=bookDto.getBookIsbn() %></span>
+							</li>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table class="table table-border table-hover">
+			<tbody>
+				<tr>
+					<th>제목</th>
+					<td><%=reviewDto.getReviewSubject()%></td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td><%=clientDto.getClientName()%></td>
+					<th>작성일</th>
+					<td><%=reviewDto.getReviewDate().toLocaleString()%></td>
+				</tr>
+				<tr>
+					<th>조회수</th>
+					<td><%=reviewDto.getReviewRead()%></td>
+					<th>추천</th>
+					<td><%=reviewDto.getReviewLike()%></td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<div class="row text-left">
+							<pre><%=reviewDto.getReviewContent()%></pre>
+						</div>
+					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+	
+	<div class="row text-right">
+		<%if(clientNo != 0) {%>
+			<%if(reviewDto.getClientNo() == clientNo) { %>
+				<a href="reviewEdit.jsp?reviewNo=<%=reviewNo%>" class="link-btn">수정</a>
+			<%} %>
+			<%if(isAdmin || reviewDto.getClientNo() == clientNo) {%>
+				<a href="reviewDelete.kh?reviewNo=<%=reviewNo%>" class="link-btn board-delete-btn">삭제</a>
+			<%} %>
+			<%if(isLike) { %>
+				<span class="heart">
+				<a href="reviewLikeDelete.kh?reviewNo=<%=reviewNo%>&clientNo=<%=clientNo%>" class="link-btn">♥</a>
+				</span>
+			<%} else { %>
+				<span class="heart">
+				<a href="reviewLikeInsert.kh?reviewNo=<%=reviewNo%>&clientNo=<%=clientNo%>" class="link-btn">♡</a>
+				</span>
+			<%} %>
+		<%} %>
+		<a href="reviewList.jsp" class="link-btn">목록</a>
+	</div>
 
-	<div class="row float-container">
-		<div class="left">
-			<%=clientDto.getClientName()%>
-		</div>
-		<div class="right">
-			조회수 <%=reviewDto.getReviewRead()%>
-			좋아요 <%=reviewDto.getReviewLike()%>				
-		</div>		
-		<div class="right">
-			<%=reviewDto.getReviewDate().toLocaleString()%>
-		</div>
-	</div>
-	
-	<div class="row float-container">
-		<div class="left">
-			도서명 <%=bookDto.getBookTitle()%>
-			저자	<%=bookDto.getBookAuthor()%>
-			출판사 <%=bookDto.getBookPublisher()%>
-			출판일 <%=bookDto.getBookDate()%>			
-		</div>
-	</div>
-	
-	<div class="row text-left" style="min-height:300px;">
-		<pre><%=reviewDto.getReviewContent()%></pre>
-	</div>
-	
 	<form action="reviewCommentInsert.kh" method="post">
 			<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
 			<div class="row">
@@ -238,27 +286,7 @@
 			</div>
 		<%} %>
 	
-	<div class="row text-right">
-		<!-- 본인 및 관리자에게만 표시되도록 하는 것이 좋다 -->
-		<%if(clientNo != 0) {%>
-			<%if(reviewDto.getClientNo() == clientNo) { %>
-				<a href="reviewEdit.jsp?reviewNo=<%=reviewNo%>" class="link-btn">수정</a>
-			<%} %>
-			<%if(isAdmin || reviewDto.getClientNo() == clientNo) {%>
-				<a href="reviewDelete.kh?reviewNo=<%=reviewNo%>" class="link-btn board-delete-btn">삭제</a>
-			<%} %>
-			<%if(isLike) { %>
-				<span class="heart">
-				<a href="reviewLikeDelete.kh?reviewNo=<%=reviewNo%>&clientNo=<%=clientNo%>" class="link-btn">♥</a>
-				</span>
-			<%} else { %>
-				<span class="heart">
-				<a href="reviewLikeInsert.kh?reviewNo=<%=reviewNo%>&clientNo=<%=clientNo%>" class="link-btn">♡</a>
-				</span>
-			<%} %>
-		<%} %>
-		<a href="reviewList.jsp" class="link-btn">목록</a>
-	</div>
+
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

@@ -224,16 +224,12 @@
 				<tr>
 					<th>작성자</th>
 					<td><%=clientDto.getClientName()%></td>
-				</tr>
-				<tr>
 					<th>작성일</th>
 					<td><%=boardDto.getBoardDate().toLocaleString()%></td>
 				</tr>
 				<tr>
 					<th>조회수</th>
 					<td><%=boardDto.getBoardRead()%></td>
-				</tr>
-				<tr>
 					<th>추천</th>
 					<td><%=boardDto.getBoardLike()%></td>
 				</tr>

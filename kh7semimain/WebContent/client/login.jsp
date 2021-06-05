@@ -23,27 +23,24 @@ String root = request.getContextPath();
 		</div>
 		
 		<div class="section">
-			<div class="row text-center">
-			
-				<form action="login.kh" method="post">
-					<table class="table table-border ">
+			<form action="login.kh" method="post">
+				<table class="login-wrap">
+					<tbody>
 						<tr>
-							<td colspan="2">
-								<input type="text" name="clientId" placeholder="아이디" class="form-input">
+							<td><img src="../image/login.png" alt="login" width="200" height="200"></td>
+							<td>
+								<div class="login">
+									<input type="text" name="clientId" placeholder="아이디" class="login-form">
+								</div>
+								<div class="login">
+									<input type="password" name="clientPw" placeholder="비밀번호" class="login-form">
+								</div>
 							</td>
-							<td rowspan="2">
-								<input type="submit" value="로그인" class="form-btn">
-							</td>
+							<td><input type="submit" value="로그인" class="login-btn"></td>
 						</tr>
-						<tr>
-							<td colspan="2">
-								<input type="password" name="clientPw" placeholder="비밀번호" class="form-input">
-							</td>
-						</tr>
-					</table>
-				</form>
-				
-			</div>
+					</tbody>
+				</table>
+			</form>
 		</div>
 	</div>
 		

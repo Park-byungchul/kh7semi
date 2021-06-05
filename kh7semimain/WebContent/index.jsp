@@ -1,3 +1,5 @@
+<%@page import="library.beans.PromotionInfoDto"%>
+<%@page import="library.beans.PromotionInfoDao"%>
 <%@page import="library.beans.CalendarDao"%>
 <%@page import="library.beans.GenreDto"%>
 <%@page import="library.beans.GenreDao"%>
@@ -14,15 +16,12 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String pageNow = request.getRequestURI();
-
 CalendarDao calendarDao = new CalendarDao();
 int year;
 int month;
-
 try {
 	year = Integer.parseInt(request.getParameter("year"));
 	month = Integer.parseInt(request.getParameter("month"));
-
 	if (month >= 13) {
 		year++;
 		month = 1;
@@ -34,14 +33,11 @@ try {
 	year = calendarDao.year;
 	month = calendarDao.month;
 }
-
 int first = calendarDao.first(year, month);
 int last = calendarDao.last(year, month);
-
 String root = request.getContextPath();
 int areaNo;
 AreaDao areaDao = new AreaDao();
-
 try{
 	areaNo = (int)session.getAttribute("areaNo");
 }
@@ -50,21 +46,15 @@ catch (Exception e){
 }
 AreaDto areaDto = areaDao.detail(areaNo);
 boolean isChild = areaNo != 0;	
-
 RecommendDao recommendDao = new RecommendDao();
 List<RecommendDto> recommendRank = recommendDao.rank(1, 3);
-
 request.setCharacterEncoding("UTF-8");
-
 String title;
 if(areaNo > 0){
 	title =areaDto.getAreaName();
 } else {
  title = "메인 도서관";
 }
-
-
-
 int areaPageNo;
 try{
 	areaPageNo = Integer.parseInt(request.getParameter("areaPageNo"));
@@ -72,26 +62,46 @@ try{
 catch (Exception e){
 	areaPageNo = 1;
 }
-
 int areaPageSize = 5; // 1페이지에 보여줄 개수
-
 // rownum의 시작번호(startRow)와 종료번호(endRow)를 계산
 int strNum = areaPageSize * areaPageNo - (areaPageSize-1);
 int endNum = areaPageSize * areaPageNo;
-
 List<AreaDto> list = areaDao.list(strNum, endNum);
 int count = areaDao.getCount();
-
 int blockSize = 1;
 int lastBlock = (count + areaPageSize - 1) / areaPageSize;
 int startBlock = (areaPageNo - 1) / blockSize * blockSize + 1;
 int endBlock = startBlock + blockSize - 1;
-
 if(endBlock > lastBlock){ // 범위를 벗어나면
 endBlock = lastBlock; // 범위를 수정
 }
 
+PromotionInfoDao promotionInfoDao = new PromotionInfoDao();
+int promotionCount;
+if(areaNo != 0){
+	promotionCount = promotionInfoDao.count(areaNo);
+} else{
+	promotionCount = promotionInfoDao.count();
+}
 
+int promotionPage;
+try{
+	promotionPage = Integer.parseInt(request.getParameter("promotionPage"));
+	if (promotionPage < 1){
+		promotionPage = promotionCount;
+	} else if(promotionPage > promotionCount){
+		promotionPage = 1;
+	}
+} catch (Exception e){
+	promotionPage = 1;
+}
+
+PromotionInfoDto promotionInfoDto;
+if(areaNo != 0){
+	promotionInfoDto = promotionInfoDao.detail(promotionPage, areaNo);
+} else{
+	promotionInfoDto = promotionInfoDao.detail(promotionPage);
+}
 %>
 
 <jsp:include page="/template/header.jsp">
@@ -99,11 +109,6 @@ endBlock = lastBlock; // 범위를 수정
 </jsp:include>
 
 <style>
-	
-	.promotion, .notice, .plan{
-		width: 32%;
-		height: 300px;
-	}
 	.float-container.recommend {
 		margin:10px;
 		width:300px; 
@@ -127,9 +132,9 @@ endBlock = lastBlock; // 범위를 수정
 			
 				<div class="float-container row">
 					<%if(startBlock > 1){ %>
-						<button class="areaBtnMove left" onClick="location.href='<%=root %>?areaPageNo=<%=areaPageNo - 1 %>'">이전</button>
+						<button class="areaBtnMove left" onClick="location.href='<%=root %>?areaPageNo=<%=areaPageNo - 1 %>'">&lt;</button>
 					<%} else{ %>
-						<button class="areaBtnMoveNone left"></button>
+						<button class="areaBtnMoveInactive left">&lt;</button>
 					<%} %>
 				
 					<div style="display: inline-block;">
@@ -140,9 +145,9 @@ endBlock = lastBlock; // 범위를 수정
 					</div>
 					
 					<%if(endBlock < lastBlock){ %>
-						<button class="areaBtnMove right" onClick="location.href='<%=root %>?areaPageNo=<%=areaPageNo + 1 %>'">다음</button>
+						<button class="areaBtnMove right" onClick="location.href='<%=root %>?areaPageNo=<%=areaPageNo + 1 %>'">&gt;</button>
 					<%} else{ %>
-						<button class="areaBtnMoveNone right"></button>
+						<button class="areaBtnMoveInactive right">&gt;</button>
 					<%} %>
 				</div>
 				
@@ -152,7 +157,22 @@ endBlock = lastBlock; // 범위를 수정
 				
 				<div class="float-container row">
 					<div class="promotion left">
-						<img alt="banner" src="<%=root%>/image/banner.png" width="360">
+						
+						
+						
+						<img id="promotionImg" src="<%=root %>/promotion/promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">
+						<span>
+							<%if(promotionInfoDto.getAreaNo() != 0){%>
+								<%=areaDao.detail(promotionInfoDto.getAreaNo()).getAreaName() %> 
+							<%} %>
+						</span>
+						
+						<button class="btn-pre" onclick="location.href='?promotionPage=<%=promotionPage -1 %>'">&lt</button>
+						
+						<button class="btn-next" onclick="location.href='?promotionPage=<%=promotionPage + 1 %>'">&gt</button>
+						
+						<span></span>
+						
 					</div>
 					
 					<div class="notice" style="display: inline-block;">
@@ -191,3 +211,4 @@ endBlock = lastBlock; // 범위를 수정
 			<%} %>
 		</section>
 		
+<jsp:include page="/template/footer.jsp"></jsp:include>

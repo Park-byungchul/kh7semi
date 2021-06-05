@@ -72,9 +72,11 @@
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/scrolledMenu.css">
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
-	<!-- <link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css"> -->
+<%-- 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css"> --%>
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/calendar.css">
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/board.css">
+  	
+  	<link rel="stylesheet" type="text/css" href="<%=root%>/css/sidebar.css">
 	<style>
 	ul > li {
 		z-index:99;
@@ -118,9 +120,20 @@
 		$(".activeAreaMenu").click(function(){
 			var areaMenu = $(".areaMenu");
 			if(areaMenu.css("display") == "block"){
-				$(".areaMenu").css("display", "none");
+				areaMenu.css("display", "none");
 			} else{
-				$(".areaMenu").css("display", "block");
+				areaMenu.css("display", "block");
+			}
+		});
+		
+		$(".activeMyArea").click(function(){
+			console.log("click");
+			var myArea = $(".myArea");
+			console.log(myArea);
+			if(myArea.css("display") == "block"){
+				myArea.css("display", "none");
+			} else{
+				myArea.css("display", "block");
 			}
 		});
 	});
@@ -149,7 +162,6 @@
 				</button>
 				
 				<ul class="areaMenu">
-					<button class="activeAreaMenu"><span>도서관 바로가기 ▲</span></button>
 						<%for (AreaDto areaDto : list){ %>
 							<li onclick="location.href='<%=root %>/areaSelect.kh?areaNo=<%=areaDto.getAreaNo()%>&back=<%=pageNow%>'"><%=areaDto.getAreaName() %></li>
 						<%} %>
@@ -185,23 +197,26 @@
 			
 				<%if(isAdminAll || isAdminPermission || isAdminNormal){ %>
 					<div class="right">
-						<span><%=clientDto.getClientType() %></span>
 						
-						<select class="area">
-							<option value="">내 관리지점</option>
+						<button class="myMenuItem" onclick="location.href='<%=root %>/admin/adminMenu.jsp'"><%=clientDto.getClientType() %><br>관리자메뉴</button>
+						
+						<button class="activeMyArea">
+							<span>내 관리지점 ▼</span>
+						</button>
+						
+						<ul class="myArea">
 								<%if(isAdminAll){ %>
-									<option value="<%=root %>/areaSelect.kh?areaNo=0">도서관 홈으로</option>
 									<%for (AreaDto areaDto : list){ %>
-									<option value="<%=root %>/areaSelect.kh?areaNo=<%=areaDto.getAreaNo()%>"><%=areaDto.getAreaName() %></option>
+										<li onclick="location.href='<%=root %>/areaSelect.kh?areaNo=<%=areaDto.getAreaNo()%>&back=<%=pageNow%>'"><%=areaDto.getAreaName() %></li>
 									<%} %>
 								<%}else{ %>
 									<%for (RoleAreaDto roleAreaDto : permissionList){ %>
-									<option value="<%=root %>/areaSelect.kh?areaNo=<%=roleAreaDto.getAreaNo()%>"><%=roleAreaDto.getAreaName() %></option>
+										<li onclick="location.href='<%=root %>/areaSelect.kh?areaNo=<%=roleAreaDto.getAreaNo()%>&back=<%=pageNow%>'"><%=roleAreaDto.getAreaName() %></li>
 									<%} %>
-								<%} %>
-						</select>
+								<%} %>				
+						</ul>
 						
-						<a href="<%=root %>/admin/adminMenu.jsp">관리자메뉴</a>
+						
 					</div>
 				<%} %>
 				

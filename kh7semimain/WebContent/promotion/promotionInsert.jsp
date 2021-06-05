@@ -15,19 +15,6 @@ catch (Exception e){
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-
-<script>
-	$(function(){
-		$("#promotionInsert").submit(function(evt){
-			<%if(areaNo == 0){%>
-				window.alert("각 지점에서 배너를 등록하세요");
-				evt.preventDefault();
-			<%}%>
-		});
-	});
-</script>
-
 <form id="promotionInsert" action="promotionInsert.kh" method="post" enctype="multipart/form-data">
 
 	<input type="hidden" name="areaNo" value="<%=areaNo %>">

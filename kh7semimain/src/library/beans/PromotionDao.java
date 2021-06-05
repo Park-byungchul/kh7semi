@@ -24,10 +24,17 @@ public class PromotionDao {
 	public void insert(PromotionDto promotionDto) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 
-		String sql = "insert into promotion values(?, ?)";
+		String sql;
+		if(promotionDto.getAreaNo() == 0) {
+			sql = "insert into promotion values(?, null)";
+		} else {
+			sql = "insert into promotion values(?, ?)";
+		}
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, promotionDto.getPromotionNo());
-		ps.setInt(2, promotionDto.getAreaNo());
+		if(promotionDto.getAreaNo() != 0) {
+			ps.setInt(2, promotionDto.getAreaNo());
+		}
 		ps.execute();
 
 		con.close();

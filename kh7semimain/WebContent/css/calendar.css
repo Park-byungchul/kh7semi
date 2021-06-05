@@ -1,44 +1,89 @@
 @charset "UTF-8";
 	
 	#calendar{
+		padding-left: 15px;
+		padding-right: 15px;
+		padding-bottom: 10px;
 		background-color: white;
 		width: 100%;
 		height: 100%;
 		text-align: center;
 	}
 	
-	#calendar a{
+	#calendar th.week{
+		border-bottom: 1px solid lightgray;
+	}
+	
+	#calendar .planDay{
+		color: rgb(249, 115, 134);
+		font-weight: bold;
+	}
+	
+	#calendar .breakDay{
+		color: rgb(67, 164, 157);
+		font-weight: bold;
+	}
+	
+	th#title a{
+		font-size: 20px;
+		color: rgb(67, 164, 157);
+		text-align: left;
+		padding-left: 20px;
 		text-decoration: none;
+	}
+	
+	th#title a.preMonth, th#title a.nextMonth{
 		color: black;
+		opacity: 0.2;
 	}
 	
-	td.sun, td.sunday{
-		color: red;
+	th#title span.breakDay{
+		font-size: 12px;
+		padding-right: 20px;
+		color: rgb(67, 164, 157);
 	}
 	
-	td.sat, td.saturday{
-		color: blue;
+	th#title span.planDay{
+		font-size: 12px;
+		padding-right: 20px;
+		color: rgb(249, 115, 134);
 	}
 	
 	td.sunday:hover, td.saturday:hover, td.etc:hover {
-		background-color: yellow;
+		background-color: rgb(250, 244, 222);
+		transition: background-color 0.2s ease-in-out;
 	}
 	
-	.planIndex td{
-		font-weight: bold;
-		font-size: 12px;
+	.plan, .planList{
+		border: 1px solid rgb(240, 240, 240);
 	}
-	
 	.plan{
-		height: 400px;
+		width: 400px;
+		height: 300px;
+	}
+	.planList{
+		width: 450px;
+		min-height: 300px;
+		padding: 15px;
 	}
 	
-	.plan td, .plan th{
-		font-weight: bold;
-		font-size: 18px;
+	.planTable{
+		width: 100%;
 	}
 	
-	.calendarDetail th{
-		font-size: 24px;
-		heifht: 400px;
+	.planTable th{
+		height: 40px;
+	}
+	
+	.planTable>thead>tr>th{
+		font-size: 20px;
+		color: rgb(67, 164, 157);
+		text-align: left;
+		padding-left: 10px;
+		border-bottom: 1px solid lightgray;
+	}
+	
+	.planTable td{
+		text-align: center;
+		height: 20px;
 	}

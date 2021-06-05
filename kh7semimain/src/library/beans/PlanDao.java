@@ -45,4 +45,30 @@ public class PlanDao {
 		con.close();
 		return planList;
 	}
+	
+	public boolean isBreakDay(String today) throws Exception{
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from plan where plan_content like '휴관일' and (? between to_char(plan_start_date, 'YYYYMMDD') and to_char(plan_end_date, 'YYYYMMDD'))";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, today);
+		ResultSet rs = ps.executeQuery();
+		boolean result = rs.next();
+		
+		con.close();
+		return result;
+	}
+	
+	public boolean isPlanDay(String today) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from plan where ? between to_char(plan_start_date, 'YYYYMMDD') and to_char(plan_end_date, 'YYYYMMDD')";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, today);
+		ResultSet rs = ps.executeQuery();
+		boolean result = rs.next();
+		
+		con.close();
+		return result;
+	}
 }

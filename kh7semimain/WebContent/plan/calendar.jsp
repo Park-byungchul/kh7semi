@@ -1,3 +1,4 @@
+<%@page import="library.beans.PlanDao"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="library.beans.CalendarDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -28,30 +29,42 @@
 	
 	int first = calendarDao.first(year, month);
 	int last = calendarDao.last(year, month);
+	
+	PlanDao planDao = new PlanDao();
+	
 %>
 
 
 				
 				<table cellpadding="0" cellspacing="0" id="calendar">
 		
-					<tr height="15%;">
+					<tr height="25%;">
 						
 						<th id="title" colspan="7">
-						<a href ="?year=<%=year%>&month=<%=month - 1%>">&lt</a>
-						<%=year%>년 <%=month%>월
-						<a href ="?year=<%=year%>&month=<%= month + 1%>">&gt</a>
+							<div class="float-container">
+								<div class="left">
+									<a class="preMonth" href ="?year=<%=year%>&month=<%=month - 1%>">&lt</a>
+									<a href="<%=root %>/plan/plan.jsp?year=<%=year %>&month=<%=month %>"><%=year%>.<%=month%></a>
+									<a class="nextMonth" href ="?year=<%=year%>&month=<%= month + 1%>">&gt</a>
+								</div>
+								
+								<div class="right">
+									<span class="breakDay">■ 휴관일</span>
+									<span class="planDay">■ 행사일</span>
+								</div>
+							</div>
 						</th>
 						
 					</tr>
 					
-					<tr height="12%;">
-						<td class="sun">일</td>
-						<td>월</td>
-						<td>화</td>
-						<td>수</td>
-						<td>목</td>
-						<td>금</td>
-						<td class="sat">토</td>
+					<tr height="10%;">
+						<th class="week">일</th>
+						<th class="week">월</th>
+						<th class="week">화</th>
+						<th class="week">수</th>
+						<th class="week">목</th>
+						<th class="week">금</th>
+						<th class="week">토</th>
 					</tr>
 		
 					<tr>
@@ -60,7 +73,15 @@
 						<%} %>
 		
 						<% for(int i = 1 ; i <= last ; i++){ %>
-								<td onclick="location.href='<%=root %>/plan/planList.jsp?year=<%=year %>&month=<%=month %>&day=<%=i %>'" class="<%=calendarDao.isToday(year, month, i) %>"><%=i %></td>
+								<td onclick="location.href='<%=root %>/plan/plan.jsp?year=<%=year %>&month=<%=month %>&day=<%=i %>'" class="<%=calendarDao.isToday(year, month, i) %>
+									<%String today = Integer.toString(year) + (month < 10 ? "0" + Integer.toString(month) : Integer.toString(month)) + (i < 10 ? "0" + Integer.toString(i) : Integer.toString(i)); %>
+									<%if(planDao.isBreakDay(today)){ %> breakDay
+									<%}else if(planDao.isPlanDay(today)){ %>planDay
+									<%} %>
+								"><%=i %>
+									
+								</td>
+								
 								<%if(calendarDao.isToday(year, month, i) == "saturday"){%>
 									</tr><tr>
 								<%} %>

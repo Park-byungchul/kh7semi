@@ -12,7 +12,7 @@ try{
 catch (Exception e){
 	areaNo = 0;
 }
-String title = "찾아오는길";
+String title = "이용 안내";
 if(areaNo > 0){
 	title += " : " + areaDao.detail(areaNo).getAreaName();
 }
@@ -38,12 +38,21 @@ if(areaNo > 0){
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>
 
+	<div class="header">
+		<div class="row">
+			<span class="title">이용 안내</span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 소개 > 이용 안내</span>
+		</div>
+	</div>
 <div class="container-800">
-	<h2>이용 안내</h2>
+	
 		<h3>이용시간 및 휴관일 안내</h3>
 			<table class="table table-border table-hover text-center">
 				<tr>
-					<th>도서관</th>
+					<th style="width:150px;">도서관</th>
 					<th style="width:450px;">자료실/열람실 이용시간</th>
 					<th style="width:250px;">휴관일</th>
 				</tr>

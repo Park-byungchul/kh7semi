@@ -13,9 +13,11 @@ from role R, client C, area A
 where R.area_no = A.area_no and R.client_no = C.client_no;
 
 -- 도서 목록 출력을 위한 view
+
 drop view board_list;
 
 create view board_list as
+
 select B.board_no, B.area_no as board_area, B.board_type_no, B.board_title, 
         B.board_date, B.board_read, B.board_like, B.client_no as board_writer,
         b.board_sep_no, b.board_reply, b.board_open,
@@ -26,6 +28,7 @@ from board B
 left outer join client C on B.client_no = C.client_no
 left outer join area A on B.area_no = A.area_no
 left outer join board_type BT on B.board_type_no = bt.board_type_no;
+
 
 --get_book / lend_book view
 create or replace view get_book_view as
@@ -52,7 +55,6 @@ create or replace view get_book_search_view as
                 
                 
 --게시판 질문-답변 조인한 view
-drop view board_qna;
 
 create view board_qna as
 select B.board_no, B.client_no, B.area_no as board_area_no,
@@ -71,8 +73,6 @@ select R.review_no, R.client_no as reviewer, R.book_isbn, R.review_subject,
         C.client_no, C.client_name
 from review R
 left outer join client C on R.client_no = C.client_no;
-
-drop view review_list;
 
 -- 추천도서 목록 출력 view
 create or replace view recommendBook as

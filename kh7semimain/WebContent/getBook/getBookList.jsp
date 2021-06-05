@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.RecommendDto"%>
 <%@page import="library.beans.RecommendDao"%>
 <%@page import="library.beans.GetBookSearchDto"%>
@@ -20,6 +21,23 @@
 	catch (Exception e){
 		clientNo = 0;
 	}
+
+	
+// 브라우저 이름 정하기
+	AreaDao areaDao = new AreaDao();
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
+
+	String title = "관리자 메뉴";
+	if(areaNo > 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
+
 	//--------------------------------
 	request.setCharacterEncoding("UTF-8");
 	String type = request.getParameter("type");
@@ -91,7 +109,9 @@ catch (Exception e) {
 	}
 //페이징 -------------------------------------------------------
 %>
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 
 <script src="<%=root%>/pagination/pagination.js"></script>

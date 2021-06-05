@@ -56,6 +56,8 @@ public class BoardListDao {
 		
 		return boardList;
 	}
+
+
 	
 	// 검색 (도서관 포함)
 	public List<BoardListDto> search(int boardTypeNo, int areaNo, String type, String keyword, int startRow, int endRow) throws Exception {

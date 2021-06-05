@@ -170,7 +170,7 @@
 		});
 		$(".comment-edit-cancel-btn").click(function() {
 			$(this).parent().parent().hide();
-			$(this).parent().parent().prwv.show();
+			$(this).parent().parent().parent().prev().show();
 		});
 	});
 	
@@ -184,11 +184,11 @@
 <div class="main">
 	<div class="header">
 		<div class="row">
-			<span class="title">공지사항</span>
+			<span class="title"><%=boardListDto.getBoardTypeName() %></span>
 		</div>
 				
 		<div class="row">
-			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 공지사항</span>
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > <%=boardListDto.getBoardTypeName() %></span>
 		</div>
 	</div>
 	
@@ -268,7 +268,10 @@
 			<%for(BoardCommentDto commentDto : commentList) { %>
 				<li class="row text-left comment-list">
 					<div class="float-container">
-						<div class="left"><%=commentDao.getClientName(commentDto.getClientNo()) %></div>
+						<div class="left">
+							<span style="font-weight:bold"><%=commentDao.getClientName(commentDto.getClientNo()) %>&nbsp;</span>
+							<span style="color:gray"><%=commentDto.getCommentDate().toLocaleString() %></span>
+						</div>
 						
 						 <%if(commentDto.getClientNo() == clientNo) { %>
 							<div class="right">
@@ -287,13 +290,14 @@
 							<form action="commentEdit.kh" method="post">
 								<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
 								<input type="hidden" name="boardNo" value="<%=boardNo%>">
-								<textarea name="commentContent" required><%=commentDto.getCommentContent()%></textarea>
-								<input type="submit" value="댓글 수정">
-								<input type="button" value="작성 취소" class="comment-edit-cancel-btn">
+								<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea"  name="commentContent" required><%=commentDto.getCommentContent()%></textarea>
+								<div class="text-right">
+									<input type="submit" class="form-btn form-btn-inline" value="댓글 수정">
+									<input type="button" class="form-btn form-btn-inline comment-edit-cancel-btn" value="작성 취소">
+								</div>
 							</form>
 						</div>
 					<%} %>
-					<div><%=commentDto.getCommentDate().toLocaleString() %></div>
 				</li>
 			<%} %>
 			
@@ -302,10 +306,10 @@
 				<input type="hidden" name="boardNo" value="<%=boardNo%>">
 				<input type="hidden" name="boardTypeNo" value="<%=boardListDto.getBoardTypeNo()%>">
 				<div class="row">
-					<textarea maxlength="300" cols="146" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea" id="commentContent" name="commentContent" required></textarea>
-				</div>
-				<div class="row">
-					<input type="submit" value="댓글 작성">
+					<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea" id="commentContent" name="commentContent" required></textarea>
+					<div class="text-right">
+						<input class="form-btn form-btn-inline" type="submit" value="댓글 작성">
+					</div>
 				</div>
 			</form>
 		<%} else { %>
@@ -333,25 +337,31 @@
 		<%} %>
 	</ul>
 	
-	<div class="row text-left">
-		다음글 : 
-		<%if(nextBoardDto == null){%>
-		다음글이 없습니다.
-		<%}else{ %>
-		<a href="boardDetail.jsp?boardNo=<%=nextBoardDto.getBoardNo()%>">
-			<%=nextBoardDto.getBoardTitle()%>
-		</a>
-		<%} %>
-	</div>
-	<div class="row text-left">
-		이전글 : 
-		<%if(prevBoardDto == null){%>
-		이전글이 없습니다.
-		<%}else{ %>
-		<a href="boardDetail.jsp?boardNo=<%=prevBoardDto.getBoardNo()%>">
-			<%=prevBoardDto.getBoardTitle()%>
-		</a>
-		<%} %>
+	<div class="row">
+		<table class="table table-border table-hover">
+			<tbody>
+				<tr>
+					<th>다음글</th>
+					<%if(nextBoardDto == null){%>
+						<td>다음글이 없습니다.</td>
+					<%}else{ %>
+						<td><a href="boardDetail.jsp?boardNo=<%=nextBoardDto.getBoardNo()%>">
+							<%=nextBoardDto.getBoardTitle()%>
+						</a></td>
+					<%} %>
+				</tr>
+				<tr>
+					<th>이전글</th>
+					<%if(prevBoardDto == null){%>
+						<td>이전글이 없습니다.</td>
+					<%}else{ %>
+						<td><a href="boardDetail.jsp?boardNo=<%=prevBoardDto.getBoardNo()%>">
+							<%=prevBoardDto.getBoardTitle()%>
+						</a></td>
+					<%} %>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 

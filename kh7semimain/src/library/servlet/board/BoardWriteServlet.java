@@ -58,9 +58,11 @@ public class BoardWriteServlet extends HttpServlet {
 			if (boardTypeNo == 2) {
 				BoardAnswerDao answerDao = new BoardAnswerDao();
 				answerDao.receipt(boardNo);
+				resp.sendRedirect("qnaDetail.jsp?boardNo="+boardNo);
 			}
-			
-			resp.sendRedirect("boardDetail.jsp?boardNo="+boardNo);
+			else {
+				resp.sendRedirect("boardDetail.jsp?boardNo="+boardNo);
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();

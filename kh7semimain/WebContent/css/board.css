@@ -93,7 +93,6 @@ table > tbody > tr > td {
 }
 
 .review-area > li > label {
-	display: table-cell;
 	padding:0 1em 0 0;
 	min-width: 125px;
 	color: gray;
@@ -102,7 +101,6 @@ table > tbody > tr > td {
 }
 
 .review-area > li > span, a {
-	display: table-cell;
 	font-size:16px;
 }
 
@@ -110,4 +108,29 @@ table > tbody > tr > td {
 	 background-color: lightgray; 
 	 height: 1px; 
 	 border: 0;
+}
+
+.board-write-area {
+	overflow-y: hidden;
+ 	resize: none;
+ 	padding: 1em;
+ 	padding-bottom: 0.2em;
+ 	width: 100%;
+ 	min-height:287px;
+}
+
+.board-btn, .edit-btn {
+	display: inline-block;
+	padding: 0.75rem;
+	border: none;
+	text-decoration: none;
+	background-color: rgb(36, 106, 127);
+	color: white;
+	font-size:16px;
+}
+
+.review-write-text {
+	width: 85%;
+	padding: 0.5rem;
+	outline: none;
 }

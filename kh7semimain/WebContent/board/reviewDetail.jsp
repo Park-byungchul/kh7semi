@@ -120,7 +120,6 @@
 		});
 	});
 
-	
 	// 댓글 삭제
 	$(function(){
 		$(".comment-delete-btn").click(function(e) {
@@ -136,14 +135,20 @@
 		$(".comment-edit-area").hide();
 		
 		$(".comment-edit-btn").click(function() {
-			$(this).parent().parent().next().hide();
 			$(this).parent().parent().next().next().show();
+			$(this).parent().parent().next().hide();	
 		});
 		$(".comment-edit-cancel-btn").click(function() {
-			$(this).parent().parent().hide();
-			$(this).parent().parent().prwv.show();
+			$(this).parent().parent().parent().prev().show();
+			$(this).parent().parent().parent().hide();
 		});
 	});
+	
+	// 댓글 높이 자동 설정
+	function resize(obj) {
+  		obj.style.height = "1px";
+  		obj.style.height = (12+obj.scrollHeight)+"px";
+	}
 </script>
 
 <div class="main">
@@ -240,26 +245,17 @@
 		<%} %>
 		<a href="reviewList.jsp" class="link-btn">목록</a>
 	</div>
-
-	<form action="reviewCommentInsert.kh" method="post">
-			<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
-			<div class="row">
-				<textarea id="commentField" name="commentField" required></textarea>
-			</div>
-			<div class="row">
-				<input type="submit" value="댓글 작성">
-			</div>
-		</form>
 		
-		<div class="row text-left">
-			<h4>댓글 목록</h4>
-		</div>
+	<ul class="comment-area">
 		<%for(ReviewCommentDto commentDto : commentList) { %>
-			<div class="row text-left" style="border:1px solid gray;">
+			<li class="row text-left comment-list">
 				<div class="float-container">
-					<div class="left"><%=commentDao.getClientName(commentDto.getClientNo()) %></div>
+					<div class="left">
+						<span style="font-weight:bold"><%=commentDao.getClientName(commentDto.getClientNo()) %>&nbsp;</span>
+						<span style="color:gray"><%=commentDto.getCommentDate().toLocaleString() %></span>
+					</div>
 					
-					 <%if(commentDto.getClientNo() == clientNo) { %>
+					<%if(commentDto.getClientNo() == clientNo) { %>
 						<div class="right">
 							<a class="comment-edit-btn">수정</a>
 							| 
@@ -268,6 +264,7 @@
 					<%} %>
 				</div>
 
+				<!-- 화면 표시 댓글 -->
 				<div class="comment-display-area">
 					<pre><%=commentDto.getCommentField() %></pre>
 				</div>
@@ -276,17 +273,28 @@
 						<form action="reviewCommentEdit.kh" method="post">
 							<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
 							<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
-							<textarea name="commentField" required><%=commentDto.getCommentField()%></textarea>
-							<input type="submit" value="댓글 수정">
-							<input type="button" value="작성 취소" class="comment-edit-cancel-btn">
+							<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea" name="commentField" required><%=commentDto.getCommentField()%></textarea>
+							<div class="text-right">
+								<input type="submit" class="form-btn form-btn-inline" value="댓글 수정">
+								<input type="button" class="form-btn form-btn-inline comment-edit-cancel-btn" value="작성 취소" class="comment-edit-cancel-btn">
+							</div>
 						</form>
 					</div>
 				<%} %>
-				<div><%=commentDto.getCommentDate().toLocaleString() %></div>
-			</div>
+			</li>
 		<%} %>
-	
-
+		
+		<!-- 댓글 작성 -->
+		<form action="reviewCommentInsert.kh" method="post">
+			<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
+			<div class="row">
+				<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea" id="commentField" name="commentField" required></textarea>
+				<div class="text-right">
+					<input class="form-btn form-btn-inline" type="submit" value="댓글 작성">
+				</div>
+			</div>
+		</form>
+	</ul>
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

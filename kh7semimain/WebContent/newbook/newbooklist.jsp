@@ -74,15 +74,7 @@ catch(Exception e){
 int startRow = pageNo * pageSize - (pageSize-1);
 int endRow = pageNo * pageSize;
 
-int count  = newBookDao.getCount();
-int blockSize = 10;
-int lastBlock = (count + pageSize - 1) / pageSize;
-int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
-int endBlock = startBlock + blockSize - 1;
-
-if(endBlock > lastBlock){
-	endBlock = lastBlock;
-}
+int count; 
 
 List<NewBookDto> bookList = null;
 
@@ -95,26 +87,42 @@ int termInt;
 
 if(isMain) {
 	bookList = newBookDao.newBookList(startRow, endRow);
+	count = newBookDao.getCount();
 }
 else if(area.equals("메인도서관") && genre.equals("all") && term.equals("90")) {
 	bookList = newBookDao.newBookList(startRow, endRow);
+	count = newBookDao.getCount();
 }
 else if(!area.equals("메인도서관") && genre.equals("all") && term.equals("90")){
 	termInt = Integer.parseInt(term);
 	bookList = newBookDao.newBookList1(area, termInt, startRow, endRow);
+	count = newBookDao.getCount(area);
 }
 else if(area.equals("메인도서관") && !genre.equals("all")){
 	termInt = Integer.parseInt(term);
 	bookList = newBookDao.newBookList1(genre, termInt, startRow, endRow);
+	count = newBookDao.getCount(genre);
 }
 else if(area.equals("메인도서관") && genre.equals("all") && !term.equals("90")){
 	termInt = Integer.parseInt(term);
 	bookList = newBookDao.newBookList2(termInt, startRow, endRow);
+	count = newBookDao.getCount(termInt);
 }
 else {
 	termInt = Integer.parseInt(term);
 	bookList = newBookDao.newBookList3(termInt, area, genre, startRow, endRow);
+	count = newBookDao.getCount(termInt, area, genre);
 }
+
+int blockSize = 10;
+int lastBlock = (count + pageSize - 1) / pageSize;
+int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+int endBlock = startBlock + blockSize - 1;
+
+if(endBlock > lastBlock){
+	endBlock = lastBlock;
+}
+
 
 
 AreaDao areaDao = new AreaDao();

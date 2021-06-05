@@ -68,16 +68,7 @@ catch(Exception e){
 int startRow = pageNo * pageSize - (pageSize-1);
 int endRow = pageNo * pageSize;
 
-int count  = recommendDao.getCount();
-int blockSize = 10;
-int lastBlock = (count + pageSize - 1) / pageSize;
-int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
-int endBlock = startBlock + blockSize - 1;
-
-
-if(endBlock > lastBlock){
-	endBlock = lastBlock;
-}
+int count;
 
 
 List<RecommendDto> recommendList;
@@ -88,14 +79,28 @@ boolean isSearch = type != null && keyword != null && !keyword.trim().equals("")
 
 if(!isSearch){
 	recommendList = recommendDao.rank(startRow, endRow);
+	count = recommendDao.getCount();
 }
 else if(type.equals("all")){
 	recommendList = recommendDao.search(keyword,startRow,endRow);
+	count = recommendDao.getCount(keyword);
 }
 else{
 	recommendList = recommendDao.search(type, keyword,startRow,endRow);
+	count = recommendDao.getCount(type, keyword);
 }
 
+int blockSize = 10;
+int lastBlock = (count + pageSize - 1) / pageSize;
+int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+int endBlock = startBlock + blockSize - 1;
+
+
+if(endBlock > lastBlock){
+	endBlock = lastBlock;
+}
+
+//브라우저 이름짓기
 AreaDao areaDao = new AreaDao();
 int areaNo;
 try{

@@ -62,7 +62,7 @@ try{
 catch (Exception e){
 	areaPageNo = 1;
 }
-int areaPageSize = 5; // 1페이지에 보여줄 개수
+int areaPageSize = 6; // 1페이지에 보여줄 개수
 // rownum의 시작번호(startRow)와 종료번호(endRow)를 계산
 int strNum = areaPageSize * areaPageNo - (areaPageSize-1);
 int endNum = areaPageSize * areaPageNo;
@@ -157,16 +157,12 @@ if(areaNo != 0){
 				
 				<div class="float-container row">
 					<div class="promotion left">
-						
-						
 
 						<%if(promotionInfoDto != null){%>
 						<img id="promotionImg" src="<%=root %>/promotion/promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">
 						<span>
 							<%if(promotionInfoDto.getAreaNo() != 0){%>
-								
-									<%=areaDao.detail(promotionInfoDto.getAreaNo()).getAreaName() %> 
-								
+								<%=areaDao.detail(promotionInfoDto.getAreaNo()).getAreaName() %> 
 							<%} %>
 						</span>
 						<%} %>

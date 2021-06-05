@@ -20,6 +20,7 @@
 */
 .menu {
 	border-bottom: 1px solid black;
+	text-align: center;
 }
 .menu, .menu ul {
 	margin:0;
@@ -31,7 +32,6 @@
 .menu > li {
 	display: inline-block;
 	position: relative;
-	left:250px;
 }
 .menu ul {
 	display:none; 
@@ -45,11 +45,16 @@
 .menu li {
 	padding:1rem;
 	width:150px;
+	z-index: 2;
 }
 .menu li:hover {
-	background-color:#f5f5f5;
-	text-decoration: underline;
+	background-color: RGB(228, 244, 243);
+	text-decoration: none;
 }
+.menu li:hover>a{
+	color: gray;
+}
+
 .menu li > a {
 /* 	color:black; */
 	text-decoration: none;
@@ -82,7 +87,7 @@
 }
 
 .areaBtn, .areaBtnMove{
-	background-color: RGB(217, 223, 221);
+	background-color: RGB(228, 244, 243);
 	padding: 0px;
 }
 
@@ -93,7 +98,7 @@
 }
 
 .areaBtn {
-	width: 180px;
+	width: 187px;
 }
 
 .areaBtnMove, .areaBtnMoveInactive {
@@ -101,8 +106,9 @@
 }
 
 .areaBtn:hover, .areaBtnMove:hover {
-	background-color: blue;
+	background-color: rgb(181, 225, 210);
 	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
 }
 
 .inactive {
@@ -113,7 +119,7 @@
 로그인&회원가입
  */
 .main {
-	padding: 20px;
+	padding: 40px 40px;
 }
 
 .header {
@@ -274,6 +280,7 @@
 
 .areaMenu  li, .myArea li {
 	font-size: 13px;
+	text-align: center;
 	font-weight: bold;
 	border: black;
 	padding: 0px;

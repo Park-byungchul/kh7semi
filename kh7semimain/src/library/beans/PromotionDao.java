@@ -40,4 +40,16 @@ public class PromotionDao {
 		con.close();
 	}
 	
+	public boolean delete(int promotionNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "delete promotion where promotion_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, promotionNo);
+		int count = ps.executeUpdate();
+		
+		con.close();
+		return count > 0;
+	}
+	
 }

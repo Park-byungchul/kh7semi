@@ -8,6 +8,7 @@ public class CalendarDao {
 	
 	public int year = today.get(Calendar.YEAR);
 	public int month = today.get(Calendar.MONTH) + 1;
+	public int day = today.get(Calendar.DATE);
 	
 //	년도를 넘겨받아 윤년/ 평년을 판단해 윤년이면 true, 평년이면 false를 리턴하는 메서드
 	public static boolean isLeapYear(int year) {

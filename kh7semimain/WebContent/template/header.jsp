@@ -76,7 +76,9 @@
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/calendar.css">
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/board.css">
 	<style>
-	
+	ul > li {
+		z-index:99;
+	}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
@@ -209,7 +211,7 @@
 	
 		<nav>
 			<!-- 메뉴 -->
-			<ul class="menu" style="z-index:1">
+			<ul class="menu">
 				<li>
 					<a href="<%=root%>/location/location.jsp">도서관 소개</a>
 					<ul>

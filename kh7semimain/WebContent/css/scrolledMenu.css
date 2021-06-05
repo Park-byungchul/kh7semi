@@ -27,11 +27,13 @@
 	position : fixed;
 	top:0;
 	left:0;
+	z-index:99;
 }
 .menu.fixed > li {
 	display: inline-block;
 	position: relative;
 	left:600px;
+	z-index:99;
 }
 .menu.fixed ul {
 	display:none; 

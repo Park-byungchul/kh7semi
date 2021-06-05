@@ -107,28 +107,26 @@ String title = "추천 도서";
 }
 </style>
 <div class="container-1000">
-	<div class="row text-center">
-		<h2>추천 도서</h2>
-	</div>
-	<div class="row text-center">
-				<form action = "recommendList.jsp" method="get">
-					<select name="type">
-						<option value="all">전체</option>
-						<option value="book_title">제목</option>
-						<option value= "book_author">저자</option>
-					</select>
+	<div class="row text-center" style="margin-left:-50px;">
+		<h1>추천 도서</h1>
+			<form action = "recommendList.jsp" method="get">
+				<select name="type">
+					<option value="all">전체</option>
+					<option value="book_title">제목</option>
+					<option value= "book_author">저자</option>
+				</select>
 				
 				<input type="text" name="keyword" size="50" height = "20">
 				<input type="submit" value="검색">
 				</form>					
-	</div> <br><br>
+	</div> <br>
 	
-		<ul class="recommendList">
+		<div class="recommendList">
 		<%for (RecommendDto recommendDto : recommendList) { 
 			bookDto = bookDao.get(recommendDto.getBookIsbn());
 			
 		%>
-			<li style="position:relative;padding:17px 20px;overflow:hidden;height:200px;margin-left:10px;">
+			<div style="position:relative;padding:17px 20px;overflow:hidden;height:200px;margin-left:10px;">
 				<div class="img" style="position:absolute;top:30px;left:0px;">
 					<img src="<%=bookDto.getBookImg()%>">
 				</div>
@@ -139,7 +137,7 @@ String title = "추천 도서";
 								<span>발행 : <%=bookDto.getBookDate()%> | </span><br><br>
 								<textarea cols="120" rows="6" style="resize:none;border:0 ;"><%=bookDto.getBookContent()%></textarea>
 					</div>
-			</li>
+			</div>
 						
 						
 				
@@ -148,7 +146,7 @@ String title = "추천 도서";
 				
 		
 		<%}%>
-		</ul>
+		</div>
 			
 	
 

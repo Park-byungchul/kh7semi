@@ -29,9 +29,6 @@ List<AreaDto> areaList = areaDao.list();
 %>
 
 <style>
-	#map1, #map2, #map3 {
-		z-index: -1;
-	}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -52,9 +49,7 @@ List<AreaDto> areaList = areaDao.list();
 	
 </script>
 
-<style>
 
-</style>
 <jsp:include page="/template/header.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>

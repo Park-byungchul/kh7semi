@@ -109,15 +109,15 @@ String title = "추천 도서";
 <div class="container-1000">
 	<div class="row text-center" style="margin-left:-50px;">
 		<h1>추천 도서</h1>
-			<form action = "recommendList.jsp" method="get">
-				<select name="type">
+			<form action = "recommendList.jsp" method="get" class="search-form text-center">
+				<select name="type" class="select-form">
 					<option value="all">전체</option>
 					<option value="book_title">제목</option>
 					<option value= "book_author">저자</option>
 				</select>
 				
-				<input type="text" name="keyword" size="50" height = "20">
-				<input type="submit" value="검색">
+				<input type="text" name="keyword" size="50" height = "20" class="text-search-form">
+				<input type="submit" value="검색" class="form-btn form-btn-inline">
 				</form>					
 	</div> <br>
 	

@@ -77,6 +77,7 @@
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/board.css">
   	
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/sidebar.css">
+  	<link rel="stylesheet" type="text/css" href="<%=root%>/css/btn.css">
 	<style>
 	ul > li {
 		z-index:99;

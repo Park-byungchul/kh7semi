@@ -69,18 +69,23 @@
 	}
 	
 %>
+
 <jsp:include page="/service/serviceSidebar.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
+
 <script src="<%=root%>/pagination/pagination.js">
 
 </script>
+
+
+<div class="main">
 	<div class="header">
 		<div class="row">
 			<span class="title">희망도서</span>
 		</div>
 		<div class="row">
-			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 희망도서</span>
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 서비스 > 희망도서</span>
 		</div>
 	</div>		
 	
@@ -146,4 +151,5 @@
 		<input type="hidden" name="pageNo">
 	</form>
 
+</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

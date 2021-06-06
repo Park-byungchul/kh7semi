@@ -83,7 +83,7 @@ $(function(){
 </style>			
 
 
-	<div class="main">
+	<div class="main" style="min-height:800px;">
 		<div class="header">
 			<div class="row">
 				<span class="title">대여 접수</span>
@@ -95,10 +95,6 @@ $(function(){
 		</div>
 
 		<section>
-			<div class="row text-right">
-				<input class="form-btn form-btn-inline"
-				 type="button" onclick="location.href='<%=root%>/lendBook/lendBookUpdate.jsp'" value="대여 반납">
-			</div>
 			<div class= "float-container">
 				<aside class="multi-container">
 				
@@ -108,12 +104,11 @@ $(function(){
 				
 			<!-- 	대여 접수 입력창 구현 -->
 				<div>
-					<form action = "lendBookInsert.kh" method="post" class = "form" onsubmit="return onSubmit()">		
-						회원번호 : <input type="text" name="clientNo" size="50" height = "20" required id = "clientNo">
-<%--  						회원번호 : <input type="text" name="clientNo" size="50" height = "20" value = <%=clientNo%> required> --%>
-						 <br><br>
-						입고번호 : <input type="text" name="getBookNo" size="50" height = "20" required>
-						 <br><br>
+					<form action = "lendBookInsert.kh" method="post" class = "form" onsubmit="return onSubmit()">	
+					<label class="text-left">회원번호 : </label>
+					<input type="text" name="clientNo" size="50" height = "20" required class="form-input form-input-underline" style="width:80%;"><br>
+					<label class="text-left">입고번호 : </label>
+				    <input type="text" name="getBookNo" size="50" height = "20" required class="form-input form-input-underline" style="width:80%;">	
 						 <input type="hidden" name="areaNo" size="50" height = "20" value="<%=areaNo %>"required>
 						 <br><br>						
 						<input type="submit" onclick="insertOnClick()"value="대여 접수" class="form-btn form-btn-inline">			
@@ -124,6 +119,8 @@ $(function(){
 			</div>
 		</div>		
 			<div class="row text-right">
+						<input class="form-btn form-btn-inline"
+				 type="button" onclick="location.href='<%=root%>/lendBook/lendBookUpdate.jsp'" value="대여 반납">
 						<input class="form-btn form-btn-inline"
 						 type="button" onclick="location.href='<%=root%>/lendBook/lendBookList.jsp'" value="대출목록 조회">
 					</div>
@@ -156,6 +153,6 @@ $(function(){
 		</table>
 	</div>
 	
-	
+</div>
 	<%} %>
 		<jsp:include page="/template/footer.jsp"></jsp:include>

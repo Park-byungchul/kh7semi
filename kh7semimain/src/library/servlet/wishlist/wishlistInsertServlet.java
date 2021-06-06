@@ -21,6 +21,7 @@ public class wishlistInsertServlet extends HttpServlet{
 			WishlistDto wishlistDto = new WishlistDto();
 			wishlistDto.setClientNo(Integer.parseInt(req.getParameter("clientNo"))); 
 			wishlistDto.setBookIsbn(req.getParameter("bookIsbn"));
+			int getBookNo = Integer.parseInt(req.getParameter("getBookNo"));
 			
 			//처리
 			WishlistDao wishlistDao = new WishlistDao();
@@ -30,7 +31,7 @@ public class wishlistInsertServlet extends HttpServlet{
 			wishlistDao.insert(wishlistDto);
 			String root = req.getContextPath();
 			
-			resp.sendRedirect(root+"/search/searchList.jsp");
+			resp.sendRedirect(root+"/getBook/getBookDetail.jsp?getBookNo="+getBookNo);
 			
 		}
 		catch(Exception e) {

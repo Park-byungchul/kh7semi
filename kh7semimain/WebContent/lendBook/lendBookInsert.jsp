@@ -28,6 +28,8 @@ try{
 	else{
 		lendBookList = lendBookDao.list(Integer.parseInt(clientNo));
 	}
+	
+	String title = "대여 접수";
 %>
 <%if(isSearch){ %>
 <script>
@@ -36,16 +38,11 @@ $(function(){
 });
 </script>
 <%} %>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>대여 접수</title>
-	<link rel="stylesheet" type="text/css" href="<%=root%>/css/common.css">
-	<link rel="stylesheet" type="text/css" href="<%=root%>/css/menu.css">
-	<link rel="stylesheet" type="text/css" href="<%=root%>/css/layout.css">
-	<link rel="stylesheet" type="text/css" href="<%=root%>/css/test.css">
+
+
+	
 	<script>
 	var is_empty = false;
 	
@@ -74,7 +71,9 @@ $(function(){
 		}
 	</script>
 	
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>	
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title" />
+</jsp:include>
 
 <style>
 	input[type="button"]{
@@ -82,12 +81,23 @@ $(function(){
 		height: 50px;
 	}
 </style>			
-		<header>
-			<h2>대여 접수</h2>
-		</header>
+
+
+	<div class="main">
+		<div class="header">
+			<div class="row">
+				<span class="title">대여 접수</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 서비스 > 회원가입</span>
+			</div>
+		</div>
+
 		<section>
 			<div class="row text-right">
-				<input type="button" onclick="location.href='<%=root%>/lendBook/lendBookUpdate.jsp'" value="대여 반납">
+				<input class="form-btn form-btn-inline"
+				 type="button" onclick="location.href='<%=root%>/lendBook/lendBookUpdate.jsp'" value="대여 반납">
 			</div>
 			<div class= "float-container">
 				<aside class="multi-container">
@@ -106,7 +116,7 @@ $(function(){
 						 <br><br>
 						 <input type="hidden" name="areaNo" size="50" height = "20" value="<%=areaNo %>"required>
 						 <br><br>						
-						<input type="submit" onclick="insertOnClick()"value="대여 접수">			
+						<input type="submit" onclick="insertOnClick()"value="대여 접수" class="form-btn form-btn-inline">			
 					</form>	
 									
 				</div> <br><br>
@@ -114,7 +124,8 @@ $(function(){
 			</div>
 		</div>		
 			<div class="row text-right">
-						<input type="button" onclick="location.href='<%=root%>/lendBook/lendBookList.jsp'" value="대출목록 조회">
+						<input class="form-btn form-btn-inline"
+						 type="button" onclick="location.href='<%=root%>/lendBook/lendBookList.jsp'" value="대출목록 조회">
 					</div>
 		</section>
 		

@@ -2,6 +2,7 @@ package library.servlet.book;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,16 +20,22 @@ public class BookEditServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			req.setCharacterEncoding("UTF-8");
-			
 			BookDto bookDto = new BookDto();
 			bookDto.setBookIsbn(req.getParameter("bookIsbn"));
 			bookDto.setGenreNo(Integer.parseInt(req.getParameter("genreNo")));
 			bookDto.setBookTitle(req.getParameter("bookTitle"));
 			bookDto.setBookAuthor(req.getParameter("bookAuthor"));
 			bookDto.setBookPublisher(req.getParameter("bookPublisher"));
-			bookDto.setBookDate(Date.valueOf(req.getParameter("bookDate")));
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			
+			java.util.Date util_StartDate = format.parse(req.getParameter("bookDate"));
+			java.sql.Date sql_StartDate = new java.sql.Date(util_StartDate.getTime());
+			
+			bookDto.setBookDate(sql_StartDate);
 			bookDto.setBookContent(req.getParameter("bookContent"));
 			bookDto.setBookImg(req.getParameter("bookImg"));
+			
 			BookDao bookDao = new BookDao();
 			boolean result = bookDao.editBook(bookDto);
 			

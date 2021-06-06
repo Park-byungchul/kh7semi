@@ -1,3 +1,5 @@
+<%@page import="library.beans.ClientDto"%>
+<%@page import="library.beans.ClientDao"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="library.beans.PlanDto"%>
 <%@page import="java.util.List"%>
@@ -11,13 +13,28 @@
 request.setCharacterEncoding("UTF-8");
 String root = request.getContextPath();
 AreaDao areaDao = new AreaDao();
+ClientDao clientDao = new ClientDao();
+ClientDto clientDto = new ClientDto();
 int areaNo;
+int clientNo;
 try{
 	areaNo = (int)session.getAttribute("areaNo");
 }
 catch (Exception e){
 	areaNo = 0;
 }
+
+boolean isClient = true;
+try{
+	clientNo = (int)session.getAttribute("clientNo");
+	clientDto = clientDao.get(clientNo);
+	isClient = clientDto.getClientType().equals("일반사용자");
+}
+catch(Exception e){
+	clientNo = 0;
+}
+
+
 
 String title = "행사 일정";
 if(areaNo > 0){
@@ -111,9 +128,11 @@ if(areaNo == 0){
 						<th colspan="2" class="left">
 							<%=year %>.<%=month %>.<%=day %>
 						</th>
+						<%if(clientNo != 0 && !isClient) { %>
 						<th class="right">
 							<button class="insertBtn" onclick="location.href='planInsert.jsp?year=<%=year %>&month=<%=month %>&day=<%=day %>'">일정 등록</button>
 						</th>
+						<% } %>
 					</tr>
 				</thead>
 				<tbody>
@@ -146,5 +165,7 @@ if(areaNo == 0){
 				<%} %>
 			</div>
 		</div>
+	</div>
+</div>
 
-		<jsp:include page="/template/footer.jsp"></jsp:include>
+<jsp:include page="/template/footer.jsp"></jsp:include>

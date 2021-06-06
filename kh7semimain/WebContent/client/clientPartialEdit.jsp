@@ -94,16 +94,17 @@ String title = "회원 목록";
 
 <%} %>
 
-<div class="main">
-	<div class="header">
-		<div class="row">
-			<span class="title">회원 목록</span>
-		</div>
+	<div class="main">
+		
+			<div class="header">
+				<div class="row">
+					<span class="title">회원 목록</span>
+				</div>
 				
-		<div class="row">
-			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 관리자메뉴 > 권한관리자 > 회원 목록</span>
-		</div>
-	</div>
+				<div class="row">
+					<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 권한관리자 > 회원 목록</span>
+				</div>
+			</div>
 
 	<div class="row">
 		<table class="table table-border table-hover">
@@ -207,4 +208,5 @@ String title = "회원 목록";
 	</div>
 </div>
 
+</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

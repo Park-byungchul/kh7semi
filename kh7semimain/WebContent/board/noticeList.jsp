@@ -21,7 +21,14 @@
 	if(keyword == null)
 		keyword = "";
 	
-	int areaNo = 0;
+	int areaNo;
+	try{
+		areaNo = (int)request.getSession().getAttribute("areaNo");
+	} catch (Exception e){
+		areaNo = 0;
+	}
+	
+	
 	if(areaNoStr != null) {
 		areaNo = Integer.parseInt(areaNoStr);
 	}
@@ -102,9 +109,16 @@
 	
 	AreaDao areaDao = new AreaDao();
 	List<AreaDto> areaList = areaDao.list();
+	
+	String title = "공지사항";
+	if(areaNo != 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 %>
 
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <%if(isSearch) { %>
 	<script>

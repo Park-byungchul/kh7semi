@@ -30,7 +30,7 @@
 	String type = request.getParameter("type"); //검색 정보
 	String keyword = request.getParameter("keyword"); //검색 정보
 	
-	String title = "자료 검색";
+	String title = "통합 자료 검색";
 %>
 
 <jsp:include page="/search/searchSidebar.jsp">
@@ -44,8 +44,15 @@
 	}
 </style>
 
-		<div class="row text-center">
-			<h2>자료 검색</h2>
+	<div class="main">
+		<div class="header">
+			<div class="row">
+				<span class="title">통합 자료 검색</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 통합 자료 검색</span>
+			</div>
 		</div>
 		
 		<div class="row text-center">
@@ -66,5 +73,6 @@
 				<input type="submit" value="검색">
 				</form>					
 			</div> <br><br>
+		</div>
 			
 <jsp:include page="/template/footer.jsp"></jsp:include>

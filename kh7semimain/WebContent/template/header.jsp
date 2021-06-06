@@ -240,9 +240,9 @@
 				<li>
 					<a href="<%=root%>/search/searchInput.jsp">자료 검색</a>
 					<ul>
-						<li><a href="<%=root%>/search/searchInput.jsp">통합자료검색</a></li>
-						<li><a href="<%=root%>/newbook/newbooklist.jsp">신착자료</a></li>
-						<li><a href="<%=root%>/recommend/recommendList.jsp">추천도서</a></li>
+						<li><a href="<%=root%>/search/searchInput.jsp">통합 자료 검색</a></li>
+						<li><a href="<%=root%>/newbook/newbooklist.jsp">신착 도서</a></li>
+						<li><a href="<%=root%>/recommend/recommendList.jsp">추천 도서</a></li>
 						<li><a href="#">대출베스트</a></li>
 					</ul>
 				</li>
@@ -251,9 +251,10 @@
 				<li>
 					<a href="<%=root%>/service/serviceInfo.jsp">도서관 서비스</a>
 					<ul>
+						<li><a href="<%=root%>/service/serviceInfo.jsp">이용 안내</a></li>
 						<li><a href="<%=root%>/reservation/reservationInfo.jsp">도서 예약</a></li>
 						<li><a href="<%=root%>/hopelist/hopelist.jsp">희망도서</a></li>
-						<li><a href="<%=root %>/plan/plan.jsp">행사일정</a></li>
+						<li><a href="<%=root %>/plan/plan.jsp">행사 일정</a></li>
 					</ul>
 				</li>
 				

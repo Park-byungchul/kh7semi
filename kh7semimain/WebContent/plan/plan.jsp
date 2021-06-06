@@ -19,7 +19,7 @@ catch (Exception e){
 	areaNo = 0;
 }
 
-String title = "행사일정";
+String title = "행사 일정";
 if(areaNo > 0){
 	title += " : " + areaDao.detail(areaNo).getAreaName();
 }
@@ -89,12 +89,12 @@ if(areaNo == 0){
 
 <div class="main">
 	<div class="header">
-		<div>
-			<span class="title">행사일정</span>
+		<div class="row">
+			<span class="title">행사 일정</span>
 		</div>
 		<div class="row">
 			<span class="path"><a class="imgArea" href="<%=root %>"><img
-					alt="home" src="<%=root %>/image/home.png"></a> > 도서관 서비스 > 행사일정</span>
+					alt="home" src="<%=root %>/image/home.png"></a> > 도서관 서비스 > 행사 일정</span>
 		</div>
 		
 	</div>
@@ -124,14 +124,13 @@ if(areaNo == 0){
 							[<%=areaDao.detail(planDto.getAreaNo()).getAreaName()%>]<br>
 							<%} %>
 						</td>
-						<td width="60%;" class="left">
+						<td width="65%;" class="left">
 							<%=planDto.getPlanContent() %>
 						</td>
-						<td width="25%">
-							<%if(planDto.getPlanStartDate().equals(planDto.getPlanEndDate())){ %>
-								<%=planDto.getPlanStartDate() %>
-							<%}else{ %>
-								<%=planDto.getPlanStartDate() %> ~ <%=planDto.getPlanEndDate() %>
+						<td width="20%">
+							<%=planDto.getPlanStartDate() %>
+							<%if(!planDto.getPlanStartDate().equals(planDto.getPlanEndDate())){ %>
+								~<br><%=planDto.getPlanEndDate() %>
 							<%} %>
 						</td>
 					</tr>

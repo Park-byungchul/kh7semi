@@ -53,15 +53,17 @@ List<AreaDto> areaList = areaDao.list();
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
 
-	<div class="header">
-		<div class="row">
-			<span class="title">찾아오는길</span>
+	<div class="main">
+		<div class="header">
+			<div class="row">
+				<span class="title">찾아오는길</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 소개 > 찾아오는길</span>
+			</div>
 		</div>
-				
-		<div class="row">
-			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 소개 > 찾아오는길</span>
-		</div>
-	</div>
+		
 <%if(areaNo==0) { %>
 <div class="float-container">
 	
@@ -144,6 +146,7 @@ List<AreaDto> areaList = areaDao.list();
 	
 </div>
 <%} %>
+</div>
 <!-- 카카오 지도 api 스크립트 부분 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1038b1ced14e22e17b2cd601ec877523&libraries=services"></script>
 <script>

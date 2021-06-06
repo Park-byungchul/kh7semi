@@ -29,10 +29,13 @@
 	request.setCharacterEncoding("UTF-8");
 	String type = request.getParameter("type"); //검색 정보
 	String keyword = request.getParameter("keyword"); //검색 정보
-
+	
+	String title = "자료 검색";
 %>
 
-<jsp:include page="/search/searchSidebar.jsp"></jsp:include>
+<jsp:include page="/search/searchSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <style>
 	input[type="button"] {

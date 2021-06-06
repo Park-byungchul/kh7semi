@@ -9,6 +9,8 @@
     pageEncoding="UTF-8"%>
     
 <%
+	request.setCharacterEncoding("UTF-8");
+
 	int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
 	
 	ReviewDao reviewDao = new ReviewDao();
@@ -16,9 +18,13 @@
 	BookDto bookDto = reviewDao.getBookInfo(reviewDto.getBookIsbn());
 	
 	String root = request.getContextPath();
+
+	String title = "도서 리뷰";
 %>
-    
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 

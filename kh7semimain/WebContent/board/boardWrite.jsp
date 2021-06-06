@@ -24,11 +24,13 @@
 	BoardTypeDao boardTypeDao = new BoardTypeDao();
 	String boardName = boardTypeDao.getBoardName(boardTypeNo);
 	
-	String title = "아아아";
+
+	String title = "글쓰기";
 %>
     
 <jsp:include page="/board/boardMenuSidebar.jsp">
-	<jsp:param value="<%=title %>" name="title"/>
+	<jsp:param value="<%=title%>" name="title"/>
+
 </jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>

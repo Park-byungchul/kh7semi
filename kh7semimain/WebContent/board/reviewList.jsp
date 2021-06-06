@@ -87,9 +87,13 @@
 		clientDto = null;
 	else
 		clientDto = clientDao.get(clientNo);
+	
+	String title = "도서 리뷰";
 %>
 
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <%if(isSearch) { %>
 	<script>
@@ -123,16 +127,17 @@
 	});
 </script>
 
-<div class="row text-left">
-	<div class="header">
-		<div class="row">
-			<span class="title">도서 리뷰</span>
+
+	<div class="main">
+		<div class="header">
+			<div class="row">
+				<span class="title">도서 리뷰</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 도서 리뷰</span>
+			</div>
 		</div>
-				
-		<div class="row">
-			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 도서 리뷰</span>
-		</div>
-	</div>
 	
 	<form class="search-form text-center" action="reviewList.jsp" method="get">
 		<input type="hidden" name="pageNo">

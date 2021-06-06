@@ -29,6 +29,21 @@ List<AreaDto> areaList = areaDao.list();
 %>
 
 <style>
+	.float-container>.left.info {
+		width:400px;
+		height:400px;
+		margin:20px;
+		background-color:RGB(238, 248, 247);
+		padding:10px 20px;
+	}
+	.library-areaName {
+		margin-bottom:50px;
+	}
+	
+	.main > .float-container {
+		border-bottom:1px solid lightgray;
+		padding:20px 0px;
+	}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -42,9 +57,6 @@ List<AreaDto> areaList = areaDao.list();
 			this.form.submit();
 			//test
 		});
-			
-
-		
 	});
 	
 </script>
@@ -69,7 +81,7 @@ List<AreaDto> areaList = areaDao.list();
 	
 	<div class="left" id="map1" style="width:400px;height:400px;margin:20px 20px;display:inline-block;">
 	</div>	
-	<div class="left">
+	<div class="left info">
 		<div class="row">
 			<h2 class="library-areaName" style="display:inline-block;"><%=areaList.get(1).getAreaName()%></h2>
 		</div>
@@ -89,7 +101,7 @@ List<AreaDto> areaList = areaDao.list();
 <div class="float-container">
 	<div class="left" id="map2" style="width:400px;height:400px;margin:20px 20px;display:inline-block;">
 	</div>	
-	<div class="left">
+	<div class="left info">
 		<div class="row">
 			<h2 class="library-areaName" style="display:inline-block;"><%=areaList.get(2).getAreaName()%></h2>
 		</div>
@@ -109,7 +121,7 @@ List<AreaDto> areaList = areaDao.list();
 <div class="float-container">
 	<div class="left" id="map3" style="width:400px;height:400px;margin:20px 20px;display:inline-block;">
 	</div>	
-	<div class="left">
+	<div class="left info" >
 		<div class="row">
 			<h2 class="library-areaName" style="display:inline-block;"><%=areaList.get(3).getAreaName()%></h2>
 		</div>
@@ -129,7 +141,7 @@ List<AreaDto> areaList = areaDao.list();
 <div class="float-container">
 	<div class="left" id="map" style="width:400px;height:400px;margin:20px 20px;display:inline-block;">
 	</div>	
-	<div class="left">
+	<div class="left info">
 		<div class="row">
 			<h2 class="library-areaName" style="display:inline-block;"><%=areaList.get(areaNo).getAreaName()%></h2>
 		</div>

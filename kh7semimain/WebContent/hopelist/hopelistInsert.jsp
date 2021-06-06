@@ -1,4 +1,3 @@
-
 <%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>

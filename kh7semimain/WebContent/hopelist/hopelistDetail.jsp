@@ -8,9 +8,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String root = request.getContextPath();
-	request.setCharacterEncoding("UTF-8");
-	
 	int hopelistNo = Integer.parseInt(request.getParameter("hopelistNo"));
 	HopelistDao hopelistDao = new HopelistDao();
 	HopelistDto hopelistDto = hopelistDao.get(hopelistNo);
@@ -37,13 +34,15 @@
 	catch (Exception e){
 		areaNo = 0;
 	}
-	String tit
+	String title = "희망도서";
+	if(areaNo > 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 %>
 
 <jsp:include page="/service/serviceSidebar.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
-
 <script>
 $(function(){
 	$("#hopelistDelete").click(function(){
@@ -120,5 +119,4 @@ $(function(){
 			<a href="hopelist.jsp" class="link-btn">목록</a>
 		</div>
 	</div>
-
 <jsp:include page="/template/footer.jsp"></jsp:include>

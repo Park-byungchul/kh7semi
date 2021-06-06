@@ -214,5 +214,4 @@ if(areaNo > 0){
 		
 		</div>
 	</div>
-	
 <jsp:include page="/template/footer.jsp"></jsp:include>

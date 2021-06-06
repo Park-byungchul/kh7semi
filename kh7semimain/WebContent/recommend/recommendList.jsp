@@ -135,7 +135,7 @@ textarea:focus {
 </jsp:include>
 
 
-	<div class="main">
+		<div class="main">
 		<div class="header">
 			<div class="row">
 				<span class="title">추천 도서</span>
@@ -208,5 +208,4 @@ textarea:focus {
 		
 		</div>
 	</div>
-
 <jsp:include page="/template/footer.jsp"></jsp:include>

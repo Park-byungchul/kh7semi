@@ -1,10 +1,9 @@
+<%@page import="library.beans.AreaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="library.beans.LendBookDto"%>
 <%@page import="library.beans.LendBookDao"%>
 <%@page import="java.util.List"%>
-    
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>	
 <%
 	String root = request.getContextPath();
 	LendBookDao lendBookDao = new LendBookDao();
@@ -13,6 +12,19 @@
 	String keyword = request.getParameter("keyword");
 	boolean isSearch = keyword != null;
 	
+	AreaDao areaDao = new AreaDao();
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
+
+	String title = "관리자 메뉴";
+	if(areaNo > 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 	
 //--페이징
 	// 페이지 번호
@@ -65,7 +77,9 @@
 	if(endBlock > lastBlock) // 범위를 벗어나면
 		endBlock = lastBlock;
 %>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 <%if(isSearch){ %>
 <script>
 $(function(){
@@ -75,17 +89,24 @@ $(function(){
 <%} %>
 
 
-<script src="<%=root%>/pagination/pagination.js"></script>
-		<div class="row text-center">
-			<h2>대여 목록</h2>
+<script src="<%=root%>/pagination/pagination.js">
+</script>
+<div class="main" style="height:800px;">
+	<div class="header">
+		<div class="row">
+			<span class="title">대여 목록</span>
 		</div>
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 대여 목록</span>
+		</div>
+	</div>		
 		
 		<div class="row text-center">
 			<form action = "lendBookList.jsp" method="get">
 				
 				
 				<input type="text" name="keyword" size="50" height="20" id = "keyword" placeholder="회원번호 입력">
-				<input type="submit" value="검색">
+				<input type="submit" value="검색" class="form-btn form-btn-inline">
 			</form>
 		</div> <br><br>
 		
@@ -134,5 +155,5 @@ $(function(){
 	<form class="search-form" action="lendBookList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	</form>
-	
+</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

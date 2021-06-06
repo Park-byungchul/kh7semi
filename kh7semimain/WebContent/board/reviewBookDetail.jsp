@@ -10,12 +10,12 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String root = request.getContextPath(); 
-
+	
 	String bookIsbn = request.getParameter("bookIsbn");
 	BookDao bookDao = new BookDao();
 	BookDto bookDto = bookDao.get(bookIsbn);
 
-	String title = "신착 도서";
+	String title = "도서 리뷰";
 %>
 
 <jsp:include page="/search/searchSidebar.jsp">
@@ -27,11 +27,11 @@
 <div class="main">
 		<div class="header">
 			<div class="row">
-				<span class="title">신착 도서</span>
+				<span class="title">도서 리뷰</span>
 			</div>
 			
 			<div class="row">
-				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 신착 도서</span>
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 도서 리뷰 > 도서 상세보기 </span>
 			</div>
 		</div>
 	
@@ -52,7 +52,7 @@
 			<label>이미지 URL</label><input type="text" name="bookImg" id="bookImg" required class="form-input form-input-underline" value="<%=bookDto.getBookImg()%>" disabled><br><br>
 	</div>
 	<div class="row text-center">
-			<button class="board-btn"><a class="btn-text" href="newbooklist.jsp">목록</a></button>
+			<button class="board-btn"><a class="btn-text" href="<%=root%>/board/reviewList.jsp">목록</a></button>
 	</div>
 	</div>
 </div>

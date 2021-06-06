@@ -80,8 +80,8 @@ $(function(){
 					<option value="book_title">제목</option>
 					<option value="book_author">저자</option>
 				</select>
-				<input type="text" name="keyword" value=<%=keyword %>>
-				<input type="submit" value="검색" class="bookSearch-btn">
+				<input type="text" class="text-search-form" name="keyword" value=<%=keyword %>>
+				<input type="submit" value="검색" class="bookSearch-btn form-btn form-btn-inline">
 			</form>
 	</div>
 	<hr>	
@@ -110,7 +110,7 @@ $(function(){
 					<td Id="searched-bookAuthor"><%=bookDto.getBookAuthor()%></td>
 					<td Id="searched-bookImg"><img src="<%=bookDto.getBookImg() %>"></td>
 					<td>
-					<button class="choice-btn">선택하기</button>
+					<button class="choice-btn link-btn">선택하기</button>
 					</td>
 				</tr>
 				<%}%>

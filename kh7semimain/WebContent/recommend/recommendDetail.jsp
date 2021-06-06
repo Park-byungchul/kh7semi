@@ -8,21 +8,37 @@
     pageEncoding="UTF-8"%>
 
 <%
-
+	request.setCharacterEncoding("UTF-8");
+	String root = request.getContextPath(); 
+	
 	String bookIsbn = request.getParameter("bookIsbn");
 	BookDao bookDao = new BookDao();
 	BookDto bookDto = bookDao.get(bookIsbn);
 
 	String title = "추천 도서";
 %>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script>
-</script>
-<jsp:include page="/search/searchSidebar.jsp"></jsp:include>
 
-<div class="container-600">
+<jsp:include page="/search/searchSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<div class="main">
+		<div class="header">
+			<div class="row">
+				<span class="title">추천 도서</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 추천 도서</span>
+			</div>
+		</div>
+	
+	<div class="container-600 ">
+	
+
 	<div class="row text-center">
-		<h2>추천 도서 상세 정보</h2>
 			<img id="thumnail" style="width:240px;height:348px;"src="<%=bookDto.getBookImg()%>">
 		</div>		
 		<div class="row text-left">
@@ -35,10 +51,10 @@
 			<label>도서 소개</label><br><br><textarea name="bookContent" cols="87" rows="6" style="resize:none;border:0 ;'" id="bookContent"  disabled><%=bookDto.getBookContent()%></textarea><br><br>
 			<label>이미지 URL</label><input type="text" name="bookImg" id="bookImg" required class="form-input form-input-underline" value="<%=bookDto.getBookImg()%>" disabled><br><br>
 	</div>
-	<div class="row text-right">
-			<button><a href="recommendList.jsp">목록</a></button>
+	<div class="row text-center">
+			<button class="board-btn"><a class="btn-text" href="recommendList.jsp">목록</a></button>
 	</div>
-		
+	</div>
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

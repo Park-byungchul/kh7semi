@@ -162,7 +162,7 @@
 	</div>
 	
 	<!-- 검색 -->
-	<form class="search-form text-center" action="noticeList.jsp" method="get">
+	<form class="search-form search-form-back text-center" action="noticeList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	
 		<%if(areaNo == 0) { %>

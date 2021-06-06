@@ -95,7 +95,7 @@ $(function(){
 					<option value="book_title">제목</option>
 					<option value="book_author">저자</option>
 				</select>
-				<input class="text-search-form type="text" name="keyword" placeholder="검색어" class="hopelist-bookSearch">
+				<input class="text-search-form"  type="text" name="keyword" placeholder="검색어" class="hopelist-bookSearch">
 			</form>
 			<button class="bookSearch-btn board-btn">검색</button>
 		</div>	

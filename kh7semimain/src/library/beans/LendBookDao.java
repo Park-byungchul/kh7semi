@@ -192,4 +192,34 @@ public class LendBookDao {
 			}
 			return lendBookList;
 		}
+		
+		//대출베스트
+		public List<LendBookDto> rank(int begin, int end) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select * from ("
+								+ "select rownum rn, TMP.* from ("
+									+ "select book_isbn,count(*) from lend_book group by book_isbn order by count(*) desc"
+								+ ") TMP"
+							+ ") where rn between ? and ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, begin);
+			ps.setInt(2, end);
+			ResultSet rs = ps.executeQuery();
+			
+			//List로 변환
+			List<LendBookDto> lendBookRankList = new ArrayList<>();
+			while(rs.next()) {
+				LendBookDto lendBookDto = new LendBookDto();
+
+				lendBookDto.setBookIsbn(rs.getString("book_isbn"));
+				
+				
+				lendBookRankList.add(lendBookDto);
+			}
+			
+			con.close();
+			
+			return lendBookRankList;
+		}
 	}

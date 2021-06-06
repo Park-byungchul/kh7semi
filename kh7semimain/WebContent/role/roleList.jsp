@@ -112,7 +112,6 @@ endBlock = lastBlock; // 범위를 수정
 				</tr>
 			</thead>
 			<tbody>
-				<%for(ClientDto clientDto : adminPermissionList){ %>
 					<tr>
 						<th width="20%">관리자</th>
 						<th>지점</th>
@@ -159,6 +158,7 @@ endBlock = lastBlock; // 범위를 수정
 			<%if(endBlock < lastBlock){ %>
 			<a class="move-link">다음</a>
 			<%} %>
+			
 		</div>
 		
 		<div class="row text-center">

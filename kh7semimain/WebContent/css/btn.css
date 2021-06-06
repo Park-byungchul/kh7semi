@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.insertBtn{
+	display: inline-block;
+	padding: 5px;
+	color: white;
+	border: 1px solid  rgb(67, 164, 157);
+	background-color: rgb(67, 164, 157);
+	width: 80px;
+}

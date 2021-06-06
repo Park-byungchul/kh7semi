@@ -65,7 +65,7 @@
 	</div>
 
 	<div class="row">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<thead>
 				<tr>
 					<th>ISBN</th>

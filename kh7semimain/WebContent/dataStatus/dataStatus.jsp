@@ -23,20 +23,11 @@ if(areaNo > 0){
 }
 
 %>
-<jsp:include page="/template/header.jsp">
+
+<jsp:include page="/location/locationSidebar.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
 
-<jsp:include page="/template/sidebar1.jsp"></jsp:include>
-
-<h2>도서관 소개</h2>
-<ul>
-	<li><a href="<%=root%>/location/location.jsp">찾아오는길</a></li>
-	<li><a href="dataStatus.jsp">자료현황</a></li>
-	<li><a href="<%=root%>/useInfo/useInfo.jsp">이용 안내</a></li>
-</ul>
-
-<jsp:include page="/template/sidebar2.jsp"></jsp:include>
 	<div class="header">
 		<div class="row">
 			<span class="title">자료현황</span>
@@ -57,10 +48,10 @@ if(areaNo > 0){
 					<th>강남도서관</th>
 				</tr>
 				<tr>
-					<td><%=bookCountDao.count()%></td>
-					<td><%=bookCountDao.count(1) %></td>
-					<td><%=bookCountDao.count(2) %></td>
-					<td><%=bookCountDao.count(3) %></td>	
+<%-- 					<td><%=bookCountDao.count()%></td> --%>
+<%-- 					<td><%=bookCountDao.count(1) %></td> --%>
+<%-- 					<td><%=bookCountDao.count(2) %></td> --%>
+<%-- 					<td><%=bookCountDao.count(3) %></td>	 --%>
 				</tr>
 			</table>
 			
@@ -75,10 +66,10 @@ if(areaNo > 0){
 					<th>강남도서관</th>
 				</tr>
 				<tr>
-					<td><%=bookCountDao.lendAbleCount()%></td>
-					<td><%=bookCountDao.lendAbleCount(1) %></td>
-					<td><%=bookCountDao.lendAbleCount(2) %></td>
-					<td><%=bookCountDao.lendAbleCount(3) %></td>	
+<%-- 					<td><%=bookCountDao.lendAbleCount()%></td> --%>
+<%-- 					<td><%=bookCountDao.lendAbleCount(1) %></td> --%>
+<%-- 					<td><%=bookCountDao.lendAbleCount(2) %></td> --%>
+<%-- 					<td><%=bookCountDao.lendAbleCount(3) %></td>	 --%>
 				</tr>
 			</table>
 </div>

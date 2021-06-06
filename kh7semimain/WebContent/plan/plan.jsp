@@ -57,7 +57,30 @@ try{
 }
 
 PlanDao planDao = new PlanDao();
-List<PlanDto> planList = planDao.list(year, month, day);
+int planPageSize = 5;
+int planPageNo;
+int planCount = planDao.count(year, month, day);
+int lastPlanPageNo = (planCount + planPageSize - 1) / planPageSize;
+try{
+	planPageNo = Integer.parseInt(request.getParameter("planPageNo"));
+	if(planPageNo < 1){
+		planPageNo = 1;
+	} else if(planPageNo > lastPlanPageNo) {
+		planPageNo = lastPlanPageNo;
+	}
+} catch(Exception e){
+	planPageNo = 1;
+}
+
+int strNum = planPageSize * planPageNo - (planPageSize-1);
+int endNum = planPageSize * planPageNo;
+
+List<PlanDto> planList;
+if(areaNo == 0){
+	planList = planDao.list(year, month, day, strNum, endNum);
+} else{
+	planList = planDao.list(year, month, day, strNum, endNum, areaNo);
+}
 %>
 
 <jsp:include page="/service/serviceSidebar.jsp">
@@ -85,24 +108,44 @@ List<PlanDto> planList = planDao.list(year, month, day);
 			<table class="planTable">
 				<thead>
 					<tr>
-						<th colspan="2">
+						<th colspan="2" class="left">
 							<%=year %>.<%=month %>.<%=day %>
+						</th>
+						<th class="right">
+							<button class="insertBtn" onclick="location.href='planInsert.jsp?year=<%=year %>&month=<%=month %>&day=<%=day %>'">일정 등록</button>
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<%for(PlanDto planDto : planList){ %>
-					<tr>
-						<td width="30%;"><%=planDto.getPlanContent() %></td>
-						<%if(planDto.getPlanStartDate().equals(planDto.getPlanEndDate())){ %>
-						<td><%=planDto.getPlanStartDate() %></td>
-						<%}else{ %>
-						<td><%=planDto.getPlanStartDate() %>~<%=planDto.getPlanEndDate() %></td>
-						<%} %>
+					<tr onclick="location.href='planEdit.jsp?planNo=<%=planDto.getPlanNo()%>'">
+						<td width="15%" class="area">
+							<%if(planDto.getAreaNo() > 0){ %>
+							[<%=areaDao.detail(planDto.getAreaNo()).getAreaName()%>]<br>
+							<%} %>
+						</td>
+						<td width="60%;" class="left">
+							<%=planDto.getPlanContent() %>
+						</td>
+						<td width="25%">
+							<%if(planDto.getPlanStartDate().equals(planDto.getPlanEndDate())){ %>
+								<%=planDto.getPlanStartDate() %>
+							<%}else{ %>
+								<%=planDto.getPlanStartDate() %> ~ <%=planDto.getPlanEndDate() %>
+							<%} %>
+						</td>
 					</tr>
 					<%} %>
 				</tbody>
 			</table>
+			<div class="text-center">
+				<%if(planPageNo > 1){ %>
+				<a href="?year=<%=year %>&month=<%=month %>&day=<%=day %>&planPageNo=<%=planPageNo - 1 %>" class="upDownBtn">▲</a>
+				<%} %>
+				<%if(planPageNo < lastPlanPageNo){ %>
+				<a href="?year=<%=year %>&month=<%=month %>&day=<%=day %>&planPageNo=<%=planPageNo + 1 %>" class="upDownBtn">▼</a>
+				<%} %>
+			</div>
 		</div>
 
 		<jsp:include page="/template/footer.jsp"></jsp:include>

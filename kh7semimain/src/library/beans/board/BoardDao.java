@@ -237,7 +237,7 @@ public class BoardDao {
 		Connection con = JdbcUtils.getConnection();
 		
 		String sql = "update board set area_no = ?, board_title = ?, "
-				+ "board_field = ? where board_no = ?";
+				+ "board_field = ?, board_open = ? where board_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		if(boardDto.getAreaNo() == 0) {
 			// 전체 도서관일 경우
@@ -248,7 +248,8 @@ public class BoardDao {
 		}
 		ps.setString(2, boardDto.getBoardTitle());
 		ps.setString(3, boardDto.getBoardField());
-		ps.setInt(4, boardDto.getBoardNo());
+		ps.setString(4, boardDto.getBoardOpen());
+		ps.setInt(5, boardDto.getBoardNo());
 		int count = ps.executeUpdate();
 		
 		con.close();

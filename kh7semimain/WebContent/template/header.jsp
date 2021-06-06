@@ -77,6 +77,7 @@
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/board.css">
   	
   	<link rel="stylesheet" type="text/css" href="<%=root%>/css/sidebar.css">
+  	<link rel="stylesheet" type="text/css" href="<%=root%>/css/btn.css">
 	<style>
 	ul > li {
 		z-index:99;
@@ -257,7 +258,7 @@
 				</li>
 				
 				<li>
-					<a href="#">열린 공간</a>
+					<a href="<%=root%>/board/noticeList.jsp">열린 공간</a>
 					<ul>
 						<li><a href="<%=root%>/board/noticeList.jsp">공지사항</a></li>
 						<li><a href="<%=root%>/board/qnaList.jsp">질문 답변</a></li>

@@ -10,9 +10,11 @@
 
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto = clientDao.get(clientNo);
+	
+	String root = request.getContextPath();
 %>
     
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -23,66 +25,81 @@
 		
 		window.open("reviewBookSearch.jsp?", "target", option);
 	}
+	
+	// 높이 자동 설정
+	function resize(obj) {
+  		obj.style.height = "1px";
+  		obj.style.height = (12+obj.scrollHeight)+"px";
+	}
 </script>
 
-<script>
+<style>
+	th {
+		width:15%;
+	}
+</style>
 
-</script>
-    
-<h1>리뷰 작성</h1>
-
-<div class="container-800">
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title">도서 리뷰</span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 도서 리뷰</span>
+		</div>
+	</div>
+	
 	<form action="reviewInsert.kh" method="post">
-		<table>
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">리뷰 제목</th>
+					<th>리뷰 제목</th>
 					<td>
-						<input type="text" name="reviewSubject" class="form-input" style="width:750px">
+						<input maxlength="300" type="text" name="reviewSubject" class="form-input" style="width:750px">
 					</td>
 				</tr>
-					
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">작성자</th>
+					<th>작성자</th>
 					<td>
-						<p><%=clientDto.getClientName()%></p>
+						<p style="margin:0"><%=clientDto.getClientName()%></p>
 					</td>
 				</tr>
-				
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">도서명</th>
+					<th>도서명</th>
 					<td>
-						<input type="text" id="bookTitle" name="bookTitle" placeholder="검색어">
-						<a onclick="bookSearch()" class="link-btn">도서 검색</a>
+						<div>
+							<input class="review-write-text" type="text" id="bookTitle" name="bookTitle" placeholder="검색어">
+							<a onclick="bookSearch()" class="text-right link-btn">도서 검색</a>
+						</div>
 					</td>
 				</tr>
-				
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">저자</th>
+					<th>저자</th>
 					<td>
-						<input type="text" id="bookAuthor" name="bookAuthor">
+						<input class="form-input" type="text" id="bookAuthor" name="bookAuthor">
 						<input type="hidden" id="bookIsbn" name="bookIsbn">
 					</td>
 				</tr>
 				
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">출판사</th>
+					<th>출판사</th>
 					<td>
-						<input type="text" id="bookPublisher">
+						<input class="form-input" type="text" id="bookPublisher">
 					</td>
 				</tr>
 				
 				<tr>
-					<th class="text-left" style="background-color:lightgray;">내용</th>
+					<th>내용</th>
 					<td>
-						<textarea name="reviewContent" rows="15" class="text-right form-input"></textarea>
+						<textarea maxlength="4000" class="board-write-area" onkeydown="resize(this)" onkeyup="resize(this)" name="reviewContent" rows="15"></textarea>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<div class="row">
-			<input type="submit" value="등록">
+		<div class="row text-right">
+			<input type="submit" class="board-btn" value="등록">
 			<a href="reviewList.jsp" class="link-btn">목록</a>
 		</div>
 	</form>

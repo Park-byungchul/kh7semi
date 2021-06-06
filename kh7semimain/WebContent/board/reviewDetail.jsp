@@ -120,7 +120,6 @@
 		});
 	});
 
-	
 	// 댓글 삭제
 	$(function(){
 		$(".comment-delete-btn").click(function(e) {
@@ -136,14 +135,20 @@
 		$(".comment-edit-area").hide();
 		
 		$(".comment-edit-btn").click(function() {
-			$(this).parent().parent().next().hide();
 			$(this).parent().parent().next().next().show();
+			$(this).parent().parent().next().hide();	
 		});
 		$(".comment-edit-cancel-btn").click(function() {
-			$(this).parent().parent().hide();
-			$(this).parent().parent().prwv.show();
+			$(this).parent().parent().parent().prev().show();
+			$(this).parent().parent().parent().hide();
 		});
 	});
+	
+	// 댓글 높이 자동 설정
+	function resize(obj) {
+  		obj.style.height = "1px";
+  		obj.style.height = (12+obj.scrollHeight)+"px";
+	}
 </script>
 
 <div class="main">
@@ -158,88 +163,69 @@
 	</div>
 	
 	<div class="row">
-		<table class="table table-border table-hover">
+		<table class="table table-border table-hover board-table">
 			<tbody>
 				<tr>
-					<td><a href="../book/bookDetail.jsp?bookIsbn=<%=reviewListDto.getBookIsbn() %>" class="review-title"></td>
+					<td width="15%"><img src=<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookImg() %>></td>
+					<td>
+						<ul class="review-area">
+							<li>
+								<label>도서명</label>
+								<a href="../book/bookDetail.jsp?bookIsbn=<%=reviewListDto.getBookIsbn() %>" class="review-title">
+									<%=bookDto.getBookTitle()%>
+								</a>
+								<hr>
+							</li>
+							<li>
+								<label>저자명</label>
+								<span><%=bookDto.getBookAuthor()%></span>
+								<hr>
+							</li>
+							<li>
+								<label>발행사항</label>
+								<span><%=bookDto.getBookPublisher()%>, <%=bookDto.getBookDate().getYear() + 1900%></span>
+								<hr>
+							</li>
+							<li>
+								<label>ISBN</label>
+								<span><%=bookDto.getBookIsbn() %></span>
+							</li>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table class="table table-border table-hover board-table">
+			<tbody>
+				<tr>
+					<th>제목</th>
+					<td><%=reviewDto.getReviewSubject()%></td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td><%=clientDto.getClientName()%></td>
+					<th>작성일</th>
+					<td><%=reviewDto.getReviewDate().toLocaleString()%></td>
+				</tr>
+				<tr>
+					<th>조회수</th>
+					<td><%=reviewDto.getReviewRead()%></td>
+					<th>추천</th>
+					<td><%=reviewDto.getReviewLike()%></td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<div class="row text-left">
+							<pre><%=reviewDto.getReviewContent()%></pre>
+						</div>
+					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
-	<div class="row float-container">
-		<div class="left">
-			<%=clientDto.getClientName()%>
-		</div>
-		<div class="right">
-			조회수 <%=reviewDto.getReviewRead()%>
-			좋아요 <%=reviewDto.getReviewLike()%>				
-		</div>		
-		<div class="right">
-			<%=reviewDto.getReviewDate().toLocaleString()%>
-		</div>
-	</div>
-	
-	<div class="row float-container">
-		<div class="left">
-			도서명 <%=bookDto.getBookTitle()%>
-			저자	<%=bookDto.getBookAuthor()%>
-			출판사 <%=bookDto.getBookPublisher()%>
-			출판일 <%=bookDto.getBookDate()%>			
-		</div>
-	</div>
-	
-	<div class="row text-left" style="min-height:300px;">
-		<pre><%=reviewDto.getReviewContent()%></pre>
-	</div>
-	
-	<form action="reviewCommentInsert.kh" method="post">
-			<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
-			<div class="row">
-				<textarea id="commentField" name="commentField" required></textarea>
-			</div>
-			<div class="row">
-				<input type="submit" value="댓글 작성">
-			</div>
-		</form>
-		
-		<div class="row text-left">
-			<h4>댓글 목록</h4>
-		</div>
-		<%for(ReviewCommentDto commentDto : commentList) { %>
-			<div class="row text-left" style="border:1px solid gray;">
-				<div class="float-container">
-					<div class="left"><%=commentDao.getClientName(commentDto.getClientNo()) %></div>
-					
-					 <%if(commentDto.getClientNo() == clientNo) { %>
-						<div class="right">
-							<a class="comment-edit-btn">수정</a>
-							| 
-							<a class="comment-delete-btn" href="reviewCommentDelete.kh?commentNo=<%=commentDto.getCommentNo()%>&reviewNo=<%=reviewNo%>">삭제</a>
-						</div>
-					<%} %>
-				</div>
-
-				<div class="comment-display-area">
-					<pre><%=commentDto.getCommentField() %></pre>
-				</div>
-				<%if(commentDto.getClientNo() == clientNo) { %>
-					<div class="comment-edit-area">
-						<form action="reviewCommentEdit.kh" method="post">
-							<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
-							<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
-							<textarea name="commentField" required><%=commentDto.getCommentField()%></textarea>
-							<input type="submit" value="댓글 수정">
-							<input type="button" value="작성 취소" class="comment-edit-cancel-btn">
-						</form>
-					</div>
-				<%} %>
-				<div><%=commentDto.getCommentDate().toLocaleString() %></div>
-			</div>
-		<%} %>
 	
 	<div class="row text-right">
-		<!-- 본인 및 관리자에게만 표시되도록 하는 것이 좋다 -->
 		<%if(clientNo != 0) {%>
 			<%if(reviewDto.getClientNo() == clientNo) { %>
 				<a href="reviewEdit.jsp?reviewNo=<%=reviewNo%>" class="link-btn">수정</a>
@@ -259,6 +245,58 @@
 		<%} %>
 		<a href="reviewList.jsp" class="link-btn">목록</a>
 	</div>
+		
+	<ul class="comment-area">
+		<%for(ReviewCommentDto commentDto : commentList) { %>
+			<li class="row text-left comment-list">
+				<div class="float-container">
+					<div class="left">
+						<span style="font-weight:bold"><%=commentDao.getClientName(commentDto.getClientNo()) %>&nbsp;</span>
+						<span style="color:gray"><%=commentDto.getCommentDate().toLocaleString() %></span>
+					</div>
+					
+					<%if(commentDto.getClientNo() == clientNo) { %>
+						<div class="right">
+							<a class="comment-edit-btn">수정</a>
+							| 
+							<a class="comment-delete-btn" href="reviewCommentDelete.kh?commentNo=<%=commentDto.getCommentNo()%>&reviewNo=<%=reviewNo%>">삭제</a>
+						</div>
+					<%} %>
+				</div>
+
+				<!-- 화면 표시 댓글 -->
+				<div class="comment-display-area">
+					<pre><%=commentDto.getCommentField() %></pre>
+				</div>
+				<%if(commentDto.getClientNo() == clientNo) { %>
+					<div class="comment-edit-area">
+						<form action="reviewCommentEdit.kh" method="post">
+							<input type="hidden" name="commentNo" value="<%=commentDto.getCommentNo()%>">
+							<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
+							<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea" name="commentField" required><%=commentDto.getCommentField()%></textarea>
+							<div class="text-right">
+								<input type="submit" class="form-btn form-btn-inline" value="댓글 수정">
+								<input type="button" class="form-btn form-btn-inline comment-edit-cancel-btn" value="작성 취소" class="comment-edit-cancel-btn">
+							</div>
+						</form>
+					</div>
+				<%} %>
+			</li>
+		<%} %>
+		
+		<!-- 댓글 작성 -->
+		<form action="reviewCommentInsert.kh" method="post">
+			<input type="hidden" name="reviewNo" value="<%=reviewNo%>">
+			<div class="row">
+				<textarea maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)" class="comment-textarea" id="commentField" name="commentField" required></textarea>
+				<div class="text-right">
+					<%if(clientNo != 0) {%>
+						<input class="form-btn form-btn-inline" type="submit" value="댓글 작성">
+					<%} %>
+				</div>
+			</div>
+		</form>
+	</ul>
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

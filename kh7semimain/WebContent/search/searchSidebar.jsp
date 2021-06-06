@@ -16,22 +16,34 @@
 	}
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto = clientDao.get(clientNo);
-	
-	String title = "자료 검색";
 %>
 
-<jsp:include page="/template/header.jsp">
-	<jsp:param value="<%=title%>" name="title"/>
-</jsp:include>
+
+<jsp:include page="/template/header.jsp"></jsp:include>
 
 <jsp:include page="/template/sidebar1.jsp"></jsp:include>
 
-<h2>자료 검색</h2>
-<ul>
-	<li><a href="<%=root%>/search/searchInput.jsp">통합자료검색</a></li>
-	<li><a href="<%=root%>/newbook/newbooklist.jsp">신착자료</a></li>
-	<li><a href="<%=root%>/recommend/recommendList.jsp">추천도서</a></li>
-	<li><a href="#">대출베스트</a></li>
-</ul>
+<script>
+	$(function(){
+
+		$(".menuItem").each(function(index, data){
+			if(window.location.pathname == $(this).attr('href')){
+				$(this).addClass("active");
+			}
+		});
+
+	});
+</script>
+
+<div class="sidebarContainer">
+	<span class="sidebarTitle">자료 검색</span>
+	
+	<ul class="sidebarMenu">
+		<li><a class="menuItem"  href="<%=root%>/search/searchInput.jsp">통합자료검색</a></li>
+		<li><a class="menuItem"  href="<%=root%>/newbook/newbooklist.jsp">신착자료</a></li>
+		<li><a class="menuItem"  href="<%=root%>/recommend/recommendList.jsp">추천도서</a></li>
+		<li><a class="menuItem"  href="#">대출베스트</a></li>
+	</ul>
+</div>
 
 <jsp:include page="/template/sidebar2.jsp"></jsp:include>

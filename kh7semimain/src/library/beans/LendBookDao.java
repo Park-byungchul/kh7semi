@@ -71,12 +71,108 @@ public class LendBookDao {
 	}
 	//lendBookList에 보여질 dto리스트 만드는 함수
 
+		public List<LendBookDto> list(int keyword, int startRow, int endRow) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+
+			String sql = "select * from("
+							+ "select rownum rn, TMP.* from("
+								+ "select * from lend_book_view "
+								+ "where client_no = ? "
+								+ "order by lend_book_date desc"
+							+ ")TMP"
+							+ ") where rn between ? and ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, keyword);
+			ps.setInt(2, startRow);
+			ps.setInt(3, endRow);
+			ResultSet rs = ps.executeQuery();
+
+			List<LendBookDto> lendBookList = new ArrayList<>();
+
+			while (rs.next()) {
+				LendBookDto lendBookDto = new LendBookDto();
+				lendBookDto.setClientNo(rs.getInt("client_no"));
+				lendBookDto.setGetBookNo(rs.getInt("get_book_no"));
+				lendBookDto.setBookTitle(rs.getString("book_title"));
+				lendBookDto.setLendBookDate(rs.getDate("lend_book_date"));
+				lendBookDto.setLendBookLimit(rs.getDate("lend_book_limit"));
+				
+				
+				lendBookList.add(lendBookDto);
+			}
+
+			con.close();
+
+			return lendBookList;
+		}
+		
+		public List<LendBookDto> list(int startRow, int endRow) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select * from("
+								+ "select rownum rn, TMP.* from("
+									+ "select * from lend_book_view order by lend_book_date desc"
+								+ ")TMP"
+								+ ") where rn between ? and ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, startRow);
+			ps.setInt(2, endRow);
+			ResultSet rs = ps.executeQuery();
+			
+			List<LendBookDto> lendBookList = new ArrayList<>();
+			
+			while (rs.next()) {
+				LendBookDto lendBookDto = new LendBookDto();
+				lendBookDto.setClientNo(rs.getInt("client_no"));
+				lendBookDto.setGetBookNo(rs.getInt("get_book_no"));
+				lendBookDto.setBookTitle(rs.getString("book_title"));
+				lendBookDto.setLendBookDate(rs.getDate("lend_book_date"));
+				lendBookDto.setLendBookLimit(rs.getDate("lend_book_limit"));
+				
+				
+				lendBookList.add(lendBookDto);
+			}
+			
+			con.close();
+			
+			return lendBookList;
+		}
+		//페이지블럭 계산을 위한 카운트 기능(목록/검색)
+		public int getCount() throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select count(*) from lend_book_view";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			int count = rs.getInt("count(*)");
+			
+			con.close();
+			
+			return count;
+		}
+		
+		public int getCount(int clientNo) throws Exception {
+			Connection con = JdbcUtils.getConnection();
+			
+			String sql = "select count(*) from lend_book_view where client_no = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, clientNo);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			int count = rs.getInt("count(*)");
+			
+			con.close();
+			
+			return count;
+		}
+		
 		public List<LendBookDto> list(int keyword) throws Exception {
 			Connection con = JdbcUtils.getConnection();
 
 			String sql = "select * from lend_book_view "
-					+ "where client_no = ? "
-					+ "order by lend_book_date desc";
+								+ "where client_no = ? "
+								+ "order by lend_book_date desc";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, keyword);
 			ResultSet rs = ps.executeQuery();
@@ -94,37 +190,6 @@ public class LendBookDao {
 				
 				lendBookList.add(lendBookDto);
 			}
-
-			con.close();
-
 			return lendBookList;
 		}
-		
-		public List<LendBookDto> list() throws Exception {
-			Connection con = JdbcUtils.getConnection();
-			
-			String sql = "select * from lend_book_view order by lend_book_date desc";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
-			
-			List<LendBookDto> lendBookList = new ArrayList<>();
-			
-			while (rs.next()) {
-				LendBookDto lendBookDto = new LendBookDto();
-				lendBookDto.setClientNo(rs.getInt("client_no"));
-				lendBookDto.setGetBookNo(rs.getInt("get_book_no"));
-				lendBookDto.setBookTitle(rs.getString("book_title"));
-				lendBookDto.setLendBookDate(rs.getDate("lend_book_date"));
-				lendBookDto.setLendBookLimit(rs.getDate("lend_book_limit"));
-				
-				
-				lendBookList.add(lendBookDto);
-			}
-			
-			con.close();
-			
-			return lendBookList;
-		}
-		
-		
-}
+	}

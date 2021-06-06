@@ -84,7 +84,9 @@
 				
 			</div>
 		</div>		
-			
+			<div class="row text-right">
+						<input type="button" onclick="location.href='<%=root%>/lendBook/lendBookList.jsp'" value="대출목록 조회">
+					</div>
 		</section>
 		
 		<jsp:include page="/template/footer.jsp"></jsp:include>	

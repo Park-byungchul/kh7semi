@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import library.beans.ClientDto;
 import library.beans.GetBookDao;
 import library.beans.GetBookDto;
 import library.beans.LendBookDao;
@@ -32,7 +33,7 @@ public class LendBookInsertServlet extends HttpServlet{
 					resp.sendRedirect("lendBookInsertFail.jsp");
 				}
 				else if (lendBookDao.lendBookInsert(lendBookDto)){//정상적으로 insert 되었다면?
-					resp.sendRedirect("lendBookInsert.jsp");
+					resp.sendRedirect("lendBookInsert.jsp?clientNo="+lendBookDto.getClientNo());
 				}
 				else {
 					resp.sendRedirect("lendBookInsertFail2.jsp");//누군가 빌린 기록은 없지만 insert 안됐다면?

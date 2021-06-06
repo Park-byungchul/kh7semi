@@ -132,32 +132,39 @@ if(areaNo != 0){
 		overflow: hidden; 
 		text-overflow: ellipsis;
 	}
-	.main-btn {
-		width: 300px;
-	    height: 60px;
-	    margin: 10px -4px;
+	.recommend-tab:hover, .newbook-tab:hover, .lendbook-tab:hover{
+	    padding: 16px 80px 20px 80px;
+		background-color:RGB(228, 244, 243);
+		color:gray;
+		font-weight:bolder;
+	}
+	.tab {
+		height: 60px;
 	    border: 1px none gray;
-	    background-color:#4B97FF; 
+	    background-color: RGB(67, 164, 157);
 	    color: white;
 	    font-size:18px;
 	}
-	.main-btn:hover{
-		background-color:#1359B5; 
+	.tab > li {
+		padding:1rem;
+		width:33.3%;
+		float:left;
+		list-style:none;
 	}
 </style>
 <script>
 $(function(){
-	$(".main-btn.recommend").on("click",function(e){
-		
+	$(".recommend-tab").on("click",function(e){
+		e.preventDefault();
 		$(".float-container.recommend").show();
 		$(".float-container.newbook").hide();
-		$(".float-container.lendbest").hide();
+		$(".float-container.lendbook").hide();
 	});
-	$(".main-btn.newbook").on("click",function(e){
-		
-		$(".float-container.newbook").show();
+	$(".newbook-tab").on("click",function(e){
+		e.preventDefault();
 		$(".float-container.recommend").hide();
-		$(".float-container.lendbest").hide();
+		$(".float-container.newbook").show();
+		$(".float-container.lendbook").hide();
 	});
 });
 </script>
@@ -221,11 +228,17 @@ $(function(){
 		</section>
 		
 		<section style="height:500px;">
-		<div class="row">
-		<button class="main-btn recommend">추천도서</button>
-		<button class="main-btn newbook">신착도서</button>
-		<button class="main-btn lendbest">대출베스트</button>
-		</div>
+		<ul class="tab">
+			<li style="padding-left:100px;">
+				<a class="recommend-tab">추천도서</a>
+			</li>
+			<li style="padding-right:50px;">
+				<a class="newbook-tab">신착도서</a>
+			</li>
+			<li style="padding-right:170px;">
+				<a class="lendbest-tab">대출베스트</a>
+			</li>
+		</ul>
 			
 			<%for(RecommendDto recommendDto : recommendRank) { %>
 				<%

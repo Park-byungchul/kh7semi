@@ -171,7 +171,7 @@ if(areaNo > 0){
 	</div>		
 <div class="container-800">
 	<div class="row text-center">
-			<form action = "newbooklist.jsp" method="get">
+			<form action = "newbooklist.jsp" method="get" class="search-form">
 				<select name="area" class="select-form">
 					<option value="메인도서관">전체도서관</option>
 					<option value="강남도서관">강남도서관</option>

@@ -11,7 +11,7 @@
 <%
 	String root = request.getContextPath(); 
 	GetBookSearchDao getBookSearchDao = new GetBookSearchDao();
-	List<GetBookSearchDto> list = getBookSearchDao.list();
+	
 	int clientNo;
 	try {
 		clientNo = (int)session.getAttribute("clientNo");
@@ -26,17 +26,17 @@
 	String keyword = request.getParameter("keyword");
 
 	boolean isLogin = session.getAttribute("clientNo") != null;
-	List<GetBookSearchDto> getBookList;
-		//select값이 기본 -> '전체' 값을 null로 주고 keyword만 전송
-		if(type == null && keyword == null) {
-			getBookList = getBookSearchDao.list();
-		}
-		else if(type.equals("all") || type.equals(null)){
-			getBookList = getBookSearchDao.searchList(keyword);
-		}
-		else{ //select가 '전체'가 아니면 type과 keyword 같이 전송
-			getBookList = getBookSearchDao.searchList(type, keyword);
-		}
+// 	List<GetBookSearchDto> getBookList;
+// 		//select값이 기본 -> '전체' 값을 null로 주고 keyword만 전송
+// 		if(type == null && keyword == null) {
+// 			getBookList = getBookSearchDao.list(startRow, endRow);
+// 		}
+// 		else if(type.equals("all") || type.equals(null)){
+// 			getBookList = getBookSearchDao.searchList(keyword);
+// 		}
+// 		else{ //select가 '전체'가 아니면 type과 keyword 같이 전송
+// 			getBookList = getBookSearchDao.searchList(type, keyword);
+// 		}
 //-----------------------------------
 int p;
 
@@ -47,49 +47,67 @@ catch (Exception e) {
 	p = 1;
 }
 	
-	
-// 페이징 -------------------------------------------------------
+
+//--페이징
+	// 페이지 번호
 	int pageNo;
 	
-	try{
+	try {
 		pageNo = Integer.parseInt(request.getParameter("pageNo"));
-		if(pageNo < 1) { 
-			throw new Exception();
-		}
+		if(pageNo < 1) throw new Exception();
 	}
-	catch(Exception e){
+	catch (Exception e) {
 		pageNo = 1;
 	}
-
-	//한 페이지 글 개수
+	
+	// 한 페이지 글 개수
 	int pageSize;
-	try{
+	try {
 		pageSize = Integer.parseInt(request.getParameter("pageSize"));
-		if(pageSize < 10) {
-			throw new Exception();
-		}
+		if(pageSize < 10) throw new Exception();
 	}
-	catch(Exception e){
+	catch (Exception e) {
 		pageSize = 10;
-	}	
-
-	//시작과 끝번호
-	int startRow = pageNo * pageSize - (pageSize-1);
+	}
+	
+	// 시작과 끝번호
+	int startRow = pageNo * pageSize - (pageSize - 1);
 	int endRow = pageNo * pageSize;
 	
+	// 페이지 네비게이션 영역 계산
+	int count;
 	
-	//페이지 네비게이션 영역 계산
-	int count  = 1;
-	//int count = getBookSearchDao.getCount(); //구현하자!
+	
+	
+	
+	
+	
+	List<GetBookSearchDto> getBookList;
+	//select값이 기본 -> '전체' 값을 null로 주고 keyword만 전송
+	if(type == null && keyword == null) {
+		getBookList = getBookSearchDao.list(startRow, endRow);
+		count  = getBookSearchDao.getCount();
+	}
+	else if(type.equals("all") || type.equals(null)){
+		getBookList = getBookSearchDao.searchList(keyword, startRow, endRow);
+		count = getBookSearchDao.getCount(keyword);
+	}
+	else{ //select가 '전체'가 아니면 type과 keyword 같이 전송
+		getBookList = getBookSearchDao.searchList(type, keyword, startRow, endRow);
+		count = getBookSearchDao.getCount(type, keyword);
+	}
+	
+	
 	int blockSize = 10;
-	int lastBlock = (count + pageSize - 1) / pageSize;
+	
+	int lastBlock = (count + pageSize - 1) / pageSize;	
+	// int lastBlock = (count - 1) / pageSize + 1;
+	
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 	int endBlock = startBlock + blockSize - 1;
-
-	if(endBlock > lastBlock){
+	
+	if(endBlock > lastBlock) // 범위를 벗어나면
 		endBlock = lastBlock;
-	}
-//페이징 -------------------------------------------------------
 %>
 <jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
 
@@ -149,7 +167,7 @@ catch (Exception e) {
 	
 				%>
 				<tr>
-					<td><%=getBookSearchDto.getBookIsbn()%></td>
+					<td><%=getBookSearchDto.getGetBookNo()%></td>
 					<td><%=getBookSearchDto.getBookTitle()%></td>
 					<td><%=getBookSearchDto.getBookAuthor()%></td>
 					<td><img src="<%=getBookSearchDto.getBookImg() %>"></td>
@@ -181,7 +199,7 @@ catch (Exception e) {
 			<%} %>
 		</div>
 	</div>
-	<form class="search-form" action="bookList.jsp" method="get">
+	<form class="search-form" action="getBookList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	</form>
 

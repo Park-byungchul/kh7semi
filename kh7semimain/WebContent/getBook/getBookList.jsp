@@ -155,20 +155,20 @@ catch (Exception e) {
 	<div class="row text-center">
 		<h2>입고된 도서 목록</h2>
 	</div>
-	<div class="row text-center">
-				<form action = "getBookList.jsp" method="get">
+	<div class="row text-center search-form">
+				<form  class="search-form" action = "getBookList.jsp" method="get">
 					<select name="type">
 						<option value="all">전체</option>
 						<option value="book_title">서명</option>
 						<option value= "book_author">저자</option>
 					</select>
 				
-				<input type="text" name="keyword" size="50" height = "20" >
-				<input type="submit" value="검색">
+				<input type="text" name="keyword" class="text-search-form" size="50" height = "20" >
+				<input type="submit" class="form-btn form-btn-inline" value="검색">
 				</form>					
 			</div>
 	<div class="row text-right">
-		<a href="getBookInsert.jsp">입고하기</a>
+		<a class="link-btn" href="getBookInsert.jsp">입고하기</a>
 	</div>
 	
 	<div class="row">
@@ -192,9 +192,9 @@ catch (Exception e) {
 					<td><%=getBookSearchDto.getBookAuthor()%></td>
 					<td><img src="<%=getBookSearchDto.getBookImg() %>"></td>
 					<td class="bookList">
-					<button><a href="getBookEdit.jsp?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>">수정</a></button>
-					<button><a class="getBookDelete" href="getBookDelete.kh?getBookNo=<%=getBookSearchDto.getGetBookNo()%>">삭제</a></button>
-					<button><a href="bookDetail.jsp?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>">상세보기</a></button>
+					<button class="board-btn"><a class="btn-text" href="getBookEdit.jsp?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>">수정</a></button>
+					<button class="board-btn"><a class="getBookDelete btn-text" href="getBookDelete.kh?getBookNo=<%=getBookSearchDto.getGetBookNo()%>">삭제</a></button>
+					<button class="board-btn"><a class="btn-text" href="bookDetail.jsp?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>">상세보기</a></button>
 					</td>
 				</tr>
 				<%}%>
@@ -219,12 +219,13 @@ catch (Exception e) {
 			<%} %>
 		</div>
 	</div>
-	<form class="search-form" action="getBookList.jsp" method="get">
+  
+	<form action="bookList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	</form>
 
 	<div class="row text-right">
-		<a href="getBookInsert.jsp">책 등록하기</a>
+		<a class="link-btn" href="getBookInsert.jsp">책 등록하기</a>
 	</div>
 
 </div>

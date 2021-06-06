@@ -141,7 +141,6 @@ catch (Exception e) {
 						<th>책제목</th>
 						<th>저자</th>						
 						<th>상태</th>
-						<th>기능</th>
 					</tr>
 				</thead>
 				<tbody>

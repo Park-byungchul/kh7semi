@@ -12,6 +12,8 @@
 	pageEncoding="UTF-8"%>
 
 <%
+request.setCharacterEncoding("UTF-8");
+
 String root = request.getContextPath(); 
 BookDao bookDao = new BookDao();
 
@@ -121,7 +123,7 @@ if(areaNo > 0){
 		<h2>책 목록</h2>
 	</div>
 	<div class="row text-right">
-		<a href="bookInsert.jsp">책 등록하기</a>
+		<a class="link-btn" href="bookInsert.jsp">책 등록하기</a>
 	</div>
 	
 	<div class="row">
@@ -149,9 +151,9 @@ if(areaNo > 0){
 					<td><%=bookDto.getBookAuthor()%></td>
 					<td><img src="<%=bookDto.getBookImg() %>"></td>
 					<td class="bookList">
-					<button><a href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
-					<button><a class="bookDelete" href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>">삭제</a></button>
-					<button><a href="bookDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">상세보기</a></button>
+					<button class="board-btn"><a class="btn-text" href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
+					<button class="board-btn"><a class="bookDelete btn-text" href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>">삭제</a></button>
+					<button class="board-btn"><a class="btn-text" href="bookDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">상세보기</a></button>
 					</td>
 				</tr>
 				<%}%>
@@ -177,12 +179,12 @@ if(areaNo > 0){
 		</div>
 	</div>
 	
-	<form class="search-form" action="bookList.jsp" method="get">
+	<form action="bookList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	</form>
 
 	<div class="row text-right">
-		<a href="bookInsert.jsp">책 등록하기</a>
+		<a class="link-btn" href="bookInsert.jsp">책 등록하기</a>
 	</div>
 
 </div>

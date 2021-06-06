@@ -135,6 +135,11 @@
 	outline: none;
 }
 
+.btn-text {
+	color:white;
+	text-decoration: none;
+}
+
 /* 로그인 CSS */
 
  .login-wrap {
@@ -188,6 +193,10 @@
 	 background-color: lightgray; 
 	 height: 1px; 
 	 border: 0;
+}
+
+.hr-plus {
+	margin-top: 30px;
 }
 
 .notice-title {

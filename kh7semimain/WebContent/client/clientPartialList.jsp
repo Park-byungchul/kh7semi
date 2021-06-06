@@ -123,13 +123,13 @@ endBlock = lastBlock; // 범위를 수정
 							<td><%=clientDto.getClientType()%></td>
 							<td>
 							<%if(clientDto.getClientType().equals("일반관리자") || clientDto.getClientType().equals("일반사용자")){ %>
-								<button><a href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
-									<%if(isSearch){ %>
-										&search=<%=search %>
-									<%} %>
-								">수정</a></button>
-								<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>&type=partial">삭제</a></button>
+								<button class="board-btn"><a class="btn-text" href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
+							<%if(isSearch){ %>
+								&search=<%=search %>
 							<%} %>
+						">수정</a></button>
+						<button class="clientDelete board-btn"><a class="btn-text" href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>&type=partial">삭제</a></button>
+					<%} %>
 							</td>
 						</tr>
 						<%}%>
@@ -161,13 +161,13 @@ endBlock = lastBlock; // 범위를 수정
 				<%} %>
 			</div>
 				
-			<div class="row text-center">
-				<form action="clientPartialList.jsp" method="post">
-					<input type="hidden" value="1" name="pageNo">
-					<input type="text" name="search" id="search" required>
-					<input type="submit" value="검색">
-				</form>
-			</div>
+	<div class="row text-center">
+		<form action="clientPartialList.jsp" method="post">
+			<input type="hidden" value="1" name="pageNo">
+			<input type="text" class="text-search-form" name="search" id="search" required>
+			<input type="submit" class="form-btn form-btn-inline" value="검색">
+		</form>
+	</div>
 		</div>
 	
 <jsp:include page="/template/footer.jsp"></jsp:include>

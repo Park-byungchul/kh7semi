@@ -62,9 +62,9 @@ $(function() {
 			<label>이미지 URL</label><input type="text" name="bookImg" id="bookImg" required class="form-input form-input-underline" value="<%=bookDto.getBookImg()%>" disabled><br><br>
 	</div>
 	<div class="row text-right">
-			<button><a href="bookList.jsp">목록</a></button>
-			<button><a href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
-			<button><a href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>" class="bookDelete">삭제</a></button>
+			<button class="board-btn"><a class="btn-text" href="bookList.jsp">목록</a></button>
+			<button class="board-btn"><a class="btn-text" href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
+			<button class="board-btn"><a class="btn-text" href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>" class="bookDelete">삭제</a></button>
 	</div>
 		
 </div>

@@ -43,8 +43,8 @@ $(function(){
 	<h2>도서 데이터 추가하기</h2>
 			<img id="thumnail">
 		</div>
-		<div class="row text-center">
-			<form class="bookSearchForm" name="bookSearchForm" action="daumBookSearch.jsp" method="post" target="target">
+		<div class="row text-center search-form">
+			<form class="bookSearchForm search-form" name="bookSearchForm" action="daumBookSearch.jsp" method="post" target="target">
 					<select name="type" class="bookSearchType" >
 						<option value="all" selected>전체</option>
 						<option value="title">제목</option>
@@ -52,9 +52,9 @@ $(function(){
 						<option value="publisher">출판사</option>
 						<option value="isbn">isbn</option>
 					</select>
-					<input type="text" name="keyword" placeholder="검색어" class="bookSearchKeyword" required>
+					<input type="text" name="keyword" placeholder="검색어" class="bookSearchKeyword text-search-form" required>
 			</form>
-				<button class="bookSearch-btn">검색</button>
+				<button class="bookSearch-btn form-btn form-btn-inline">검색</button>
 		</div>
 	
 		<form action="insert.kh" method="post">
@@ -67,9 +67,9 @@ $(function(){
 			<label>도서 소개 : </label><br><br><textarea name="bookContent" cols="95" rows="6" style="resize:none;border:0;" id="bookContent"></textarea><br><br>
 			<label>이미지 URL : </label><input type="text" name="bookImg" id="bookImg" required class="form-input form-input-underline"><br><br>
 			<div class="text-center">
-				<input type="submit" value="추가하기">
-				<input type="reset" class="reset" value="초기화">
-				<a href="bookList.jsp"><input type="button" value="목록으로"></a>
+				<input type="submit" class="form-btn form-btn-inline" value="추가하기">
+				<input type="reset" class="reset form-btn form-btn-inline" value="초기화">
+				<a href="bookList.jsp"><input type="button" class="form-btn form-btn-inline" value="목록으로"></a>
 			</div>
 		</form>
 	

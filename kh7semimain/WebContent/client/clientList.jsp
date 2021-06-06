@@ -123,14 +123,14 @@ if(endBlock > lastBlock){ // 범위를 벗어나면
 						<td><%=clientDto.getClientPossible()%></td>
 						<td><%=clientDto.getClientType()%></td>
 						<td>
-						<button><a href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
-							<%if(isSearch){ %>
-								&search=<%=search %>
-							<%}%>
-						">수정</a></button>
-						<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
-						</td>
-					</tr>
+					<button class="board-btn"><a class="btn-text" href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
+						<%if(isSearch){ %>
+							&search=<%=search %>
+						<%}%>
+					">수정</a></button>
+					<button class="clientDelete board-btn"><a class="btn-text" href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
+					</td>
+				</tr>
 					<%}%>
 				</tbody>
 			</table>
@@ -160,15 +160,12 @@ if(endBlock > lastBlock){ // 범위를 벗어나면
 			<%} %>
 		</div>
 		
-			
-		<div class="row text-center">
-			<form action="clientList.jsp" method="post">
-				<input type="hidden" value="1" name="pageNo">
-				<input type="text" name="search" id="search" required>
-				<input type="submit" value="검색">
-			</form>
-		</div>
-	
+	<div class="row text-center">
+		<form action="clientList.jsp" method="post">
+			<input type="hidden" value="1" name="pageNo">
+			<input type="text" class="text-search-form" name="search" id="search" required>
+			<input type="submit" class="form-btn form-btn-inline" value="검색">
+		</form>
 	</div>
 	
 <jsp:include page="/template/footer.jsp"></jsp:include>

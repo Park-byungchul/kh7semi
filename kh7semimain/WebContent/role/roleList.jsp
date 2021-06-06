@@ -98,10 +98,21 @@ endBlock = lastBlock; // 범위를 수정
 		<div class="row text-right">
 			<button><a href="roleInsert.jsp">권한 등록</a></button>
 		</div>
-	
-		<div class="row">
-			<table class="table table-border table-hover">
-				<thead>
+    
+	<div class="row text-right">
+		<button class="board-btn"><a class="btn-text" href="roleInsert.jsp">권한 등록</a></button>
+	</div>
+
+	<div class="row">
+		<table class="table table-border table-hover">
+			<thead>
+				<tr>
+					<th width="20%">관리자</th>
+					<th>지점</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%for(ClientDto clientDto : adminPermissionList){ %>
 					<tr>
 						<th width="20%">관리자</th>
 						<th>지점</th>
@@ -151,12 +162,12 @@ endBlock = lastBlock; // 범위를 수정
 		</div>
 		
 		<div class="row text-center">
-			<form action="roleList.jsp" method="post">
-				<input type="hidden" value="1" name="pageNo">
-				<input type="text" name="search" id="search" required>
-				<input type="submit" value="검색">
-			</form>
-		</div>
+		<form action="roleList.jsp" method="post">
+			<input type="hidden" value="1" name="pageNo">
+			<input type="text" class="text-search-form" name="search" id="search" required>
+			<input type="submit" class="form-btn form-btn-inline" value="검색">
+		</form>
+	</div>
 		
 		</div>
 

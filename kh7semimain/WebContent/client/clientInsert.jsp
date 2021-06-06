@@ -6,6 +6,12 @@
 	String root = request.getContextPath();
 %>
 
+<style>
+	th {
+		width:15%;
+	}
+</style>
+
 <jsp:include page="/client/clientSidebar.jsp">
 	<jsp:param value="회원가입" name="title" />
 </jsp:include>
@@ -21,34 +27,51 @@
 			</div>
 		</div>
 		
-		<div class="section">
+		<div>
 			<form action="insert.kh" method="post">
-				<table class="login-wrap">
+				<table class="table table-border table-hover board-table">
 					<tbody>
 						<tr>
+							<th>아이디</th>
 							<td>
-								<div>
-									<input type="text" name="clientId" required placeholder="아이디">
-								</div>
-								<div>
-									<input type="password" name="clientPw" required placeholder="비밀번호">
-								</div>
-								<div>
-									<input type="text" name="clientName" required placeholder="이름">
-								</div>
-								<div>
-									<input type="text" name="clientEmail" required placeholder="이메일">
-								</div>
-								<div>
-									<input type="text" name="clientPhone" required placeholder="휴대폰번호">
-								</div>
-								<div>
-									<input type="submit" value="가입하기" >
-								</div>
+								<input type="text" name="clientId" class="login-form" required>
+							</td>
+						</tr>
+						
+						<tr>
+							<th>비밀번호</th>
+							<td>
+								<input type="password" name="clientPw" class="login-form" required>
+							</td>
+						</tr>
+						
+						<tr>
+							<th>이름</th>
+							<td>
+								<input type="text" name="clientName" class="login-form" required>
+							</td>
+						</tr>
+						
+						<tr>
+							<th>이메일</th>
+							<td>
+								<input type="text" name="clientEmail" class="login-form" required>
+							</td>
+						</tr>
+						
+						<tr>
+							<th>휴대폰번호</th>
+							<td>
+								<input type="text" name="clientPhone" class="login-form" required>
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				
+				<div class="row text-center">
+					<input type="submit" class="board-btn" value="가입하기">
+					<a href="<%=root %>/index.jsp" class="link-btn">취소</a>
+				</div>
 			</form>
 		</div>
 	</div>

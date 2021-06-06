@@ -204,7 +204,7 @@ if(areaNo > 0){
 					<%} %>
 				</div>
 			</div>
-			<form class="search-form" action="recommendList.jsp" method="get">
+			<form action="recommendList.jsp" method="get">
 				<input type="hidden" name="pageNo">
 			</form>
 		

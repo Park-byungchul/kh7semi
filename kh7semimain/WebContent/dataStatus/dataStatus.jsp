@@ -69,9 +69,9 @@ if(areaNo > 0){
 						</tr>
 						<tr>
 							<td><%=bookCountDao.lendAbleCount()%></td>
-							<td><%=bookCountDao.lendAbleCount(6) %></td>
-							<td><%=bookCountDao.lendAbleCount(11) %></td>
-							<td><%=bookCountDao.lendAbleCount(12) %></td>	
+							<td><%=bookCountDao.lendAbleCount(1) %></td>
+							<td><%=bookCountDao.lendAbleCount(2) %></td>
+							<td><%=bookCountDao.lendAbleCount(3) %></td>	
 						</tr>
 					</table>
 		</div>

@@ -16,15 +16,10 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String root = request.getContextPath(); 
-
 NewBookDao newBookDao = new NewBookDao();
-
 String area = request.getParameter("area");
 String genre = request.getParameter("genre");
 String term = request.getParameter("term");
-
-
-
 int clientNo;
 try {
 	clientNo = (int)session.getAttribute("clientNo");
@@ -33,21 +28,14 @@ try {
 catch (Exception e){
 	clientNo = 0;
 }
-
-
 boolean isLogin = session.getAttribute("clientNo") != null;
-
-
-
 int p;
-
 try {
 	p = Integer.parseInt(request.getParameter("p"));
 }
 catch (Exception e) {
 	p = 1;
 }
-
 // 페이징 -------------------------------------------------------
 int pageNo;
 try{
@@ -59,7 +47,6 @@ try{
 catch(Exception e){
 	pageNo = 1;
 }
-
 int pageSize;
 try{
 	pageSize = Integer.parseInt(request.getParameter("pageSize"));
@@ -70,19 +57,12 @@ try{
 catch(Exception e){
 	pageSize = 10;
 }
-
 int startRow = pageNo * pageSize - (pageSize-1);
 int endRow = pageNo * pageSize;
-
 int count; 
-
 List<NewBookDto> bookList = null;
-
 // boolean isNotSelect = area.equals("메인도서관") && genre.equals("all") && term.equals("90");
 boolean isMain = area == null && genre == null && term == null;
-
-
-
 int termInt;
 
 if(isMain) {
@@ -118,13 +98,9 @@ int blockSize = 10;
 int lastBlock = (count + pageSize - 1) / pageSize;
 int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 int endBlock = startBlock + blockSize - 1;
-
 if(endBlock > lastBlock){
 	endBlock = lastBlock;
 }
-
-
-
 AreaDao areaDao = new AreaDao();
 int areaNo;
 try{
@@ -138,10 +114,10 @@ if(areaNo > 0){
 	title += " : " + areaDao.detail(areaNo).getAreaName();
 }
 %>
-
 <jsp:include page="/search/searchSidebar.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
+<script src="<%=root%>/pagination/pagination.js"></script>
 
 <style>
 .bookList>button>a{

@@ -113,7 +113,12 @@ if(areaNo != 0){
 }
 
 	BoardListDao boardListDao = new BoardListDao();
-	List<BoardListDto> noticeList = boardListDao.mainNotice();
+	
+	List<BoardListDto> noticeList;
+	if(areaNo == 0)
+		noticeList = boardListDao.mainNotice();
+	else 
+		noticeList = boardListDao.mainNotice(areaNo);
 %>
 
 <jsp:include page="/template/header.jsp">

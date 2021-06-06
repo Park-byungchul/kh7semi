@@ -21,6 +21,7 @@
 <script>
 	$(function(){
 		var ck = [/^[a-zA-Z0-9]{8,20}$/, /^[a-zA-Z0-9!@#$]{8,20}$/, /^[가-힣]{2,7}$/,/^.*@.*\..*$/ , /^010-[0-9]{4}-[0-9]{4}$/];
+		
 		$(".board-btn").click(function(evt){
 			$(".login-form").each(function(index, data){
 				if(!ck[index].test($(data).val())){

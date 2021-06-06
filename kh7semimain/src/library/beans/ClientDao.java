@@ -564,4 +564,17 @@ public class ClientDao {
 		con.close();
 		return count;
 	}
+	
+	public boolean checkId(String clientId) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+		
+		String sql = "select * from client where client_id = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, clientId);
+		ResultSet rs = ps.executeQuery();
+		boolean result = rs.next();
+		
+		con.close();
+		return result;
+	}
 }

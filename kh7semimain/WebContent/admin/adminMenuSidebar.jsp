@@ -66,16 +66,16 @@
 	<span class="sidebarTitle">대여접수</span>
 	
 	<ul class="sidebarMenu">
-		<li><a class="menuItem" href="<%=root %>/lendBook/lendBookInsert.jsp">대여접수</a></li>
-		<li><a class="menuItem" href="<%=root %>/lendBook/lendBookUpdate.jsp">대여반납</a></li>
-		<li><a class="menuItem" href="<%=root %>/lendBook/lendBookList.jsp">대여목록</a></li>
+		<li><a class="menuItem" href="<%=root %>/lendBook/lendBookInsert.jsp">대여 접수</a></li>
+		<li><a class="menuItem" href="<%=root %>/lendBook/lendBookUpdate.jsp">대여 반납</a></li>
+		<li><a class="menuItem" href="<%=root %>/lendBook/lendBookList.jsp">대여 목록</a></li>
 	</ul>
 	
 	<span class="sidebarTitle">도서 데이터 추가</span>
 	
 	<ul class="sidebarMenu">
-		<li><a class="menuItem" href="<%=root %>/book/bookInsert.jsp">도서등록</a></li>
-		<li><a class="menuItem" href="<%=root %>/book/bookList.jsp">도서목록</a></li>
+		<li><a class="menuItem" href="<%=root %>/book/bookInsert.jsp">도서 등록</a></li>
+		<li><a class="menuItem" href="<%=root %>/book/bookList.jsp">도서 목록</a></li>
 	</ul>
 	
 	<span class="sidebarTitle">지점별 도서 입고</span>

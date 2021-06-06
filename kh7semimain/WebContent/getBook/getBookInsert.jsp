@@ -32,7 +32,25 @@ $(function(){
 	
 	
 });
+
+function insertOnClick(){
+	is_empty = false;
+	$('.form').find('input[type="text"]').each(function(){
+	    if(!$(this).val()) {
+	        is_empty = true;
+	    }
+	});
+	if(is_empty) {
+	    alert('값을 전부 입력하시오');
+	    return false;
+	}
 	
+}
+
+function onSubmit(){
+		alert('도서 입고 등록이 완료되었습니다.');
+		return true;
+}
 </script>
 <jsp:include page="/admin/adminMenuSidebar.jsp">
 	<jsp:param value="<%=title %>" name="title"/>
@@ -55,13 +73,13 @@ $(function(){
 		<hr>
 		
 		
-	<form action="insert.kh" method="post">
+	<form action="insert.kh" method="post" onsubmit="return onSubmit()">
 		<label>ISBN : </label><input type="text" name="bookIsbn"  id="bookIsbn" required class="form-input form-input-underline"><br><br>
 		<label>저자 : </label><input type="text" name="bookAuthor"  id="bookAuthor" required class="form-input form-input-underline"><br><br>
 		<label>제목 : </label><input type="text" name="bookTitle" id="bookTitle" required class="form-input form-input-underline"><br><br>
 		<label>지점번호 : </label><input type="text" name="areaNo" required value="<%=areaNo%>" class="form-input form-input-underline"><br><br>
 		<div class="text-center">
-			<input type="submit" class="board-btn" value="도서 추가">
+			<input type="submit" class="board-btn" value="도서 추가"onclick="insertOnClick()">
 			<button class="board-btn"><a class="btn-text" href="getBookList.jsp">목록</a></button>
 		</div>
 	</form>

@@ -83,7 +83,7 @@ endBlock = lastBlock; // 범위를 수정
 <%} %>
 
 
-	<div class="main">
+	<div class="main" style="min-height:800px;">
 		
 			<div class="header">
 				<div class="row">
@@ -107,12 +107,6 @@ endBlock = lastBlock; // 범위를 수정
 					<th>지점</th>
 				</tr>
 			</thead>
-			<tbody>
-					<tr>
-						<th width="20%">관리자</th>
-						<th>지점</th>
-					</tr>
-				</thead>
 				<tbody>
 					<%for(ClientDto clientDto : adminPermissionList){ %>
 						<tr>

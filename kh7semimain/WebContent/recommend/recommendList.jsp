@@ -125,6 +125,9 @@ if(areaNo > 0){
 .bookList>button>a{
 	text-decoration: none;
 }
+textarea:focus {
+    outline: none;
+}
 </style>
 
 <jsp:include page="/search/searchSidebar.jsp">
@@ -171,7 +174,7 @@ if(areaNo > 0){
 										<span>저자 : <%=bookDto.getBookAuthor()%> | </span>
 										<span>출판사 : <%=bookDto.getBookPublisher()%> | </span>
 										<span>발행 : <%=bookDto.getBookDate()%> | </span><br><br>
-										<textarea cols="120" rows="6" style="resize:none;border:0 ;"><%=bookDto.getBookContent()%></textarea>
+										<textarea cols="100" rows="6" style="resize:none;border:0;"readonly><%=bookDto.getBookContent()%></textarea>
 							</div>
 					</div>
 								

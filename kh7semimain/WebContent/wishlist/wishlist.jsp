@@ -32,7 +32,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function(){
-		$(".wishlistDelete").click(function(){
+		$(".form-btn.form-btn-inline").click(function(){
 			var choice = window.confirm("정말 삭제하시겠습니까?");
 			if (choice) {
 				return true;
@@ -47,14 +47,16 @@
 </jsp:include>
 <!-- -->
 <div class="container-1000">
-	<div class="header">
-		<div class="row">
-			<span class="title">관심도서</span>
+<div class="main">
+		<div class="header">
+			<div class="row">
+				<span class="title">관심도서</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 마이페이지 > 관심도서</span>
+			</div>
 		</div>
-		<div class="row">
-			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 마이페이지 > 관심도서</span>
-		</div>
-	</div>		
 	<%if(wishList.size()==0) {%>
 	<span>비어있습니다. 관심도서를 추가해보세요</span>
 	<%} else { %>
@@ -67,6 +69,7 @@
 					<th>도서명</th>
 					<th>저자</th>
 					<th>썸네일</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -79,7 +82,7 @@
 					<td><%=bookDto.getBookAuthor()%></td>
 					<td><img src="<%=bookDto.getBookImg()%>"></td>
 					<td class="bookList text-center">
-					<button class="wishlistDelete"><a href="wishlistDelete.kh?bookIsbn=<%=wishlistDto.getBookIsbn()%>&clientNo=<%=clientNo%>">삭제</a></button>
+					<button class="form-btn form-btn-inline"><a style="padding:0px;"class="link-btn" href="wishlistDelete.kh?bookIsbn=<%=wishlistDto.getBookIsbn()%>&clientNo=<%=clientNo%>">삭제</a></button>
 					</td>
 				</tr>
 				<%}%>
@@ -87,6 +90,7 @@
 		</table>
 	</div>
 	<%} %>
+</div>
 </div>
 
 

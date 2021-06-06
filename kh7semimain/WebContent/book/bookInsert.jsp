@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
+String root = request.getContextPath();
 AreaDao areaDao = new AreaDao();
 int areaNo;
 try{
@@ -38,7 +39,16 @@ $(function(){
 <jsp:include page="/admin/adminMenuSidebar.jsp">
 	<jsp:param value="<%=title %>" name="title"/>
 </jsp:include>
-<div class="container-600">
+<div class="main" style="min-height:800px;">
+	<div class="header">
+		<div class="row">
+			<span class="title">도서 목록</span>
+		</div>
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 도서 목록</span>
+		</div>
+	</div>		
+<div class="container-800">
 		<div class="row text-center">
 	<h2>도서 데이터 추가하기</h2>
 			<img id="thumnail">
@@ -72,7 +82,7 @@ $(function(){
 				<a href="bookList.jsp"><input type="button" class="form-btn form-btn-inline" value="목록으로"></a>
 			</div>
 		</form>
-	
+	</div>
 	
 </div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

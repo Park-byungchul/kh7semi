@@ -134,7 +134,7 @@
 		</div>
 	</div>
 	
-	<form class="search-form text-center" action="freeBoardList.jsp" method="get">
+	<form class="search-form search-form-back text-center" action="freeBoardList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	
 		<select name="type" class="select-form">

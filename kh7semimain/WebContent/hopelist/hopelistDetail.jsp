@@ -64,38 +64,46 @@ $(function(){
 		<div class="row">
 			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 서비스 > 희망도서 상세보기</span>
 		</div>
-	</div>		
-		<div class="row">
-				<div class="row text-left">
-					<label>신청자</label>
-					<input type="text"  readonly id="clientName" value="<%=clientDto.getClientName()%>" placeholder = "session으로 clientNo가져와서 처리" class="form-input form-input-underline">
-				</div>
-				<div class="row text-left">
-					<label>휴대폰 번호</label>
-					<input type="text"  readonly id="clientPhone" value="<%=clientDto.getClientPhone()%>" placeholder = "위와 동일" class="form-input form-input-underline">
-				</div>
-		</div>
-	
-		<div class="row text-left">
-				<label>저자</label>
-				<input type="text"  Id="bookAuthor"readonly value = "<%=bookDto.getBookAuthor()%>"class="form-input form-input-underline">
-			</div>
-			<div class="row text-left">
-				<label>제목</label>
-				<input type="text" Id ="bookTitle" readonly value = "<%=bookDto.getBookTitle()%>" class="form-input form-input-underline">
-			</div>
-				<input type="hidden" Id ="genreNo"  value = "<%=bookDto.getGenreNo()%>" class="form-input form-input-underline">
-			<input type="hidden" name="hopelistNo" value="<%=hopelistDto.getHopelistNo()%>">
-			<input type="hidden" id="bookIsbn" name="bookIsbn" value="1">
-			<div class="row text-left">
-				<label>비치희망 도서관</label>
-			<input type="text" Id =""  value = "<%=hopelistDto.getHopelistLibrary()%>" class="form-input form-input-underline">
-			</div>
-			<div class="row text-left">
-				<label>신청사유</label>
-				<textarea name="hopelistReason" rows="10" class="form-input"  style="resize:none;border:0;"readonly><%=hopelistDto.getHopelistReason()%></textarea> 
-			</div>
-		
+	</div>				
+	<div class="row">
+		<table class="table table-border table-hover board-table">
+			<tbody>
+				<tr>
+					<th>신청자</th>
+					<td><%=clientDto.getClientName()%></td>
+				</tr>
+				<tr>
+					<th>휴대폰 번호</th>
+					<td><%=clientDto.getClientPhone()%></td>
+				</tr>
+				<tr>
+					<th>도서명</th>
+					<td><%=bookDto.getBookTitle()%></td>
+				</tr>
+				<tr>
+					<th>저자</th>
+					<td><%=bookDto.getBookAuthor()%></td>
+				</tr>
+				<tr>
+					<th>신청 날짜</th>
+					<td><%=hopelistDto.getHopelistDate()%></td>
+				</tr>
+				<tr>
+					<th>희망 도서관</th>
+					<td><%=hopelistDto.getHopelistLibrary()%></td>
+				</tr>
+				<tr>
+					<th>신청 이유</th>
+					<td>
+						<div class="row text-left">
+							<pre><%=hopelistDto.getHopelistReason()%></pre>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
 		<div class="row text-right">
 			<a href="hopelistInsert.jsp" class="link-btn">신청하러가기</a>
 		
@@ -106,5 +114,5 @@ $(function(){
 			
 			<a href="hopelist.jsp" class="link-btn">목록</a>
 		</div>
-</div>
+	</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

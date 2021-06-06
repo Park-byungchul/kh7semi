@@ -90,10 +90,10 @@
 	</div>		
 	
 	<div class="row">
-		<table class="table table-striped">
+		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th width="8%">번호</th>
 					<th>도서관</th>
 					<th width="30%">도서명</th>
 					<th>저자</th>
@@ -130,7 +130,7 @@
 	
 <!-- 	pageNo전송폼 -->
 	
-	<div class="row">
+	<div class="row text-center">
 		<div class="pagination">
 			<%if(startBlock > 1) { %>
 				<a class="move-link">이전</a>

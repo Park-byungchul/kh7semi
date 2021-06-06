@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
     <%
     	
-    
+    String root = request.getContextPath();
     request.setCharacterEncoding("UTF-8");
     AreaDao areaDao = new AreaDao();
     int areaNo;
@@ -55,10 +55,15 @@ function onSubmit(){
 <jsp:include page="/admin/adminMenuSidebar.jsp">
 	<jsp:param value="<%=title %>" name="title"/>
 </jsp:include>
-
-	<h2>도서관에 도서 추가</h2>
-	<hr>
-	<h3>도서 검색하기</h3>
+<div class="main" style="min-height:800px;">
+	<div class="header">
+		<div class="row">
+			<span class="title">입고 목록</span>
+		</div>
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 입고 목록</span>
+		</div>
+	</div>		
 		<div class="row text-center search-form">
 			<form class="bookSearchForm search-form" name="bookSearchForm" action="getBookSearch.jsp" method="post" target="target">
 				<select name="type" >
@@ -84,6 +89,6 @@ function onSubmit(){
 		</div>
 	</form>
 	
-	
+</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

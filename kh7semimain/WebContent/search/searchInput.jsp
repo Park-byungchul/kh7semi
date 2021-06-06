@@ -56,21 +56,21 @@
 		</div>
 		
 		<div class="row text-center">
-			<input type="button"  onclick="location.href='<%=root%>/reservation/reservationInfo.jsp'" value="대출 및 예약 안내">
-			<input type="button" value="자료 검색">		
+			<input type="button" class="board-btn" onclick="location.href='<%=root%>/reservation/reservationInfo.jsp'" value="대출 및 예약 안내">
+			<input type="button" class="board-btn" value="자료 검색">		
 		</div>
 			<br><br>
 			
 			<div class="row text-center">
-				<form action = "searchList.jsp" method="get">
-					<select name="type">
+				<form class="search-form-back text-center" action = "searchList.jsp" method="get">
+					<select name="type" class="select-form">
 						<option value="all">전체</option>
 						<option value="book_title">서명</option>
 						<option value= "book_author">저자</option>
 					</select>
 				
-				<input type="text" name="keyword" size="50" height = "20" required>
-				<input type="submit" value="검색">
+				<input type="text" class="text-search-form" name="keyword" size="50"required>
+				<input type="submit" class="form-btn form-btn-inline" value="검색">
 				</form>					
 			</div> <br><br>
 		</div>

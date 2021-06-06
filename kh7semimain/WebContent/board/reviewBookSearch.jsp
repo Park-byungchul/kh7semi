@@ -53,9 +53,9 @@
 <body>
 	<div class="row">
 			<form class="bookSearchForm" name="bookSearchForm" action="reviewBookSearch.jsp" method="post" target="target">
-				<p>도서명을 검색할 수 있습니다. 해당하는 도서가 없는 경우 직접 입력바랍니다.</p>
-				<input type="text" name="keyword">
-				<input type="submit" value="검색" class="bookSearch-btn">
+				<p>  도서명을 검색할 수 있습니다. 해당하는 도서가 없는 경우 직접 입력바랍니다.</p>
+				<input type="text" class="text-search-form" name="keyword">
+				<input type="submit" value="검색" class="bookSearch-btn form-btn form-btn-inline">
 			</form>
 	</div>
 	<hr>	
@@ -83,7 +83,7 @@
 						<td id="searched-bookAuthor"><%=bookDto.getBookAuthor()%></td>
 						<td id="searched-bookPublisher"><%=bookDto.getBookPublisher()%></td>
 						<td>
-						<button class="choice-btn">선택하기</button>
+						<button class="choice-btn link-btn">선택하기</button>
 						</td>
 					</tr>
 					<%}%>

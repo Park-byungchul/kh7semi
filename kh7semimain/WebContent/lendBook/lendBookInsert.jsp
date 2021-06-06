@@ -105,15 +105,17 @@ $(function(){
 						입고번호 : <input type="text" name="getBookNo" size="50" height = "20" required>
 						 <br><br>
 						 <input type="hidden" name="areaNo" size="50" height = "20" value="<%=areaNo %>"required>
-						 <br><br>
-						
-						<input type="submit" onclick="insertOnClick()"value="대여 접수">
-					</form>					
+						 <br><br>						
+						<input type="submit" onclick="insertOnClick()"value="대여 접수">			
+					</form>	
+									
 				</div> <br><br>
 				
 			</div>
 		</div>		
-			
+			<div class="row text-right">
+						<input type="button" onclick="location.href='<%=root%>/lendBook/lendBookList.jsp'" value="대출목록 조회">
+					</div>
 		</section>
 		
 	

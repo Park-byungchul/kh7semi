@@ -91,6 +91,9 @@
 						<%} %>
 						</td>
 				</div>
+				<div class="text-center">
+						<input type="button" value="목록으로" onClick="history.go(-1)">
+				</div>
 				
 		</div>
 	</div>

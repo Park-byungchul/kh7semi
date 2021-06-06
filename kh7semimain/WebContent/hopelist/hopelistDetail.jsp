@@ -64,22 +64,18 @@ $(function(){
 		<div class="row">
 			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 서비스 > 희망도서 상세보기</span>
 		</div>
-	</div>		
-		<div class="row">
-				<div class="row text-left">
-					<label>신청자</label>
-					<input type="text"  readonly id="clientName" value="<%=clientDto.getClientName()%>" placeholder = "session으로 clientNo가져와서 처리" class="form-input form-input-underline">
-				</div>
-				<div class="row text-left">
-					<label>휴대폰 번호</label>
-					<input type="text"  readonly id="clientPhone" value="<%=clientDto.getClientPhone()%>" placeholder = "위와 동일" class="form-input form-input-underline">
-				</div>
-		</div>
-	</div>
-
+	</div>				
 	<div class="row">
 		<table class="table table-border table-hover board-table">
 			<tbody>
+				<tr>
+					<th>신청자</th>
+					<td><%=clientDto.getClientName()%></td>
+				</tr>
+				<tr>
+					<th>휴대폰 번호</th>
+					<td><%=clientDto.getClientPhone()%></td>
+				</tr>
 				<tr>
 					<th>도서명</th>
 					<td><%=bookDto.getBookTitle()%></td>

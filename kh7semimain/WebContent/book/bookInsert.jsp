@@ -39,7 +39,7 @@ $(function(){
 <jsp:include page="/admin/adminMenuSidebar.jsp">
 	<jsp:param value="<%=title %>" name="title"/>
 </jsp:include>
-<div class="main">
+<div class="main" style="min-height:800px;">
 	<div class="header">
 		<div class="row">
 			<span class="title">도서 목록</span>

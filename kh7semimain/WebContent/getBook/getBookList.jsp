@@ -151,10 +151,16 @@ catch (Exception e) {
 	text-decoration: none;
 }
 </style>
+<div class="main" style="min-height:800px;">
+	<div class="header">
+		<div class="row">
+			<span class="title">입고 목록</span>
+		</div>
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 입고 목록</span>
+		</div>
+	</div>		
 <div class="container-900">
-	<div class="row text-center">
-		<h2>입고된 도서 목록</h2>
-	</div>
 	<div class="row text-center search-form">
 				<form  class="search-form" action = "getBookList.jsp" method="get">
 					<select name="type">
@@ -229,5 +235,5 @@ catch (Exception e) {
 	</div>
 
 </div>
-
+</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

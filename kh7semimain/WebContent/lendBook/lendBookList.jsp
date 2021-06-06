@@ -91,7 +91,7 @@ $(function(){
 
 <script src="<%=root%>/pagination/pagination.js">
 </script>
-<div class="main" style="height:800px;">
+<div class="main" style="min-height:800px;">
 	<div class="header">
 		<div class="row">
 			<span class="title">대여 목록</span>

@@ -30,7 +30,7 @@ String root = request.getContextPath();
 							<td><img src="../image/login.png" alt="login" width="200" height="200"></td>
 							<td>
 								<div class="login">
-									<input type="text" name="clientId" placeholder="아이디" class="login-form">
+									<input type="text" name="clientId" placeholder="아이디" class="login-form" autocomplete="off">
 								</div>
 								<div class="login">
 									<input type="password" name="clientPw" placeholder="비밀번호" class="login-form">

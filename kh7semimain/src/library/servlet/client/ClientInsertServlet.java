@@ -1,6 +1,7 @@
 package library.servlet.client;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,10 +26,16 @@ public class ClientInsertServlet extends HttpServlet {
 			clientDto.setClientPhone(req.getParameter("clientPhone"));
 			
 			ClientDao clientDao = new ClientDao();
-			clientDao.insert(clientDto);
+			if(!clientDao.checkId(clientDto.getClientId())) {
+				clientDao.insert(clientDto);
+				resp.sendRedirect("clientInsertSuccess.jsp");
+			} else {
+				resp.setContentType("text/html; charset=UTF-8");
+				PrintWriter out=resp.getWriter();
+				out.println("<script>alert('아이디가 존재합니다.'); location.href='"+ req.getContextPath()+"/client/clientInsert.jsp" +"';</script>");
+				out.flush();
+			}
 			
-			resp.sendRedirect("clientInsertSuccess.jsp");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);

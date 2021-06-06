@@ -5,7 +5,8 @@
 <%@page import="library.beans.RecommendDao"%>
 <%@page import="library.beans.WishlistDto"%>
 <%@page import="library.beans.WishlistDao"%>
-
+<%@page import="library.beans.ReservationDto"%>
+<%@page import="library.beans.ReservationDao"%>
 <%@page import=  "java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -23,6 +24,10 @@
 	WishlistDao wishlistDao = new WishlistDao();
 	WishlistDto wishlistDto = new WishlistDto();
 	
+	ReservationDao reservationDao = new ReservationDao();
+	ReservationDto reservationDto = new ReservationDto();
+	
+	
 	boolean isLogin = session.getAttribute("clientNo") != null;
 	int clientNo;
 	try {
@@ -38,8 +43,12 @@
 	wishlistDto.setClientNo(clientNo);
 	wishlistDto.setBookIsbn(getBookSearchDto.getBookIsbn());
 	
+	reservationDto.setClientNo(clientNo);
+	reservationDto.setGetBookNo(getBookNo);
+	
 	boolean isRecommend = recommendDao.check(recommendDto);
 	boolean isWishlist = wishlistDao.check(wishlistDto);
+
 	
 	AreaDao areaDao = new AreaDao();
 	int areaNo;
@@ -53,7 +62,8 @@
 	if(areaNo > 0){
 		title += " : " + areaDao.detail(areaNo).getAreaName();
 	}
-	
+
+	boolean isReservated = reservationDao.check(reservationDto);
 %>
 <jsp:include page="/search/searchSidebar.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
@@ -111,6 +121,12 @@
 						<%} else if(isLogin && !isWishlist) { %>
 						<button class="form-btn form-btn-inline"><a class="link-btn"  href="<%=root%>/wishlist/wishlistInsert.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">관심도서 담기</a></button>
 						<%} %>
+						
+<%-- 						<%if(isLogin && isReservated) { %> --%>
+<%-- 						<button class="booklist-wishlistBtn-neg"><a href="<%=root%>/reservation/reservationDelete.kh?clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">도서예약</a></button> --%>
+<%-- 						<%} else if(isLogin && !isReservated) { %> --%>
+<%-- 						<button class="booklist-wishlistBtn-pos"><a href="<%=root%>/reservation/reservationInsert.kh?clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">예약취소</a></button> --%>
+<%-- 						<%} %> --%>
 						</td>
 				</div>
 				<div class="text-center">

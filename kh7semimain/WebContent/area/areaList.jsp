@@ -79,7 +79,7 @@ String title = "지점 목록";
 	</div>
 
 	<div class="row text-right">
-		<button><a href="areaInsert.jsp">지점 등록</a></button>
+		<button class="board-btn"><a class="btn-text" href="areaInsert.jsp">지점 등록</a></button>
 	</div>
 
 	<div class="row">
@@ -132,8 +132,8 @@ String title = "지점 목록";
 	<div class="row text-center">
 		<form action="areaList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
-			<input type="text" name="search" id="search" required>
-			<input type="submit" value="검색">
+			<input type="text" class="text-search-form" name="search" id="search" required>
+			<input type="submit" class="form-btn form-btn-inline" value="검색">
 		</form>
 	</div>
 

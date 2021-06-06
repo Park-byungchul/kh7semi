@@ -94,8 +94,15 @@ String title = "회원 목록";
 
 <%} %>
 
-	<div class="row text-left">
-		<h2>회원 목록</h2>
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title">회원 목록</span>
+		</div>
+				
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 관리자메뉴 > 권한관리자 > 회원 목록</span>
+		</div>
 	</div>
 
 	<div class="row">
@@ -103,11 +110,11 @@ String title = "회원 목록";
 			<thead>
 				<tr>
 					<th width="15%">아이디</th>
-					<th width="20%">이름</th>
+					<th width="15%">이름</th>
 					<th width="20%">이메일</th>
 					<th width="20%">대출가능일</th>
-					<th width="12%">등급</th>
-					<th width="13%">관리</th>
+					<th width="13%">등급</th>
+					<th width="17%">관리</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -142,8 +149,8 @@ String title = "회원 목록";
 								<option>일반사용자</option>
 								<option>일반관리자</option>
 						</select></td>
-						<td><input type="submit" value="완료">
-						<button><a
+						<td><input type="submit" class="board-btn" value="완료">
+						<button class="board-btn"><a class="btn-text"
 							href="clientPartialList.jsp?pageNo=<%=pageNo %>
 								<%if(isSearch){ %>
 									&search=<%=search %>
@@ -156,12 +163,12 @@ String title = "회원 목록";
 						<td><%=clientDto.getClientType()%></td>
 						<td>
 						<%if(clientDto.getClientType().equals("일반관리자") || clientDto.getClientType().equals("일반사용자")){ %>
-						<button><a href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
+						<button class="board-btn"><a class="btn-text" href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
 							<%if(isSearch){ %>
 								&search=<%=search %>
 							<%} %>
 						">수정</a></button>
-						<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
+						<button class="clientDelete board-btn"><a class="btn-text" href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
 						<%} %>
 						</td>
 					<%
@@ -194,9 +201,10 @@ String title = "회원 목록";
 	<div class="row text-center">
 		<form action="clientPartialList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
-			<input type="text" name="search" id="search" required>
-			<input type="submit" value="검색">
+			<input type="text" class="text-search-form" name="search" id="search" required>
+			<input type="submit" class="form-btn form-btn-inline" value="검색">
 		</form>
 	</div>
+</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

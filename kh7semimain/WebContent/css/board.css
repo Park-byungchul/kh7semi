@@ -135,6 +135,11 @@
 	outline: none;
 }
 
+.btn-text {
+	color:white;
+	text-decoration: none;
+}
+
 /* 로그인 CSS */
 
  .login-wrap {

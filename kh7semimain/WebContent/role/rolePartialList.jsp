@@ -105,7 +105,7 @@ endBlock = lastBlock; // 범위를 수정
 	</div>
 	
 	<div class="row text-right">
-		<button><a href="rolePartialInsert.jsp">관리자 추가</a></button>
+		<button class="board-btn"><a class="btn-text" href="rolePartialInsert.jsp">관리자 추가</a></button>
 	</div>
 	
 	<div class="row text-center"">
@@ -186,8 +186,8 @@ endBlock = lastBlock; // 범위를 수정
 	<div class="row text-center">
 		<form action="rolePartialList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
-			<input type="text" name="search" id="search" required>
-			<input type="submit" value="검색">
+			<input type="text" class="text-search-form" name="search" id="search" required>
+			<input type="submit" class="form-btn form-btn-inline" value="검색">
 		</form>
 	</div>
 	<%} %>

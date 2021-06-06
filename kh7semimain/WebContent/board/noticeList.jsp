@@ -111,9 +111,6 @@
 	List<AreaDto> areaList = areaDao.list();
 	
 	String title = "공지사항";
-	if(areaNo != 0){
-		title += " : " + areaDao.detail(areaNo).getAreaName();
-	}
 %>
 
 <jsp:include page="/board/boardMenuSidebar.jsp">

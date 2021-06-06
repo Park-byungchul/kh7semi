@@ -165,5 +165,7 @@ if(areaNo == 0){
 				<%} %>
 			</div>
 		</div>
+	</div>
+</div>
 
-		<jsp:include page="/template/footer.jsp"></jsp:include>
+<jsp:include page="/template/footer.jsp"></jsp:include>

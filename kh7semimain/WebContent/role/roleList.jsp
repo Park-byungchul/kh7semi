@@ -82,71 +82,82 @@ endBlock = lastBlock; // 범위를 수정
 
 <%} %>
 
-	<div class="row text-left">
-		<h2>권한관리자 목록</h2>
-	</div>
-	
-	<div class="row text-right">
-		<button><a href="roleInsert.jsp">권한 등록</a></button>
-	</div>
 
-	<div class="row">
-		<table class="table table-border table-hover">
-			<thead>
-				<tr>
-					<th width="20%">관리자</th>
-					<th>지점</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%for(ClientDto clientDto : adminPermissionList){ %>
+	<div class="main">
+		
+			<div class="header">
+				<div class="row">
+					<span class="title">권한관리자 목록</span>
+				</div>
+				
+				<div class="row">
+					<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 권한관리자 목록</span>
+				</div>
+			</div>
+			
+		<div class="row text-right">
+			<button><a href="roleInsert.jsp">권한 등록</a></button>
+		</div>
+	
+		<div class="row">
+			<table class="table table-border table-hover">
+				<thead>
 					<tr>
-						<td>
-							<a href="<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>">[<%=clientDto.getClientNo() %>]<%=clientDto.getClientName() %>[<%=clientDto.getClientId() %>]</a>
-						</td>
-						<td>
-							<%List<RoleAreaDto> roleList = roleAreaDao.areaListByClient(clientDto.getClientNo()); %>
-							
-							<%for (RoleAreaDto roleAreaDto : roleList){ %>
-								<a href="roleDetail.jsp?roleClientNo=<%=roleAreaDto.getClientNo()%>&roleAreaNo=<%=roleAreaDto.getAreaNo()%>">[<%=roleAreaDto.getAreaNo() %>]<%=roleAreaDto.getAreaName() %></a>
-							<%} %>
-						</td>
+						<th width="20%">관리자</th>
+						<th>지점</th>
 					</tr>
-				<%} %>
-			</tbody>
-		</table>
-	</div>
-	
-	<div class="text-center pagination">
-	<%if(startBlock > 1){ %>
-		<a class="move-link">이전</a>
-		<%} %>
-		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
-			<%if(i == pageNo){ %>
-				<a href="roleList.jsp?pageNo=<%=i %>
-					<%if(isSearch){ %>
-						&search=<%=search %>
+				</thead>
+				<tbody>
+					<%for(ClientDto clientDto : adminPermissionList){ %>
+						<tr>
+							<td>
+								<a href="<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>">[<%=clientDto.getClientNo() %>]<%=clientDto.getClientName() %>[<%=clientDto.getClientId() %>]</a>
+							</td>
+							<td>
+								<%List<RoleAreaDto> roleList = roleAreaDao.areaListByClient(clientDto.getClientNo()); %>
+								
+								<%for (RoleAreaDto roleAreaDto : roleList){ %>
+									<a href="roleDetail.jsp?roleClientNo=<%=roleAreaDto.getClientNo()%>&roleAreaNo=<%=roleAreaDto.getAreaNo()%>">[<%=roleAreaDto.getAreaNo() %>]<%=roleAreaDto.getAreaName() %></a>
+								<%} %>
+							</td>
+						</tr>
 					<%} %>
-				" class="on"><%=i %></a>
-			<%}else{ %>
-				<a href="roleList.jsp?pageNo=<%=i %>
-					<%if(isSearch){ %>
-						&search=<%=search %>
-					<%} %>
-				"><%=i %></a>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="text-center pagination">
+		<%if(startBlock > 1){ %>
+			<a class="move-link">이전</a>
 			<%} %>
-		<%} %>
-		<%if(endBlock < lastBlock){ %>
-		<a class="move-link">다음</a>
-		<%} %>
-	</div>
-	
-	<div class="row text-center">
-		<form action="roleList.jsp" method="post">
-			<input type="hidden" value="1" name="pageNo">
-			<input type="text" name="search" id="search" required>
-			<input type="submit" value="검색">
-		</form>
-	</div>
+			<%for(int i = startBlock ; i <= endBlock ; i++){ %>
+				<%if(i == pageNo){ %>
+					<a href="roleList.jsp?pageNo=<%=i %>
+						<%if(isSearch){ %>
+							&search=<%=search %>
+						<%} %>
+					" class="on"><%=i %></a>
+				<%}else{ %>
+					<a href="roleList.jsp?pageNo=<%=i %>
+						<%if(isSearch){ %>
+							&search=<%=search %>
+						<%} %>
+					"><%=i %></a>
+				<%} %>
+			<%} %>
+			<%if(endBlock < lastBlock){ %>
+			<a class="move-link">다음</a>
+			<%} %>
+		</div>
+		
+		<div class="row text-center">
+			<form action="roleList.jsp" method="post">
+				<input type="hidden" value="1" name="pageNo">
+				<input type="text" name="search" id="search" required>
+				<input type="submit" value="검색">
+			</form>
+		</div>
+		
+		</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

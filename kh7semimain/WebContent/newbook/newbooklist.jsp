@@ -119,6 +119,8 @@ if(areaNo > 0){
 </jsp:include>
 <script src="<%=root%>/pagination/pagination.js"></script>
 
+<script src="<%=root%>/pagination/pagination.js"></script>
+
 <style>
 .bookList>button>a{
 	text-decoration: none;

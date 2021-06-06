@@ -6,6 +6,8 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
+	String root = request.getContextPath();
+
 	int areaNo = Integer.parseInt(request.getParameter("areaNo"));
 	AreaDao areaDao = new AreaDao();
 	AreaDto areaDto = areaDao.detail(areaNo);
@@ -33,8 +35,17 @@
 	});
 </script>
 
-		<div class="row text-left">
-			<h2>지점 정보</h2>
+
+	<div class="main">
+	
+		<div class="header">
+			<div class="row">
+				<span class="title">지점 정보</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 지점 정보</span>
+			</div>
 		</div>
 		
 		<div class="row">
@@ -58,8 +69,8 @@
 					<button><a href="areaList.jsp">취소</a></button>
 					<button id="areaDeleteBtn"><a href="areaDelete.kh?areaNo=<%=areaDto.getAreaNo() %>">삭제</a></button>
 				</div>
-			
-		</div>
+			</div>
+		
 	</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

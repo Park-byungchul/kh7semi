@@ -9,6 +9,8 @@
 <%
 request.setCharacterEncoding("UTF-8");
 
+String root = request.getContextPath();
+
 AreaDao areaDao = new AreaDao();
 
 String search = request.getParameter("search");
@@ -74,9 +76,17 @@ String title = "지점 목록";
 
 <%} %>
 
-	<div class="row text-left">
-		<h2>지점 목록</h2>
-	</div>
+	<div class="main">
+	
+		<div class="header">
+			<div class="row">
+				<span class="title">지점 목록</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 지점 목록</span>
+			</div>
+		</div>
 
 	<div class="row text-right">
 		<button><a href="areaInsert.jsp">지점 등록</a></button>
@@ -137,4 +147,5 @@ String title = "지점 목록";
 		</form>
 	</div>
 
+</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

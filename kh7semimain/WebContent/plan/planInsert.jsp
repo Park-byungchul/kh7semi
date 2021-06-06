@@ -63,7 +63,7 @@ try{
 
 <div class="main">
 	<div class="header">
-		<div>
+		<div class="row">
 			<span class="title">일정등록</span>
 		</div>
 		<div class="row">
@@ -92,10 +92,12 @@ try{
 					<input type="date" name="planEndDate" value="<%=year%>-<%=month < 10 ? "0" + Integer.toString(month) : Integer.toString(month) %>-<%=day < 10 ? "0" + Integer.toString(day) : Integer.toString(day)%>">
 				</div>
 				<div class="row">
-					<input type="submit" value="등록">
+					<input type="submit" value="등록" class="board-btn">
 				</div>
 				</form>
 			</div>
 		</div>
+	</div>
+</div>
 
 		<jsp:include page="/template/footer.jsp"></jsp:include>

@@ -52,20 +52,8 @@ $(function() {
 			<img id="thumnail" style="width:240px;height:348px;"src="<%=bookDto.getBookImg()%>">
 		</div>
 		
-		<div class="row text-center">
-			<form class="bookSearchForm" name="bookSearchForm" action="daumBookSearch.jsp" method="post" target="target">
-					<select name="type" class="bookSearchType" >
-						<option value="all" selected>전체</option>
-						<option value="title">제목</option>
-						<option value="authors">저자</option>
-						<option value="publisher">출판사</option>
-						<option value="isbn">isbn</option>
-					</select>
-					<input type="text" name="keyword" placeholder="검색어" class="bookSearchKeyword">
-			</form>
-				<button class="bookSearch-btn">검색</button>
-		</div>
-		<form action="bookEdit.kh?bookIsbn=<%=bookIsbn%>" method="post">
+		
+		<form action="bookEdit.kh" method="post">
 			<div class="row text-left">
 				<label>ISBN</label><input type="text" name="bookIsbn" id="bookIsbn" class="form-input form-input-underline" required value="<%=bookDto.getBookIsbn()%>"><br><br>
 				<label>장르 번호 </label><input type="text" name="genreNo"  required class="form-input form-input-underline" value="<%=bookDto.getGenreNo()%>"><br><br>

@@ -64,10 +64,10 @@
 					value = "<%=areaDto.getAreaCall()%>">
 				</div>
 				<div class="row">
-					<input type="submit" value="수정">
+					<input class="board-btn" type="submit" value="수정">
 				</form>
-					<button><a href="areaList.jsp">취소</a></button>
-					<button id="areaDeleteBtn"><a href="areaDelete.kh?areaNo=<%=areaDto.getAreaNo() %>">삭제</a></button>
+					<button class="board-btn"><a class="btn-text" href="areaList.jsp">취소</a></button>
+					<button class="board-btn" id="areaDeleteBtn"><a class="btn-text" href="areaDelete.kh?areaNo=<%=areaDto.getAreaNo() %>">삭제</a></button>
 				</div>
 			</div>
 		

@@ -179,7 +179,7 @@ if(areaNo > 0){
 		</div>
 	</div>
 	
-	<form action="bookList.jsp" method="get">
+	<form action="bookList.jsp" method="get" class="search-form">
 		<input type="hidden" name="pageNo">
 	</form>
 

@@ -1,10 +1,12 @@
 
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
+	String root = request.getContextPath();
 	Integer clientNo = (Integer)session.getAttribute("clientNo");
 	
 	ClientDao clientDao = new ClientDao();
@@ -16,9 +18,23 @@
 		clientDto = clientDao.get(clientNo);
 	}
 
+	AreaDao areaDao = new AreaDao();
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
+	String title = "희망도서";
+	if(areaNo > 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 %>
 
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
+<jsp:include page="/service/serviceSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
@@ -51,9 +67,15 @@ $(function(){
 	}
 </style>
 
-	<div class="row text-center">
-		<h2>희망도서 신청 페이지</h2>
-	</div>
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title">희망도서</span>
+		</div>
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 도서관 서비스 > 희망도서 신청</span>
+		</div>
+	</div>		
 	
 	<div class="row">
 				<div class="row text-left">
@@ -110,5 +132,5 @@ $(function(){
 				</a>
 			
 	</div>
-
+</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

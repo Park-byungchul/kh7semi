@@ -207,7 +207,7 @@ textarea:focus {
 					<%} %>
 				</div>
 			</div>
-			<form action="recommendList.jsp" method="get">
+			<form action="recommendList.jsp" method="get" class="search-form">
 				<input type="hidden" name="pageNo">
 			</form>
 		

@@ -83,7 +83,7 @@ endBlock = lastBlock; // 범위를 수정
 <%} %>
 
 
-	<div class="main">
+	<div class="main" style="min-height:800px;">
 		
 			<div class="header">
 				<div class="row">
@@ -94,11 +94,7 @@ endBlock = lastBlock; // 범위를 수정
 					<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 권한관리자 목록</span>
 				</div>
 			</div>
-			
-		<div class="row text-right">
-			<button><a href="roleInsert.jsp">권한 등록</a></button>
-		</div>
-    
+
 	<div class="row text-right">
 		<button class="board-btn"><a class="btn-text" href="roleInsert.jsp">권한 등록</a></button>
 	</div>

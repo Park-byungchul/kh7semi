@@ -71,7 +71,7 @@ if(areaNo > 0){
 					</select>
 				</div>
 				<div class="row">
-					<input type="submit" value="등록">
+					<input type="submit" class="board-btn" value="등록">
 				</div>
 			</form>
 		</div>

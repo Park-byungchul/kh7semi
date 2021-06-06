@@ -1,3 +1,5 @@
+<%@page import="library.beans.LendBookDto"%>
+<%@page import="library.beans.LendBookDao"%>
 <%@page import="library.beans.board.BoardListDto"%>
 <%@page import="library.beans.board.BoardListDao"%>
 <%@page import="library.beans.NewBookDto"%>
@@ -55,6 +57,8 @@ RecommendDao recommendDao = new RecommendDao();
 List<RecommendDto> recommendRank = recommendDao.rank(1, 3);
 NewBookDao newBookDao = new NewBookDao();
 List<NewBookDto> newBookRank = newBookDao.rank(1, 3); 
+LendBookDao lendBookDao = new LendBookDao();
+List<LendBookDto> lendBookRank = lendBookDao.rank(1, 3);
 
 
 request.setCharacterEncoding("UTF-8");
@@ -126,13 +130,13 @@ if(areaNo != 0){
 </jsp:include>
 
 <style>
-	.float-container.recommend , .float-container.newbook {
+	.float-container.recommend , .float-container.newbook, .float-container.lendbest {
 		margin:10px;
 		width:300px; 
 		height:300px; 
 		display:inline-block;
 	}
-	.recommend-input , .newbook-input{
+	.recommend-input , .newbook-input, .lendbest-input{
 		padding:0.2rem;
 		text-align:center;
 		width:300px;
@@ -142,10 +146,16 @@ if(areaNo != 0){
 		overflow: hidden; 
 		text-overflow: ellipsis;
 	}
-	.recommend-tab:hover, .newbook-tab:hover, .lendbook-tab:hover{
+	.recommend-tab:hover, .newbook-tab:hover{
 	    padding: 19px 80px 21px 80px;
 		background-color:RGB(228, 244, 243);
 		color:gray;
+		font-weight:bolder;
+	}
+	.lendbest-tab:hover {
+		background-color:RGB(228, 244, 243);
+	    padding: 20px 60px;
+	    color:gray;
 		font-weight:bolder;
 	}
 	.tab {
@@ -168,13 +178,19 @@ $(function(){
 		e.preventDefault();
 		$(".float-container.recommend").show();
 		$(".float-container.newbook").hide();
-		$(".float-container.lendbook").hide();
+		$(".float-container.lendbest").hide();
 	});
 	$(".newbook-tab").on("click",function(e){
 		e.preventDefault();
 		$(".float-container.recommend").hide();
 		$(".float-container.newbook").show();
-		$(".float-container.lendbook").hide();
+		$(".float-container.lendbest").hide();
+	});
+	$(".lendbest-tab").on("click",function(e){
+		e.preventDefault();
+		$(".float-container.recommend").hide();
+		$(".float-container.newbook").hide();
+		$(".float-container.lendbest").show();
 	});
 });
 </script>
@@ -301,6 +317,27 @@ $(function(){
 						<span class="newbook-input"><%=newBookDto.getBookTitle()%></span>
 						<strong>저자</strong><span class="newbook-input"><%=newBookDto.getBookAuthor()%></span>
 						<strong>장르</strong><span class="newbook-input"><%=newBookDto.getGenreName()%></span>
+					</div>
+	
+				</div>
+			<%} %>
+			
+			<%for(LendBookDto lendBookDto : lendBookRank) { 
+				String bookIsbn = lendBookDto.getBookIsbn();
+				
+				BookDao bookDao = new BookDao();
+				BookDto bookDto = bookDao.get(bookIsbn);
+				
+				GenreDao genreDao = new GenreDao();
+				GenreDto genreDto = genreDao.get(bookDto.getGenreNo());
+			%>
+				<div class="float-container lendbest" style="display:none;">
+					<div class="row text-center">
+						<img src="<%=bookDto.getBookImg()%>">
+						<br>
+						<span class="lendbest-input"><%=bookDto.getBookTitle()%></span>
+						<strong>저자</strong><span class="lendbest-input"><%=bookDto.getBookAuthor()%></span>
+						<strong>장르</strong><span class="lendbest-input"><%=genreDto.getGenreName()%></span>
 					</div>
 	
 				</div>

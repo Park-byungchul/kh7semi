@@ -56,10 +56,12 @@ section {
 }
 
 .promotion>span{
-	left: 0px;
+	left: 10px;
+	top: 10px;
 	position: absolute;
-	font-size: 8px;
+	font-size: 12px;
 	font-weight: bold;
+	color: gray;
 }
 
 .btn-next:hover, .btn-pre:hover{

@@ -21,7 +21,14 @@
 	if(keyword == null)
 		keyword = "";
 	
-	int areaNo = 0;
+	int areaNo;
+	try{
+		areaNo = (int)request.getSession().getAttribute("areaNo");
+	} catch (Exception e){
+		areaNo = 0;
+	}
+	
+	
 	if(areaNoStr != null) {
 		areaNo = Integer.parseInt(areaNoStr);
 	}
@@ -102,9 +109,16 @@
 	
 	AreaDao areaDao = new AreaDao();
 	List<AreaDto> areaList = areaDao.list();
+	
+	String title = "공지사항";
+	if(areaNo != 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 %>
 
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <%if(isSearch) { %>
 	<script>
@@ -171,16 +185,15 @@
 	</form>
 
 	<div class="row">
-		<table class="table table-border table-hover board-table">
+		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th width="8%">번호</th>
-					<th width="10%"></th>
+					<th width="10%">번호</th>
+					<th width="13%"></th>
 					<th width="40%">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th width="8%">조회</th>
-					<th width="8%">추천</th>
+					<th width="10%">조회</th>
 				</tr>
 			</thead>
 			
@@ -204,7 +217,6 @@
 					<td><%=boardListDto.getClientName() %></td>
 					<td><%=boardListDto.getBoardDate() %></td>
 					<td><%=boardListDto.getBoardRead() %></td>
-					<td><%=boardListDto.getBoardLike() %></td>
 				</tr>
 				<%} %>
 			</tbody>

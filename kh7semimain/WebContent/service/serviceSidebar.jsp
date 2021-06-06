@@ -38,10 +38,10 @@
 	<span class="sidebarTitle">도서관 서비스</span>
 	
 	<ul class="sidebarMenu">
-		<li><a class="menuItem" href="<%=root %>/service/serviceInfo.jsp">이용안내</a></li>
+		<li><a class="menuItem" href="<%=root %>/service/serviceInfo.jsp">이용 안내</a></li>
 		<li><a class="menuItem" href="<%=root %>/reservation/reservationInfo.jsp">도서 예약</a></li>
 		<li><a class="menuItem" href="<%=root %>/hopelist/hopelist.jsp">희망도서</a></li>
-		<li><a class="menuItem" href="<%=root %>/plan/plan.jsp">행사일정</a></li>
+		<li><a class="menuItem" href="<%=root %>/plan/plan.jsp">행사 일정</a></li>
 	</ul>
 </div>
 

@@ -120,101 +120,95 @@ if(areaNo > 0){
 <script src="<%=root%>/pagination/pagination.js"></script>
 <script>
 </script>
-<jsp:include page="/template/header.jsp">
-	<jsp:param value="<%=title%>" name="title"/>
-</jsp:include>
 
-<jsp:include page="/template/sidebar1.jsp"></jsp:include>
-
-<h2>자료 검색</h2>
-<ul>
-	<li><a href="<%=root%>/search/searchInput.jsp">통합자료검색</a></li>
-	<li><a href="<%=root%>/newbook/newbooklist.jsp">신착자료</a></li>
-	<li><a href="<%=root%>/recommend/recommendList.jsp">추천도서</a></li>
-	<li><a href="#">대출베스트</a></li>
-</ul>
-
-<jsp:include page="/template/sidebar2.jsp"></jsp:include>
 <style>
 .bookList>button>a{
 	text-decoration: none;
 }
 </style>
-	<div class="header">
-		<div class="row">
-			<span class="title">추천 도서</span>
-		</div>
-		<div class="row">
-			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 추천 도서</span>
-		</div>
-	</div>		
-<div class="container-800">
-	<div class="row text-center" style="margin-left:0px;">
-			<form action = "recommendList.jsp" method="get" class="search-form text-center">
-				<select name="type" class="select-form">
-					<option value="all">전체</option>
-					<option value="book_title">제목</option>
-					<option value= "book_author">저자</option>
-				</select>
-				
-				<input type="text" name="keyword" size="50" height = "20" class="text-search-form">
-				<input type="submit" value="검색" class="form-btn form-btn-inline">
-				</form>					
-	</div> <br>
-	
-		<div class="recommendList">
-		<%for (RecommendDto recommendDto : recommendList) { 
-			bookDto = bookDao.get(recommendDto.getBookIsbn());
-			
-		%>
-			<div style="position:relative;padding:17px 20px;overflow:hidden;height:200px;margin-left:10px;">
-				<div class="img" style="position:absolute;top:30px;left:0px;">
-					<img src="<%=bookDto.getBookImg()%>">
-				</div>
-					<div class="row" style="margin-left:120px;font-size:13px">
-								<a href="<%=root%>/recommend/recommendDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>" style="font-size:16px;font-weight: bold;padding:5px 0px;"><%=bookDto.getBookTitle()%></a><br>
-								<span>저자 : <%=bookDto.getBookAuthor()%> | </span>
-								<span>출판사 : <%=bookDto.getBookPublisher()%> | </span>
-								<span>발행 : <%=bookDto.getBookDate()%> | </span><br><br>
-								<textarea cols="120" rows="6" style="resize:none;border:0 ;"><%=bookDto.getBookContent()%></textarea>
-					</div>
+
+<jsp:include page="/search/searchSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
+
+
+	<div class="main">
+		<div class="header">
+			<div class="row">
+				<span class="title">추천 도서</span>
 			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 추천 도서</span>
+			</div>
+		</div>
+		
+		<div class="container-800">
+			<div class="row text-center" style="margin-left:0px;">
+					<form action = "recommendList.jsp" method="get" class="search-form text-center">
+						<select name="type" class="select-form">
+							<option value="all">전체</option>
+							<option value="book_title">제목</option>
+							<option value= "book_author">저자</option>
+						</select>
 						
+						<input type="text" name="keyword" size="50" height = "20" class="text-search-form">
+						<input type="submit" value="검색" class="form-btn form-btn-inline">
+						</form>					
+			</div> <br>
+			
+				<div class="recommendList">
+				<%for (RecommendDto recommendDto : recommendList) { 
+					bookDto = bookDao.get(recommendDto.getBookIsbn());
+					
+				%>
+					<div style="position:relative;padding:17px 20px;overflow:hidden;height:200px;margin-left:10px;">
+						<div class="img" style="position:absolute;top:30px;left:0px;">
+							<img src="<%=bookDto.getBookImg()%>">
+						</div>
+							<div class="row" style="margin-left:120px;font-size:13px">
+										<a href="<%=root%>/recommend/recommendDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>" style="font-size:16px;font-weight: bold;padding:5px 0px;"><%=bookDto.getBookTitle()%></a><br>
+										<span>저자 : <%=bookDto.getBookAuthor()%> | </span>
+										<span>출판사 : <%=bookDto.getBookPublisher()%> | </span>
+										<span>발행 : <%=bookDto.getBookDate()%> | </span><br><br>
+										<textarea cols="120" rows="6" style="resize:none;border:0 ;"><%=bookDto.getBookContent()%></textarea>
+							</div>
+					</div>
+								
+								
+						
+							
+					
 						
 				
+				<%}%>
+				</div>
 					
 			
-				
 		
-		<%}%>
-		</div>
-			
-	
-
-		<div class="row text-center">
-		<div class="pagination">
-			<%if(startBlock > 1) { %>
-				<a class="move-link">이전</a>
-			<%} %>
-			<%for(int i = startBlock; i <= endBlock; i++) {
-			%>
-				<%if(i == pageNo) {%>
-					<a class="on"><%=i %></a>
-				<%} else { %>
-					<a><%=i %></a>
-				<%} %>
-			<%} %>
-	 		<%if(endBlock < lastBlock) { %>
-				<a class="move-link">다음</a>
-			<%} %>
+				<div class="row text-center">
+				<div class="pagination">
+					<%if(startBlock > 1) { %>
+						<a class="move-link">이전</a>
+					<%} %>
+					<%for(int i = startBlock; i <= endBlock; i++) {
+					%>
+						<%if(i == pageNo) {%>
+							<a class="on"><%=i %></a>
+						<%} else { %>
+							<a><%=i %></a>
+						<%} %>
+					<%} %>
+			 		<%if(endBlock < lastBlock) { %>
+						<a class="move-link">다음</a>
+					<%} %>
+				</div>
+			</div>
+			<form class="search-form" action="recommendList.jsp" method="get">
+				<input type="hidden" name="pageNo">
+			</form>
+		
 		</div>
 	</div>
-	<form class="search-form" action="recommendList.jsp" method="get">
-		<input type="hidden" name="pageNo">
-	</form>
-
-	
-
-</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

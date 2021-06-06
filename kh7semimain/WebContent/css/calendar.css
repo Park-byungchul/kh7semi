@@ -69,6 +69,8 @@
 	
 	.planTable{
 		width: 100%;
+		word-break:break-all; 
+		word-wrap:break-word;
 	}
 	
 	.planTable th{
@@ -95,7 +97,10 @@
 		font-size: 6px;
 		font-weight: bold;
 	}
+	
+	.planTable>tbody>tr>td{
 		font-size: 12px;
+		border-bottom: 1px solid rgb(240, 240, 240);
 	}
 	
 	.planTable>tbody>tr>td.left{

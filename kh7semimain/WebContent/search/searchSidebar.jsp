@@ -39,9 +39,9 @@
 	<span class="sidebarTitle">자료 검색</span>
 	
 	<ul class="sidebarMenu">
-		<li><a class="menuItem"  href="<%=root%>/search/searchInput.jsp">통합자료검색</a></li>
-		<li><a class="menuItem"  href="<%=root%>/newbook/newbooklist.jsp">신착자료</a></li>
-		<li><a class="menuItem"  href="<%=root%>/recommend/recommendList.jsp">추천도서</a></li>
+		<li><a class="menuItem"  href="<%=root%>/search/searchInput.jsp">통합 자료 검색</a></li>
+		<li><a class="menuItem"  href="<%=root%>/newbook/newbooklist.jsp">신착 도서</a></li>
+		<li><a class="menuItem"  href="<%=root%>/recommend/recommendList.jsp">추천 도서</a></li>
 		<li><a class="menuItem"  href="#">대출베스트</a></li>
 	</ul>
 </div>

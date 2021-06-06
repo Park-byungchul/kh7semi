@@ -128,8 +128,6 @@
 		<div class="row">
 			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 열린 공간 > 자유게시판</span>
 		</div>
-		
-		<hr>
 	</div>
 	
 	<form class="search-form text-center" action="freeBoardList.jsp" method="get">
@@ -145,7 +143,7 @@
 	</form>
 
 	<div class="row">
-		<table class="table table-border table-hover board-table">
+		<table class="table table-border table-hover">
 			<thead>
 				<tr>
 					<th width="8%">번호</th>

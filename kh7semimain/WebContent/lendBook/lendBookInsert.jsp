@@ -96,7 +96,8 @@ $(function(){
 
 		<section>
 			<div class="row text-right">
-				<input type="button" onclick="location.href='<%=root%>/lendBook/lendBookUpdate.jsp'" value="대여 반납">
+				<input class="form-btn form-btn-inline"
+				 type="button" onclick="location.href='<%=root%>/lendBook/lendBookUpdate.jsp'" value="대여 반납">
 			</div>
 			<div class= "float-container">
 				<aside class="multi-container">
@@ -115,7 +116,7 @@ $(function(){
 						 <br><br>
 						 <input type="hidden" name="areaNo" size="50" height = "20" value="<%=areaNo %>"required>
 						 <br><br>						
-						<input type="submit" onclick="insertOnClick()"value="대여 접수">			
+						<input type="submit" onclick="insertOnClick()"value="대여 접수" class="form-btn form-btn-inline">			
 					</form>	
 									
 				</div> <br><br>
@@ -123,7 +124,8 @@ $(function(){
 			</div>
 		</div>		
 			<div class="row text-right">
-						<input type="button" onclick="location.href='<%=root%>/lendBook/lendBookList.jsp'" value="대출목록 조회">
+						<input class="form-btn form-btn-inline"
+						 type="button" onclick="location.href='<%=root%>/lendBook/lendBookList.jsp'" value="대출목록 조회">
 					</div>
 		</section>
 		

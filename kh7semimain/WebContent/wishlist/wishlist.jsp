@@ -69,7 +69,6 @@
 					<th>도서명</th>
 					<th>저자</th>
 					<th>썸네일</th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -81,9 +80,6 @@
 					<td><a href="<%=root%>/book/bookDetail.jsp?bookIsbn=<%=wishlistDto.getBookIsbn()%>"><%=bookDto.getBookTitle()%></a></td>
 					<td><%=bookDto.getBookAuthor()%></td>
 					<td><img src="<%=bookDto.getBookImg()%>"></td>
-					<td class="bookList text-center">
-					<button class="form-btn form-btn-inline"><a style="padding:0px;"class="link-btn" href="wishlistDelete.kh?bookIsbn=<%=wishlistDto.getBookIsbn()%>&clientNo=<%=clientNo%>">삭제</a></button>
-					</td>
 				</tr>
 				<%}%>
 			</tbody>

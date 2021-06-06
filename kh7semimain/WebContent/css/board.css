@@ -133,8 +133,9 @@
 	width: 85%;
 	padding: 0.5rem;
 	outline: none;
+}
 
-  .login-wrap {
+ .login-wrap {
 	margin:auto;
 	padding:30px;
 }

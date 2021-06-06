@@ -171,16 +171,15 @@
 	</form>
 
 	<div class="row">
-		<table class="table table-border table-hover board-table">
+		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<th width="8%">번호</th>
-					<th width="10%"></th>
+					<th width="10%">번호</th>
+					<th width="13%"></th>
 					<th width="40%">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th width="8%">조회</th>
-					<th width="8%">추천</th>
+					<th width="10%">조회</th>
 				</tr>
 			</thead>
 			
@@ -204,7 +203,6 @@
 					<td><%=boardListDto.getClientName() %></td>
 					<td><%=boardListDto.getBoardDate() %></td>
 					<td><%=boardListDto.getBoardRead() %></td>
-					<td><%=boardListDto.getBoardLike() %></td>
 				</tr>
 				<%} %>
 			</tbody>

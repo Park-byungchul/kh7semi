@@ -83,7 +83,7 @@ endBlock = lastBlock; // 범위를 수정
 <%} %>
 
 
-	<div class="main">
+	<div class="main" style="min-height:800px;">
 		
 			<div class="header">
 				<div class="row">

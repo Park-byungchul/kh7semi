@@ -118,9 +118,6 @@ if(areaNo > 0){
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
 <script src="<%=root%>/pagination/pagination.js"></script>
-
-<script src="<%=root%>/pagination/pagination.js"></script>
-
 <style>
 .bookList>button>a{
 	text-decoration: none;
@@ -211,7 +208,7 @@ if(areaNo > 0){
 					<%} %>
 				</div>
 			</div>
-			<form action="newbooklist.jsp" method="get">
+			<form action="newbooklist.jsp" method="get" class="search-form">
 				<input type="hidden" name="pageNo">
 			</form>
 		

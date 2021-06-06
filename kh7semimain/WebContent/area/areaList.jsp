@@ -76,7 +76,7 @@ String title = "지점 목록";
 
 <%} %>
 
-	<div class="main">
+	<div class="main" style="min-height:800px;">
 	
 		<div class="header">
 			<div class="row">

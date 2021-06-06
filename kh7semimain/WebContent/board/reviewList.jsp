@@ -87,9 +87,13 @@
 		clientDto = null;
 	else
 		clientDto = clientDao.get(clientNo);
+	
+	String title = "도서 리뷰";
 %>
 
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <%if(isSearch) { %>
 	<script>

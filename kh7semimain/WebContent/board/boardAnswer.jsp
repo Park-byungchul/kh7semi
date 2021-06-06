@@ -7,6 +7,8 @@
     pageEncoding="UTF-8"%>
     
 <%
+	request.setCharacterEncoding("UTF-8");
+
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 
 	Integer clientNo = (Integer)session.getAttribute("clientNo");
@@ -15,9 +17,13 @@
 	ClientDto clientDto = clientDao.get(clientNo);
 	
 	String root = request.getContextPath();
+	
+	String title = "답변하기";
 %>
     
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <style>
 	th {

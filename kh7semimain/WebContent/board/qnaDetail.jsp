@@ -19,6 +19,8 @@
     pageEncoding="UTF-8"%>
     
 <%
+	request.setCharacterEncoding("UTF-8");
+
 	// 테스트
 	// 세션 번호
 	int clientNo;
@@ -27,6 +29,13 @@
 	}
 	catch (Exception e) {
 		clientNo = 0;
+	}
+	
+	int areaNo;
+	try{
+		areaNo = (int)request.getSession().getAttribute("areaNo");
+	} catch (Exception e){
+		areaNo = 0;
 	}
 	
 	String root = request.getContextPath();
@@ -73,9 +82,16 @@
 	// 답글 출력
 	BoardAnswerDao answerDao = new BoardAnswerDao();
 	BoardAnswerDto answerDto = answerDao.get(boardNo);
+	
+	String title = "질문 답변";
+	if(areaNo != 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 %>
 
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <script>
 	$(function(){

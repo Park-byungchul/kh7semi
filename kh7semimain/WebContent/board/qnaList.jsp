@@ -18,14 +18,21 @@
 	// 검색 변수
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
-	String areaNoStr = request.getParameter("areaNo");
+	String areaNoStr = request.getParameter("areaNoSearch");
 	
 	if(keyword == null)
 		keyword = "";
 	
-	int areaNo = 0;
+	int areaNoSearch = 0;
 	if(areaNoStr != null) {
-		areaNo = Integer.parseInt(areaNoStr);
+		areaNoSearch = Integer.parseInt(areaNoStr);
+	}
+	
+	int areaNo;
+	try{
+		areaNo = (int)request.getSession().getAttribute("areaNo");
+	} catch (Exception e){
+		areaNo = 0;
 	}
 	
 	boolean isSearch = type != null && keyword != null && !keyword.trim().equals("");
@@ -62,10 +69,10 @@
 	int count;
 	
 	if(isSearch) {
-		if(areaNo == 0)
+		if(areaNoSearch == 0)
 			count = boardListDao.getCount(type, keyword, 2);
 		else
-			count = boardListDao.getCount(type, areaNo, keyword, 2);
+			count = boardListDao.getCount(type, areaNoSearch, keyword, 2);
 	}
 	else count = boardListDao.getCount(2);
 	
@@ -84,10 +91,10 @@
 	if(!isSearch)
 		boardList = boardListDao.list(2, startRow, endRow);
 	else {
-		if(areaNo == 0)
+		if(areaNoSearch == 0)
 			boardList = boardListDao.search(2, type, keyword, startRow, endRow);
 		else
-			boardList = boardListDao.search(2, areaNo, type, keyword, startRow, endRow);
+			boardList = boardListDao.search(2, areaNoSearch, type, keyword, startRow, endRow);
 	}
 	
 	// 회원 정보
@@ -114,16 +121,23 @@
 	List<AreaDto> areaList = areaDao.list();
 	
 	BoardAnswerDao answerDao = new BoardAnswerDao();
+	
+	String title = "질문 답변";
+	if(areaNo != 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 %>
 
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <%if(isSearch) { %>
 	<script>
 		$(function() {
 			$("select[name=type]").val("<%=type%>").prop("selected", true);
 			$("input[name=keyword]").val("<%=keyword%>");
-			$("select[name=areaNo]").val("<%=areaNo%>").prop("selected", true);
+			$("select[name=areaNoSearch]").val("<%=areaNoSearch%>").prop("selected", true);
 		});
 	</script>
 <%} %>
@@ -166,12 +180,14 @@
 	<form class="search-form text-center" action="qnaList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	
-		<select name="areaNo" class="select-form">
-			<option value="0">도서관 전체</option>
-			<%for(int i = 0; i < areaList.size(); i++) { %>
-				<option value="<%=areaList.get(i).getAreaNo()%>"><%=areaList.get(i).getAreaName()%></option>
-			<%} %>
-		</select>
+		<%if(areaNo == 0) { %>
+			<select name="areaNoSearch" class="select-form">
+				<option value="0">도서관 전체</option>
+				<%for(int i = 0; i < areaList.size(); i++) { %>
+					<option value="<%=areaList.get(i).getAreaNo()%>"><%=areaList.get(i).getAreaName()%></option>
+				<%} %>
+			</select>
+		<%} %>
 		
 		<select name="type" class="select-form">
 			<option value="board_title">제목</option>
@@ -197,30 +213,32 @@
 			
 			<tbody>
 				<%for(BoardListDto boardListDto : boardList) { %>
-				<tr>
-					<td><%=boardListDto.getBoardSepNo() %></td>
-					<%if(boardListDto.getAreaNo() != 0){ %>
-						<td>[<%=boardListDto.getAreaName().substring(0, boardListDto.getAreaName().length() - 3)%>]</td>
-					<%} else { %>
-						<td>[전체]</td>
+					<%if(areaNo == 0 || (boardListDto.getAreaNo() == areaNo || boardListDto.getAreaNo() == 0)) { %>
+						<tr>
+							<td><%=boardListDto.getBoardSepNo() %></td>
+							<%if(boardListDto.getAreaNo() != 0){ %>
+								<td>[<%=boardListDto.getAreaName().substring(0, boardListDto.getAreaName().length() - 3)%>]</td>
+							<%} else { %>
+								<td>[전체]</td>
+							<%} %>
+							<td align=left>
+								<%if(boardListDto.getBoardOpen().equals("비공개") && !isAdmin && boardListDto.getClientNo() != clientNo) {%>
+									<%=boardListDto.getBoardTitle() %>
+								<%} else { %>
+									<a href="qnaDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
+										<%=boardListDto.getBoardTitle() %>
+									</a>
+								<%} %>
+								
+								<%if(boardListDto.getBoardOpen().equals("비공개")) { %> 
+									 <img src="<%=root %>/image/lock.png" align="center">
+								<%} %>
+							</td>
+							<td><%=answerDao.getAnswerStatus(boardListDto.getBoardNo()) %></td>
+							<td><%=boardListDto.getClientName() %></td>
+							<td><%=boardListDto.getBoardDate() %></td>
+						</tr>
 					<%} %>
-					<td align=left>
-						<%if(boardListDto.getBoardOpen().equals("비공개") && !isAdmin && boardListDto.getClientNo() != clientNo) {%>
-							<%=boardListDto.getBoardTitle() %>
-						<%} else { %>
-							<a href="qnaDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
-								<%=boardListDto.getBoardTitle() %>
-							</a>
-						<%} %>
-						
-						<%if(boardListDto.getBoardOpen().equals("비공개")) { %> 
-							 <img src="<%=root %>/image/lock.png" align="center">
-						<%} %>
-					</td>
-					<td><%=answerDao.getAnswerStatus(boardListDto.getBoardNo()) %></td>
-					<td><%=boardListDto.getClientName() %></td>
-					<td><%=boardListDto.getBoardDate() %></td>
-				</tr>
 				<%} %>
 			</tbody>
 		</table>

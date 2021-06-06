@@ -16,7 +16,7 @@
 	// 검색 변수
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
-	String areaNoStr = request.getParameter("areaNo");
+	String areaNoStr = request.getParameter("areaNoSearch");
 	
 	if(keyword == null)
 		keyword = "";
@@ -28,9 +28,9 @@
 		areaNo = 0;
 	}
 	
-	
+	int areaNoSearch = 0;
 	if(areaNoStr != null) {
-		areaNo = Integer.parseInt(areaNoStr);
+		areaNoSearch = Integer.parseInt(areaNoStr);
 	}
 	
 	boolean isSearch = type != null && keyword != null && !keyword.trim().equals("");
@@ -67,10 +67,10 @@
 	int count;
 	
 	if(isSearch) {
-		if(areaNo == 0)
+		if(areaNoSearch == 0)
 			count = boardListDao.getCount(type, keyword, 1);
 		else
-			count = boardListDao.getCount(type, areaNo, keyword, 1);
+			count = boardListDao.getCount(type, areaNoSearch, keyword, 1);
 	}
 	else count = boardListDao.getCount(1);
 	
@@ -89,10 +89,10 @@
 	if(!isSearch)
 		boardList = boardListDao.list(1, startRow, endRow);
 	else {
-		if(areaNo == 0)
+		if(areaNoSearch == 0)
 			boardList = boardListDao.search(1, type, keyword, startRow, endRow);
 		else
-			boardList = boardListDao.search(1, areaNo, type, keyword, startRow, endRow);
+			boardList = boardListDao.search(1, areaNoSearch, type, keyword, startRow, endRow);
 	}
 	
 	// 회원 정보
@@ -125,7 +125,7 @@
 		$(function() {
 			$("select[name=type]").val("<%=type%>").prop("selected", true);
 			$("input[name=keyword]").val("<%=keyword%>");
-			$("select[name=areaNo]").val("<%=areaNo%>").prop("selected", true);
+			$("select[name=areaNoSearch]").val("<%=areaNoSearch%>").prop("selected", true);
 		});
 	</script>
 <%} %>
@@ -168,12 +168,14 @@
 	<form class="search-form text-center" action="noticeList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	
-		<select name="areaNo" class="select-form">
-			<option value="0">도서관 전체</option>
-			<%for(int i = 0; i < areaList.size(); i++) { %>
-				<option value="<%=areaList.get(i).getAreaNo()%>"><%=areaList.get(i).getAreaName()%></option>
-			<%} %>
-		</select>
+		<%if(areaNo == 0) { %>
+			<select name="areaNoSearch" class="select-form">
+				<option value="0">도서관 전체</option>
+				<%for(int i = 0; i < areaList.size(); i++) { %>
+					<option value="<%=areaList.get(i).getAreaNo()%>"><%=areaList.get(i).getAreaName()%></option>
+				<%} %>
+			</select>
+		<%} %>
 		
 		<select name="type" class="select-form">
 			<option value="board_title">제목</option>
@@ -199,25 +201,27 @@
 			
 			<tbody>
 				<%for(BoardListDto boardListDto : boardList) { %>
-				<tr>
-					<td><%=boardListDto.getBoardSepNo() %></td>
-					<%if(boardListDto.getAreaNo() != 0){ %>
-						<td>[<%=boardListDto.getAreaName().substring(0, boardListDto.getAreaName().length() - 3)%>]</td>
-					<%} else { %>
-						<td>[전체]</td>
+					<%if(areaNo == 0 || (boardListDto.getAreaNo() == areaNo || boardListDto.getAreaNo() == 0)) { %>
+						<tr>
+							<td><%=boardListDto.getBoardSepNo() %></td>
+							<%if(boardListDto.getAreaNo() != 0){ %>
+								<td>[<%=boardListDto.getAreaName().substring(0, boardListDto.getAreaName().length() - 3)%>]</td>
+							<%} else { %>
+								<td>[전체]</td>
+							<%} %>
+							<td align=left>
+								<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
+									<%=boardListDto.getBoardTitle() %>
+								</a>
+								<%if(boardListDto.getBoardReply() > 0){ %>
+									[<%=boardListDto.getBoardReply()%>]
+								<%} %>
+							</td>
+							<td><%=boardListDto.getClientName() %></td>
+							<td><%=boardListDto.getBoardDate() %></td>
+							<td><%=boardListDto.getBoardRead() %></td>
+						</tr>
 					<%} %>
-					<td align=left>
-						<a href="boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">
-							<%=boardListDto.getBoardTitle() %>
-						</a>
-						<%if(boardListDto.getBoardReply() > 0){ %>
-							[<%=boardListDto.getBoardReply()%>]
-						<%} %>
-					</td>
-					<td><%=boardListDto.getClientName() %></td>
-					<td><%=boardListDto.getBoardDate() %></td>
-					<td><%=boardListDto.getBoardRead() %></td>
-				</tr>
 				<%} %>
 			</tbody>
 		</table>

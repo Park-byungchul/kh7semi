@@ -10,6 +10,9 @@
 
 <%
 request.setCharacterEncoding("UTF-8");
+
+String root = request.getContextPath();
+
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 ClientDao clientDao = new ClientDao();
 List<ClientDto> adminList = clientDao.adminPermissionList();
@@ -35,9 +38,17 @@ if(areaNo > 0){
 	<jsp:param value="<%=title %>" name="title"/>
 </jsp:include>
 
-	<div class="row text-left">
-		<h2>권한 등록</h2>
-	</div>
+	<div class="main">
+		
+			<div class="header">
+				<div class="row">
+					<span class="title">권한 등록</span>
+				</div>
+				
+				<div class="row">
+					<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 권한 등록</span>
+				</div>
+			</div>
 
 	<div class="row">
 			<form action="roleInsert.kh" method="post">
@@ -64,6 +75,6 @@ if(areaNo > 0){
 				</div>
 			</form>
 		</div>
-
+</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

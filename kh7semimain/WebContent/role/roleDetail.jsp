@@ -10,6 +10,9 @@
 
 <%
 request.setCharacterEncoding("UTF-8");
+
+String root = request.getContextPath();
+
 RoleAreaDao roleAreaDao = new RoleAreaDao();
 ClientDao clientDao = new ClientDao();
 List<ClientDto> adminList = clientDao.adminPermissionList();
@@ -24,7 +27,7 @@ catch (Exception e){
 	areaNo = 0;
 }
 
-String title = "권한수정";
+String title = "권한 수정";
 
 int roleClientNo = Integer.parseInt(request.getParameter("roleClientNo"));
 int roleAreaNo = Integer.parseInt(request.getParameter("roleAreaNo"));
@@ -54,9 +57,17 @@ RoleAreaDto roleAreaDto = roleAreaDao.get(roleClientNo, roleAreaNo);
 	});
 </script>
 
-	<div class="row text-left">
-		<h2>권한 수정</h2>
-	</div>
+	<div class="main">
+		
+			<div class="header">
+				<div class="row">
+					<span class="title">권한 수정</span>
+				</div>
+				
+				<div class="row">
+					<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 권한 수정</span>
+				</div>
+			</div>
 
 	<div class="row">
 			<form action="roleEdit.kh" method="post">
@@ -88,6 +99,6 @@ RoleAreaDto roleAreaDto = roleAreaDao.get(roleClientNo, roleAreaNo);
 				</div>
 			
 		</div>
-
+</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

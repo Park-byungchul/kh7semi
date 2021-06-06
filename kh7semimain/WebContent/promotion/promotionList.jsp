@@ -6,6 +6,7 @@
     pageEncoding="UTF-8"%>
 
 <%
+request.setCharacterEncoding("UTF-8");
 String root = request.getContextPath();
 AreaDao areaDao = new AreaDao();
 int areaNo;
@@ -18,9 +19,16 @@ catch (Exception e){
 
 PromotionInfoDao promotionInfoDao = new PromotionInfoDao();
 List<PromotionInfoDto> list = promotionInfoDao.list();
+
+String title = "배너 목록";
+if(areaNo > 0){
+	title += " : " + areaDao.detail(areaNo).getAreaName();
+}
 %>
 
-<jsp:include page="/template/header.jsp"></jsp:include>
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -35,12 +43,25 @@ List<PromotionInfoDto> list = promotionInfoDao.list();
 	});
 </script>
 
-<a href="<%=root %>/promotion/promotionInsert.jsp">배너 등록</a>
+<div class="main">
+		
+			<div class="header">
+				<div class="row">
+					<span class="title">배너 목록</span>
+				</div>
+				
+				<div class="row">
+					<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 권한관리자 > 배너 목록</span>
+				</div>
+			</div>
+
+		<div class="row text-right">
+			<button><a href="<%=root %>/promotion/promotionInsert.jsp">배너 등록</a></button>
+		</div>
 
 <%for(PromotionInfoDto promotionInfoDto : list){ %>
 
 	<%if(promotionInfoDto.getFileNo() > 0){ %>
-		<h3><%=promotionInfoDto.getPromotionNo() %></h3>
 		<img src="promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>"  style="max-width: 200px; height:auto;">
 		<a href="promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">다운로드</a>
 		<a id="promotionDeleteBtn" href="promotionDelete.kh?promotionNo=<%=promotionInfoDto.getPromotionNo()%>">삭제</a>

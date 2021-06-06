@@ -89,31 +89,40 @@ if(endBlock > lastBlock){ // 범위를 벗어나면
 </script>
 
 <%} %>
-	<div class="row text-left">
-		<h2>회원 목록</h2>
-	</div>
 
-	<div class="row">
-		<table class="table table-border table-hover">
-			<thead>
-				<tr>
-					<th width="15%">아이디</th>
-					<th width="20%">이름</th>
-					<th width="20%">이메일</th>
-					<th width="20%">대출가능일</th>
-					<th width="12%">등급</th>
-					<th width="13%">관리</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%for (ClientDto clientDto : list) { %>
-				<tr>
-					<td><a href=<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>><%=clientDto.getClientId()%></a></td>
-					<td><%=clientDto.getClientName()%></td>
-					<td><%=clientDto.getClientEmail()%></td>
-					<td><%=clientDto.getClientPossible()%></td>
-					<td><%=clientDto.getClientType()%></td>
-					<td>
+	<div class="main">
+	
+		<div class="header">
+			<div class="row">
+				<span class="title">회원 목록</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 회원 목록</span>
+			</div>
+		</div>
+
+		<div class="row">
+			<table class="table table-border table-hover">
+				<thead>
+					<tr>
+						<th width="15%">아이디</th>
+						<th width="20%">이름</th>
+						<th width="20%">이메일</th>
+						<th width="20%">대출가능일</th>
+						<th width="12%">등급</th>
+						<th width="13%">관리</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%for (ClientDto clientDto : list) { %>
+					<tr>
+						<td><a href=<%=root%>/client/clientInfo.jsp?clientNo=<%=clientDto.getClientNo()%>><%=clientDto.getClientId()%></a></td>
+						<td><%=clientDto.getClientName()%></td>
+						<td><%=clientDto.getClientEmail()%></td>
+						<td><%=clientDto.getClientPossible()%></td>
+						<td><%=clientDto.getClientType()%></td>
+						<td>
 					<button class="board-btn"><a class="btn-text" href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
 						<%if(isSearch){ %>
 							&search=<%=search %>
@@ -122,35 +131,34 @@ if(endBlock > lastBlock){ // 범위를 벗어나면
 					<button class="clientDelete board-btn"><a class="btn-text" href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
 					</td>
 				</tr>
-				<%}%>
-			</tbody>
-		</table>
-	</div>
-	
-	<div class="text-center pagination">
-	<%if(startBlock > 1){ %>
-		<a class="move-link">이전</a>
-		<%} %>
-		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
-			<%if(i == pageNo){ %>
-				<a href="clientList.jsp?pageNo=<%=i %>
-					<%if(isSearch){ %>
-						&search=<%=search %>
-					<%} %>
-				" class="on"><%=i %></a>
-			<%}else{ %>
-				<a href="clientList.jsp?pageNo=<%=i %>
-					<%if(isSearch){ %>
-						&search=<%=search %>
-					<%} %>
-				"><%=i %></a>
+					<%}%>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="text-center pagination">
+		<%if(startBlock > 1){ %>
+			<a class="move-link">이전</a>
 			<%} %>
-		<%} %>
-		<%if(endBlock < lastBlock){ %>
-		<a class="move-link">다음</a>
-		<%} %>
-	</div>
-	
+			<%for(int i = startBlock ; i <= endBlock ; i++){ %>
+				<%if(i == pageNo){ %>
+					<a href="clientList.jsp?pageNo=<%=i %>
+						<%if(isSearch){ %>
+							&search=<%=search %>
+						<%} %>
+					" class="on"><%=i %></a>
+				<%}else{ %>
+					<a href="clientList.jsp?pageNo=<%=i %>
+						<%if(isSearch){ %>
+							&search=<%=search %>
+						<%} %>
+					"><%=i %></a>
+				<%} %>
+			<%} %>
+			<%if(endBlock < lastBlock){ %>
+			<a class="move-link">다음</a>
+			<%} %>
+		</div>
 		
 	<div class="row text-center">
 		<form action="clientList.jsp" method="post">

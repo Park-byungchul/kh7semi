@@ -89,77 +89,78 @@ endBlock = lastBlock; // 범위를 수정
 
 <%} %>
 
-<div class="main">
-	<div class="header">
-		<div class="row">
-			<span class="title">회원 목록</span>
-		</div>
+	<div class="main">
+		
+			<div class="header">
+				<div class="row">
+					<span class="title">회원 목록</span>
+				</div>
 				
-		<div class="row">
-			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 관리자메뉴 > 권한관리자 > 회원 목록</span>
-		</div>
-	</div>
-	
-	<div class="row">
-		<table class="table table-border table-hover">
-			<thead>
-				<tr>
-					<th width="15%">아이디</th>
-					<th width="15%">이름</th>
-					<th width="20%">이메일</th>
-					<th width="20%">대출가능일</th>
-					<th width="13%">등급</th>
-					<th width="17%">관리</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%for (ClientDto clientDto : list) { %>
-				<tr>
-					<td><%=clientDto.getClientId()%></a></td>
-					<td><%=clientDto.getClientName()%></td>
-					<td><%=clientDto.getClientEmail()%></td>
-					<td><%=clientDto.getClientPossible()%></td>
-					<td><%=clientDto.getClientType()%></td>
-					<td>
-					<%if(clientDto.getClientType().equals("일반관리자") || clientDto.getClientType().equals("일반사용자")){ %>
-						<button class="board-btn"><a class="btn-text" href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
+				<div class="row">
+					<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 권한관리자 > 회원 목록</span>
+				</div>
+			</div>
+
+			<div class="row">
+				<table class="table table-border table-hover">
+					<thead>
+						<tr>
+							<th width="15%">아이디</th>
+							<th width="20%">이름</th>
+							<th width="20%">이메일</th>
+							<th width="20%">대출가능일</th>
+							<th width="12%">등급</th>
+							<th width="13%">관리</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%for (ClientDto clientDto : list) { %>
+						<tr>
+							<td><%=clientDto.getClientId()%></a></td>
+							<td><%=clientDto.getClientName()%></td>
+							<td><%=clientDto.getClientEmail()%></td>
+							<td><%=clientDto.getClientPossible()%></td>
+							<td><%=clientDto.getClientType()%></td>
+							<td>
+							<%if(clientDto.getClientType().equals("일반관리자") || clientDto.getClientType().equals("일반사용자")){ %>
+								<button class="board-btn"><a class="btn-text" href="clientPartialEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
 							<%if(isSearch){ %>
 								&search=<%=search %>
 							<%} %>
 						">수정</a></button>
 						<button class="clientDelete board-btn"><a class="btn-text" href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>&type=partial">삭제</a></button>
 					<%} %>
-					</td>
-				</tr>
-				<%}%>
-			</tbody>
-		</table>
-	</div>
-	
-	<div class="text-center pagination">
-	<%if(startBlock > 1){ %>
-		<a class="move-link">이전</a>
-		<%} %>
-		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
-			<%if(i == pageNo){ %>
-				<a href="clientPartialList.jsp?pageNo=<%=i %>
-					<%if(isSearch){ %>
-						&search=<%=search %>
+							</td>
+						</tr>
+						<%}%>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="text-center pagination">
+			<%if(startBlock > 1){ %>
+				<a class="move-link">이전</a>
+				<%} %>
+				<%for(int i = startBlock ; i <= endBlock ; i++){ %>
+					<%if(i == pageNo){ %>
+						<a href="clientPartialList.jsp?pageNo=<%=i %>
+							<%if(isSearch){ %>
+								&search=<%=search %>
+							<%} %>
+						" class="on"><%=i %></a>
+					<%}else{ %>
+						<a href="clientPartialList.jsp?pageNo=<%=i %>
+							<%if(isSearch){ %>
+								&search=<%=search %>
+							<%} %>
+						"><%=i %></a>
 					<%} %>
-				" class="on"><%=i %></a>
-			<%}else{ %>
-				<a href="clientPartialList.jsp?pageNo=<%=i %>
-					<%if(isSearch){ %>
-						&search=<%=search %>
-					<%} %>
-				"><%=i %></a>
-			<%} %>
-		<%} %>
-		<%if(endBlock < lastBlock){ %>
-		<a class="move-link">다음</a>
-		<%} %>
-	</div>
-		
+				<%} %>
+				<%if(endBlock < lastBlock){ %>
+				<a class="move-link">다음</a>
+				<%} %>
+			</div>
+				
 	<div class="row text-center">
 		<form action="clientPartialList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
@@ -167,6 +168,6 @@ endBlock = lastBlock; // 범위를 수정
 			<input type="submit" class="form-btn form-btn-inline" value="검색">
 		</form>
 	</div>
-</div>
+		</div>
 	
 <jsp:include page="/template/footer.jsp"></jsp:include>

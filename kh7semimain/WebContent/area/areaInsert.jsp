@@ -1,11 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<jsp:include page="/admin/adminMenuSidebar.jsp"></jsp:include>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String root = request.getContextPath();
 
-		<div class="row text-left">
-			<h2>지점 등록</h2>
-		</div>
+	String title = "지점 등록";
+%>
+
+
+<jsp:include page="/admin/adminMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
+
+	
+	<div class="main">
+		
+			<div class="header">
+				<div class="row">
+					<span class="title">지점 등록</span>
+				</div>
+				
+				<div class="row">
+					<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 지점 등록</span>
+				</div>
+			</div>
 		
 		<div class="row">
 			<form action="areaInsert.kh" method="post">

@@ -43,7 +43,7 @@ if(areaNo > 0){
 	});
 </script>
 
-<div class="main">
+<div class="main" style="min-height:800px;">
 		
 			<div class="header">
 				<div class="row">
@@ -56,18 +56,30 @@ if(areaNo > 0){
 			</div>
 
 		<div class="row text-right">
-			<button><a href="<%=root %>/promotion/promotionInsert.jsp">배너 등록</a></button>
+			<button class="form-btn form-btn-inline"><a class="link-btn"  href="<%=root %>/promotion/promotionInsert.jsp" style="padding:0px;">배너 등록</a></button>
 		</div>
 
-<%for(PromotionInfoDto promotionInfoDto : list){ %>
+		<table class="table table-border table-hover text-center">
+				<tr>
+					<th>이미지</th>
+					<th>지점번호</th>
+					<th>기능</th>
+				</tr>
+				<%for(PromotionInfoDto promotionInfoDto : list){ %>
+					<%if(promotionInfoDto.getFileNo() > 0){ %>
+				<tr>	
+					<td><img src="promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>"  style="max-width: 200px; height:auto;"></td>
+					<td><%=promotionInfoDto.getAreaNo() %></td>
+					<td><a href="promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">다운로드</a> | <a id="promotionDeleteBtn" href="promotionDelete.kh?promotionNo=<%=promotionInfoDto.getPromotionNo()%>">삭제</a></td>
+				</tr>
+					<%} %>
+				<%} %>
+		</table>
 
-	<%if(promotionInfoDto.getFileNo() > 0){ %>
-		<img src="promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>"  style="max-width: 200px; height:auto;">
-		<a href="promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">다운로드</a>
-		<a id="promotionDeleteBtn" href="promotionDelete.kh?promotionNo=<%=promotionInfoDto.getPromotionNo()%>">삭제</a>
-		<h3><%=promotionInfoDto.getAreaNo() %></h3>
-	<%} %>
+		<div class="row text-right">
+			<button class="form-btn form-btn-inline"><a class="link-btn" href="<%=root %>/promotion/promotionInsert.jsp" style="padding:0px;">배너 등록</a></button>
+		</div>
+	
 
-<%} %>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

@@ -8,6 +8,8 @@
     pageEncoding="UTF-8"%>
     
 <%
+	request.setCharacterEncoding("UTF-8");
+
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	
 	BoardDao boardDao = new BoardDao(); 
@@ -20,9 +22,13 @@
 	
 	BoardTypeDao boardTypeDao = new BoardTypeDao();
 	String boardName = boardTypeDao.getBoardName(boardDto.getBoardTypeNo());
+	
+	String title = "수정하기";
 %>
 
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <style>
 	th {

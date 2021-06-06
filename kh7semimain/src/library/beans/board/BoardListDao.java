@@ -255,7 +255,7 @@ public class BoardListDao {
 		return count;
 	}
 	
-	// 메인 공지사항 (상위 1~4번째 글)
+	// 메인도서관 공지사항 (상위 1~4번째 글)
 	public List<BoardListDto> mainNotice() throws Exception {
 		Connection con = JdbcUtils.getConnection();
 				
@@ -266,6 +266,55 @@ public class BoardListDao {
 				+ ")TMP"
 				+ ") where rn between 1 and 4";
 		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+				
+		List<BoardListDto> boardList = new ArrayList<>();
+				
+		while(rs.next()) {
+			BoardListDto boardListDto = new BoardListDto();
+
+			boardListDto.setBoardNo(rs.getInt("board_no"));
+			boardListDto.setClientNo(rs.getInt("client_no"));
+			boardListDto.setBoardTypeNo(rs.getInt("board_type_no"));
+			boardListDto.setAreaNo(rs.getInt("area_no"));
+			boardListDto.setBoardTitle(rs.getString("board_title"));
+			boardListDto.setBoardRead(rs.getInt("board_read"));
+			boardListDto.setBoardLike(rs.getInt("board_like"));
+			boardListDto.setBoardDate(rs.getDate("board_date"));
+			boardListDto.setBoardSepNo(rs.getInt("board_sep_no"));
+			boardListDto.setBoardReply(rs.getInt("board_reply"));
+			boardListDto.setBoardOpen(rs.getString("board_open"));
+				
+			boardListDto.setClientNo(rs.getInt("client_no"));
+			boardListDto.setClientName(rs.getString("client_name"));
+			
+			boardListDto.setAreaNo(rs.getInt("area_no"));				
+			boardListDto.setAreaName(rs.getString("area_name"));
+			
+			boardListDto.setTypeNo(rs.getInt("type_no"));
+			boardListDto.setBoardTypeName(rs.getString("board_type_name"));
+			
+			boardList.add(boardListDto);
+		}
+				
+		con.close();
+				
+		return boardList;
+	}
+	
+	// 지점도서관 공지사항 (상위 1~4번째 글)
+	public List<BoardListDto> mainNotice(int areaNo) throws Exception {
+		Connection con = JdbcUtils.getConnection();
+				
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from board_list where board_type_no = 1 "
+				+ "and (area_no is null or area_no = ?)"
+				+ "order by board_date desc"
+				+ ")TMP"
+				+ ") where rn between 1 and 4";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, areaNo);
 		ResultSet rs = ps.executeQuery();
 				
 		List<BoardListDto> boardList = new ArrayList<>();

@@ -18,6 +18,8 @@
     pageEncoding="UTF-8"%>
     
 <%
+	request.setCharacterEncoding("UTF-8");
+	
 	// 테스트
 	// 세션 번호
 	int clientNo;
@@ -80,9 +82,13 @@
 	// 댓글 목록 출력
 	ReviewCommentDao commentDao = new ReviewCommentDao();
 	List<ReviewCommentDto> commentList = commentDao.list(reviewNo);
+	
+	String title = "도서 리뷰";
 %>
 
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <style>
 	.heart > a {

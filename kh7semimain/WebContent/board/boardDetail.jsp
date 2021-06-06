@@ -32,6 +32,13 @@
 	catch (Exception e) {
 		clientNo = 0;
 	}
+	
+	int areaNo;
+	try{
+		areaNo = (int)request.getSession().getAttribute("areaNo");
+	} catch (Exception e){
+		areaNo = 0;
+	}
 
 	// 현재 보드 번호
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
@@ -105,9 +112,16 @@
 	
 	BoardAnswerDao answerDao = new BoardAnswerDao();
 	BoardAnswerDto answerDto = answerDao.get(boardNo);
+	
+	String title = boardListDto.getBoardTypeName();
+	if(areaNo != 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
 %>
 
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <style>
 	.heart > a {

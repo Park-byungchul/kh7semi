@@ -148,7 +148,7 @@ textarea:focus {
 		
 		<div class="container-800">
 			<div class="row text-center" style="margin-left:0px;">
-					<form action = "recommendList.jsp" method="get" class="search-form text-center">
+					<form action = "recommendList.jsp" method="get" class="search-form search-form-back text-center">
 						<select name="type" class="select-form">
 							<option value="all">전체</option>
 							<option value="book_title">제목</option>
@@ -160,30 +160,25 @@ textarea:focus {
 						</form>					
 			</div> <br>
 			
+			<hr class="notice-hr">
+			
 				<div class="recommendList">
 				<%for (RecommendDto recommendDto : recommendList) { 
 					bookDto = bookDao.get(recommendDto.getBookIsbn());
-					
 				%>
 					<div style="position:relative;padding:17px 20px;overflow:hidden;height:200px;margin-left:10px;">
 						<div class="img" style="position:absolute;top:30px;left:0px;">
 							<img src="<%=bookDto.getBookImg()%>">
 						</div>
 							<div class="row" style="margin-left:120px;font-size:13px">
-										<a href="<%=root%>/recommend/recommendDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>" style="font-size:16px;font-weight: bold;padding:5px 0px;"><%=bookDto.getBookTitle()%></a><br>
+										<a href="<%=root%>/recommend/recommendDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>" style="font-size:16px;font-weight: bold;padding:5px 0px;color:black"><%=bookDto.getBookTitle()%></a><br>
 										<span>저자 : <%=bookDto.getBookAuthor()%> | </span>
 										<span>출판사 : <%=bookDto.getBookPublisher()%> | </span>
 										<span>발행 : <%=bookDto.getBookDate()%> | </span><br><br>
 										<textarea cols="100" rows="6" style="resize:none;border:0;"readonly><%=bookDto.getBookContent()%></textarea>
 							</div>
 					</div>
-								
-								
-						
-							
-					
-						
-				
+					<hr class="notice-hr hr-plus">
 				<%}%>
 				</div>
 					
@@ -207,7 +202,7 @@ textarea:focus {
 					<%} %>
 				</div>
 			</div>
-			<form action="recommendList.jsp" method="get" class="search-form">
+    <form class="search-form" action="recommendList.jsp" method="get">
 				<input type="hidden" name="pageNo">
 			</form>
 		

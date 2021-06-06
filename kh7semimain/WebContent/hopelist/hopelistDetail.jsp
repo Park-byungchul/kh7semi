@@ -8,6 +8,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	String root = request.getContextPath();
+	request.setCharacterEncoding("UTF-8");
+	
 	int hopelistNo = Integer.parseInt(request.getParameter("hopelistNo"));
 	HopelistDao hopelistDao = new HopelistDao();
 	HopelistDto hopelistDto = hopelistDao.get(hopelistNo);
@@ -34,15 +37,13 @@
 	catch (Exception e){
 		areaNo = 0;
 	}
-	String title = "희망도서";
-	if(areaNo > 0){
-		title += " : " + areaDao.detail(areaNo).getAreaName();
-	}
+	String tit
 %>
 
 <jsp:include page="/service/serviceSidebar.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
+
 <script>
 $(function(){
 	$("#hopelistDelete").click(function(){
@@ -75,27 +76,39 @@ $(function(){
 					<input type="text"  readonly id="clientPhone" value="<%=clientDto.getClientPhone()%>" placeholder = "위와 동일" class="form-input form-input-underline">
 				</div>
 		</div>
-	
-		<div class="row text-left">
-				<label>저자</label>
-				<input type="text"  Id="bookAuthor"readonly value = "<%=bookDto.getBookAuthor()%>"class="form-input form-input-underline">
-			</div>
-			<div class="row text-left">
-				<label>제목</label>
-				<input type="text" Id ="bookTitle" readonly value = "<%=bookDto.getBookTitle()%>" class="form-input form-input-underline">
-			</div>
-				<input type="hidden" Id ="genreNo"  value = "<%=bookDto.getGenreNo()%>" class="form-input form-input-underline">
-			<input type="hidden" name="hopelistNo" value="<%=hopelistDto.getHopelistNo()%>">
-			<input type="hidden" id="bookIsbn" name="bookIsbn" value="1">
-			<div class="row text-left">
-				<label>비치희망 도서관</label>
-			<input type="text" Id =""  value = "<%=hopelistDto.getHopelistLibrary()%>" class="form-input form-input-underline">
-			</div>
-			<div class="row text-left">
-				<label>신청사유</label>
-				<textarea name="hopelistReason" rows="10" class="form-input"  style="resize:none;border:0;"readonly><%=hopelistDto.getHopelistReason()%></textarea> 
-			</div>
-		
+	</div>
+
+	<div class="row">
+		<table class="table table-border table-hover board-table">
+			<tbody>
+				<tr>
+					<th>도서명</th>
+					<td><%=bookDto.getBookTitle()%></td>
+				</tr>
+				<tr>
+					<th>저자</th>
+					<td><%=bookDto.getBookAuthor()%></td>
+				</tr>
+				<tr>
+					<th>신청 날짜</th>
+					<td><%=hopelistDto.getHopelistDate()%></td>
+				</tr>
+				<tr>
+					<th>희망 도서관</th>
+					<td><%=hopelistDto.getHopelistLibrary()%></td>
+				</tr>
+				<tr>
+					<th>신청 이유</th>
+					<td>
+						<div class="row text-left">
+							<pre><%=hopelistDto.getHopelistReason()%></pre>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
 		<div class="row text-right">
 			<a href="hopelistInsert.jsp" class="link-btn">신청하러가기</a>
 		
@@ -106,5 +119,6 @@ $(function(){
 			
 			<a href="hopelist.jsp" class="link-btn">목록</a>
 		</div>
-</div>
+	</div>
+
 <jsp:include page="/template/footer.jsp"></jsp:include>

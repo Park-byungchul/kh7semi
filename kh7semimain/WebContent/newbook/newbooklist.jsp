@@ -136,7 +136,7 @@ if(areaNo > 0){
 		</div>
 		
 		<div class="container-800">
-			<div class="row text-center">
+			<div class="row text-center search-form-back">
 					<form action = "newbooklist.jsp" method="get">
 						<select name="area" class="select-form">
 							<option value="메인도서관">전체도서관</option>
@@ -208,7 +208,7 @@ if(areaNo > 0){
 					<%} %>
 				</div>
 			</div>
-			<form action="newbooklist.jsp" method="get" class="search-form">
+    <form class="search-form" action="newbooklist.jsp" method="get">
 				<input type="hidden" name="pageNo">
 			</form>
 		

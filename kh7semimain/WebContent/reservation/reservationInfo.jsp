@@ -30,8 +30,8 @@
 	</div>
 	
 		<div class="row text-center">
-			<input type="button" value="대출 및 예약 안내">
-			<input type="button" onclick="location.href='<%=root%>/search/searchInput.jsp'" value="대출 및 예약 신청">		
+			<input type="button" class="board-btn" value="대출 및 예약 안내">
+			<input type="button" class="board-btn" onclick="location.href='<%=root%>/search/searchInput.jsp'" value="대출 및 예약 신청">		
 		</div>
 			<br><br>
 		

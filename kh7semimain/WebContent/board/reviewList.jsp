@@ -139,7 +139,7 @@
 			</div>
 		</div>
 	
-	<form class="search-form text-center" action="reviewList.jsp" method="get">
+	<form class="search-form search-form-back text-center" action="reviewList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	
 		<select name="type" class="select-form">
@@ -168,7 +168,7 @@
 					<td><%=reviewListDto.getReviewNo() %></td>
 					<td><img src=<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookImg() %>></td>
 					<td align=left>
-						<a href="../book/bookDetail.jsp?bookIsbn=<%=reviewListDto.getBookIsbn() %>" class="review-title">
+						<a href="reviewBookDetail.jsp?bookIsbn=<%=reviewListDto.getBookIsbn() %>" class="review-title">
 							<%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookTitle() %>
 						</a>
 						<p><%=reviewDao.getBookInfo(reviewListDto.getBookIsbn()).getBookAuthor() %></p>

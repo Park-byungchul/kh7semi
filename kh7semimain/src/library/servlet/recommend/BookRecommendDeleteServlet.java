@@ -21,6 +21,7 @@ public class BookRecommendDeleteServlet extends HttpServlet{
 			RecommendDto recommendDto = new RecommendDto();
 			recommendDto.setClientNo(Integer.parseInt(req.getParameter("clientNo"))); 
 			recommendDto.setBookIsbn(req.getParameter("bookIsbn"));
+			int getBookNo = Integer.parseInt(req.getParameter("getBookNo"));
 			
 			//처리
 			RecommendDao recommendDao = new RecommendDao();
@@ -28,8 +29,8 @@ public class BookRecommendDeleteServlet extends HttpServlet{
 			
 			String root = req.getContextPath();
 			
-			//출력 : 책 리스트로 복귀
-			resp.sendRedirect(root+"/search/searchList.jsp");
+			//출력 : 책 디테일로 복귀
+			resp.sendRedirect(root+"/getBook/getBookDetail.jsp?getBookNo="+getBookNo);
 			
 		}
 		catch(Exception e) {

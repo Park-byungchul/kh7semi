@@ -21,15 +21,16 @@ public class wishlistDeleteServlet extends HttpServlet{
 			WishlistDto wishlistDto = new WishlistDto();
 			wishlistDto.setClientNo(Integer.parseInt(req.getParameter("clientNo"))); 
 			wishlistDto.setBookIsbn(req.getParameter("bookIsbn"));
+			int getBookNo = Integer.parseInt(req.getParameter("getBookNo"));
 			
 			//처리
 			WishlistDao wishlistDao = new WishlistDao();
 			wishlistDao.delete(wishlistDto.getClientNo(), wishlistDto.getBookIsbn());
 			
 			String root = req.getContextPath();
-			//출력 : 책 리스트로 복귀
+			//출력 : 책 디테일로 복귀
 		
-			resp.sendRedirect(root+"/search/searchList.jsp");	
+			resp.sendRedirect(root+"/getBook/getBookDetail.jsp?getBookNo="+getBookNo);	
 		
 		}
 		catch(Exception e) {

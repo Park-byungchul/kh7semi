@@ -97,8 +97,8 @@ if(areaNo > 0){
 <jsp:include page="/admin/adminMenuSidebar.jsp">
 	<jsp:param value="<%=title %>" name="title"/>
 </jsp:include>
-
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
 <script src="<%=root%>/pagination/pagination.js"></script>
 <script>
 	$(function(){
@@ -118,10 +118,16 @@ if(areaNo > 0){
 	text-decoration: none;
 }
 </style>
-<div class="container-1000">
-	<div class="row text-left">
-		<h2>책 목록</h2>
-	</div>
+<div class="main">
+	<div class="header">
+		<div class="row">
+			<span class="title">도서 목록</span>
+		</div>
+		<div class="row">
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 도서 목록</span>
+		</div>
+	</div>		
+<div class="container-800">
 	<div class="row text-right">
 		<a class="link-btn" href="bookInsert.jsp">책 등록하기</a>
 	</div>
@@ -151,9 +157,9 @@ if(areaNo > 0){
 					<td><%=bookDto.getBookAuthor()%></td>
 					<td><img src="<%=bookDto.getBookImg() %>"></td>
 					<td class="bookList">
-					<button class="board-btn"><a class="btn-text" href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
-					<button class="board-btn"><a class="bookDelete btn-text" href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>">삭제</a></button>
-					<button class="board-btn"><a class="btn-text" href="bookDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">상세보기</a></button>
+					<button class="board-btn" style="border-bottom: 1px solid white; width: 88px;"><a class="btn-text" href="bookEdit.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">수정</a></button>
+					<button class="board-btn" style="border-bottom: 1px solid white; width: 88px;"><a class="bookDelete btn-text" href="bookDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>">삭제</a></button>
+					<button class="board-btn" style="border-bottom: 1px solid white; width: 88px;"><a class="btn-text" href="bookDetail.jsp?bookIsbn=<%=bookDto.getBookIsbn()%>">상세보기</a></button>
 					</td>
 				</tr>
 				<%}%>
@@ -188,5 +194,5 @@ if(areaNo > 0){
 	</div>
 
 </div>
-
+</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

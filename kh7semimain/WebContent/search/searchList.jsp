@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.BookDto"%>
 <%@page import="library.beans.BookDao"%>
 <%@page import="library.beans.GetBookDto"%>
@@ -101,6 +102,20 @@ catch (Exception e) {
 		
 		if(endBlock > lastBlock) // 범위를 벗어나면
 			endBlock = lastBlock;
+		
+		//브라우저 이름짓기
+		AreaDao areaDao = new AreaDao();
+		int areaNo;
+		try{
+			areaNo = (int)session.getAttribute("areaNo");
+		}
+		catch (Exception e){
+			areaNo = 0;
+		}
+		String title = "자료 검색";
+		if(areaNo > 0){
+			title += " : " + areaDao.detail(areaNo).getAreaName();
+		}
 %>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <%if(isSearch){ %>
@@ -111,11 +126,20 @@ catch (Exception e) {
 </script>
 <%} %>
 
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>
+<jsp:include page="/search/searchSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
 
 <script src="<%=root%>/pagination/pagination.js"></script>
-		<div class="row text-center">
-			<h2>자료 검색</h2>
+	<div class="main">
+		<div class="header">
+			<div class="row">
+				<span class="title">통합 자료 검색</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 통합 자료 검색</span>
+			</div>
 		</div>
 		
 		<div class="row text-center">
@@ -180,9 +204,6 @@ catch (Exception e) {
 	<form class="search-form" action="searchList.jsp" method="get">
 		<input type="hidden" name="pageNo">
 	</form>
-
-	
-
 </div>	
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

@@ -105,10 +105,10 @@ RoleAreaDto roleCurrentAreaDto = roleAreaDao.get(rolePartialClientNo, rolePartia
 					</select>
 				</div>
 				<div class="row">
-					<input type="submit" value="수정">
+					<input type="submit" class="board-btn" value="수정">
 					</form>
-					<button><a href="rolePartialList.jsp">취소</a></button>
-					<button id="rolePartialDeleteBtn"><a href="roleDelete.kh?roleClientNo=<%=roleCurrentAreaDto.getClientNo() %>&roleAreaNo=<%=roleCurrentAreaDto.getAreaNo()%>&type=partial">삭제</a></button>
+					<button class="board-btn"><a class="btn-text" href="rolePartialList.jsp">취소</a></button>
+					<button class="board-btn" id="rolePartialDeleteBtn"><a class="btn-text" href="roleDelete.kh?roleClientNo=<%=roleCurrentAreaDto.getClientNo() %>&roleAreaNo=<%=roleCurrentAreaDto.getAreaNo()%>&type=partial">삭제</a></button>
 				</div>
 			
 		</div>

@@ -96,10 +96,10 @@ PlanDto planDto = planDao.detail(planNo);
 				<div class="row">
 					<input type="date" name="planEndDate" value="<%=planDto.getPlanEndDate()%>">
 				<div class="row">
-					<input type="submit" value="수정">
+					<input type="submit" value="수정" class="board-btn">
 				</form>
-					<button><a href="plan.jsp">취소</a></button>
-					<button><a href="planDelete.kh?planNo=<%=planDto.getPlanNo()%>">삭제</a></button>
+					<button class="board-btn"><a class="btn-text" href="plan.jsp">취소</a></button>
+					<button class="board-btn"><a class="btn-text" href="planDelete.kh?planNo=<%=planDto.getPlanNo()%>">삭제</a></button>
 				</div>
 			</div>
 		</div>

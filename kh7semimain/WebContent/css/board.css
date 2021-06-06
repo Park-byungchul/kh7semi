@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.search-form {
+.search-form-back {
 	background-color: #f5f5f5;
 	padding: 10px;
 }
@@ -152,7 +152,7 @@
 }
 
 .login-form {
-	width: 250px;
+	width: 450px;
 	padding: 0.5rem;
 	outline: none;
 	margin:5px;

@@ -153,8 +153,8 @@ String title = "회원 목록";
 								<option>권한관리자</option>
 								<option>전체관리자</option>
 						</select></td>
-						<td><input type="submit" value="완료">
-						<button><a
+						<td><input type="submit" class="board-btn" value="완료">
+						<button class="board-btn"><a class="btn-text"
 							href="clientList.jsp?pageNo=<%=pageNo %>
 								<%if(isSearch){ %>
 									&search=<%=search %>
@@ -168,12 +168,12 @@ String title = "회원 목록";
 						<td><%=clientDto.getClientEmail()%></td>
 						<td><%=clientDto.getClientPossible()%></td>
 						<td><%=clientDto.getClientType()%></td>
-						<td><button><a href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
+						<td><button class="board-btn"><a class="btn-text" href="clientEdit.jsp?clientNo=<%=clientDto.getClientNo()%>&pageNo=<%=pageNo %>
 							<%if(isSearch){ %>
 								&search=<%=search %>
 							<%}%>
 						">수정</a></button>
-						<button class="clientDelete"><a href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
+						<button class="clientDelete board-btn"><a class="btn-text" href="clientDelete.kh?clientNo=<%=clientDto.getClientNo()%>">삭제</a></button>
 					<%
 					}
 					%>
@@ -213,7 +213,7 @@ String title = "회원 목록";
 		<form action="clientList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
 			<input type="text" name="search" id="search" required>
-			<input type="submit" value="검색">
+			<input type="submit" class="board-btn" value="검색">
 		</form>
 	</div>
 

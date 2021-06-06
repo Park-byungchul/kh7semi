@@ -168,15 +168,17 @@ if(areaNo > 0){
 						<input type="submit" value="검색" class="form-btn form-btn-inline">
 					</form>					
 			</div> <br>
+				<hr class="notice-hr">
 			
 				<div class="recommendList">
 				<%for(NewBookDto newBookDto : bookList) {%>
 					<div style="position:relative;padding:17px 20px;overflow:hidden;height:200px;margin-left:10px;">
+						
 						<div class="img" style="position:absolute;top:30px;left:0px;">
 							<img src="<%=newBookDto.getBookImg()%>">
 						</div>
-							<div class="row" style="margin-left:120px;font-size:13px">
-										<a href="<%=root%>/newbook/newbookDetail.jsp?bookIsbn=<%=newBookDto.getBookIsbn()%>" style="font-size:16px;font-weight: bold;padding:5px 0px;"><%=newBookDto.getBookTitle()%></a><br>
+							<div class="row" style="margin-left:120px;font-size:13px;">
+										<a href="<%=root%>/newbook/newbookDetail.jsp?bookIsbn=<%=newBookDto.getBookIsbn()%>" style="font-size:16px;font-weight: bold;padding:5px 0px;color:black"><%=newBookDto.getBookTitle()%></a><br>
 										<span>저자 : <%=newBookDto.getBookAuthor()%> | </span>
 										<span>출판사 : <%=newBookDto.getBookPublisher()%> | </span>
 										<span>발행일 : <%=newBookDto.getBookDate()%> | </span><br>
@@ -184,7 +186,9 @@ if(areaNo > 0){
 										<span>장르 : <%=newBookDto.getGenreName()%> | </span><br>
 										<span>도서관 : <%=newBookDto.getAreaName()%></span>	
 							</div>
+							
 					</div>
+					<hr class="notice-hr hr-plus">
 				<%} %>
 				</div>
 					
@@ -207,7 +211,7 @@ if(areaNo > 0){
 					<%} %>
 				</div>
 			</div>
-			<form class="search-form" action="newbooklist.jsp" method="get">
+			<form action="newbooklist.jsp" method="get">
 				<input type="hidden" name="pageNo">
 			</form>
 		

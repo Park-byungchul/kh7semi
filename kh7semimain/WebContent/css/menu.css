@@ -242,7 +242,7 @@
 	font-weight: bold;
 }
 
-.activeAreaMenu, .loginNavBtn, .activeMyArea{
+.activeAreaMenu,.activeAreaMenu-footer, .loginNavBtn, .activeMyArea{
 	height: 40px;
 	padding: 0.5rem;
 	outline: none;
@@ -251,7 +251,7 @@
 	font-weight: bold;
 }
 
-.activeAreaMenu, .activeMyArea{
+.activeAreaMenu, .activeAreaMenu-footer, .activeMyArea{
 	width: 180px;
 }
 
@@ -259,7 +259,7 @@
 	width: 100px;
 }
 
-.areaMenu, .myArea{
+.areaMenu,.areaMenu-footer, .myArea{
 	width: 180px;
 	height: 0px;
 	padding: 0.5rem;
@@ -271,14 +271,14 @@
 	top: 0px;
 }
 
-.areaMenu, .areaMenu ul, .myArea, .myArea ul {
+.areaMenu,.areaMenu-footer, .areaMenu ul,.areaMenu-footer ul, .myArea, .myArea ul {
 	margin:0;
 	padding:0;
 	list-style: none;
 	background-color: rgb(245, 245, 245);
 }
 
-.areaMenu  li, .myArea li {
+.areaMenu  li, .areaMenu-footer li, .myArea li {
 	font-size: 13px;
 	text-align: center;
 	font-weight: bold;
@@ -293,14 +293,15 @@
 	z-index: 2;
 }
 
-.areaMenu ul, .myArea ul {
+.areaMenu ul, .areaMenu-footer ul .myArea ul {
 	display:block; 
 	position:relative;
 	left:0;
 }
 
-.areaMenu li:hover, .areaMenu ul:hover, .activeAreaMenu:hover, .homeBtn:hover,
- .loginNavBtn:hover, .myArea li:hover, .myArea ul:hover, .activeMyArea:hover, .myMenuItem:hover{
+.areaMenu li:hover, .areaMenu ul:hover, .activeAreaMenu:hover, 
+.areaMenu-footer li:hover, .areaMenu-footer ul:hover, .activeAreaMenu-footer:hover, 
+.homeBtn:hover, .loginNavBtn:hover, .myArea li:hover, .myArea ul:hover, .activeMyArea:hover, .myMenuItem:hover{
 	background-color: lightgray;
 	cursor: pointer;
 	transition: background-color 0.2s ease-in-out;

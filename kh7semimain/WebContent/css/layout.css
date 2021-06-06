@@ -6,8 +6,11 @@ main {
 	margin-right:auto;
 }
 		
-header, section, footer {
+header, section {
 	text-align:center;
+}
+footer {
+	text-align:left
 }
 section {
 	min-height: 300px;

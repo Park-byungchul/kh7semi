@@ -1,3 +1,4 @@
+<%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.GetBookSearchDto"%>
 <%@page import="library.beans.GetBookSearchDao"%>
 <%@page import="library.beans.RecommendDto"%>
@@ -11,6 +12,7 @@
     pageEncoding="UTF-8"%>
 
 <%
+	request.setCharacterEncoding("UTF-8");
 	String root = request.getContextPath();
 	int getBookNo = Integer.parseInt(request.getParameter("getBookNo"));
 	GetBookSearchDao getBookSearchDao = new GetBookSearchDao();
@@ -46,15 +48,37 @@
 	
 	boolean isRecommend = recommendDao.check(recommendDto);
 	boolean isWishlist = wishlistDao.check(wishlistDto);
+
+	
+	AreaDao areaDao = new AreaDao();
+	int areaNo;
+	try{
+		areaNo = (int)session.getAttribute("areaNo");
+	}
+	catch (Exception e){
+		areaNo = 0;
+	}
+	String title = "자료 검색";
+	if(areaNo > 0){
+		title += " : " + areaDao.detail(areaNo).getAreaName();
+	}
+
 	boolean isReservated = reservationDao.check(reservationDto);
 %>
-
-<jsp:include page="/service/serviceSidebar.jsp"></jsp:include>	
-
-	<div class="container-800">
-		<div class="row text-left">
-			<h2>도서 정보</h2>
+<jsp:include page="/search/searchSidebar.jsp">
+	<jsp:param value="<%=title%>" name="title"/>
+</jsp:include>
+	<div class="main">
+		<div class="header">
+			<div class="row">
+				<span class="title">도서 정보</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 통합 자료 검색</span>
+			</div>
 		</div>
+	<div class="container-800">
 		
 		<div class="row">
 			
@@ -87,15 +111,15 @@
 				</div>
 				<div class="row bookList">
 						<%if(isLogin && isRecommend) {%>
-						<button class="booklist-btn"><a href="<%=root%>/recommend/recommendDelete.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">추천취소</a></button>
+						<button class="form-btn form-btn-inline"><a class="link-btn" href="<%=root%>/recommend/recommendDelete.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">추천취소</a></button>
 						<%} else if(isLogin && !isRecommend){%>
-						<button class="booklist-btn"><a href="<%=root%>/recommend/recommendInsert.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">추천하기</a></button>
+						<button class="form-btn form-btn-inline"><a class="link-btn" href="<%=root%>/recommend/recommendInsert.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">추천하기</a></button>
 						<%}%>
 						
 						<%if(isLogin && isWishlist) { %>
-						<button class="booklist-wishlistBtn-neg"><a href="<%=root%>/wishlist/wishlistDelete.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">관심도서 해제</a></button>
+						<button class="form-btn form-btn-inline"><a class="link-btn"  href="<%=root%>/wishlist/wishlistDelete.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">관심도서 해제</a></button>
 						<%} else if(isLogin && !isWishlist) { %>
-						<button class="booklist-wishlistBtn-pos"><a href="<%=root%>/wishlist/wishlistInsert.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">관심도서 담기</a></button>
+						<button class="form-btn form-btn-inline"><a class="link-btn"  href="<%=root%>/wishlist/wishlistInsert.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">관심도서 담기</a></button>
 						<%} %>
 						
 <%-- 						<%if(isLogin && isReservated) { %> --%>
@@ -106,10 +130,10 @@
 						</td>
 				</div>
 				<div class="text-center">
-						<input type="button" value="목록으로" onClick="history.go(-1)">
+						<input type="button" value="목록으로" onClick="history.go(-1)" class="form-btn form-btn-inline">
 				</div>
 				
 		</div>
 	</div>
-
+</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

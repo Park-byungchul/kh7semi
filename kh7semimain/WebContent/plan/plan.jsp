@@ -108,7 +108,7 @@ if(areaNo == 0){
 			<table class="planTable">
 				<thead>
 					<tr>
-						<th class="left">
+						<th colspan="2" class="left">
 							<%=year %>.<%=month %>.<%=day %>
 						</th>
 						<th class="right">
@@ -119,16 +119,21 @@ if(areaNo == 0){
 				<tbody>
 					<%for(PlanDto planDto : planList){ %>
 					<tr onclick="location.href='planEdit.jsp?planNo=<%=planDto.getPlanNo()%>'">
-						<td width="50%;">
-						<%if(planDto.getAreaNo() > 0){ %>
-							(<%=areaDao.detail(planDto.getAreaNo()).getAreaName()%>) 
-						<%} %>
-						<%=planDto.getPlanContent() %></td>
-						<%if(planDto.getPlanStartDate().equals(planDto.getPlanEndDate())){ %>
-						<td><%=planDto.getPlanStartDate() %></td>
-						<%}else{ %>
-						<td><%=planDto.getPlanStartDate() %> ~ <%=planDto.getPlanEndDate() %></td>
-						<%} %>
+						<td width="15%" class="area">
+							<%if(planDto.getAreaNo() > 0){ %>
+							[<%=areaDao.detail(planDto.getAreaNo()).getAreaName()%>]<br>
+							<%} %>
+						</td>
+						<td width="60%;" class="left">
+							<%=planDto.getPlanContent() %>
+						</td>
+						<td width="25%">
+							<%if(planDto.getPlanStartDate().equals(planDto.getPlanEndDate())){ %>
+								<%=planDto.getPlanStartDate() %>
+							<%}else{ %>
+								<%=planDto.getPlanStartDate() %> ~ <%=planDto.getPlanEndDate() %>
+							<%} %>
+						</td>
 					</tr>
 					<%} %>
 				</tbody>

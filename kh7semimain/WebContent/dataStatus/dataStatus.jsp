@@ -48,10 +48,10 @@ if(areaNo > 0){
 					<th>강남도서관</th>
 				</tr>
 				<tr>
-<%-- 					<td><%=bookCountDao.count()%></td> --%>
-<%-- 					<td><%=bookCountDao.count(1) %></td> --%>
-<%-- 					<td><%=bookCountDao.count(2) %></td> --%>
-<%-- 					<td><%=bookCountDao.count(3) %></td>	 --%>
+					<td><%=bookCountDao.count()%></td>
+					<td><%=bookCountDao.count(1) %></td>
+					<td><%=bookCountDao.count(2) %></td>
+					<td><%=bookCountDao.count(3) %></td>	
 				</tr>
 			</table>
 			
@@ -66,10 +66,10 @@ if(areaNo > 0){
 					<th>강남도서관</th>
 				</tr>
 				<tr>
-<%-- 					<td><%=bookCountDao.lendAbleCount()%></td> --%>
-<%-- 					<td><%=bookCountDao.lendAbleCount(1) %></td> --%>
-<%-- 					<td><%=bookCountDao.lendAbleCount(2) %></td> --%>
-<%-- 					<td><%=bookCountDao.lendAbleCount(3) %></td>	 --%>
+					<td><%=bookCountDao.lendAbleCount()%></td>
+					<td><%=bookCountDao.lendAbleCount(1) %></td>
+					<td><%=bookCountDao.lendAbleCount(2) %></td>
+					<td><%=bookCountDao.lendAbleCount(3) %></td>	
 				</tr>
 			</table>
 </div>

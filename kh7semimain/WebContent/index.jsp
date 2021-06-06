@@ -133,7 +133,7 @@ if(areaNo != 0){
 		text-overflow: ellipsis;
 	}
 	.recommend-tab:hover, .newbook-tab:hover, .lendbook-tab:hover{
-	    padding: 16px 80px 20px 80px;
+	    padding: 19px 80px 21px 80px;
 		background-color:RGB(228, 244, 243);
 		color:gray;
 		font-weight:bolder;

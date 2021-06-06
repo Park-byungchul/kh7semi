@@ -2,16 +2,40 @@
     pageEncoding="UTF-8"%>
 <%@page import="library.beans.ClientDto"%>
 <%@page import="library.beans.ClientDao"%>
+<%@page import="library.beans.LendBookDto"%>
+<%@page import="library.beans.LendBookDao"%>
+<%@page import="java.util.List"%>
 <%
 	String root = request.getContextPath();
+	LendBookDao lendBookDao = new LendBookDao();
+
+	request.setCharacterEncoding("UTF-8");
+	String clientNo = request.getParameter("clientNo");
+	boolean isSearch = clientNo != null;
+
+
 int areaNo;
 try{
 	areaNo=(int)request.getSession().getAttribute("areaNo");
 }
-catch (Exception e){
-	areaNo=0;
-}
+	catch (Exception e){
+		areaNo=0;
+	}
+	List<LendBookDto> lendBookList;
+	if(clientNo == null) {
+		lendBookList = null;
+	}
+	else{
+		lendBookList = lendBookDao.list(Integer.parseInt(clientNo));
+	}
 %>
+<%if(isSearch){ %>
+<script>
+$(function(){
+  $("#clientNo").val("<%=clientNo %>");
+});
+</script>
+<%} %>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!DOCTYPE html>
 <html>
@@ -75,7 +99,7 @@ catch (Exception e){
 			<!-- 	대여 접수 입력창 구현 -->
 				<div>
 					<form action = "lendBookInsert.kh" method="post" class = "form" onsubmit="return onSubmit()">		
-						회원번호 : <input type="text" name="clientNo" size="50" height = "20" required>
+						회원번호 : <input type="text" name="clientNo" size="50" height = "20" required id = "clientNo">
 <%--  						회원번호 : <input type="text" name="clientNo" size="50" height = "20" value = <%=clientNo%> required> --%>
 						 <br><br>
 						입고번호 : <input type="text" name="getBookNo" size="50" height = "20" required>
@@ -92,4 +116,33 @@ catch (Exception e){
 			
 		</section>
 		
+	
+	<%if(isSearch){ %>
+	<div class="row">
+		<table class="table table-border table-hover">
+			<thead>
+				<tr>
+					<th>회원번호</th>
+					<th>입고번호</th>
+					<th>책제목</th>
+					<th>대출일</th>
+					<th>반납기한</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%for(LendBookDto lendBookDto : lendBookList) {%>
+					<tr>
+						<td><%=lendBookDto.getClientNo() %></td>					
+						<td><%=lendBookDto.getGetBookNo() %></td>
+						<td> <a href = "<%=root%>/getBook/getBookDetail.jsp?getBookNo=<%=lendBookDto.getGetBookNo()%>"><%=lendBookDto.getBookTitle()%></a></td>
+						<td><%=lendBookDto.getLendBookDate() %></td>
+						<td><%=lendBookDto.getLendBookLimit() %></td>
+					</tr>
+					<%} %>
+			</tbody>
+		</table>
+	</div>
+	
+	
+	<%} %>
 		<jsp:include page="/template/footer.jsp"></jsp:include>

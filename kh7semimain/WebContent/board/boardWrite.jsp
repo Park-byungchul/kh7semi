@@ -8,6 +8,7 @@
     pageEncoding="UTF-8"%>
     
 <%
+	request.setCharacterEncoding("UTF-8");
 	int boardTypeNo = Integer.parseInt(request.getParameter("boardTypeNo"));
 
 	Integer clientNo = (Integer)session.getAttribute("clientNo");
@@ -22,9 +23,13 @@
 	
 	BoardTypeDao boardTypeDao = new BoardTypeDao();
 	String boardName = boardTypeDao.getBoardName(boardTypeNo);
+	
+	String title = "아아아";
 %>
     
-<jsp:include page="/board/boardMenuSidebar.jsp"></jsp:include>
+<jsp:include page="/board/boardMenuSidebar.jsp">
+	<jsp:param value="<%=title %>" name="title"/>
+</jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>

@@ -143,6 +143,8 @@ if(areaNo > 0){
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
 
+<script src="<%=root%>/pagination/pagination.js"></script>
+
 <style>
 .bookList>button>a{
 	text-decoration: none;

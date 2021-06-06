@@ -5,6 +5,9 @@
     
 <%
 	request.setCharacterEncoding("UTF-8");
+
+	String root = request.getContextPath();
+	
 	int clientNo = Integer.parseInt(request.getParameter("clientNo"));
 	ClientDao clientDao = new ClientDao();
 	ClientDto clientDto = clientDao.get(clientNo);
@@ -17,9 +20,18 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
-	<div class="row text-left">
-		<h2>회원 정보</h2>
-	</div>
+
+	<div class="main">
+	
+		<div class="header">
+			<div class="row">
+				<span class="title">회원 정보</span>
+			</div>
+			
+			<div class="row">
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 회원 정보</span>
+			</div>
+		</div>
 	
 	<div class="row">
 		<table class="table table-border">
@@ -95,6 +107,8 @@
 				</td>
 			</tr>
 		</table>
+	</div>
+	
 	</div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

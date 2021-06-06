@@ -14,6 +14,8 @@
 request.setCharacterEncoding("UTF-8");
 AreaDao areaDao = new AreaDao();
 
+String root = request.getContextPath();
+
 String search = request.getParameter("search");
 boolean isSearch = search != null;
 
@@ -96,13 +98,21 @@ endBlock = lastBlock; // 범위를 수정
 
 <%} %>
 
-	<div class="row">
-		<h1>일반관리자 목록 
-		<%if(areaNo > 0){ %>
-		(<%=areaDao.detail(areaNo).getAreaName() %>)
-		<%} %>
-		</h1>
-	</div>
+	<div class="main">
+		
+			<div class="header">
+				<div class="row">
+					<span class="title">일반관리자 목록
+					<%if(areaNo > 0){ %>
+						(<%=areaDao.detail(areaNo).getAreaName() %>)
+						<%} %>
+					</span>
+				</div>
+				
+				<div class="row">
+					<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 권한관리자 > 일반관리자 목록</span>
+				</div>
+			</div>
 	
 	<div class="row text-right">
 		<button><a href="rolePartialInsert.jsp">관리자 추가</a></button>
@@ -192,4 +202,5 @@ endBlock = lastBlock; // 범위를 수정
 	</div>
 	<%} %>
 	
+</div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

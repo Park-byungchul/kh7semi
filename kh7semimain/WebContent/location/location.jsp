@@ -147,6 +147,7 @@ List<AreaDto> areaList = areaDao.list();
 </div>
 <%} %>
 </div>
+
 <!-- 카카오 지도 api 스크립트 부분 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1038b1ced14e22e17b2cd601ec877523&libraries=services"></script>
 <script>

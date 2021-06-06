@@ -28,7 +28,10 @@ public class ClientInsertServlet extends HttpServlet {
 			ClientDao clientDao = new ClientDao();
 			if(!clientDao.checkId(clientDto.getClientId())) {
 				clientDao.insert(clientDto);
-				resp.sendRedirect("clientInsertSuccess.jsp");
+				resp.setContentType("text/html; charset=UTF-8");
+				PrintWriter out=resp.getWriter();
+				out.println("<script>alert('회원가입이 완료되었습니다.'); location.href='"+ req.getContextPath()+"/client/login.jsp" +"';</script>");
+				out.flush();
 			} else {
 				resp.setContentType("text/html; charset=UTF-8");
 				PrintWriter out=resp.getWriter();

@@ -188,11 +188,14 @@
 			</div>
 			
 			<div class="searchHeader">
-				<form action="#" method="post">
-					<input type="text" placeholder="도서명을 입력하세요" class="searchInput">
+				<form action="<%=root %>/search/searchList.jsp" method="post">
+					<input type="hidden" name="type" value="all">
+					<input type="text" name="keyword" placeholder="도서명을 입력하세요" class="searchInput">
 					<input type="image" src="<%=root %>/image/search.png" alt="검색버튼" class="searchImage">
 				</form>
-			</div>
+			</div>	
+			
+			
 							
 			<div class="right myMenu">
 			

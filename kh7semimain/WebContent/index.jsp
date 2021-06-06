@@ -1,3 +1,5 @@
+<%@page import="library.beans.board.BoardListDto"%>
+<%@page import="library.beans.board.BoardListDao"%>
 <%@page import="library.beans.NewBookDto"%>
 <%@page import="library.beans.NewBookDao"%>
 <%@page import="library.beans.PromotionInfoDto"%>
@@ -109,6 +111,9 @@ if(areaNo != 0){
 } else{
 	promotionInfoDto = promotionInfoDao.detail(promotionPage);
 }
+
+	BoardListDao boardListDao = new BoardListDao();
+	List<BoardListDto> noticeList = boardListDao.mainNotice();
 %>
 
 <jsp:include page="/template/header.jsp">
@@ -132,32 +137,39 @@ if(areaNo != 0){
 		overflow: hidden; 
 		text-overflow: ellipsis;
 	}
-	.main-btn {
-		width: 300px;
-	    height: 60px;
-	    margin: 10px -4px;
+	.recommend-tab:hover, .newbook-tab:hover, .lendbook-tab:hover{
+	    padding: 19px 80px 21px 80px;
+		background-color:RGB(228, 244, 243);
+		color:gray;
+		font-weight:bolder;
+	}
+	.tab {
+		height: 60px;
 	    border: 1px none gray;
-	    background-color:#4B97FF; 
+	    background-color: RGB(67, 164, 157);
 	    color: white;
 	    font-size:18px;
 	}
-	.main-btn:hover{
-		background-color:#1359B5; 
+	.tab > li {
+		padding:1rem;
+		width:33.3%;
+		float:left;
+		list-style:none;
 	}
 </style>
 <script>
 $(function(){
-	$(".main-btn.recommend").on("click",function(e){
-		
+	$(".recommend-tab").on("click",function(e){
+		e.preventDefault();
 		$(".float-container.recommend").show();
 		$(".float-container.newbook").hide();
-		$(".float-container.lendbest").hide();
+		$(".float-container.lendbook").hide();
 	});
-	$(".main-btn.newbook").on("click",function(e){
-		
-		$(".float-container.newbook").show();
+	$(".newbook-tab").on("click",function(e){
+		e.preventDefault();
 		$(".float-container.recommend").hide();
-		$(".float-container.lendbest").hide();
+		$(".float-container.newbook").show();
+		$(".float-container.lendbook").hide();
 	});
 });
 </script>
@@ -210,7 +222,28 @@ $(function(){
 					</div>
 					
 					<div class="notice" style="display: inline-block;">
-					
+						<div class="notice-box">
+							<div class="notice-top">
+								<a href="<%=root %>/board/noticeList.jsp">공지사항</a>
+								<a href="<%=root %>/board/noticeList.jsp" id="notice-plus">+</a>
+							</div>
+							<%for(BoardListDto boardListDto : noticeList) { %>
+								<div>
+									<div class="notice-td">
+										<hr class="notice-hr">
+										<span class="library-color">
+											<%if(boardListDto.getAreaName() == null) { %>
+												전체
+											<%} else {%>
+												<%=boardListDto.getAreaName().substring(0, boardListDto.getAreaName().length() - 3)%>
+											<%}  %>
+										</span>
+										<a class="notice-title" href="<%=root %>/board/boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">&nbsp;<%=boardListDto.getBoardTitle()%></a>
+										<span class="notice-date"><%=boardListDto.getBoardDate()%></span>
+									</div>
+								</div>
+							<%} %>
+						</div>
 					</div>
 					
 					<div class="planIndex right">
@@ -221,11 +254,17 @@ $(function(){
 		</section>
 		
 		<section style="height:500px;">
-		<div class="row">
-		<button class="main-btn recommend">추천도서</button>
-		<button class="main-btn newbook">신착도서</button>
-		<button class="main-btn lendbest">대출베스트</button>
-		</div>
+		<ul class="tab">
+			<li style="padding-left:100px;">
+				<a class="recommend-tab">추천도서</a>
+			</li>
+			<li style="padding-right:50px;">
+				<a class="newbook-tab">신착도서</a>
+			</li>
+			<li style="padding-right:170px;">
+				<a class="lendbest-tab">대출베스트</a>
+			</li>
+		</ul>
 			
 			<%for(RecommendDto recommendDto : recommendRank) { %>
 				<%

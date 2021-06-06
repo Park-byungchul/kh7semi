@@ -135,7 +135,9 @@
 	outline: none;
 }
 
-  .login-wrap {
+/* 로그인 CSS */
+
+ .login-wrap {
 	margin:auto;
 	padding:30px;
 }
@@ -156,4 +158,66 @@
 	width: 90px;
 	height: 90px;
 	font-size:20px;
+}
+
+/* 메인페이지 공지사항 CSS */
+
+.notice-box {
+	padding: 20px 15px 0px;
+	text-align: left;
+}
+
+
+.notice-top {
+	padding: 3px;
+}
+
+.notice-top > a {
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+	color: black;
+}
+
+#notice-plus {
+	float: right;
+	color: lightgray;
+}
+
+.notice-hr {
+	 background-color: lightgray; 
+	 height: 1px; 
+	 border: 0;
+}
+
+.notice-title {
+	display:inline-block;
+	width:200px;
+	text-decoration: none;
+	color: black;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+
+a.notice-title:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+.notice-td {
+	padding: 5px;
+	vertical-align: middle;
+}
+
+.notice-date {
+	color: gray;
+	float: right;
+	padding:5px;
+}
+
+.library-color {
+	display: inline-block;
+	background-color: RGB(228, 244, 243);
+	padding:5px;
 }

@@ -143,7 +143,7 @@
 	</form>
 
 	<div class="row">
-		<table class="table table-border table-hover board-table">
+		<table class="table table-border table-hover">
 			<thead>
 				<tr>
 					<th width="8%">번호</th>

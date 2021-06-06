@@ -59,11 +59,11 @@ $(function(){
 		<div class="row">
 				<div class="row text-left">
 					<label>신청자</label>
-					<input type="text"  readonly id="clientName" value="<%=clientDto.getClientName()%>" placeholder = "session으로 clientNo가져와서 처리" class="form-input form-input-underline">
+					<input type="text"  id="clientName" value="<%=clientDto.getClientName()%>" placeholder = "session으로 clientNo가져와서 처리" class="form-input form-input-underline">
 				</div>
 				<div class="row text-left">
 					<label>휴대폰 번호</label>
-					<input type="text"  readonly id="clientPhone" value="<%=clientDto.getClientPhone()%>" placeholder = "위와 동일" class="form-input form-input-underline">
+					<input type="text"  id="clientPhone" value="<%=clientDto.getClientPhone()%>" placeholder = "위와 동일" class="form-input form-input-underline">
 				</div>
 			
 		<div class="row text-center search-form-back">
@@ -74,12 +74,13 @@ $(function(){
 					<option value="book_author">저자</option>
 				</select>
 				<input class="text-search-form" type="text" name="keyword" placeholder="검색어" class="hopelist-bookSearch">
-			</form>
 			<button class="bookSearch-btn board-btn">검색</button>
+			</form>
 		</div>	
 		
 			
 			
+		<form action ="hopelistEdit.kh" method="post">
 			<div class="row text-left">
 				<label>저자</label>
 				<input type="text"  Id="bookAuthor"readonly value = "<%=bookDto.getBookAuthor()%>"class="form-input form-input-underline">
@@ -92,7 +93,6 @@ $(function(){
 	
 			
 			
-		<form action ="hopelistEdit.kh" method="post">
 			<input type="hidden" name="hopelistNo" value="<%=hopelistDto.getHopelistNo()%>">
 			<input type="hidden" id="bookIsbn" name="bookIsbn" value="1">
 			<div class="row text-left">

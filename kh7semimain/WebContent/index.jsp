@@ -1,3 +1,5 @@
+<%@page import="library.beans.board.BoardListDto"%>
+<%@page import="library.beans.board.BoardListDao"%>
 <%@page import="library.beans.NewBookDto"%>
 <%@page import="library.beans.NewBookDao"%>
 <%@page import="library.beans.PromotionInfoDto"%>
@@ -109,6 +111,9 @@ if(areaNo != 0){
 } else{
 	promotionInfoDto = promotionInfoDao.detail(promotionPage);
 }
+
+	BoardListDao boardListDao = new BoardListDao();
+	List<BoardListDto> noticeList = boardListDao.mainNotice();
 %>
 
 <jsp:include page="/template/header.jsp">
@@ -210,7 +215,28 @@ $(function(){
 					</div>
 					
 					<div class="notice" style="display: inline-block;">
-					
+						<div class="notice-box">
+							<div class="notice-top">
+								<a href="<%=root %>/board/noticeList.jsp">공지사항</a>
+								<a href="<%=root %>/board/noticeList.jsp" id="notice-plus">+</a>
+							</div>
+							<%for(BoardListDto boardListDto : noticeList) { %>
+								<div>
+									<div class="notice-td">
+										<hr class="notice-hr">
+										<span class="library-color">
+											<%if(boardListDto.getAreaName() == null) { %>
+												전체
+											<%} else {%>
+												<%=boardListDto.getAreaName().substring(0, boardListDto.getAreaName().length() - 3)%>
+											<%}  %>
+										</span>
+										<a class="notice-title" href="<%=root %>/board/boardDetail.jsp?boardNo=<%=boardListDto.getBoardNo()%>">&nbsp;<%=boardListDto.getBoardTitle()%></a>
+										<span class="notice-date"><%=boardListDto.getBoardDate()%></span>
+									</div>
+								</div>
+							<%} %>
+						</div>
 					</div>
 					
 					<div class="planIndex right">

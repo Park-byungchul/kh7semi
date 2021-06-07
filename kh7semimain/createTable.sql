@@ -217,7 +217,7 @@ file_upload_name varchar2(256) not null,
 file_save_name varchar2(256) not null,
 file_content_type varchar2(30),
 file_size number(19) not null,
-file_origin number(19)
+file_origin references promotion(promotion_no) on delete cascade
 );
 
 DROP TABLE "CLIENT" CASCADE CONSTRAINTS;

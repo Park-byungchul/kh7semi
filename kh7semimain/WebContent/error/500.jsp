@@ -12,7 +12,7 @@ String title = "ERROR";
 
 <div class="main">
 		<div class="text-center" style="padding: 100px 0px;">
-			<span style="font-size: 100px; font-weight: bold;">401 ERROR</span>
+			<span style="font-size: 100px; font-weight: bold;">500 ERROR</span>
 		</div>
 </div>
 

@@ -42,10 +42,10 @@ $(function(){
 <div class="main" style="min-height:800px;">
 	<div class="header">
 		<div class="row">
-			<span class="title">도서 목록</span>
+			<span class="title">도서 등록</span>
 		</div>
 		<div class="row">
-			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 도서 목록</span>
+			<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 전체관리자 > 도서 등록</span>
 		</div>
 	</div>		
 <div class="container-800">

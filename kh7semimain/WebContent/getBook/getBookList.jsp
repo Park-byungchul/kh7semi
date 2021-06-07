@@ -226,7 +226,7 @@ catch (Exception e) {
 		</div>
 	</div>
   
-	<form action="bookList.jsp" method="get" class="">
+	<form action="bookList.jsp" method="get" class="search-form">
 		<input type="hidden" name="pageNo">
 	</form>
 

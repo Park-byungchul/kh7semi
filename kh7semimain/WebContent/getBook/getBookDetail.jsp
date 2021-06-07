@@ -68,6 +68,17 @@
 <jsp:include page="/search/searchSidebar.jsp">
 	<jsp:param value="<%=title%>" name="title"/>
 </jsp:include>
+<script>
+$(function(){
+	$(".link-btn.neg").on("click",function(){
+		alert("관심도서에 해제되었습니다.")
+	});
+	$(".link-btn.pos").on("click",function(){
+		alert("관심도서가 추가되었습니다.")
+	});
+	
+});
+</script>
 	<div class="main">
 		<div class="header">
 			<div class="row">
@@ -117,9 +128,9 @@
 						<%}%>
 						
 						<%if(isLogin && isWishlist) { %>
-						<button class="form-btn form-btn-inline"><a class="link-btn"  href="<%=root%>/wishlist/wishlistDelete.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">관심도서 해제</a></button>
+						<button class="form-btn form-btn-inline"><a class="link-btn neg"  href="<%=root%>/wishlist/wishlistDelete.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">관심도서 해제</a></button>
 						<%} else if(isLogin && !isWishlist) { %>
-						<button class="form-btn form-btn-inline"><a class="link-btn"  href="<%=root%>/wishlist/wishlistInsert.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">관심도서 담기</a></button>
+						<button class="form-btn form-btn-inline"><a class="link-btn pos"  href="<%=root%>/wishlist/wishlistInsert.kh?bookIsbn=<%=getBookSearchDto.getBookIsbn()%>&clientNo=<%=clientNo%>&getBookNo=<%=getBookNo%>">관심도서 담기</a></button>
 						<%} %>
 						
 <%-- 						<%if(isLogin && isReservated) { %> --%>

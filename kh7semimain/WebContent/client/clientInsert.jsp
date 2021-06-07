@@ -58,7 +58,7 @@
 						<tr>
 							<th>아이디</th>
 							<td>
-								<input type="text" name="clientId" class="login-form" required placeholder="아이디는 8~20자의 영문자, 숫자로 작성하세요"><span></span>
+								<input type="text" name="clientId" class="login-form" required placeholder="아이디는 8~20자의 영문자, 숫자로 작성하세요" autocomplete="off"><span></span>
 							</td>
 						</tr>
 						
@@ -72,21 +72,21 @@
 						<tr>
 							<th>이름</th>
 							<td>
-								<input type="text" name="clientName" class="login-form" required placeholder="이름은 2~7자의 한글로 작성하세요"><span></span>
+								<input type="text" name="clientName" class="login-form" required placeholder="이름은 2~7자의 한글로 작성하세요" autocomplete="off"><span></span>
 							</td>
 						</tr>
 						
 						<tr>
 							<th>이메일</th>
 							<td>
-								<input type="text" name="clientEmail" class="login-form" required placeholder="sample@sample.sample의 형태로 작성하세요"><span></span>
+								<input type="text" name="clientEmail" class="login-form" required placeholder="sample@sample.sample의 형태로 작성하세요" autocomplete="off"><span></span>
 							</td>
 						</tr>
 						
 						<tr>
 							<th>휴대폰번호</th>
 							<td>
-								<input type="text" name="clientPhone" class="login-form" required placeholder="휴대폰 번호는 010-xxxx-xxxx의 형태로 작성하세요"><span></span>
+								<input type="text" name="clientPhone" class="login-form" required placeholder="휴대폰 번호는 010-xxxx-xxxx의 형태로 작성하세요" autocomplete="off"><span></span>
 							</td>
 						</tr>
 					</tbody>

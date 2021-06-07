@@ -190,7 +190,7 @@
 			<div class="searchHeader">
 				<form action="<%=root %>/search/searchList.jsp" method="post">
 					<input type="hidden" name="type" value="all">
-					<input type="text" name="keyword" placeholder="도서명을 입력하세요" class="searchInput">
+					<input type="text" name="keyword" placeholder="도서명을 입력하세요" class="searchInput" autocomplete="off">
 					<input type="image" src="<%=root %>/image/search.png" alt="검색버튼" class="searchImage">
 				</form>
 			</div>	

@@ -1,24 +1,19 @@
-<%@page import="library.beans.AreaDto"%>
-<%@page import="library.beans.AreaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <%
-	String root = request.getContextPath();
+request.setCharacterEncoding("UTF-8");
+String title = "ERROR";
 %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Error</title>
-</head>
-<body>
-	<div>
-		<span>401 오류(로그인 먼저)</span>
-	</div>
-	<div>
-		<a href="<%=root %>/index.jsp">홈으로</a>
-	</div>
-</body>
-</html>
+<jsp:include page="/template/header.jsp">
+	<jsp:param value="<%=title %>" name="title" />
+</jsp:include>
+
+<div class="main">
+		<div class="text-center" style="padding: 100px 0px;">
+			<span style="font-size: 100px; font-weight: bold;">401 ERROR</span>
+		</div>
+</div>
+
+<jsp:include page="/template/footer.jsp"></jsp:include>

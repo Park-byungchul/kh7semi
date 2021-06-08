@@ -1,4 +1,4 @@
--- ì§€ì  ì¶”ê°€ ( ì°¾ì•„ì˜¤ëŠ”ê¸¸ í˜ì´ì§€ ë‚˜ì˜¤ê²Œ )
+-- ÁöÁ¡ Ãß°¡ ( Ã£¾Æ¿À´Â±æ ÆäÀÌÁö ³ª¿À°Ô )
 
 drop sequence area_seq;
 
@@ -11,8 +11,58 @@ nocache;
 
 delete from area;
 
-insert into area values(0,'ë©”ì¸ë„ì„œê´€','ë©”ì¸ë„ì„œê´€','010-1111-1111');
-insert into area values(area_seq.nextval,'ë‹¹ì‚°ë„ì„œê´€','ì„œìš¸íŠ¹ë³„ì‹œ ì˜ë“±í¬êµ¬ ì„ ìœ ë™2ë¡œ 57 ì´ë ˆë¹Œë”© (êµ¬ê´€) 19F, 20F','010-1111-1111');
-insert into area values(area_seq.nextval,'ì¢…ë¡œë„ì„œê´€','ì„œìš¸íŠ¹ë³„ì‹œ ì¤‘êµ¬ ë‚¨ëŒ€ë¬¸ë¡œ 120 ëŒ€ì¼ë¹Œë”© 2F, 3F','010-2222-2222');
-insert into area values(area_seq.nextval,'ê°•ë‚¨ë„ì„œê´€','ì„œìš¸íŠ¹ë³„ì‹œ ê°•ë‚¨êµ¬ í…Œí—¤ë€ë¡œ 14ê¸¸ 6 ë‚¨ë„ë¹Œë”© 2F, 3F, 4F, 5F, 6F','010-3333-3333');
+insert into area values(0,'¸ŞÀÎµµ¼­°ü','¸ŞÀÎµµ¼­°ü','010-1111-1111');
+insert into area values(area_seq.nextval,'´ç»êµµ¼­°ü','¼­¿ïÆ¯º°½Ã ¿µµîÆ÷±¸ ¼±À¯µ¿2·Î 57 ÀÌ·¹ºôµù (±¸°ü) 19F, 20F','010-1111-1111');
+insert into area values(area_seq.nextval,'Á¾·Îµµ¼­°ü','¼­¿ïÆ¯º°½Ã Áß±¸ ³²´ë¹®·Î 120 ´ëÀÏºôµù 2F, 3F','010-2222-2222');
+insert into area values(area_seq.nextval,'°­³²µµ¼­°ü','¼­¿ïÆ¯º°½Ã °­³²±¸ Å×Çì¶õ·Î 14±æ 6 ³²µµºôµù 2F, 3F, 4F, 5F, 6F','010-3333-3333');
 commit;
+
+select count(*) from get_book where area_no = 3;
+
+select * from get_book_search_view where lend_book_date is null and reservation_date is null;
+select * from recommend;
+
+select * from recommend order by recommend_no desc;
+
+select * from recommendCount;
+
+create or replace view recommendBook as
+select RC.recommendCount, B.*
+from recommendCount RC 
+left outer join book B on RC.book_isbn = B.book_isbn;
+
+select * from recommendBook;
+select * from recommendBook where (book_title || book_author) like '%¾îµğ¼±°¡%';
+
+
+create view review_list as
+select R.review_no, R.client_no as reviewer, R.book_isbn, R.review_subject,
+        R.review_content, R.review_read, R.review_like, R.review_date, R.review_reply,
+        C.client_no, C.client_name
+from review R
+left outer join client C on R.client_no = C.client_no;
+
+insert into book values('1111111111111', 140, 'Å×½ºÆ®', '123', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·¤·');
+insert into book values('1111111111112', 150, 'Å×½ºÆ®1', '123', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·1¤·');
+insert into book values('1111111111113', 160, 'Å×½ºÆ®2', '123', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·32¤·');
+insert into book values('1111111111114', 140, 'Å×½ºÆ®3', '123', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·4¤·');
+insert into book values('1111111111115', 160, '1Å×½ºÆ®', '123', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·6¤·');
+insert into book values('1111111111116', 170, '2Å×½ºÆ®', '123', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·7¤·');
+insert into book values('1111111111117', 110, '3Å×½ºÆ®', '123', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·1342¤·');
+insert into book values('1111111111118', 170, 'Å×½ºÆ®', '123', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·122¤·');
+insert into book values('1111111111119', 160, '123', 'Å×½ºÆ®', 'Å×½ºÆ®', sysdate, '¼³¸í', '61234¤·¤·');
+insert into book values('1111111111120', 130, '123', 'Å×½ºÆ®', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·162¤·');
+insert into book values('1111111113111', 140, '123', 'Å×½ºÆ®', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·332¤·');
+insert into book values('1111114111111', 150, '123Å×½ºÆ®', 'Å×½ºÆ®123', 'Å×½ºÆ®', sysdate, '¼³¸í', '¤·12525¤·');
+commit;
+
+select * from get_book;
+
+select * from board_list;
+
+select * from board_list where board_type_no = 1 order by board_no desc;
+
+select * from (select rownum rn, TMP.* from (select * from board_list where board_type_no = 1 order by board_no desc)TMP) where rn between 1 and 10;
+
+
+select area_no,count(*) from get_book group by area_no;

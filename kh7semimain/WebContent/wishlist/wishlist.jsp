@@ -1,3 +1,5 @@
+<%@page import="library.beans.GenreDto"%>
+<%@page import="library.beans.GenreDao"%>
 <%@page import="library.beans.AreaDao"%>
 <%@page import="library.beans.ClientDao"%>
 <%@page import="library.beans.BookDto"%>
@@ -14,6 +16,7 @@
 	List<WishlistDto> wishList = wishlistDao.myWishList(clientNo);
 
 	BookDao bookDao = new BookDao();
+	GenreDao genreDao = new GenreDao();
 	String root = request.getContextPath();
 	
 	AreaDao areaDao = new AreaDao();
@@ -61,29 +64,33 @@
 	<span>비어있습니다. 관심도서를 추가해보세요</span>
 	<%} else { %>
 	<div class="row">
-		<table class="table table-border table-hover">
-			<thead>
-				<tr>
-					<th>ISBN</th>
-					<th>장르</th>
-					<th>도서명</th>
-					<th>저자</th>
-					<th>썸네일</th>
-				</tr>
-			</thead>
-			<tbody>
+		
 				<%for (WishlistDto wishlistDto : wishList) { %>
-					<%BookDto bookDto = bookDao.get(wishlistDto.getBookIsbn()); %>
-				<tr>
-					<td><%=wishlistDto.getBookIsbn()%></td>
-					<td><%=bookDto.getGenreNo()%></td>
-					<td><a href="<%=root%>/book/bookDetail.jsp?bookIsbn=<%=wishlistDto.getBookIsbn()%>"><%=bookDto.getBookTitle()%></a></td>
-					<td><%=bookDto.getBookAuthor()%></td>
-					<td><img src="<%=bookDto.getBookImg()%>"></td>
-				</tr>
+					<%
+					BookDto bookDto = bookDao.get(wishlistDto.getBookIsbn());
+					GenreDto genreDto = genreDao.get(bookDto.getGenreNo());
+					%>
+				<div style="position:relative;padding:17px 20px;overflow:hidden;height:200px;margin-left:10px;">
+						<div class="img" style="position:absolute;top:30px;left:0px;">
+							<img src="<%=bookDto.getBookImg()%>">
+						</div>
+							<div class="row" style="margin-left:120px;font-size:13px">
+										<a href="<%=root%>/wishlist/wishlistDetail.jsp?bookIsbn=<%=wishlistDto.getBookIsbn()%>&wishlistNo=<%=wishlistDto.getWishlistNo()%>" style="font-size:16px;font-weight: bold;padding:5px 0px;color:black"><%=bookDto.getBookTitle()%></a><br>
+										<span>저자 : <%=bookDto.getBookAuthor()%></span><br>
+										<span>장르명 : <%=genreDto.getGenreName()%></span><br>
+										<span>ISBN : <%=wishlistDto.getBookIsbn()%></span><br>
+										<span>발행 : <%=bookDto.getBookDate()%></span>
+							</div>
+					</div>
+					<hr class="notice-hr hr-plus">
+<%-- 					<td><%=wishlistDto.getBookIsbn()%></td> --%>
+<%-- 					<td><%=bookDto.getGenreNo()%></td> --%>
+<%-- 					<td><a href="<%=root%>/book/bookDetail.jsp?bookIsbn=<%=wishlistDto.getBookIsbn()%>" style="font-size:16px;font-weight: bold;padding:5px 0px;color:black"><%=bookDto.getBookTitle()%></a> --%>
+<%-- 					<td><%=bookDto.getBookAuthor()%></td> --%>
+<%-- 					<td><img src="<%=bookDto.getBookImg()%>"></td> --%>
+				
 				<%}%>
-			</tbody>
-		</table>
+			
 	</div>
 	<%} %>
 </div>

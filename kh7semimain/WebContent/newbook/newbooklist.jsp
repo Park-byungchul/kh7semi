@@ -131,7 +131,8 @@ if(areaNo > 0){
 			</div>
 			
 			<div class="row">
-				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 신착 도서</span>
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 신착 도서</span><br>
+				<span class="path">※ 신착도서는 최근에 도서관에 입고된 도서를 의미합니다.</span>
 			</div>
 		</div>
 		
@@ -178,9 +179,9 @@ if(areaNo > 0){
 										<a href="<%=root%>/newbook/newbookDetail.jsp?bookIsbn=<%=newBookDto.getBookIsbn()%>" style="font-size:16px;font-weight: bold;padding:5px 0px;color:black"><%=newBookDto.getBookTitle()%></a><br>
 										<span>저자 : <%=newBookDto.getBookAuthor()%> | </span>
 										<span>출판사 : <%=newBookDto.getBookPublisher()%> | </span>
-										<span>발행일 : <%=newBookDto.getBookDate()%> | </span><br>
+										<span>발행일 : <%=newBookDto.getBookDate()%></span><br>
 										<span>isbn : <%=newBookDto.getBookIsbn()%> | </span>
-										<span>장르 : <%=newBookDto.getGenreName()%> | </span><br>
+										<span>장르 : <%=newBookDto.getGenreName()%></span><br>
 										<span>도서관 : <%=newBookDto.getAreaName()%></span>	
 							</div>
 							

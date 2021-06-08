@@ -37,13 +37,12 @@ public class WishlistDao {
 		return no;
 	}
 	//관심목록 삭제
-	public boolean delete(int clientNo ,String bookIsbn) throws Exception {
+	public boolean delete(int wishlistNo) throws Exception {
 		Connection con = JdbcUtils.getConnection();
 		
-		String sql = "delete wishlist where client_no = ? and book_isbn = ?";
+		String sql = "delete wishlist where wishlist_no=?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, clientNo);
-		ps.setString(2, bookIsbn);
+		ps.setInt(1, wishlistNo);
 		int count = ps.executeUpdate();
 		
 		con.close();

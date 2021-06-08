@@ -83,7 +83,7 @@ try{
 				<form action="planInsert.kh" method="post">
 					<input type="hidden"  value="<%=areaNo %>" name="areaNo">
 				<div class="row">
-					<input type="text" name="planContent">
+					<input type="text" name="planContent" required autocomplete="off">
 				</div>
 				<div class="row">
 					<input type="date" name="planStartDate" value="<%=year%>-<%=month < 10 ? "0" + Integer.toString(month) : Integer.toString(month) %>-<%=day < 10 ? "0" + Integer.toString(day) : Integer.toString(day)%>">

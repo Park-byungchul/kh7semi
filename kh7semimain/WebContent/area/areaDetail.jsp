@@ -52,15 +52,15 @@
 			<form action="areaEdit.kh" method="post">
 				<input type=hidden name="areaNo" required value="<%=areaDto.getAreaNo()%>">
 				<div class="row">
-					<label>지점명 : </label><input type="text" name="areaName" required
+					<label>지점명 : </label><input type="text" name="areaName"  required autocomplete="off"
 					value = "<%=areaDto.getAreaName()%>">
 				</div>
 				<div class="row">
-					<label>지점 위치 : </label><input type="text" name="areaLocation" required
+					<label>지점 위치 : </label><input type="text" name="areaLocation"  required autocomplete="off"
 					value = "<%=areaDto.getAreaLocation()%>">
 				</div>
 				<div class="row">
-					<label>지점 전화번호 : </label><input type="text" name="areaCall" required
+					<label>지점 전화번호 : </label><input type="text" name="areaCall"  required autocomplete="off"
 					value = "<%=areaDto.getAreaCall()%>">
 				</div>
 				<div class="row">

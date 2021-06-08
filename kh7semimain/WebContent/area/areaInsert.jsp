@@ -29,13 +29,13 @@
 		<div class="row">
 			<form action="areaInsert.kh" method="post">
 				<div class="row">
-					<label>지점명 : </label><input type="text" class="login-form" name="areaName" required>
+					<label>지점명 : </label><input type="text" class="login-form" name="areaName"  required autocomplete="off">
 				</div>
 				<div class="row">
-					<label>지점 위치 : </label><input type="text" class="login-form" name="areaLocation" required>
+					<label>지점 위치 : </label><input type="text" class="login-form" name="areaLocation"  required autocomplete="off">
 				</div>
 				<div class="row">
-					<label>지점 전화번호 : </label><input type="text" class="login-form" name="areaCall" required>
+					<label>지점 전화번호 : </label><input type="text" class="login-form" name="areaCall"  required autocomplete="off">
 				</div>
 				<div class="row">
 					<input type="submit" class="board-btn" value="등록">

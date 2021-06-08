@@ -141,9 +141,9 @@ String title = "회원 목록";
 						<input type="hidden" name="pageNo" value="<%=pageNo %>">
 						<input type="hidden" name="clientNo"
 							value="<%=clientDto.getClientNo()%>">
-						<td><input type="text" name="clientName" required
+						<td><input type="text" name="clientName"  required autocomplete="off"
 							value="<%=clientDto.getClientName()%>"></td>
-						<td><input type="text" name="clientEmail" required
+						<td><input type="text" name="clientEmail"  required autocomplete="off"
 							value="<%=clientDto.getClientEmail()%>"></td>
 						<td><input type="date" name="clientPossible" required
 							value="<%=clientDto.getClientPossible()%>"></td>
@@ -212,7 +212,7 @@ String title = "회원 목록";
 	<div class="row text-center">
 		<form action="clientList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
-			<input type="text" name="search" id="search" required>
+			<input type="text" name="search" id="search"  required autocomplete="off">
 			<input type="submit" class="board-btn" value="검색">
 		</form>
 	</div>

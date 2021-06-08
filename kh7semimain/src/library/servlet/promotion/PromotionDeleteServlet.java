@@ -1,5 +1,6 @@
 package library.servlet.promotion;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import library.beans.PromotionDao;
+import library.beans.PromotionFileDao;
+import library.beans.PromotionFileDto;
 
 @WebServlet(urlPatterns = "/promotion/promotionDelete.kh")
 public class PromotionDeleteServlet extends HttpServlet {
@@ -20,6 +23,15 @@ public class PromotionDeleteServlet extends HttpServlet {
 			int promotionNo = Integer.parseInt(req.getParameter("promotionNo"));
 			
 			PromotionDao promotionDao = new PromotionDao();
+			
+			PromotionFileDao promotionFileDao = new PromotionFileDao();
+			PromotionFileDto promotionFileDto = promotionFileDao.getByOrigin(promotionNo);
+			String filename = promotionFileDto.getFileSaveName();
+			String path = PromotionFilePath.SAVEPATH + "/";
+			File uploadFile = new File(path + filename);
+			if(uploadFile.exists() && uploadFile.isFile()) {
+				uploadFile.delete();
+			}
 			
 			promotionDao.delete(promotionNo);
 			

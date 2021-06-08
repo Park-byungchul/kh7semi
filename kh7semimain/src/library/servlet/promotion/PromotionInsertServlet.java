@@ -25,7 +25,7 @@ public class PromotionInsertServlet extends HttpServlet{
 		try {
 			req.setCharacterEncoding("UTF-8");
 			
-			String path = "D:/promotion";
+			String path = PromotionFilePath.SAVEPATH;
 			
 			File filePath = new File(path);
 			

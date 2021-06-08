@@ -36,7 +36,7 @@ public class PromotionDownloadServlet extends HttpServlet {
 			resp.setHeader("Content-Disposition",
 					"attachment;  filename=\"" + fileName + "\"");
 			
-			File dir = new File("D:/promotion");
+			File dir = new File(PromotionFilePath.SAVEPATH);
 			File target = new File(dir, promotionFileDto.getFileSaveName());
 
 			byte[] buffer = new byte[1024];

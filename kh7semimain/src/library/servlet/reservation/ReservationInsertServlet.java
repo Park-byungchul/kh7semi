@@ -15,7 +15,7 @@ import library.beans.ReservationDto;
 public class ReservationInsertServlet extends HttpServlet{
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			req.setCharacterEncoding("UTF-8");
 			//파라미터(bookIsbn,hopelistLibrary,hopelistReason),세션(clientNo)

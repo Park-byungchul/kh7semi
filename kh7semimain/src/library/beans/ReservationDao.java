@@ -36,14 +36,22 @@ public class ReservationDao {
 		return count > 0;
 				
 	}
-	public boolean check(ReservationDto reservationDto) throws Exception {
+	public int check(int getBookNo) throws Exception {
 		Connection con = JdbcUtils.getConnection();
-		String sql = "select * from reservation where get_book_no=? and client_no=?";
+		String sql = "select * from reservation where get_book_no=?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, reservationDto.getGetBookNo());
-		ps.setInt(2, reservationDto.getClientNo());
+		ps.setInt(1, getBookNo);
 		ResultSet rs = ps.executeQuery();
-		boolean result = rs.next();
+		
+		int result;
+		if(rs.next()) {
+			result= rs.getInt("client_no");
+			System.out.println(result);
+		}
+		else {
+			result = -1;
+		}
+		
 		con.close();
 		return result;
 	}

@@ -55,7 +55,7 @@
 	catch (Exception e) {
 		pageSize = 10;
 	}
-	
+
 	BoardListDao boardListDao = new BoardListDao();
 	List<BoardListDto> boardList;
 	
@@ -67,12 +67,19 @@
 	int count;
 	
 	if(isSearch) {
-		if(areaNoSearch == 0)
+		if(areaNoSearch == 0) {
 			count = boardListDao.getCount(type, keyword, 1);
-		else
+		}
+		else {
 			count = boardListDao.getCount(type, areaNoSearch, keyword, 1);
+		}	
 	}
-	else count = boardListDao.getCount(1);
+	else {
+		if(areaNo == 0)
+			count = boardListDao.getCount(1);
+		else 
+			count = boardListDao.getCount(1, areaNo);
+	}
 	
 	int blockSize = 10;
 	
@@ -84,15 +91,22 @@
 	
 	if(endBlock > lastBlock) // 범위를 벗어나면
 		endBlock = lastBlock;
-
+	
 	// 목록 출력 (일반 목록 / 검색)
-	if(!isSearch)
-		boardList = boardListDao.list(1, startRow, endRow);
+	if(!isSearch) {
+		if(areaNo == 0) {
+			boardList = boardListDao.list(1, startRow, endRow);
+		}
+		else {
+			boardList = boardListDao.list(1, areaNo, startRow, endRow);
+		}
+	}
 	else {
 		if(areaNoSearch == 0)
 			boardList = boardListDao.search(1, type, keyword, startRow, endRow);
-		else
+		else {
 			boardList = boardListDao.search(1, areaNoSearch, type, keyword, startRow, endRow);
+		}
 	}
 	
 	// 회원 정보

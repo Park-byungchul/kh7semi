@@ -163,7 +163,7 @@ if(endBlock > lastBlock){ // 범위를 벗어나면
 	<div class="row text-center">
 		<form action="clientList.jsp" method="post">
 			<input type="hidden" value="1" name="pageNo">
-			<input type="text" class="text-search-form" name="search" id="search" required>
+			<input type="text" class="text-search-form" name="search" id="search"  required autocomplete="off">
 			<input type="submit" class="form-btn form-btn-inline" value="검색">
 		</form>
 	</div>

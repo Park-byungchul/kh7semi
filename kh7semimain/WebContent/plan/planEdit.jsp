@@ -88,7 +88,7 @@ PlanDto planDto = planDao.detail(planNo);
 					<input type="hidden" value="<%=planDto.getPlanNo() %>" name="planNo">
 					<input type="hidden"  value="<%=areaNo %>" name="areaNo">
 				<div class="row">
-					<input type="text" name="planContent" value="<%=planDto.getPlanContent()%>">
+					<input type="text" name="planContent" value="<%=planDto.getPlanContent()%>" required autocomplete="off">
 				</div>
 				<div class="row">
 					<input type="date" name="planStartDate" value="<%=planDto.getPlanStartDate()%>">

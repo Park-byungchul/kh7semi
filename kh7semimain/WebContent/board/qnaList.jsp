@@ -69,12 +69,19 @@
 	int count;
 	
 	if(isSearch) {
-		if(areaNoSearch == 0)
+		if(areaNoSearch == 0) {
 			count = boardListDao.getCount(type, keyword, 2);
-		else
+		}
+		else {
 			count = boardListDao.getCount(type, areaNoSearch, keyword, 2);
+		}	
 	}
-	else count = boardListDao.getCount(2);
+	else {
+		if(areaNo == 0)
+			count = boardListDao.getCount(2);
+		else 
+			count = boardListDao.getCount(2, areaNo);
+	}
 	
 	int blockSize = 10;
 	
@@ -88,8 +95,14 @@
 		endBlock = lastBlock;
 
 	// 목록 출력 (일반 목록 / 검색)
-	if(!isSearch)
-		boardList = boardListDao.list(2, startRow, endRow);
+	if(!isSearch) {
+		if(areaNo == 0) {
+			boardList = boardListDao.list(2, startRow, endRow);
+		}
+		else {
+			boardList = boardListDao.list(2, areaNo, startRow, endRow);
+		}
+	}
 	else {
 		if(areaNoSearch == 0)
 			boardList = boardListDao.search(2, type, keyword, startRow, endRow);

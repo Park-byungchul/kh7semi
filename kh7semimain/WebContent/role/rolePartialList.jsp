@@ -171,7 +171,11 @@ endBlock = lastBlock; // 범위를 수정
 	<%if(areaNo == 0){ %>
 	<div class="text-center pagination">
 	<%if(startBlock > 1){ %>
-		<a class="move-link">이전</a>
+		<a href="rolePartialList.jsp?pageNo=<%=startBlock - 1 %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%}%>
+				" class="move-link">이전</a>
 		<%} %>
 		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
 			<%if(i == pageNo){ %>
@@ -189,7 +193,11 @@ endBlock = lastBlock; // 범위를 수정
 			<%} %>
 		<%} %>
 		<%if(endBlock < lastBlock){ %>
-		<a class="move-link">다음</a>
+		<a href="rolePartialList.jsp?pageNo=<%=endBlock + 1 %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%}%>
+				""class="move-link">다음</a>
 		<%} %>
 	</div>
 	

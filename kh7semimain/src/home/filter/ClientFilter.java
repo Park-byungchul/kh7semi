@@ -1,7 +1,6 @@
 package home.filter;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebFilter(urlPatterns = {
-		"/client/clientDetail.jsp"
+			"/client/clientDetail.jsp"
 		})
 public class ClientFilter implements Filter{
 
@@ -24,10 +23,6 @@ public class ClientFilter implements Filter{
 		HttpServletResponse resp = (HttpServletResponse) response;
 
 		if(req.getSession().getAttribute("clientNo") == null) {
-//			resp.setContentType("text/html; charset=UTF-8");
-//			PrintWriter out=response.getWriter();
-//			out.println("<script>alert('로그인주세요.'); location.href='"+ req.getContextPath()+"/client/login.jsp" +"';</script>");
-//			out.flush();
 			resp.sendRedirect(req.getContextPath()+"/client/login.jsp");
 		}
 		else {

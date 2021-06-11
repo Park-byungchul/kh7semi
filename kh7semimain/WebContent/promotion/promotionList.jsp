@@ -62,14 +62,14 @@ if(areaNo > 0){
 		<table class="table table-border table-hover text-center">
 				<tr>
 					<th>이미지</th>
-					<th>지점번호</th>
+					<th>지점명</th>
 					<th>기능</th>
 				</tr>
 				<%for(PromotionInfoDto promotionInfoDto : list){ %>
 					<%if(promotionInfoDto.getFileNo() > 0){ %>
 				<tr>	
 					<td><img src="promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>"  style="max-width: 200px; height:auto;"></td>
-					<td><%=promotionInfoDto.getAreaNo() %></td>
+					<td><%=areaDao.detail(promotionInfoDto.getAreaNo()).getAreaName() %></td>
 					<td><a href="promotionFile.kh?fileNo=<%=promotionInfoDto.getFileNo() %>">다운로드</a> | <a id="promotionDeleteBtn" href="promotionDelete.kh?promotionNo=<%=promotionInfoDto.getPromotionNo()%>">삭제</a></td>
 				</tr>
 					<%} %>

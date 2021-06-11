@@ -14,10 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 import library.beans.ClientDao;
 
 @WebFilter(urlPatterns = {
+		"/client/clientList.jsp", "/client/clientPartialList.jsp", "/client/clientEdit.jsp", 
+		"/client/clientInfo.jsp", "/client/clientPartialEdit.jsp",
 		"/admin/*",
 		"/area/*",
 		"/role/*",
-		 "/client/clientList.jsp", "/client/clientPartialList.jsp", "/client/clientEdit.jsp", "/client/clientInfo.jsp", "/client/clientPartialEdit.jsp"
+		"/plan/planEdit.jsp", "/plan/planInsert.jsp", "/plan/calendar.jsp" ,
+		"/promotion/promotionInsert.jsp", "/promotion/promotionList.jsp",
+		"/image/*",
+		"/location/locationSidebar.jsp",
+		"/search/searchSidebar.jsp",
+		"/service/serviceSidebar.jsp",
+		"/board/boardMenuSidebar.jsp",
+		"/client/myMenuSidebar.jsp"
 })
 public class AdminFilter implements Filter {
 

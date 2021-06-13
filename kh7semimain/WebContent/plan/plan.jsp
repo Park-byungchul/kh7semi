@@ -125,7 +125,7 @@ if(areaNo == 0){
 			<table class="planTable">
 				<thead>
 					<tr>
-						<th colspan="2" class="left">
+						<th colspan="3" class="left">
 							<%=year %>.<%=month %>.<%=day %>
 						</th>
 						<%if(clientNo != 0 && !isClient) { %>
@@ -137,7 +137,11 @@ if(areaNo == 0){
 				</thead>
 				<tbody>
 					<%for(PlanDto planDto : planList){ %>
-					<tr onclick="location.href='planEdit.jsp?planNo=<%=planDto.getPlanNo()%>'">
+						<%if(isClient){ %>
+							<tr>
+						<%}else{%>
+							<tr onclick="location.href='planEdit.jsp?planNo=<%=planDto.getPlanNo()%>'">
+						<%} %>
 						<td width="15%" class="area">
 							<%if(planDto.getAreaNo() > 0){ %>
 							[<%=areaDao.detail(planDto.getAreaNo()).getAreaName()%>]<br>

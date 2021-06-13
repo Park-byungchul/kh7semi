@@ -185,17 +185,33 @@ String title = "회원 목록";
 
 	<div class="text-center pagination">
 	<%if(startBlock > 1){ %>
-		<a class="move-link">이전</a>
+		<a href="clientPartialList.jsp?pageNo=<%=startBlock - 1 %>
+			<%if(isSearch){ %>
+				&search=<%=search %>
+			<%} %>
+		" class="move-link">이전</a>
 		<%} %>
 		<%for(int i = startBlock ; i <= endBlock ; i++){ %>
 			<%if(i == pageNo){ %>
-				<a href="clientPartialList.jsp?pageNo=<%=i %>" class="on"><%=i %></a>
+				<a href="clientPartialList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%} %>
+				" class="on"><%=i %></a>
 			<%}else{ %>
-				<a href="clientPartialList.jsp?pageNo=<%=i %>"><%=i %></a>
+				<a href="clientPartialList.jsp?pageNo=<%=i %>
+					<%if(isSearch){ %>
+						&search=<%=search %>
+					<%} %>
+				"><%=i %></a>
 			<%} %>
 		<%} %>
 		<%if(endBlock < lastBlock){ %>
-		<a class="move-link">다음</a>
+		<a href="clientPartialList.jsp?pageNo=<%=endBlock + 1 %>
+			<%if(isSearch){ %>
+				&search=<%=search %>
+			<%} %>
+		" class="move-link">다음</a>
 		<%} %>
 	</div>
 	

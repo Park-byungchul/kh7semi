@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
 import library.beans.WishlistDao;
 import library.beans.WishlistDto;
@@ -19,18 +20,18 @@ public class wishlistDeleteServlet extends HttpServlet{
 			//준비 : clientNo, bookIsbn
 			req.setCharacterEncoding("UTF-8");
 			WishlistDto wishlistDto = new WishlistDto();
-			wishlistDto.setClientNo(Integer.parseInt(req.getParameter("clientNo"))); 
+			wishlistDto.setClientNo((int)req.getSession().getAttribute("clientNo"));
 			wishlistDto.setBookIsbn(req.getParameter("bookIsbn"));
-			int getBookNo = Integer.parseInt(req.getParameter("getBookNo"));
-			
+			int wishlistNo = Integer.parseInt(req.getParameter("wishlistNo"));
+			wishlistDto.setWishlistNo(wishlistNo);
 			//처리
 			WishlistDao wishlistDao = new WishlistDao();
-			wishlistDao.delete(wishlistDto.getClientNo(), wishlistDto.getBookIsbn());
+			wishlistDao.delete(wishlistDto.getWishlistNo());
 			
 			String root = req.getContextPath();
 			//출력 : 책 디테일로 복귀
 		
-			resp.sendRedirect(root+"/getBook/getBookDetail.jsp?getBookNo="+getBookNo);	
+			resp.sendRedirect("wishlist.jsp");	
 		
 		}
 		catch(Exception e) {

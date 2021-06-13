@@ -10,15 +10,16 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String root = request.getContextPath(); 
-
+	
 	String bookIsbn = request.getParameter("bookIsbn");
+	String wishlistNo = request.getParameter("wishlistNo");
 	BookDao bookDao = new BookDao();
 	BookDto bookDto = bookDao.get(bookIsbn);
 
-	String title = "신착 도서";
+	String title = "추천 도서";
 %>
 
-<jsp:include page="/search/searchSidebar.jsp">
+<jsp:include page="/client/myMenuSidebar.jsp">
 	<jsp:param value="<%=title %>" name="title"/>
 </jsp:include>
 
@@ -27,12 +28,11 @@
 <div class="main">
 		<div class="header">
 			<div class="row">
-				<span class="title">신착 도서</span>
+				<span class="title">관심 도서</span>
 			</div>
 			
 			<div class="row">
-				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 신착 도서</span><br>
-				<span class="path">※ 신착도서는 최근에 도서관에 입고된 도서를 의미합니다.</span>
+				<span class="path"><a class="imgArea" href="<%=root %>"><img alt="home" src="<%=root %>/image/home.png"></a> > 자료 검색 > 관심 도서</span>
 			</div>
 		</div>
 	
@@ -53,7 +53,8 @@
 			<label>이미지 URL</label><input type="text" name="bookImg" id="bookImg" required class="form-input form-input-underline" value="<%=bookDto.getBookImg()%>" disabled><br><br>
 	</div>
 	<div class="row text-center">
-			<button class="board-btn"><a class="btn-text" href="newbooklist.jsp">목록</a></button>
+			<button class="board-btn"><a class="btn-text" href="wishlist.jsp">목록</a></button>
+			<button class="board-btn"><a class="btn-text" href="wishlistDelete.kh?bookIsbn=<%=bookDto.getBookIsbn()%>&wishlistNo=<%=wishlistNo%>">삭제</a></button>
 	</div>
 	</div>
 </div>

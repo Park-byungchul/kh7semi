@@ -95,3 +95,9 @@ from get_book GB
 left outer join book B on GB.book_isbn = B.book_isbn
 left outer join area A on gb.area_no = a.area_no
 left outer join genre G on g.genre_no = b.genre_no;
+
+-- 게시판 관리를 위한 union
+select board_type_no, board_no, board_title, client_no, board_date, board_read from board
+union
+select 4, review_no, review_subject, client_no, review_date, review_read from review
+order by board_date asc;

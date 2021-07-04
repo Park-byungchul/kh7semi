@@ -38,15 +38,6 @@ insert into board values(board_seq.nextval, 15, 2, 2, '질문 - 종로도서관'
 insert into board values(board_seq.nextval, 16, 2, 3, '강남도서관 닫는 시간', '전체', 0, 0, sysdate, qna_seq.nextval, 0, '비공개');
 commit;
 
-insert into board_answer values(288, '접수중', null, '아직 답변이 등록되지 않았습니다.', null);
-commit;
-
-select * from board;
-delete board;
-select * from board_qna;
-
-select board_status from board_answer where board_no = 288;
-
 insert into board values(board_seq.nextval, 9, 3, null, '자유게시판', '전체', 0, 0, sysdate, freeboard_seq.nextval, 0, '공개');
 insert into board values(board_seq.nextval, 10, 3, 1, '게시판을 깨끗하게', '전체', 0, 0, sysdate, freeboard_seq.nextval, 0, '공개');
 insert into board values(board_seq.nextval, 11, 3, 2, '종로도서관에 대해서', '전체', 0, 0, sysdate, freeboard_seq.nextval, 0, '공개');

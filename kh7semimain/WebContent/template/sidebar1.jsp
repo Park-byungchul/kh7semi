@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <script>
 $(function(){
-	$(".sidebarContainer").css("height",$(".main").height()+120);
+	$(".sidebarContainer").css("height",$(".main").height()+300);
 });
 </script>
 <div class="float-container">

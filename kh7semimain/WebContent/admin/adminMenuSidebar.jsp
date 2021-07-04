@@ -84,6 +84,13 @@
 		<li><a class="menuItem" href="<%=root %>/getBook/getBookInsert.jsp">입고등록</a></li>
 		<li><a class="menuItem" href="<%=root %>/getBook/getBookList.jsp">입고목록</a></li>
 	</ul>
+	
+	<span class="sidebarTitle">게시글 관리</span>
+	
+	<ul class="sidebarMenu">
+		<li><a class="menuItem" href="<%=root %>/board/adminBoard.jsp">게시글 관리</a></li>
+		<li><a class="menuItem" href="<%=root %>/board/adminComment.jsp">댓글 관리</a></li>
+	</ul>
 <%} %>
 </div>
 
